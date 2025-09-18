@@ -1,0 +1,172 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 新增 banner 樣式 */
+.banner {
+    width: 100%;
+    max-width: 500px; /* 與 button-item 的 max-width 一致 */
+    margin-bottom: 20px; /* 與下方按鈕列表的間距 */
+}
+
+.banner img {
+    width: 100%; /* 圖片寬度填滿容器 */
+    height: auto; /* 保持圖片比例 */
+    display: block; /* 移除圖片底部的空白 */
+    border-radius: 5px; /* 與 button-item 的圓角一致 */
+}
+
+.button-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.button-item {
+    width: 100%;
+    max-width: 500px;
+    background: #eee;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.button-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    background: inherit;
+    border-radius: inherit;
+    transition: background 0.2s;
+}
+
+.button-link:hover {
+    background: #ddd;
+}
+
+.owner-controls {
+    display: none; /* 預設隱藏編輯和刪除按鈕 */
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.owner-controls button {
+    background: transparent;
+    border: none;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+}
+
+.settings-button-container {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 500px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.settings-button,
+.confirm-button,
+.add-button {
+    background: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+}
+
+/* 模態視窗樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px 20px 50px 20px; /* 增加底部內邊距至 50px */
+    border-radius: 5px;
+    position: relative;
+    width: 300px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 新增 Flexbox 樣式以實現水平排列 */
+.input-container {
+    display: flex;
+    align-items: center; /* 垂直置中輸入框與按鈕 */
+    gap: 10px; /* 輸入框與按鈕之間的間距 */
+    justify-content: center; /* 水平置中內容 */
+    width: 100%; /* 確保容器佔據完整寬度 */
+}
+
+#key-input {
+    flex: 1; /* 讓輸入框填滿可用空間 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif; /* 與網頁字體一致 */
+}
+
+#submit-key {
+    background: transparent; /* 移除背景色，與其他 Icon 一致 */
+    color: #333; /* 文字顏色與其他 Icon 一致 */
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#submit-key:hover {
+    color: #555; /* 懸停時文字顏色稍微變深 */
+}
+
+.icon-link {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 16px; /* 與編輯和刪除按鈕的 Icon 大小一致 */
+    color: #333; /* 與編輯和刪除按鈕的 Icon 顏色一致 */
+    text-decoration: none;
+}
+
+.icon-link:hover {
+    color: #333; /* 保持一致，不變色 */
+}
