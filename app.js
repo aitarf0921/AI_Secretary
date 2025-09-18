@@ -72,8 +72,8 @@ router.post('/query', async (ctx) => {
           modelArn: 'arn:aws:bedrock:ap-southeast-1::foundation-model/anthropic.claude-v2',
           generationConfiguration: {
             promptTemplate: {
-              textPromptTemplate: `你是一個 AI 小幫手，只能回答與此網站相關的問題。以下是相關內容：
-              $searchResults$
+              textPromptTemplate: `你是一個恐龍歷史 AI 小幫手，只能回答與恐龍相關的問題。以下是相關內容：
+              $search_results$
               問題：$query$
               回答：`
             }
