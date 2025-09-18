@@ -1,0 +1,28 @@
+# Dependency directories
+
+node_modules/
+*/node_modules/
+
+# Optional npm cache directory
+.npm
+
+
+# Optional eslint cache
+.eslintcache
+cicd-test.txt
+
+
+# dotenv environment variables file
+
+# MAC
+.DS_Store
+*/.DS_Store
+
+package-lock.json
+
+
+#eslint
+.eslintrc.js
+*/.eslintrc.js
+.eslintrc.json
+*/.eslintrc.json
