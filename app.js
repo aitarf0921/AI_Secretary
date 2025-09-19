@@ -16,8 +16,8 @@ const app = new Koa();
 const router = new Router();
 
 // 硬編碼環境變數
-const region = 'ap-southeast-1'; // 確保與你的 S3 和 Bedrock 區域一致
-const knowledgeBaseId = 'S4A4PJIIW2'; // 替換為你的實際 Knowledge Base ID
+const region = 'us-east-1'; // 確保與你的 S3 和 Bedrock 區域一致
+const knowledgeBaseId = 'CXPSZMAOXM'; // 替換為你的實際 Knowledge Base ID
 
 const bedrockClient = new BedrockAgentRuntimeClient({ region });
 
