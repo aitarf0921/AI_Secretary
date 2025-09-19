@@ -22,39 +22,24 @@ const {
 const app = new Koa();
 const router = new Router();
 
-/** ===== 基本設定（可用環境變數覆寫） ===== */
 const region = process.env.AWS_REGION || 'us-east-1';
 const knowledgeBaseId = process.env.KB_ID || 'CXPSZMAOXM';
 const port = Number(process.env.PORT || 3000);
 
-// ✅ 使用「模型 ID」而非 ARN（且放在 knowledgeBaseConfiguration 內）
-const MODEL_ID = process.env.BEDROCK_MODEL_ID || 'arn:aws:aoss:us-east-1:688538633553:collection/y95dgm9q0su5aqf9d2v5';
+// DeepSeek-R1 的 “模型 ID” （不是完整 ARN）
+const MODEL_ID = process.env.BEDROCK_MODEL_ID || 'us.deepseek.r1-v1:0';
 
-/** ===== 建立 Bedrock Agent Runtime Client ===== */
 const bedrockClient = new BedrockAgentRuntimeClient({ region });
 
-/** ===== Koa Middlewares ===== */
 app.proxy = true;
 app.use(helmet());
 app.use(bodyParser({ enableTypes: ['json', 'form'], jsonLimit: '1mb' }));
 app.use(json());
 app.use(staticServe(__dirname + '/public'));
 app.use(views(__dirname + '/views', { extension: 'html', map: { html: 'ejs' } }));
+app.use(RateLimit.middleware({ interval: { min: 1 }, max: 10000 }));
+app.use(cors({ origin: '*', methods: 'GET,POST,OPTIONS', credentials: true, preflightContinue: false, maxAge: 5 }));
 
-const limiter = RateLimit.middleware({ interval: { min: 1 }, max: 10000 });
-app.use(limiter);
-
-app.use(
-  cors({
-    origin: '*',
-    methods: 'GET,POST,OPTIONS',
-    credentials: true,
-    preflightContinue: false,
-    maxAge: 5,
-  })
-);
-
-/** ===== Routes ===== */
 router.get('/', async (ctx) => {
   ctx.status = 200;
   await ctx.render('index');
@@ -75,7 +60,6 @@ router.post('/query', async (ctx) => {
     return;
   }
 
-  // 簡單快取（1 小時）
   const cacheKey = `query:${cleanQuery}`;
   const cached = cache.get(cacheKey);
   if (cached) {
@@ -85,14 +69,13 @@ router.post('/query', async (ctx) => {
   }
 
   try {
-    // ✅ 最小可行結構：KB 模式 + 內層使用模型「ID」
     const params = {
       input: { text: cleanQuery },
       retrieveAndGenerateConfiguration: {
         type: 'KNOWLEDGE_BASE',
         knowledgeBaseConfiguration: {
           knowledgeBaseId,
-          modelArn: MODEL_ID, // ← 注意：這裡放「模型 ID」不是 ARN
+          modelArn: MODEL_ID,  // DeepSeek-R1 模型 ID
         },
       },
     };
@@ -120,5 +103,5 @@ http.createServer(app.callback()).listen(port, () => {
   console.log(`Dinosaur AI Helper started on port ${port}`);
   console.log(`Region: ${region}`);
   console.log(`KB ID : ${knowledgeBaseId}`);
-  console.log(`Model : ${MODEL_ID} (model ID, not ARN)`);
+  console.log(`Using model ID: ${MODEL_ID} (DeepSeek-R1)`);
 });
