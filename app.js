@@ -88,34 +88,35 @@ router.post('/query', async (ctx) => {
     // **重點：modelArn 與 generationConfiguration 在最外層**
     const params = {
       input: { text: cleanQuery },
-      modelArn, // <— 放在最外層
       retrieveAndGenerateConfiguration: {
         type: 'KNOWLEDGE_BASE',
         knowledgeBaseConfiguration: {
           knowledgeBaseId,
+          // ※ 必填：放在 knowledgeBaseConfiguration 內
+          modelArn: 'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0',
           retrievalConfiguration: {
             vectorSearchConfiguration: {
-              numberOfResults: 6, // 可再降到 4 以更省
+              numberOfResults: 6,     // 想更省可以降到 4
             },
           },
+          // （可省略）如果你的 KB 有設定「文件/欄位過濾」則在這裡放 filter
+          // knowledgeBaseRetrievalConfiguration: { ... }
         },
       },
-      // 可選：覆寫生成模板與推理參數（同樣在最外層）
+      // 生成參數放最外層是 OK 的（官方允許）
       generationConfiguration: {
-        // maxOutputTokens: 400, // 想更省可以限制輸出 token
+        // maxOutputTokens: 400, // 要更省可以打開
         promptTemplate: {
-          // 注意使用 KB 的保留占位符：$search_results$ 與 $query$
           textPromptTemplate:
-            `你是一個恐龍歷史 AI 小幫手，只能回答與恐龍相關的問題，並嚴格根據知識庫的內容作答。
-以下為與問題最相關的知識：
-$search_results$
+    `你是一個恐龍歷史 AI 小幫手，只能回答與恐龍相關的問題，並嚴格根據知識庫的內容作答。
+    以下為與問題最相關的知識：
+    $search_results$
 
-問題：$query$
-請用中文簡潔回答：`,
+    問題：$query$
+    請用中文簡潔回答：`,
         },
       },
     };
-
     const response = await bedrockClient.send(new RetrieveAndGenerateCommand(params));
     const answer = response?.output?.text || '（知識庫沒有找到可用內容）';
 
@@ -135,9 +136,4 @@ $search_results$
 
 app.use(router.routes()).use(router.allowedMethods());
 
-http.createServer(app.callback()).listen(port, () => {
-  console.log(`Dinosaur AI Helper started on port ${port}`);
-  console.log(`Region: ${region}`);
-  console.log(`KB ID : ${knowledgeBaseId}`);
-  console.log(`Model : ${modelArn}`);
-});
+http.createServer(app.callback()).listen(port);
