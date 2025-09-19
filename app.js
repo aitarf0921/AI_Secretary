@@ -69,7 +69,12 @@ router.post('/query', async (ctx) => {
         type: 'KNOWLEDGE_BASE',
         knowledgeBaseConfiguration: {
           knowledgeBaseId: knowledgeBaseId,
-          modelArn: 'arn:aws:bedrock:ap-southeast-1::foundation-model/anthropic.claude-v2',
+          modelArn: 'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0',
+          retrievalConfiguration: {
+            vectorSearchConfiguration: {
+              numberOfResults: 6, // 依需求調整（少一點更省）
+            },
+          },
           generationConfiguration: {
             promptTemplate: {
               textPromptTemplate: `你是一個恐龍歷史 AI 小幫手，只能回答與恐龍相關的問題。以下是相關內容：
