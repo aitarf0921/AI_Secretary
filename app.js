@@ -22,15 +22,18 @@ const {
 const app = new Koa();
 const router = new Router();
 
-const region = process.env.AWS_REGION || 'us-east-1';
-const knowledgeBaseId = process.env.KB_ID || 'CXPSZMAOXM';
+/** ===== 基本設定 ===== */
+const region = process.env.AWS_REGION || 'us-east-1'; // 確認 KB 與 S3 都在這區
+const knowledgeBaseId = process.env.KB_ID || 'CXPSZMAOXM'; // 你的 KB ID
 const port = Number(process.env.PORT || 3000);
 
-// DeepSeek-R1 的 “模型 ID” （不是完整 ARN）
-const MODEL_ID = process.env.BEDROCK_MODEL_ID || 'us.deepseek.r1-v1:0';
+// ✅ Claude 3 Haiku (us-east-1) → 成本最低且支援 KB
+const MODEL_ID = process.env.BEDROCK_MODEL_ID || 'anthropic.claude-3-haiku-20240307-v1:0';
 
+// 建立 Bedrock Agent Runtime Client
 const bedrockClient = new BedrockAgentRuntimeClient({ region });
 
+/** ===== Koa Middlewares ===== */
 app.proxy = true;
 app.use(helmet());
 app.use(bodyParser({ enableTypes: ['json', 'form'], jsonLimit: '1mb' }));
@@ -38,8 +41,9 @@ app.use(json());
 app.use(staticServe(__dirname + '/public'));
 app.use(views(__dirname + '/views', { extension: 'html', map: { html: 'ejs' } }));
 app.use(RateLimit.middleware({ interval: { min: 1 }, max: 10000 }));
-app.use(cors({ origin: '*', methods: 'GET,POST,OPTIONS', credentials: true, preflightContinue: false, maxAge: 5 }));
+app.use(cors({ origin: '*', methods: 'GET,POST,OPTIONS', credentials: true }));
 
+/** ===== Routes ===== */
 router.get('/', async (ctx) => {
   ctx.status = 200;
   await ctx.render('index');
@@ -75,22 +79,34 @@ router.post('/query', async (ctx) => {
         type: 'KNOWLEDGE_BASE',
         knowledgeBaseConfiguration: {
           knowledgeBaseId,
-          modelArn: MODEL_ID,  // DeepSeek-R1 模型 ID
+          modelArn: MODEL_ID, // ✅ 使用 Claude 3 Haiku
+          retrievalConfiguration: {
+            vectorSearchConfiguration: { numberOfResults: 4 }, // 建議 4~8
+          },
+          generationConfiguration: {
+            promptTemplate: {
+              textPromptTemplate: `你是一個恐龍歷史 AI 小幫手，回答必須嚴格根據知識庫內容：
+$search_results$
+
+問題：$query$
+請用繁體中文簡潔回答：`,
+            },
+          },
         },
       },
     };
 
     const resp = await bedrockClient.send(new RetrieveAndGenerateCommand(params));
-    const answer = resp?.output?.text || '（知識庫沒有找到可用內容）';
+    const answer = resp?.output?.text || '（知識庫沒有找到相關內容）';
 
-    cache.put(cacheKey, answer, 60 * 60 * 1000);
+    cache.put(cacheKey, answer, 60 * 60 * 1000); // 快取 1 小時
     ctx.status = 200;
-    ctx.body = { answer, modelIdUsed: MODEL_ID, cached: false };
+    ctx.body = { answer, cached: false, modelIdUsed: MODEL_ID };
   } catch (error) {
     console.error('Bedrock RetrieveAndGenerate error ->', {
       name: error?.name,
       message: error?.message,
-      metadata: error?.$metadata,
+      httpStatus: error?.$metadata?.httpStatusCode,
     });
     ctx.status = 500;
     ctx.body = { error: 'Failed to process query', code: error?.name || 'BedrockError' };
@@ -100,8 +116,8 @@ router.post('/query', async (ctx) => {
 app.use(router.routes()).use(router.allowedMethods());
 
 http.createServer(app.callback()).listen(port, () => {
-  console.log(`Dinosaur AI Helper started on port ${port}`);
-  console.log(`Region: ${region}`);
-  console.log(`KB ID : ${knowledgeBaseId}`);
-  console.log(`Using model ID: ${MODEL_ID} (DeepSeek-R1)`);
+  console.log(`🚀 Dinosaur AI Helper started on http://localhost:${port}`);
+  console.log(`📍 Region: ${region}`);
+  console.log(`📚 KB ID : ${knowledgeBaseId}`);
+  console.log(`🤖 Model : ${MODEL_ID}`);
 });
