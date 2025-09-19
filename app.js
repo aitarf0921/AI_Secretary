@@ -22,22 +22,18 @@ const {
 const app = new Koa();
 const router = new Router();
 
-/** ===== 基本設定 ===== */
+/** ===== 基本設定（可用環境變數覆寫） ===== */
 const region = process.env.AWS_REGION || 'us-east-1';
 const knowledgeBaseId = process.env.KB_ID || 'CXPSZMAOXM';
 const port = Number(process.env.PORT || 3000);
 
-// 依序嘗試的模型（由便宜到較貴），你也可用 BEDROCK_MODEL_ARN 覆蓋
-const CANDIDATE_MODELS = [
-  process.env.BEDROCK_MODEL_ARN, // 若手動指定就用這個（若空會被過濾）
-  'arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-text-lite-v1:0',
-  'arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-lite-v1:0',
-  'arn:aws:bedrock:us-east-1::foundation-model/anthropic.claude-3-haiku-20240307-v1:0',
-].filter(Boolean);
+// ✅ 使用「模型 ID」而非 ARN（且放在 knowledgeBaseConfiguration 內）
+const MODEL_ID = process.env.BEDROCK_MODEL_ID || 'arn:aws:aoss:us-east-1:688538633553:collection/y95dgm9q0su5aqf9d2v5';
 
+/** ===== 建立 Bedrock Agent Runtime Client ===== */
 const bedrockClient = new BedrockAgentRuntimeClient({ region });
 
-/** ===== Middlewares ===== */
+/** ===== Koa Middlewares ===== */
 app.proxy = true;
 app.use(helmet());
 app.use(bodyParser({ enableTypes: ['json', 'form'], jsonLimit: '1mb' }));
@@ -79,6 +75,7 @@ router.post('/query', async (ctx) => {
     return;
   }
 
+  // 簡單快取（1 小時）
   const cacheKey = `query:${cleanQuery}`;
   const cached = cache.get(cacheKey);
   if (cached) {
@@ -87,76 +84,34 @@ router.post('/query', async (ctx) => {
     return;
   }
 
-  // 嘗試多個模型直到成功
-  let lastErr;
-  for (const modelArn of CANDIDATE_MODELS) {
-    try {
-      const params = {
-        input: { text: cleanQuery },
-        retrieveAndGenerateConfiguration: {
-          type: 'KNOWLEDGE_BASE',
-          knowledgeBaseConfiguration: {
-            knowledgeBaseId,
-            // **重點：modelArn 在 knowledgeBaseConfiguration 內，且必填**
-            modelArn,
-            retrievalConfiguration: {
-              vectorSearchConfiguration: {
-                numberOfResults: 4, // 更省
-              },
-            },
-          },
+  try {
+    // ✅ 最小可行結構：KB 模式 + 內層使用模型「ID」
+    const params = {
+      input: { text: cleanQuery },
+      retrieveAndGenerateConfiguration: {
+        type: 'KNOWLEDGE_BASE',
+        knowledgeBaseConfiguration: {
+          knowledgeBaseId,
+          modelArn: MODEL_ID, // ← 注意：這裡放「模型 ID」不是 ARN
         },
-        generationConfiguration: {
-          // maxOutputTokens: 300, // 如需更省可打開
-          promptTemplate: {
-            textPromptTemplate:
-`你是一個恐龍歷史 AI 小幫手，只能回答與恐龍相關的問題，並嚴格根據知識庫內容作答。
-以下為與問題最相關的知識：
-$search_results$
+      },
+    };
 
-問題：$query$
-請用中文簡潔回答：`,
-          },
-        },
-        // 可選：對話需要可加 sessionId
-        // sessionId: 'kb-demo-session',
-      };
+    const resp = await bedrockClient.send(new RetrieveAndGenerateCommand(params));
+    const answer = resp?.output?.text || '（知識庫沒有找到可用內容）';
 
-      const resp = await bedrockClient.send(new RetrieveAndGenerateCommand(params));
-      const answer = resp?.output?.text || '（知識庫沒有找到可用內容）';
-
-      cache.put(cacheKey, answer, 60 * 60 * 1000);
-      ctx.status = 200;
-      ctx.body = { answer, modelArnUsed: modelArn, cached: false };
-      return; // 成功就結束
-    } catch (e) {
-      lastErr = e;
-      // 只做精簡日誌，避免洩漏
-      console.error('Bedrock RnG attempt failed =>', {
-        modelArnTried: modelArn,
-        name: e?.name,
-        message: e?.message,
-        httpStatus: e?.$metadata?.httpStatusCode,
-      });
-      // 下一個模型
-    }
+    cache.put(cacheKey, answer, 60 * 60 * 1000);
+    ctx.status = 200;
+    ctx.body = { answer, modelIdUsed: MODEL_ID, cached: false };
+  } catch (error) {
+    console.error('Bedrock RetrieveAndGenerate error ->', {
+      name: error?.name,
+      message: error?.message,
+      metadata: error?.$metadata,
+    });
+    ctx.status = 500;
+    ctx.body = { error: 'Failed to process query', code: error?.name || 'BedrockError' };
   }
-
-  // 若全部模型都失敗
-  ctx.status = 500;
-  ctx.body = {
-    error: 'Failed to process query with all candidate models.',
-    lastError: {
-      name: lastErr?.name,
-      message: lastErr?.message,
-      httpStatus: lastErr?.$metadata?.httpStatusCode,
-    },
-    hints: [
-      '到 Bedrock Console → Model access，開啟 amazon.titan-text-lite-v1、amazon.nova-lite-v1、anthropic.claude-3-haiku（至少 Titan 或 Nova 其一）',
-      '確認 Knowledge Base 狀態為 ACTIVE，資料來源已完成 Sync',
-      '區域統一使用 us-east-1（KB、OSSL、S3、程式與 modelArn）',
-    ],
-  };
 });
 
 app.use(router.routes()).use(router.allowedMethods());
@@ -165,6 +120,5 @@ http.createServer(app.callback()).listen(port, () => {
   console.log(`Dinosaur AI Helper started on port ${port}`);
   console.log(`Region: ${region}`);
   console.log(`KB ID : ${knowledgeBaseId}`);
-  console.log('Model candidates (in order):');
-  CANDIDATE_MODELS.forEach((m, i) => console.log(`  ${i + 1}. ${m}`));
+  console.log(`Model : ${MODEL_ID} (model ID, not ARN)`);
 });
