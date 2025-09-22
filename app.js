@@ -110,6 +110,11 @@ require("./start")().then(() => {
     await ctx.render('index');
   });
 
+  router.get('/widget', async (ctx) => {
+    ctx.status = 200;
+    await ctx.render('widget');
+  });
+
   // 供 widget.js 呼叫的 AI 端點
   router.options('/query', (ctx) => { ctx.status = 204; }); // 額外保險的預檢處理
   router.post('/query', async (ctx) => {
