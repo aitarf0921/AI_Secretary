@@ -15,13 +15,19 @@
 
   onReady(function(){
     const qs = new URLSearchParams(location.search);
+    const title = qs.get('title') || 'AI 小幫手';
     const placeholder = qs.get('placeholder') || '請輸入您的問題…';
     const accent = qs.get('accent') || '#0055ff';
+    const brand = qs.get('brand') || '';
     const endpoint = qs.get('endpoint') || '/query';
     const site = qs.get('site') || '';
 
     // 應用 UI 文案 / 主題色
     document.documentElement.style.setProperty('--accent', accent);
+    const titleEl = document.getElementById('title');
+    if (titleEl) titleEl.textContent = title;
+    const brandEl = document.getElementById('brand');
+    if (brand && brandEl){ brandEl.style.display = 'block'; brandEl.textContent = brand; }
 
     const input = document.getElementById('q');
     const chat = document.getElementById('chat');
