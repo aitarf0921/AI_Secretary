@@ -3,170 +3,26 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>AI 小幫手</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-            body {
-                font-family: Arial, sans-serif;
-                line-height: 1.6;
-                padding: 1rem;
-                background-color: #f4f4f4;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            h1 {
-                font-size: 2rem;
-                color: #333;
-                margin-bottom: 1rem;
-                text-align: center;
-            }
-            #chat-box {
-                border: 1px solid #ccc;
-                height: 50vh;
-                max-height: 500px;
-                width: 90%;
-                max-width: 800px;
-                overflow-y: auto;
-                padding: 1rem;
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                margin-bottom: 1rem;
-            }
-            .message {
-                margin: 0.5rem 0;
-                font-size: 1rem;
-            }
-            .user {
-                font-weight: bold;
-                color: #0055ff;
-            }
-            .ai {
-                font-weight: bold;
-                color: #008800;
-            }
-            .input-container {
-                width: 90%;
-                max-width: 800px;
-                display: flex;
-                gap: 0.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            #user-input {
-                flex: 1;
-                min-width: 200px;
-                padding: 0.5rem;
-                font-size: 1rem;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                outline: none;
-            }
-            #user-input:focus {
-                border-color: #0055ff;
-                box-shadow: 0 0 5px rgba(0, 85, 255, 0.3);
-            }
-            button {
-                padding: 0.5rem 1rem;
-                font-size: 1rem;
-                background-color: #0055ff;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-            button:hover {
-                background-color: #0033cc;
-            }
-            @media (max-width: 768px) {
-                h1 {
-                    font-size: 1.5rem;
-                }
-                #chat-box {
-                    height: 60vh;
-                    width: 95%;
-                }
-                .input-container {
-                    width: 95%;
-                    flex-direction: column;
-                    align-items: stretch;
-                }
-                #user-input {
-                    min-width: 100%;
-                }
-                button {
-                    width: 100%;
-                    padding: 0.75rem;
-                }
-            }
-            @media (max-width: 480px) {
-                h1 {
-                    font-size: 1.2rem;
-                }
-                #chat-box {
-                    height: 70vh;
-                    width: 100%;
-                    padding: 0.5rem;
-                }
-                .message {
-                    font-size: 0.9rem;
-                }
-                #user-input {
-                    font-size: 0.9rem;
-                    padding: 0.4rem;
-                }
-                button {
-                    font-size: 0.9rem;
-                    padding: 0.6rem;
-                }
-            }
-        </style>
+        <title>Widget 測試頁</title>
     </head>
     <body>
-        <h1>恐龍歷史 AI 小幫手</h1>
-        <div id="chat-box"></div>
-        <div class="input-container">
-            <input
-                id="user-input"
-                type="text"
-                placeholder="問我關於恐龍的問題！"
-            />
-            <button onclick="sendQuery()">送出</button>
-        </div>
-        <script>
-            async function sendQuery() {
-                const query = document
-                    .getElementById("user-input")
-                    .value.trim();
-                if (!query) return;
-                const chatBox = document.getElementById("chat-box");
-                chatBox.innerHTML += `<div class="message user">你: ${query}</div>`;
-                try {
-                    const response = await fetch("/query", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ query }),
-                    });
-                    const data = await response.json();
-                    chatBox.innerHTML += `<div class="message ai">AI: ${data.answer || data.error}</div>`;
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                } catch (error) {
-                    chatBox.innerHTML += `<div class="message ai">AI: 抱歉，出錯了！</div>`;
-                }
-                document.getElementById("user-input").value = "";
-            }
-            document
-                .getElementById("user-input")
-                .addEventListener("keypress", (e) => {
-                    if (e.key === "Enter") sendQuery();
-                });
-        </script>
+        <h1>這是一個測試頁</h1>
+        <p>下面嵌入了台灣公構 AI 小幫手 widget：</p>
+
+        <!-- 嵌入 widget，只需一行 script -->
+        <script
+            src="http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/ai-helper-loader.js"
+            data-widget="http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/widget.html"
+            data-endpoint="http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/query"
+            data-title="台灣公構 AI 小幫手"
+            data-placeholder="問我關於台灣公構或數位行銷的問題！"
+            data-position="bottom-right"
+            data-accent="#0055ff"
+            data-brand="台灣公構"
+            data-width="360"
+            data-height="520"
+            data-z="2147483000"
+            defer
+        ></script>
     </body>
 </html>

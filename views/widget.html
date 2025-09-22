@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>AI Widget</title>
+        <style>
+            :root {
+                --accent: #0055ff;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+                font-family: Arial, sans-serif;
+                background: #fff;
+            }
+            .wrap {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 12px;
+                background: #f7f9fc;
+                border-bottom: 1px solid #eef2f7;
+            }
+            .title {
+                font-weight: 700;
+                color: #1b1f24;
+                font-size: 14px;
+            }
+            .brand {
+                font-weight: 600;
+                color: var(--accent);
+                font-size: 12px;
+                opacity: 0.9;
+            }
+            .chat {
+                flex: 1;
+                overflow-y: auto;
+                padding: 10px 12px;
+            }
+            .msg {
+                margin: 8px 0;
+                font-size: 14px;
+            }
+            .role {
+                font-weight: 600;
+            }
+            .role.user {
+                color: #0b5fff;
+            }
+            .role.ai {
+                color: #0a7a39;
+            }
+            .bubble {
+                margin-top: 4px;
+                background: #f8fafc;
+                border: 1px solid #eef2f7;
+                border-radius: 10px;
+                padding: 8px 10px;
+                color: #111827;
+            }
+            .input {
+                display: flex;
+                gap: 8px;
+                padding: 10px 12px;
+                border-top: 1px solid #eef2f7;
+            }
+            .text {
+                flex: 1;
+                border: 1px solid #d0d7de;
+                border-radius: 8px;
+                padding: 10px 12px;
+                font-size: 14px;
+                outline: none;
+            }
+            .text:focus {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.12);
+            }
+            .send {
+                background: var(--accent);
+                color: #fff;
+                border-radius: 8px;
+                border: 0;
+                padding: 10px 14px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+            .send[disabled] {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+            .hint {
+                font-size: 12px;
+                color: #6b7280;
+                padding: 8px 12px;
+                border-top: 1px dashed #e5e7eb;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="header">
+                <div>
+                    <div class="title" id="title">AI 小幫手</div>
+                    <div class="brand" id="brand" style="display: none"></div>
+                </div>
+            </div>
+            <div class="chat" id="chat" role="log" aria-live="polite"></div>
+            <div class="input">
+                <input
+                    class="text"
+                    id="q"
+                    type="text"
+                    placeholder="請輸入您的問題…"
+                />
+                <button class="send" id="send">送出</button>
+            </div>
+            <div class="hint">本對話可能用於改進服務品質</div>
+        </div>
+
+        <script src="./widget.js"></script>
+    </body>
+</html>
