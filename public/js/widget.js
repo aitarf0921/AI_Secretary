@@ -18,7 +18,7 @@
     const title = qs.get('title') || 'AI 小幫手';
     const placeholder = qs.get('placeholder') || '請輸入您的問題…';
     const accent = qs.get('accent') || '#0055ff';
-    const brand = qs.get('brand') || '';
+    const brand = qs.get('brand') || 'AI 小幫手';
     const endpoint = qs.get('endpoint') || '/query';
     const site = qs.get('site') || '';
 
