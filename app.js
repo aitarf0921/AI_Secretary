@@ -28,7 +28,7 @@ const limiter = RateLimit.middleware({
 app.use(limiter);
 
 app.use(cors({
-  origin: allowedOrigin,
+  origin: '*',
   methods: 'GET,POST',
   credentials: true,
   preflightContinue: false,
