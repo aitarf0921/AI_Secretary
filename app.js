@@ -114,7 +114,9 @@ require("./start")().then(() => {
 
     console.log('query');
     try {
-      const { query } = ctx.request.body || {};
+      const { query, site } = ctx.request.body || {};
+
+      console.log('site',site);
       if (!query || typeof query !== 'string') {
         ctx.status = 400;
         ctx.body = { error: 'Query is required' };

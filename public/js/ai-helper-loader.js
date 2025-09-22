@@ -61,13 +61,14 @@
       if (!S) { console.error('[ai-helper] 找不到載入器 <script>。'); return; }
 
       const cfg = {
-        widget:      S.getAttribute('data-widget') || '/widget.html',
-        endpoint:    S.getAttribute('data-endpoint') || '/query',
-        title:       S.getAttribute('data-title') || 'AI 小幫手',
-        placeholder: S.getAttribute('data-placeholder') || '請輸入您的問題…',
+        widget:      'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/widget',
+        endpoint:    'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/query',
+        title:       'AI 小幫手',
+        placeholder: '請輸入您的問題…',
         position:    normalizePos(S.getAttribute('data-position') || 'bottom-right'),
         accent:      sanitizeColor(S.getAttribute('data-accent') || '#0055ff'),
-        brand:       S.getAttribute('data-brand') || '',
+        brand:       'AI 小幫手',
+        site:        S.getAttribute('data-site')  || '',
         width:       Math.max(240, parseInt(S.getAttribute('data-width') || '340', 10) || 340),
         height:      Math.max(320, parseInt(S.getAttribute('data-height') || '520', 10) || 520),
         z:           String(S.getAttribute('data-z') || '2147483000'),
@@ -122,6 +123,7 @@
       url.searchParams.set('accent', cfg.accent);
       url.searchParams.set('brand', cfg.brand);
       url.searchParams.set('endpoint', cfg.endpoint);
+      url.searchParams.set('site', cfg.site);
 
       const frame = document.createElement('iframe');
       frame.src = url.toString();

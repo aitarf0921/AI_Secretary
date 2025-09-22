@@ -20,6 +20,7 @@
     const accent = qs.get('accent') || '#0055ff';
     const brand = qs.get('brand') || '';
     const endpoint = qs.get('endpoint') || '/query';
+    const site = qs.get('site') || '';
 
     // 應用 UI 文案 / 主題色
     document.documentElement.style.setProperty('--accent', accent);
@@ -130,7 +131,7 @@
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: q })
+          body: JSON.stringify({ query: q, site })
         });
 
         const ct = (res.headers.get('content-type') || '').toLowerCase();
