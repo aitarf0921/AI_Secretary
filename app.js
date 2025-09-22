@@ -81,14 +81,7 @@ require("./start")().then(() => {
 
   // CORS：允許第三方網站呼叫 /query
   app.use(cors({
-    origin: (ctx) => {
-      const reqOrigin = ctx.request.header.origin || '';
-      if (CORS_WHITELIST.length === 0) {
-        // 無白名單：允許所有（不使用 credentials）
-        return '*';
-      }
-      return CORS_WHITELIST.includes(reqOrigin) ? reqOrigin : false;
-    },
+    origin:'*',
     allowHeaders: ['Content-Type'],
     exposeHeaders: [],
     credentials: false, // 若要帶 cookie，必須改為 true、且 origin 不能是 *（要回傳具體來源）
@@ -118,6 +111,8 @@ require("./start")().then(() => {
   // 供 widget.js 呼叫的 AI 端點
   router.options('/query', (ctx) => { ctx.status = 204; }); // 額外保險的預檢處理
   router.post('/query', async (ctx) => {
+
+    console.log('query');
     try {
       const { query } = ctx.request.body || {};
       if (!query || typeof query !== 'string') {
