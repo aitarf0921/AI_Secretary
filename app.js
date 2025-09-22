@@ -66,8 +66,8 @@ router.post('/query', async (ctx) => {
       console.log('e', e);
     });
 
+});
+
 app.use(router.routes()).use(router.allowedMethods());
 
-http.createServer(app.callback()).listen(3000, () => {
-  console.log('Dinosaur AI Helper started on port 3000');
-});
+http.createServer(app.callback()).listen(3000);
