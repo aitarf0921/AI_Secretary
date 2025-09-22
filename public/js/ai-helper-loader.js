@@ -67,7 +67,7 @@
         placeholder: '請輸入您的問題…',
         position:    normalizePos(S.getAttribute('data-position') || 'bottom-right'),
         accent:      sanitizeColor(S.getAttribute('data-accent') || '#0055ff'),
-        brand:       S.getAttribute('data-brand') || '',
+        brand:       'AI 小幫手2',
         site:        S.getAttribute('data-site')  || '',
         width:       Math.max(240, parseInt(S.getAttribute('data-width') || '340', 10) || 340),
         height:      Math.max(320, parseInt(S.getAttribute('data-height') || '520', 10) || 520),
@@ -123,6 +123,7 @@
       url.searchParams.set('accent', cfg.accent);
       url.searchParams.set('brand', cfg.brand);
       url.searchParams.set('endpoint', cfg.endpoint);
+      url.searchParams.set('site', cfg.site);
 
       const frame = document.createElement('iframe');
       frame.src = url.toString();
