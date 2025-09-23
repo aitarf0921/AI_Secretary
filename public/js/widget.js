@@ -1,7 +1,7 @@
 /*
-  widget.js — iframe 小幫手（WhatsApp 風格 + Typing 動畫 + RWD）
+  widget.js — 清新訊息風格 + 打字中（三條小長條）+ RWD
   - 支援 JSON（{answer}）、純文字、SSE、NDJSON
-  - 送出後顯示「對方正在輸入…」動畫，直到接到回覆為止
+  - 送出後顯示「AI 正在輸入…」的條狀動畫，直到接到回覆為止
 */
 (function(){
   function onReady(fn){
@@ -12,9 +12,9 @@
 
   onReady(function(){
     const qs = new URLSearchParams(location.search);
-    const placeholder = qs.get('placeholder');
-    const accent = qs.get('accent');
-    const endpoint = qs.get('endpoint');
+    const placeholder = qs.get('placeholder') || '輸入訊息給 AI 客服…';
+    const accent = qs.get('accent') || '#10b981';
+    const endpoint = qs.get('endpoint') || '/query';
     const site = qs.get('site') || '';
 
     document.documentElement.style.setProperty('--accent', accent);
@@ -61,7 +61,7 @@
 
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
-      bubble.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+      bubble.innerHTML = '<span class="bar"></span><span class="bar"></span><span class="bar"></span>';
 
       wrap.appendChild(who);
       wrap.appendChild(bubble);
@@ -95,7 +95,6 @@
       while(true){
         const { value, done } = await reader.read();
         if (done) break;
-        // 第一個 chunk 到了就清掉 typing
         if (typingEl) clearTyping();
 
         buffer += decoder.decode(value, { stream: true });
@@ -147,7 +146,7 @@
       appendMsg('user', q);
       input.value = '';
       setLoading(true);
-      showTyping(); // 顯示「對方正在輸入…」
+      showTyping(); // 顯示 AI 正在輸入…
 
       let aiBubble = null;
 
@@ -166,7 +165,6 @@
           return;
         }
 
-        // 準備 AI 氣泡（開始顯示回覆）
         clearTyping();
         aiBubble = appendMsg('ai', '');
 
@@ -198,7 +196,6 @@
     if (sendBtn) sendBtn.addEventListener('click', send);
     if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') send(); });
 
-    // 手機上更好用的小體驗：進入時聚焦輸入框
     setTimeout(() => { try{ input && input.focus(); }catch(_){} }, 0);
   });
 })();

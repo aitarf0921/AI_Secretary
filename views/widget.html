@@ -6,10 +6,13 @@
         <title>AI Support</title>
         <style>
             :root {
-                --accent: #25d366; /* WhatsApp 綠 */
-                --bg: #e5ddd5;
-                --ai: #ffffff;
-                --me: #dcf8c6;
+                --accent: #10b981; /* 清新的翠綠（非 WhatsApp 綠） */
+                --bg: #f3f6f8; /* 淡灰藍背景 */
+                --ai: #ffffff; /* AI 泡泡 */
+                --me: #e6fbf4; /* 使用者泡泡（淡綠） */
+                --text: #0f172a; /* 文字主色 */
+                --subtle: #8a94a6; /* 次要文字 */
+                --border: #e5eaef; /* 邊框色 */
             }
             * {
                 box-sizing: border-box;
@@ -22,6 +25,7 @@
                     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                     "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei",
                     sans-serif;
+                color: var(--text);
             }
             body {
                 background: var(--bg);
@@ -33,14 +37,14 @@
             #chat {
                 flex: 1;
                 overflow-y: auto;
-                padding: 12px 12px 80px; /* 底部留空以免被輸入列蓋住 */
+                padding: 14px 14px 84px; /* 底部留空避免被輸入列蓋住 */
             }
 
-            /* 訊息列 */
+            /* 訊息列（左右對齊，但造型相同：長條圓角、無尾巴） */
             .msg {
                 display: flex;
                 flex-direction: column;
-                margin: 8px 0;
+                margin: 10px 0;
                 max-width: 92%;
             }
             .msg.user {
@@ -50,69 +54,59 @@
                 align-items: flex-start;
             }
 
-            /* 角色標示（可隱藏） */
             .role {
                 font-size: 12px;
-                margin: 2px 6px;
-                opacity: 0.6;
-            }
-            .role.user {
-                color: #075e54;
-            }
-            .role.ai {
-                color: #303030;
+                margin: 0 6px 4px;
+                color: var(--subtle);
             }
 
-            /* 氣泡 */
             .bubble {
                 position: relative;
-                padding: 8px 12px;
-                border-radius: 10px;
-                line-height: 1.5;
-                color: #111;
+                padding: 10px 14px;
+                border-radius: 20px; /* 膠囊感 */
+                line-height: 1.55;
                 word-wrap: break-word;
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+                box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+                border: 1px solid var(--border);
             }
             .msg.user .bubble {
                 background: var(--me);
-                border-top-right-radius: 4px;
+                border-color: #d7f6ea;
             }
             .msg.ai .bubble {
                 background: var(--ai);
-                border-top-left-radius: 4px;
             }
 
-            /* 打字中（動態省略號） */
+            /* 打字中動畫：三條小長條（避免三點點既視感） */
             .typing .bubble {
                 display: inline-flex;
                 align-items: center;
                 gap: 4px;
             }
-            .dot {
+            .bar {
                 width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: #9e9e9e;
-                display: inline-block;
+                height: 10px;
+                border-radius: 3px;
+                background: #a0aab8;
                 opacity: 0.6;
-                animation: blink 1.4s infinite ease-in-out;
+                animation: barPulse 1s infinite ease-in-out;
             }
-            .dot:nth-child(2) {
-                animation-delay: 0.2s;
+            .bar:nth-child(2) {
+                animation-delay: 0.15s;
             }
-            .dot:nth-child(3) {
-                animation-delay: 0.4s;
+            .bar:nth-child(3) {
+                animation-delay: 0.3s;
             }
-            @keyframes blink {
+            @keyframes barPulse {
                 0%,
                 80%,
                 100% {
-                    transform: scale(0.8);
-                    opacity: 0.4;
+                    transform: scaleY(0.7);
+                    opacity: 0.5;
                 }
                 40% {
-                    transform: scale(1);
-                    opacity: 0.9;
+                    transform: scaleY(1.2);
+                    opacity: 0.95;
                 }
             }
 
@@ -126,48 +120,52 @@
                 align-items: center;
                 gap: 8px;
                 padding: 10px;
-                background: #f0f0f0;
-                border-top: 1px solid rgba(0, 0, 0, 0.06);
+                background: #f7fafc;
+                border-top: 1px solid var(--border);
+                backdrop-filter: blur(4px);
             }
             #q {
                 flex: 1;
-                border: none;
+                border: 1px solid var(--border);
                 outline: none;
-                padding: 10px 12px;
-                border-radius: 20px;
+                padding: 11px 14px;
+                border-radius: 22px;
                 font-size: 15px;
                 background: #fff;
-                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04) inset;
             }
             #q:focus {
-                box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.18);
+                box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.16);
+                border-color: #cdeee4;
             }
             #send {
-                padding: 10px 14px;
+                padding: 10px 16px;
                 font-size: 14px;
                 border: 0;
-                border-radius: 20px;
+                border-radius: 22px;
                 background: var(--accent);
                 color: #fff;
                 cursor: pointer;
                 flex: 0 0 auto;
+                font-weight: 600;
+                box-shadow: 0 2px 6px rgba(16, 185, 129, 0.24);
             }
             #send:disabled {
                 opacity: 0.6;
                 cursor: not-allowed;
+                box-shadow: none;
             }
 
             /* RWD：手機優化 */
             @media (max-width: 480px) {
                 #chat {
-                    padding: 10px 10px 76px;
+                    padding: 12px 10px 76px;
                 }
                 .msg {
-                    max-width: 94%;
+                    max-width: 96%;
                 }
                 #q {
                     font-size: 16px;
-                } /* 避免 iOS 放大 */
+                } /* 避免 iOS 自動放大 */
                 #send {
                     font-size: 15px;
                 }
@@ -181,7 +179,7 @@
             <input
                 id="q"
                 type="text"
-                placeholder="輸入訊息給AI客服…"
+                placeholder="輸入訊息給 AI 客服…"
                 autocomplete="off"
             />
             <button id="send">送出</button>
