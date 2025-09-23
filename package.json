@@ -20,7 +20,7 @@
     "openai": "^4.89.0"
   },
   "scripts": {
-    "start": "node ./app"
+    "start": "NODE_NO_WARNINGS=1 node --max_old_space_size=4096 ./app"
   },
   "author": "",
   "license": "ISC"
