@@ -16,7 +16,7 @@ const app = new Koa();
 const router = new Router();
 
 // ====== 環境設定 ======
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 // 允許第三方嵌入 widget 的網域（逗號分隔）。例如： "https://a.com,https://b.com"
 const ALLOWED_EMBED_ORIGINS = (process.env.ALLOWED_EMBED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
 // CORS 白名單（允許呼叫 /query 的網域；可與上面同值或不同）
@@ -123,6 +123,12 @@ require("./start")().then(() => {
         return;
       }
 
+      if (!site || typeof site !== 'string') {
+        ctx.status = 400;
+        ctx.body = { error: 'Query is required' };
+        return;
+      }
+
       // 清理輸入，避免 XSS 等
       const cleanQuery = sanitizeHtml(query.trim(), { allowedTags: [], allowedAttributes: {} });
       if (!cleanQuery) {
@@ -132,7 +138,7 @@ require("./start")().then(() => {
       }
 
       // 簡單快取（1 小時）
-      const cacheKey = `query:${cleanQuery}`;
+      const cacheKey = `${site}:${cleanQuery}`;
       const cached = cache.get(cacheKey);
       if (cached) {
         ctx.status = 200;
@@ -146,7 +152,7 @@ require("./start")().then(() => {
       // 萬一 answer 不是字串，做個保護
       const safeAnswer = (typeof answer === 'string') ? answer : String(answer ?? '');
 
-      cache.put(cacheKey, safeAnswer, 3600000); // 1 小時
+      cache.put(cacheKey, safeAnswer, 3600000*24*30); // 24 小時
       ctx.status = 200;
       ctx.body = { answer: safeAnswer };
 
@@ -160,18 +166,6 @@ require("./start")().then(() => {
 
   app.use(router.routes()).use(router.allowedMethods());
 
-  http.createServer(app.callback()).listen(PORT, () => {
-    console.log(`AI helper server listening on http://localhost:${PORT}`);
-    if (ALLOWED_EMBED_ORIGINS.length > 0) {
-      console.log('Frame ancestors allowed:', ALLOWED_EMBED_ORIGINS);
-    } else {
-      console.log('Frame ancestors: * (開放所有站點嵌入，建議正式環境設定 ALLOWED_EMBED_ORIGINS)');
-    }
-    if (CORS_WHITELIST.length > 0) {
-      console.log('CORS whitelist:', CORS_WHITELIST);
-    } else {
-      console.log('CORS origin: * (不帶 credentials)');
-    }
-  });
+  http.createServer(app.callback()).listen(PORT);
 
 });
