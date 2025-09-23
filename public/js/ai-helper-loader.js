@@ -41,7 +41,7 @@
       const cfg = {
         widget:      'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/widget',
         endpoint:    'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/query',
-        placeholder: '輸入訊息給 AI 秘書…',
+        placeholder: '輸入訊息給AI客服…',
         position:    normalizePos('bottom-right'),
         accent:      sanitizeColor(S.getAttribute('data-accent') || '#0055ff'),
         site:        S.getAttribute('data-site')  || '',
@@ -104,7 +104,7 @@
       frame.src = url.toString();
       // 移除 clipboard-write 以避免某些瀏覽器 Feature-Policy 警告
       // frame.allow = 'clipboard-write';
-      frame.setAttribute('title', 'AI 秘書');
+      frame.setAttribute('title', 'AI Support');
 
       panel.appendChild(closeBtn);
       panel.appendChild(frame);
