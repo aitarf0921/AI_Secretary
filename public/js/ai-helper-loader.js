@@ -23,7 +23,7 @@
   }
 
   function sanitizeColor(input){
-    const def = '#25d366'; // WhatsApp 綠
+    const def = '#25d366'; // 預設綠
     if (typeof input !== 'string') return def;
     const s = input.trim();
     if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(s)) return s;
@@ -72,29 +72,22 @@
         .fab{ width:56px; height:56px; border:0; border-radius:50%; background:${cfg.accent}; color:#fff; cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.15); display:inline-flex; align-items:center; justify-content:center; }
         .fab:active{ transform: translateY(1px); }
         .panel{ position:fixed; bottom:90px; ${cfg.position === 'bottom-left' ? 'left' : 'right'}:20px; width:${cfg.width}px; height:${cfg.height}px; background:#fff; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.18); overflow:hidden; display:none; }
-        .close{ position:absolute; top:6px; ${cfg.position === 'bottom-left' ? 'left' : 'right'}:8px; background:rgba(0,0,0,.06); border:0; border-radius:8px; padding:4px 8px; cursor:pointer; }
         iframe{ width:100%; height:100%; border:0; display:block; }
         @media (max-width: 480px){ .panel{ width:92vw; height:70vh; ${cfg.position === 'bottom-left' ? 'left' : 'right'}:4vw; bottom:82px; } }
       `;
       shadow.appendChild(style);
 
-      // FAB
+      // 浮動按鈕（FAB）
       const fab = document.createElement('button');
       fab.className = 'fab';
-      fab.setAttribute('aria-label', '打開 AI 秘書');
+      fab.setAttribute('aria-label', '打開 AI Support');
       fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
 
-      // 面板 + iframe
+      // 面板 + iframe（不再加入右上角 X）
       const panel = document.createElement('div');
       panel.className = 'panel';
 
-      const closeBtn = document.createElement('button');
-      closeBtn.className = 'close';
-      closeBtn.textContent = '×';
-      closeBtn.setAttribute('aria-label','關閉');
-
       const url = new URL(widgetURL);
-      // 僅傳必要參數（已移除 title/brand）
       url.searchParams.set('placeholder', cfg.placeholder);
       url.searchParams.set('accent', cfg.accent);
       url.searchParams.set('endpoint', cfg.endpoint);
@@ -102,11 +95,8 @@
 
       const frame = document.createElement('iframe');
       frame.src = url.toString();
-      // 移除 clipboard-write 以避免某些瀏覽器 Feature-Policy 警告
-      // frame.allow = 'clipboard-write';
       frame.setAttribute('title', 'AI Support');
 
-      panel.appendChild(closeBtn);
       panel.appendChild(frame);
       shadow.appendChild(panel);
       shadow.appendChild(fab);
@@ -115,7 +105,8 @@
       function close(){ panel.style.display = 'none'; }
 
       fab.addEventListener('click', () => { panel.style.display === 'block' ? close() : open(); });
-      closeBtn.addEventListener('click', close);
+
+      // 仍保留 ESC 可關閉（無 X 但有鍵盤可用性）
       window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.style.display === 'block') close(); });
 
       // 僅接受來自 widget 的安全訊息（高度自適應等）
