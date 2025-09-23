@@ -2,11 +2,14 @@
 <html lang="zh-TW">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>AI Widget</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>AI 秘書 Widget</title>
         <style>
             :root {
-                --accent: #0055ff;
+                --accent: #25d366; /* WhatsApp 綠 */
+                --bg: #e5ddd5;
+                --ai: #ffffff;
+                --me: #dcf8c6;
             }
             * {
                 box-sizing: border-box;
@@ -15,117 +18,173 @@
             body {
                 height: 100%;
                 margin: 0;
-                font-family: Arial, sans-serif;
-                background: #fff;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei",
+                    sans-serif;
             }
-            .wrap {
+            body {
+                background: var(--bg);
                 display: flex;
                 flex-direction: column;
-                height: 100%;
             }
-            .header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px 12px;
-                background: #f7f9fc;
-                border-bottom: 1px solid #eef2f7;
-            }
-            .title {
-                font-weight: 700;
-                color: #1b1f24;
-                font-size: 14px;
-            }
-            .brand {
-                font-weight: 600;
-                color: var(--accent);
-                font-size: 12px;
-                opacity: 0.9;
-            }
-            .chat {
+
+            /* 聊天區 */
+            #chat {
                 flex: 1;
                 overflow-y: auto;
-                padding: 10px 12px;
+                padding: 12px 12px 80px; /* 底部留空以免被輸入列蓋住 */
             }
+
+            /* 訊息列 */
             .msg {
+                display: flex;
+                flex-direction: column;
                 margin: 8px 0;
-                font-size: 14px;
+                max-width: 92%;
             }
+            .msg.user {
+                align-items: flex-end;
+            }
+            .msg.ai {
+                align-items: flex-start;
+            }
+
+            /* 角色標示（可隱藏） */
             .role {
-                font-weight: 600;
+                font-size: 12px;
+                margin: 2px 6px;
+                opacity: 0.6;
             }
             .role.user {
-                color: #0b5fff;
+                color: #075e54;
             }
             .role.ai {
-                color: #0a7a39;
+                color: #303030;
             }
+
+            /* 氣泡 */
             .bubble {
-                margin-top: 4px;
-                background: #f8fafc;
-                border: 1px solid #eef2f7;
+                position: relative;
+                padding: 8px 12px;
                 border-radius: 10px;
-                padding: 8px 10px;
-                color: #111827;
+                line-height: 1.5;
+                color: #111;
+                word-wrap: break-word;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
             }
-            .input {
+            .msg.user .bubble {
+                background: var(--me);
+                border-top-right-radius: 4px;
+            }
+            .msg.ai .bubble {
+                background: var(--ai);
+                border-top-left-radius: 4px;
+            }
+
+            /* 打字中（動態省略號） */
+            .typing .bubble {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #9e9e9e;
+                display: inline-block;
+                opacity: 0.6;
+                animation: blink 1.4s infinite ease-in-out;
+            }
+            .dot:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .dot:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+            @keyframes blink {
+                0%,
+                80%,
+                100% {
+                    transform: scale(0.8);
+                    opacity: 0.4;
+                }
+                40% {
+                    transform: scale(1);
+                    opacity: 0.9;
+                }
+            }
+
+            /* 輸入列（固定底部） */
+            .input-bar {
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                right: 0;
                 display: flex;
+                align-items: center;
                 gap: 8px;
-                padding: 10px 12px;
-                border-top: 1px solid #eef2f7;
+                padding: 10px;
+                background: #f0f0f0;
+                border-top: 1px solid rgba(0, 0, 0, 0.06);
             }
-            .text {
+            #q {
                 flex: 1;
-                border: 1px solid #d0d7de;
-                border-radius: 8px;
-                padding: 10px 12px;
-                font-size: 14px;
+                border: none;
                 outline: none;
+                padding: 10px 12px;
+                border-radius: 20px;
+                font-size: 15px;
+                background: #fff;
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04) inset;
             }
-            .text:focus {
-                border-color: var(--accent);
-                box-shadow: 0 0 0 3px rgba(0, 85, 255, 0.12);
+            #q:focus {
+                box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.18);
             }
-            .send {
+            #send {
+                padding: 10px 14px;
+                font-size: 14px;
+                border: 0;
+                border-radius: 20px;
                 background: var(--accent);
                 color: #fff;
-                border-radius: 8px;
-                border: 0;
-                padding: 10px 14px;
                 cursor: pointer;
-                font-weight: 600;
+                flex: 0 0 auto;
             }
-            .send[disabled] {
+            #send:disabled {
                 opacity: 0.6;
                 cursor: not-allowed;
             }
-            .hint {
-                font-size: 12px;
-                color: #6b7280;
-                padding: 8px 12px;
-                border-top: 1px dashed #e5e7eb;
+
+            /* RWD：手機優化 */
+            @media (max-width: 480px) {
+                #chat {
+                    padding: 10px 10px 76px;
+                }
+                .msg {
+                    max-width: 94%;
+                }
+                #q {
+                    font-size: 16px;
+                } /* 避免 iOS 放大 */
+                #send {
+                    font-size: 15px;
+                }
             }
         </style>
     </head>
     <body>
-        <div class="wrap">
-            <div class="header">
-                <div>
-                    <div class="title" id="title">AI 小幫手</div>
-                    <div class="brand" id="brand" style="display: none"></div>
-                </div>
-            </div>
-            <div class="chat" id="chat" role="log" aria-live="polite"></div>
-            <div class="input">
-                <input
-                    class="text"
-                    id="q"
-                    type="text"
-                    placeholder="請輸入您的問題…"
-                />
-                <button class="send" id="send">送出</button>
-            </div>
-            <div class="hint">本對話可能用於改進服務品質</div>
+        <div id="chat" role="log" aria-live="polite"></div>
+
+        <div class="input-bar">
+            <input
+                id="q"
+                type="text"
+                placeholder="輸入訊息給 AI 秘書…"
+                autocomplete="off"
+            />
+            <button id="send">送出</button>
         </div>
 
         <script src="./js/widget.js"></script>

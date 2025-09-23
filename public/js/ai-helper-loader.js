@@ -1,25 +1,3 @@
-/*
-  ai-helper-loader.js — iframe 版載入器（穩定版 v2）
-  修正/強化：
-  - 兼容 document.currentScript 可能為 null（async/動態插入）
-  - DOM Ready 後再掛載，避免 head 早期執行出錯
-  - 檢查並正規化參數（URL/顏色/尺寸/位置）
-  - 僅接受來自 widget 原點的 postMessage（安全）
-  - 在不支援 Shadow DOM 的環境自動退化
-
-  必填 data-*：
-  - data-widget   ：你的 widget.html 完整或相對 URL
-  推薦 data-*：
-  - data-endpoint ：你的 /query API
-  - data-title    ：面板標題
-  - data-placeholder ：輸入框提示
-  - data-position ：bottom-right | bottom-left（預設 bottom-right）
-  - data-accent   ：主色（#0055ff） 允許 #RRGGBB / rgb()/rgba()
-  - data-brand    ：副標文字
-  - data-width    ：面板寬（預設 340）
-  - data-height   ：面板高（預設 520）
-  - data-z        ：z-index（預設 2147483000）
-*/
 (function(){
   function onReady(fn){
     if (document.readyState === 'loading') {
@@ -45,7 +23,7 @@
   }
 
   function sanitizeColor(input){
-    const def = '#0055ff';
+    const def = '#25d366'; // WhatsApp 綠
     if (typeof input !== 'string') return def;
     const s = input.trim();
     if (/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(s)) return s;
@@ -63,13 +41,11 @@
       const cfg = {
         widget:      'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/widget',
         endpoint:    'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/query',
-        title:       'AI 小幫手',
-        placeholder: '請輸入您的問題…',
+        placeholder: '輸入訊息給 AI 秘書…',
         position:    normalizePos(S.getAttribute('data-position') || 'bottom-right'),
-        accent:      sanitizeColor(S.getAttribute('data-accent') || '#0055ff'),
-        brand:       'AI 小幫手2',
+        accent:      sanitizeColor('#25d366'),
         site:        S.getAttribute('data-site')  || '',
-        width:       Math.max(240, parseInt(S.getAttribute('data-width') || '340', 10) || 340),
+        width:       Math.max(240, parseInt(S.getAttribute('data-width') || '360', 10) || 360),
         height:      Math.max(320, parseInt(S.getAttribute('data-height') || '520', 10) || 520),
         z:           String(S.getAttribute('data-z') || '2147483000'),
       };
@@ -92,7 +68,7 @@
       // 樣式
       const style = document.createElement('style');
       style.textContent = `
-        *,*::before,*::after{ box-sizing:border-box; font-family: Arial, sans-serif; }
+        *,*::before,*::after{ box-sizing:border-box; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,"PingFang TC","Microsoft JhengHei",sans-serif; }
         .fab{ width:56px; height:56px; border:0; border-radius:50%; background:${cfg.accent}; color:#fff; cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.15); display:inline-flex; align-items:center; justify-content:center; }
         .fab:active{ transform: translateY(1px); }
         .panel{ position:fixed; bottom:90px; ${cfg.position === 'bottom-left' ? 'left' : 'right'}:20px; width:${cfg.width}px; height:${cfg.height}px; background:#fff; border-radius:14px; box-shadow:0 10px 40px rgba(0,0,0,.18); overflow:hidden; display:none; }
@@ -105,7 +81,7 @@
       // FAB
       const fab = document.createElement('button');
       fab.className = 'fab';
-      fab.setAttribute('aria-label', cfg.title);
+      fab.setAttribute('aria-label', '打開 AI 秘書');
       fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
 
       // 面板 + iframe
@@ -118,17 +94,17 @@
       closeBtn.setAttribute('aria-label','關閉');
 
       const url = new URL(widgetURL);
-      url.searchParams.set('title', cfg.title);
+      // 僅傳必要參數（已移除 title/brand）
       url.searchParams.set('placeholder', cfg.placeholder);
       url.searchParams.set('accent', cfg.accent);
-      url.searchParams.set('brand', cfg.brand);
       url.searchParams.set('endpoint', cfg.endpoint);
-      url.searchParams.set('site', cfg.site);
+      if (cfg.site) url.searchParams.set('site', cfg.site);
 
       const frame = document.createElement('iframe');
       frame.src = url.toString();
-      frame.allow = 'clipboard-write';
-      frame.setAttribute('title', cfg.title);
+      // 移除 clipboard-write 以避免某些瀏覽器 Feature-Policy 警告
+      // frame.allow = 'clipboard-write';
+      frame.setAttribute('title', 'AI 秘書');
 
       panel.appendChild(closeBtn);
       panel.appendChild(frame);
