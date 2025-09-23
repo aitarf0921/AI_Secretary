@@ -117,6 +117,12 @@ require("./start")().then(() => {
       const { query, site } = ctx.request.body || {};
 
       console.log('site',site);
+
+      const ip = (ctx.headers['x-forwarded-for'] || ctx.ip || '').split(',')[0].trim() || 'unknown';
+
+
+      console.log('ip',ip);
+
       if (!query || typeof query !== 'string') {
         ctx.status = 400;
         ctx.body = { error: 'Query is required' };
