@@ -1,5 +1,5 @@
 /*
-  widget.js — 清新訊息風格 + 打字中（三條小長條）+ RWD
+  widget.js — 精簡對話樣式（不顯示角色標籤） + 打字中（三條小長條）+ RWD
   - 支援 JSON（{answer}）、純文字、SSE、NDJSON
   - 送出後顯示「AI 正在輸入…」的條狀動畫，直到接到回覆為止
 */
@@ -30,19 +30,15 @@
       try{ parent.postMessage({ type: 'ai-helper:resize', height: document.body.scrollHeight }, '*'); }catch(_){}
     }
 
+    // 建立訊息（不顯示角色標籤）
     function appendMsg(role, text){
       const wrap = document.createElement('div');
       wrap.className = 'msg ' + (role === 'user' ? 'user' : 'ai');
-
-      const who = document.createElement('div');
-      who.className = 'role ' + (role === 'user' ? 'user' : 'ai');
-      who.textContent = role === 'user' ? '你' : 'AI';
 
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
       bubble.textContent = text;
 
-      wrap.appendChild(who);
       wrap.appendChild(bubble);
       chat.appendChild(wrap);
       chat.scrollTop = chat.scrollHeight;
@@ -55,15 +51,10 @@
       const wrap = document.createElement('div');
       wrap.className = 'msg ai typing';
 
-      const who = document.createElement('div');
-      who.className = 'role ai';
-      who.textContent = 'AI';
-
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
       bubble.innerHTML = '<span class="bar"></span><span class="bar"></span><span class="bar"></span>';
 
-      wrap.appendChild(who);
       wrap.appendChild(bubble);
       chat.appendChild(wrap);
       chat.scrollTop = chat.scrollHeight;
