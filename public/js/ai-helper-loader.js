@@ -41,7 +41,7 @@
       const cfg = {
         widget:      'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/widget',
         endpoint:    'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/query',
-        placeholder: '輸入訊息給AI客服…',
+        placeholder: 'send msg to AI support...',
         position:    normalizePos('bottom-right'),
         accent:      sanitizeColor(S.getAttribute('data-accent') || '#0055ff'),
         site:        S.getAttribute('data-site')  || '',
@@ -80,7 +80,7 @@
       // 浮動按鈕（FAB）
       const fab = document.createElement('button');
       fab.className = 'fab';
-      fab.setAttribute('aria-label', '打開 AI Support');
+      fab.setAttribute('aria-label', 'Open AI Support');
       fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
 
       // 面板 + iframe（不再加入右上角 X）
