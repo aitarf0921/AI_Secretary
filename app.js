@@ -152,7 +152,7 @@ require("./start")().then(() => {
       // 萬一 answer 不是字串，做個保護
       const safeAnswer = (typeof answer === 'string') ? answer : String(answer ?? '');
 
-      cache.put(cacheKey, safeAnswer, 3600000*24*30); // 24 小時
+      cache.put(cacheKey, safeAnswer, 3600000*24*24);
       ctx.status = 200;
       ctx.body = { answer: safeAnswer };
 
