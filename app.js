@@ -121,6 +121,8 @@ require("./start")().then(() => {
       const ip = (ctx.headers['x-forwarded-for'] || ctx.ip || '').split(',')[0].trim() || 'unknown';
 
 
+
+
       console.log('ip',ip);
 
       if (!query || typeof query !== 'string') {
