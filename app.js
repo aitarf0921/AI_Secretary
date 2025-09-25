@@ -118,7 +118,16 @@ require("./start")().then(() => {
 
       console.log('site',site);
 
-      const ip = ctx.ip || 'unknown';
+      // 針對 AWS CloudFront/CDN 優化 IP 擷取：優先 X-Forwarded-For 的第一個 IP（客戶端 IP），支援 IPv4/IPv6
+      let forwardedFor = ctx.get('X-Forwarded-For');
+      let ip;
+      if (forwardedFor) {
+        // 取第一個 IP（CloudFront 會把客戶端 IP 放在最前面）
+        ip = forwardedFor.split(',')[0].trim();
+      } else {
+        // 後備：X-Real-IP 或 ctx.ip
+        ip = ctx.get('X-Real-IP') || ctx.ip || 'unknown';
+      }
 
 
 
