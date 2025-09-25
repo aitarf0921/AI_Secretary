@@ -192,9 +192,9 @@ require("./start")().then(() => {
 
       console.log('site',site);
 
-      const clientIP = extractClientIP(ctx);
+      // const clientIP = extractClientIP(ctx);
 
-      console.log('clientIP',clientIP);
+      console.log('clientIP',ctx.ip);
 
       if (!query || typeof query !== 'string') {
         ctx.status = 400;
