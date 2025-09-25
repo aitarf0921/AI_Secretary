@@ -118,7 +118,7 @@ require("./start")().then(() => {
 
       console.log('site',site);
 
-      const ip = (ctx.headers['x-forwarded-for'] || ctx.ip || '').split(',')[0].trim() || 'unknown';
+      const ip = ctx.ip || 'unknown';
 
 
 
