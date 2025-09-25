@@ -76,8 +76,8 @@
 
       // raw attributes (your current defaults)
       const raw = {
-        widget:      'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/widget',
-        endpoint:    'http://ec2-13-213-0-131.ap-southeast-1.compute.amazonaws.com:3000/query',
+        widget:      'https://d1apwn2mo5o5aj.cloudfront.net/widget',
+        endpoint:    'https://d1apwn2mo5o5aj.cloudfront.net/query',
         placeholder: 'send msg to AI support...',
         position:    'bottom-right',
         accent:      S.getAttribute('data-accent') || '#0055ff',
