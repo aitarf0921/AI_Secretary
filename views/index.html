@@ -17,54 +17,73 @@
         />
 
         <style>
-            /* ====== 僅保留極少量的全域樣式，避免影響外掛 ====== */
+            /* 只保留極小的全域 reset，避免影響外掛 */
             html,
             body {
                 margin: 0;
-                background: #f7f9fc;
-                color: #1b2838;
                 font-family:
                     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                     "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
                     "Noto Sans SC", "PingFang SC", "Hiragino Sans",
                     "Noto Sans JP", Arial, sans-serif;
             }
-            body[data-theme="dark"] {
-                background: #0f172a;
-                color: #f1f5f9;
+            /* Toast：全域但不攔截點擊（不會擋住右下角外掛） */
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: 24px;
+                transform: translateX(-50%);
+                background: rgba(15, 23, 42, 0.92);
+                color: #fff;
+                padding: 10px 14px;
+                border-radius: 10px;
+                font-size: 0.875rem;
+                z-index: 2147483647;
+                opacity: 0;
+                transition: 0.2s;
+                pointer-events: none;
+            }
+            .toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-4px);
             }
 
-            /* ====== 把真正的站內樣式通通關在 #app 裡 ====== */
+            /* ====== 把所有主題變數與樣式鎖在 #app，並用自家前綴 --aw-* ====== */
+            #app {
+                --aw-bg: #f7f9fc;
+                --aw-card: #fff;
+                --aw-text: #1b2838;
+                --aw-muted: #6b7a90;
+                --aw-primary: #2563eb;
+                --aw-ok: #10b981;
+                --aw-border: #e6ecf2;
+                --aw-mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                background: var(--aw-bg);
+                color: var(--aw-text);
+                min-height: 100vh;
+            }
+            #app[data-theme="dark"] {
+                --aw-bg: #0f172a;
+                --aw-card: #1e293b;
+                --aw-text: #f1f5f9;
+                --aw-muted: #94a3b8;
+                --aw-primary: #3b82f6;
+                --aw-ok: #34d399;
+                --aw-border: #334155;
+                background: var(--aw-bg);
+                color: var(--aw-text);
+            }
             #app,
             #app * {
                 box-sizing: border-box;
             }
 
-            :root {
-                --bg: #f7f9fc;
-                --card: #fff;
-                --text: #1b2838;
-                --muted: #6b7a90;
-                --primary: #2563eb;
-                --ok: #10b981;
-                --border: #e6ecf2;
-                --mono:
-                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            }
-            [data-theme="dark"] {
-                --bg: #0f172a;
-                --card: #1e293b;
-                --text: #f1f5f9;
-                --muted: #94a3b8;
-                --primary: #3b82f6;
-                --ok: #34d399;
-                --border: #334155;
-            }
-
+            /* Header */
             #app header {
                 padding: 12px 16px;
-                border-bottom: 1px solid var(--border);
-                background: var(--card);
+                border-bottom: 1px solid var(--aw-border);
+                background: var(--aw-card);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -94,15 +113,15 @@
             }
             #app .lang-select {
                 padding: 6px 12px;
-                border: 1px solid var(--border);
+                border: 1px solid var(--aw-border);
                 border-radius: 8px;
-                background: var(--card);
-                color: var(--text);
+                background: var(--aw-card);
+                color: var(--aw-text);
                 cursor: pointer;
             }
             #app .theme-toggle {
                 background: none;
-                border: 1px solid var(--border);
+                border: 1px solid var(--aw-border);
                 border-radius: 50%;
                 width: 36px;
                 height: 36px;
@@ -112,6 +131,7 @@
                 justify-content: center;
             }
 
+            /* Main layout */
             #app main {
                 max-width: 1120px;
                 margin: 0 auto;
@@ -121,15 +141,15 @@
                 gap: 32px;
             }
             #app .card {
-                background: var(--card);
-                border: 1px solid var(--border);
+                background: var(--aw-card);
+                border: 1px solid var(--aw-border);
                 border-radius: 14px;
                 padding: 24px;
                 box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
             }
             #app .hero {
                 text-align: center;
-                background: linear-gradient(135deg, var(--primary), #3b82f6);
+                background: linear-gradient(135deg, var(--aw-primary), #3b82f6);
                 color: #fff;
                 padding: 40px;
                 border-radius: 14px;
@@ -144,7 +164,6 @@
                 margin: 0 0 24px;
                 opacity: 0.95;
             }
-
             #app .benefits {
                 display: grid;
                 gap: 16px;
@@ -158,7 +177,7 @@
                 font-size: 0.9rem;
             }
             #app .benefit-icon {
-                background: var(--ok);
+                background: var(--aw-ok);
                 color: #fff;
                 width: 28px;
                 height: 28px;
@@ -167,15 +186,14 @@
                 align-items: center;
                 justify-content: center;
             }
-
             #app .btn {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
                 padding: 12px 20px;
                 border-radius: 10px;
-                border: 2px solid var(--primary);
-                background: var(--primary);
+                border: 2px solid var(--aw-primary);
+                background: var(--aw-primary);
                 color: #fff;
                 cursor: pointer;
                 text-decoration: none;
@@ -205,7 +223,7 @@
                 white-space: pre;
             }
             #app code {
-                font-family: var(--mono);
+                font-family: var(--aw-mono);
                 font-size: inherit;
             }
 
@@ -232,41 +250,33 @@
                 line-height: 1.5;
                 word-break: break-word;
             }
-            body[data-theme="dark"] #app .parameters-table {
+            #app[data-theme="dark"] .parameters-table {
                 background: #0b0b0b;
                 color: #fff;
                 border-color: #fff;
             }
-            body[data-theme="dark"] #app .parameters-table th,
-            body[data-theme="dark"] #app .parameters-table td {
+            #app[data-theme="dark"] .parameters-table th,
+            #app[data-theme="dark"] .parameters-table td {
                 border-color: #fff;
             }
 
-            /* Toast：不攔截點擊，避免擋住右下角外掛 */
-            .toast {
-                position: fixed;
-                left: 50%;
-                bottom: 24px;
-                transform: translateX(-50%);
-                background: rgba(15, 23, 42, 0.92);
-                color: #fff;
-                padding: 10px 14px;
-                border-radius: 10px;
-                font-size: 0.875rem;
-                z-index: 2147483647;
-                opacity: 0;
-                transition: 0.2s;
-                pointer-events: none;
-            }
-            .toast.show {
-                opacity: 1;
-                transform: translateX(-50%) translateY(-4px);
+            /* Footer */
+            #app footer {
+                max-width: 1120px;
+                margin: 40px auto 24px;
+                padding: 0 16px;
+                color: var(--aw-muted);
+                font-size: 0.8125rem;
+                text-align: center;
+                border-top: 1px solid var(--aw-border);
+                padding-top: 20px;
             }
         </style>
     </head>
 
-    <body data-theme="light">
-        <div id="app">
+    <body>
+        <!-- 把站內所有內容都放在 #app，外掛在 #app 之外，不會吃到我們的變數 -->
+        <div id="app" data-theme="light">
             <header>
                 <div class="wrap">
                     <div class="brand">
@@ -320,7 +330,7 @@
                             <span>多語支援：50+ 語言回覆</span>
                         </div>
                     </div>
-                    <a href="#create" class="btn primary">立即啟動免費試用</a>
+                    <a href="#quickstart" class="btn">立即啟動免費試用</a>
                 </section>
 
                 <section class="card" id="quickstart">
@@ -394,8 +404,8 @@
                 <aside class="card" id="demo">
                     <h2>即時示範（僅展示程式碼，不會實際載入）</h2>
                     <p class="muted">
-                        右下角 AI 小幫手來自頁尾唯一的
-                        script；本區不會再次載入。
+                        右下角 AI 小幫手由頁尾唯一 script
+                        載入；本區只顯示範例碼。
                     </p>
                     <div class="code" id="mini-code" title="Click to copy">
                         <pre><code id="embed-mini">&lt;script
@@ -404,7 +414,7 @@
   defer
 &gt;&lt;/script&gt;</code></pre>
                     </div>
-                    <a href="#create" class="btn primary"
+                    <a href="#quickstart" class="btn"
                         >立即嵌入您的免費 AI Widget</a
                     >
                 </aside>
@@ -415,7 +425,7 @@
         <!-- /#app -->
 
         <script>
-            /* ===== 小工具：Toast（不擋點擊） ===== */
+            // Toast（不擋點擊）
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
@@ -427,7 +437,7 @@
                     setTimeout(() => t.remove(), 250);
                 }, 1600);
             }
-            /* ===== Click-to-copy ===== */
+            // Click-to-copy
             async function copyText(txt) {
                 try {
                     await navigator.clipboard.writeText(txt);
@@ -451,21 +461,21 @@
                     toast("已複製！");
                 });
 
-            /* ===== 主題切換（作用域仍在 #app） ===== */
+            // 主題切換：只切 #app，不動 body（避免外掛吃到）
             (function () {
+                const app = document.getElementById("app");
                 const themeToggle = document.getElementById("theme-toggle");
-                const savedTheme = localStorage.getItem("aiw_theme") || "light";
-                document.body.setAttribute("data-theme", savedTheme);
+                const saved = localStorage.getItem("aw_theme") || "light";
+                app.setAttribute("data-theme", saved);
                 themeToggle.innerHTML =
-                    savedTheme === "light"
+                    saved === "light"
                         ? '<i class="fas fa-moon" style="color:black;"></i>'
                         : '<i class="fas fa-sun" style="color:white;"></i>';
                 themeToggle.addEventListener("click", () => {
-                    const cur =
-                        document.body.getAttribute("data-theme") || "light";
+                    const cur = app.getAttribute("data-theme") || "light";
                     const next = cur === "light" ? "dark" : "light";
-                    document.body.setAttribute("data-theme", next);
-                    localStorage.setItem("aiw_theme", next);
+                    app.setAttribute("data-theme", next);
+                    localStorage.setItem("aw_theme", next);
                     themeToggle.innerHTML =
                         next === "light"
                             ? '<i class="fas fa-moon" style="color:black;"></i>'
@@ -474,42 +484,28 @@
             })();
         </script>
 
-        <!-- ===== 唯一且防重複的外掛載入：強化檢查 + 診斷 ===== -->
+        <!-- 唯一且防重複的外掛載入（外掛在 #app 之外，完全不會吃到 #app 變數） -->
         <script>
             (function () {
                 const SRC =
                     "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
-
-                // 1) 檢查頁面是否已有同源 script（包含第三方注入）
+                // 若第三方 / CMS 已塞入 loader，僅保留第一份
                 const existing = Array.from(
                     document.querySelectorAll(
                         'script[src*="ai-helper-loader.js"]',
                     ),
                 );
                 if (existing.length > 0) {
-                    console.warn(
-                        "[AI Widget] Found",
-                        existing.length,
-                        "script tag(s) with ai-helper-loader.js. Will keep only one.",
-                    );
-                    // 保留第一個，其他移除以免重複初始化
                     existing.slice(1).forEach((s) => {
                         try {
                             s.parentNode && s.parentNode.removeChild(s);
                         } catch (_) {}
                     });
-                    if (existing[0].src !== SRC) {
-                        console.warn(
-                            "[AI Widget] First script src differs from expected. Using it as-is:",
-                            existing[0].src,
-                        );
-                        return; // 已有第一份，直接交給它
-                    }
-                    // 若第一份就是正確 SRC，也直接讓它工作，避免重載
-                    return;
+                    console.warn(
+                        "[AI Widget] Loader already present, skipping duplicate.",
+                    );
+                    return; // 交給現有那份
                 }
-
-                // 2) 動態插入唯一一份
                 const s = document.createElement("script");
                 s.src = SRC;
                 s.defer = true;
@@ -517,29 +513,17 @@
                 s.setAttribute(
                     "data-site",
                     "aitarf_15oJOoBsQFa3",
-                ); /* 請換成你的正式 Site ID */
+                ); /* 換成你的正式 Site ID */
                 s.setAttribute("data-accent", "#25d366");
                 s.setAttribute("data-width", "360");
                 s.setAttribute("data-height", "520");
                 s.setAttribute("data-z", "2147483000");
-                s.onload = () => console.log("[AI Widget] Loader loaded.");
+                s.onload = () => console.log("[AI Widget] loader loaded");
                 s.onerror = () =>
                     console.error(
-                        "[AI Widget] Failed to load loader script. Check network/CSP.",
+                        "[AI Widget] loader failed to load (network/CSP?)",
                     );
                 document.body.appendChild(s);
-
-                // 3) 額外診斷：2 秒後檢查是否註冊成功（避免網域白名單/權限問題）
-                setTimeout(() => {
-                    const anyFrame =
-                        document.querySelector('iframe[src*="ai"]') ||
-                        document.querySelector("iframe");
-                    if (!anyFrame) {
-                        console.warn(
-                            "[AI Widget][Diag] No widget iframe detected yet. If button is visible but面板顯示錯誤：請檢查 data-site 是否有效、網域是否已加入白名單、或 CSP 是否允許 CloudFront。",
-                        );
-                    }
-                }, 2000);
             })();
         </script>
     </body>
