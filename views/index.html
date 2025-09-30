@@ -80,7 +80,15 @@
             .brand {
                 font-weight: 800;
                 font-size: clamp(1rem, 4vw, 1.375rem);
-                white-space: nowrap;
+                white-space: normal;
+                word-wrap: break-word;
+                line-height: 1.2;
+                text-align: center;
+            }
+            @media (max-width: 480px) {
+                .brand {
+                    font-size: clamp(1rem, 5vw, 1.125rem);
+                }
             }
             .controls {
                 display: flex;
@@ -121,14 +129,14 @@
                 padding: clamp(8px, 2vw, 16px);
                 display: flex;
                 flex-direction: column;
-                gap: clamp(16px, 3vw, 24px);
+                gap: clamp(24px, 4vw, 32px);
             }
             .card {
                 background: var(--card);
                 border: 1px solid var(--border);
                 border-radius: 14px;
-                padding: clamp(12px, 3vw, 18px);
-                box-shadow: 0 6px 24px rgba(16, 24, 40, 0.04);
+                padding: clamp(16px, 4vw, 24px);
+                box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
                 transition:
                     background-color 0.3s ease,
                     border-color 0.3s ease;
@@ -138,7 +146,7 @@
                 text-align: center;
                 background: linear-gradient(135deg, var(--primary), #3b82f6);
                 color: #fff;
-                padding: clamp(20px, 6vw, 40px);
+                padding: clamp(24px, 8vw, 40px);
                 border-radius: 14px;
                 margin-bottom: clamp(0, 2vw, 16px);
             }
@@ -152,7 +160,7 @@
             }
             .hero p {
                 font-size: clamp(1rem, 3vw, 1.125rem);
-                margin: 0 0 clamp(12px, 3vw, 24px);
+                margin: 0 0 clamp(16px, 4vw, 24px);
                 opacity: 0.95;
             }
             h2 {
@@ -160,7 +168,7 @@
                 font-size: clamp(1.25rem, 4vw, 1.25rem);
             }
             h3 {
-                margin: clamp(12px, 3vw, 18px) 0 clamp(4px, 1vw, 8px);
+                margin: clamp(16px, 4vw, 24px) 0 clamp(8px, 2vw, 12px);
                 font-size: clamp(1rem, 2.5vw, 1rem);
             }
             p {
@@ -176,10 +184,11 @@
                 background: #0b1220;
                 color: #e6edf3;
                 border-radius: 10px;
-                padding: clamp(8px, 2vw, 14px);
+                padding: clamp(12px, 3vw, 16px);
                 border: 1px solid #0f1b33;
                 overflow-x: auto;
                 font-size: clamp(0.75rem, 2vw, 0.8125rem);
+                margin: clamp(12px, 3vw, 16px) 0;
             }
             pre {
                 margin: 0;
@@ -194,38 +203,46 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                padding: clamp(6px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
+                padding: clamp(10px, 2.5vw, 12px) clamp(16px, 4vw, 20px);
                 border-radius: 10px;
-                border: 1px solid var(--border);
-                background: var(--card);
-                color: var(--text);
+                border: 2px solid var(--primary);
+                background: var(--primary);
+                color: #fff;
                 cursor: pointer;
                 text-decoration: none;
-                transition:
-                    background-color 0.3s ease,
-                    color 0.3s ease;
+                transition: all 0.3s ease;
                 white-space: nowrap;
-                font-size: clamp(0.8125rem, 2vw, 0.875rem);
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+                font-weight: 600;
                 justify-content: center;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+                margin: clamp(8px, 2vw, 12px) 0;
+            }
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
             }
             .btn.primary {
                 background: var(--primary);
                 color: #fff;
-                border-color: transparent;
-                box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+                border-color: var(--primary);
             }
             .hero .btn.primary {
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                margin-top: 12px;
+                margin-top: clamp(16px, 4vw, 24px);
+                border: 2px solid rgba(255, 255, 255, 0.4);
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
             }
             .btn.small {
-                padding: clamp(4px, 1vw, 6px) clamp(6px, 1.5vw, 10px);
-                font-size: clamp(0.75rem, 2vw, 0.75rem);
+                padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 16px);
+                font-size: clamp(0.75rem, 2vw, 0.875rem);
+                margin: clamp(8px, 2vw, 12px) 0;
             }
             .copy-btn {
                 position: absolute;
-                top: clamp(4px, 1vw, 10px);
-                right: clamp(4px, 1vw, 10px);
+                top: clamp(8px, 2vw, 12px);
+                right: clamp(8px, 2vw, 12px);
+                padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+                font-size: clamp(0.75rem, 2vw, 0.8125rem);
             }
             table {
                 width: 100%;
@@ -237,18 +254,19 @@
                 display: block;
                 white-space: nowrap;
                 font-size: clamp(0.75rem, 2vw, 0.8125rem);
+                margin: clamp(12px, 3vw, 16px) 0;
             }
             th,
             td {
-                padding: clamp(6px, 1.5vw, 10px) clamp(4px, 1vw, 8px);
+                padding: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 12px);
                 border-bottom: 1px solid var(--border);
                 text-align: left;
                 vertical-align: top;
-                min-width: clamp(60px, 10vw, 80px);
             }
             th {
                 background: #f0f4fa;
                 font-weight: 600;
+                min-width: 100px;
             }
             [data-theme="dark"] th {
                 background: #334155;
@@ -259,11 +277,12 @@
             .badge {
                 display: inline-block;
                 font-size: clamp(0.6875rem, 1.5vw, 0.6875rem);
-                padding: 2px 8px;
+                padding: 4px 8px;
                 border-radius: 999px;
                 background: #eef2ff;
                 color: #354ab8;
                 border: 1px solid #d8defc;
+                margin: 2px 0;
             }
             [data-theme="dark"] .badge {
                 background: #1e40af;
@@ -273,20 +292,21 @@
             .note {
                 font-size: clamp(0.8125rem, 2vw, 0.8125rem);
                 color: var(--muted);
+                margin: clamp(8px, 2vw, 12px) 0;
             }
             footer {
                 max-width: 1120px;
-                margin: clamp(20px, 5vw, 40px) auto clamp(12px, 3vw, 24px);
+                margin: clamp(24px, 6vw, 40px) auto clamp(12px, 3vw, 24px);
                 padding: 0 clamp(8px, 2vw, 16px);
                 color: var(--muted);
                 font-size: clamp(0.8125rem, 2vw, 0.8125rem);
                 text-align: center;
                 border-top: 1px solid var(--border);
-                padding-top: clamp(12px, 3vw, 20px);
+                padding-top: clamp(16px, 4vw, 20px);
             }
             .grid {
                 display: grid;
-                gap: clamp(8px, 2vw, 12px);
+                gap: clamp(16px, 4vw, 20px);
             }
             .grid.two {
                 grid-template-columns: 1fr;
@@ -299,7 +319,7 @@
             .field {
                 display: flex;
                 flex-direction: column;
-                gap: clamp(4px, 1vw, 6px);
+                gap: clamp(8px, 2vw, 12px);
             }
             .field textarea,
             .field input {
@@ -308,13 +328,14 @@
                 resize: vertical;
                 border: 1px solid var(--border);
                 border-radius: 10px;
-                padding: clamp(6px, 1.5vw, 10px) clamp(8px, 2vw, 12px);
+                padding: clamp(8px, 2vw, 12px);
                 font-size: clamp(0.875rem, 2.5vw, 0.875rem);
                 background: var(--card);
                 color: var(--text);
                 transition:
                     background-color 0.3s ease,
                     color 0.3s ease;
+                margin-bottom: clamp(4px, 1vw, 8px);
             }
             .counter {
                 font-size: clamp(0.75rem, 2vw, 0.75rem);
@@ -323,14 +344,14 @@
             }
             .benefits {
                 display: grid;
-                gap: clamp(8px, 2vw, 12px);
-                margin: clamp(8px, 2vw, 16px) 0;
+                gap: clamp(12px, 3vw, 16px);
+                margin: clamp(12px, 3vw, 16px) 0;
                 justify-items: center;
             }
             .benefit-item {
                 display: flex;
                 align-items: flex-start;
-                gap: 8px;
+                gap: 12px;
                 max-width: 100%;
                 text-align: left;
                 font-size: clamp(0.875rem, 2.5vw, 0.875rem);
@@ -338,13 +359,13 @@
             .benefit-icon {
                 background: var(--ok);
                 color: #fff;
-                width: clamp(20px, 5vw, 24px);
-                height: clamp(20px, 5vw, 24px);
+                width: clamp(24px, 6vw, 28px);
+                height: clamp(24px, 6vw, 28px);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: clamp(0.75rem, 2vw, 0.75rem);
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
                 flex-shrink: 0;
             }
             /* Enhanced Mobile RWD */
@@ -371,7 +392,7 @@
                     order: 1;
                 }
                 .hero {
-                    padding: clamp(16px, 8vw, 20px);
+                    padding: clamp(20px, 10vw, 24px);
                 }
                 .hero h1 {
                     font-size: clamp(1.75rem, 8vw, 2rem);
@@ -380,32 +401,36 @@
                     font-size: clamp(1.125rem, 4vw, 1.25rem);
                 }
                 .card {
-                    padding: clamp(12px, 6vw, 16px);
+                    padding: clamp(16px, 8vw, 20px);
                 }
                 table {
                     font-size: clamp(0.875rem, 3vw, 1rem);
                 }
                 th,
                 td {
-                    padding: clamp(8px, 3vw, 12px) clamp(4px, 2vw, 6px);
-                    min-width: 70px;
+                    padding: clamp(10px, 4vw, 14px) clamp(6px, 2vw, 8px);
+                    min-width: 80px;
                 }
                 .btn {
                     width: 100%;
-                    padding: clamp(10px, 3vw, 12px);
+                    padding: clamp(12px, 4vw, 16px);
                     font-size: clamp(1rem, 3vw, 1rem);
+                    margin: clamp(12px, 4vw, 16px) 0;
                 }
                 .benefits {
                     grid-template-columns: 1fr;
+                    gap: clamp(16px, 5vw, 20px);
                 }
                 .benefit-item {
                     justify-content: center;
                     text-align: center;
                     flex-direction: column;
                     align-items: center;
+                    gap: 8px;
                 }
                 .grid.two {
                     grid-template-columns: 1fr;
+                    gap: clamp(20px, 6vw, 24px);
                 }
                 .field textarea,
                 .field input {
@@ -422,6 +447,9 @@
                 }
                 table {
                     font-size: 0.875rem;
+                }
+                .btn {
+                    margin: clamp(12px, 3vw, 16px) 0;
                 }
             }
         </style>
@@ -539,7 +567,6 @@
                         <tr>
                             <th data-i18n="params.th1">Attribute</th>
                             <th data-i18n="params.th2">Required</th>
-                            <th data-i18n="params.th3">Example</th>
                             <th data-i18n="params.th4">Description</th>
                         </tr>
                     </thead>
@@ -549,11 +576,6 @@
                             <td>
                                 <span class="badge" data-i18n="required"
                                     >Required</span
-                                >
-                            </td>
-                            <td>
-                                <code
-                                    >https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js</code
                                 >
                             </td>
                             <td data-i18n="params.src">
@@ -568,10 +590,6 @@
                                     >Optional</span
                                 >
                             </td>
-                            <td>
-                                <code>bottom-right</code> /
-                                <code>bottom-left</code>
-                            </td>
                             <td data-i18n="params.position">
                                 Position the floating button—default:
                                 bottom-right for optimal visibility.
@@ -584,7 +602,6 @@
                                     >Required</span
                                 >
                             </td>
-                            <td><code>aitarf_15oJOoBsQFa3</code></td>
                             <td data-i18n="params.site">
                                 Your unique site ID for knowledge base
                                 integration in the AI assistant.
@@ -597,7 +614,6 @@
                                     >Optional</span
                                 >
                             </td>
-                            <td><code>#25d366</code></td>
                             <td data-i18n="params.accent">
                                 Brand theme color (HEX/RGB) to match your site's
                                 design seamlessly.
@@ -610,7 +626,6 @@
                                     >Optional</span
                                 >
                             </td>
-                            <td><code>360</code></td>
                             <td data-i18n="params.width">
                                 Chat panel width (px), minimum 240 for
                                 responsive display.
@@ -623,7 +638,6 @@
                                     >Optional</span
                                 >
                             </td>
-                            <td><code>520</code></td>
                             <td data-i18n="params.height">
                                 Panel height (px), minimum 320; auto-adjusts on
                                 mobile devices.
@@ -636,7 +650,6 @@
                                     >Optional</span
                                 >
                             </td>
-                            <td><code>2147483000</code></td>
                             <td data-i18n="params.z">
                                 Z-index to ensure your AI widget stays on top
                                 without overlap.
@@ -647,7 +660,7 @@
 
                 <h3
                     data-i18n="create.title"
-                    style="margin-top: clamp(12px, 3vw, 18px)"
+                    style="margin-top: clamp(16px, 4vw, 24px)"
                 >
                     Build Your Custom AI Chatbot Widget: Free Starter Plan
                     Available
@@ -735,7 +748,7 @@
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
-                    brand: "AI Chatbot Widget - Embed Smart AI Assistant Effortlessly",
+                    brand: "AI Chatbot Widget\nEmbed Smart AI Assistant Effortlessly",
                     copy: "複製",
                     hero: {
                         title: "最佳 AI Chatbot Widget：輕鬆嵌入 24/7 客戶支援於您的網站",
@@ -753,7 +766,6 @@
                         title: "自訂您的 AI Chatbot Widget 參數，實現無縫整合",
                         th1: "屬性",
                         th2: "必填",
-                        th3: "範例",
                         th4: "說明",
                         src: "載入您的 AI chatbot widget 嵌入核心腳本。",
                         position: "定位浮動按鈕—預設：右下角以達最佳可見度。",
@@ -785,7 +797,7 @@
                 },
                 "zh-CN": {
                     title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
-                    brand: "AI Chatbot Widget - Embed Smart AI Assistant Effortlessly",
+                    brand: "AI Chatbot Widget\n轻松嵌入智能 AI 助手",
                     copy: "复制",
                     hero: {
                         title: "最佳 AI Chatbot Widget：轻松嵌入 24/7 客户支持于您的网站",
@@ -803,7 +815,6 @@
                         title: "自定义您的 AI Chatbot Widget 参数，实现无缝整合",
                         th1: "属性",
                         th2: "必填",
-                        th3: "示例",
                         th4: "说明",
                         src: "加载您的 AI chatbot widget 嵌入核心脚本。",
                         position: "定位浮动按钮—默认：右下角以达最佳可见度。",
@@ -835,7 +846,7 @@
                 },
                 ja: {
                     title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
-                    brand: "AI Chatbot Widget - Embed Smart AI Assistant Effortlessly",
+                    brand: "AI Chatbot Widget\nスマート AI アシスタントを簡単に埋め込み",
                     copy: "コピー",
                     hero: {
                         title: "最高の AI Chatbot Widget：簡単に 24/7 カスタマーサポートをサイトに埋め込み",
@@ -856,7 +867,6 @@
                         title: "AI Chatbot Widget パラメータをカスタマイズしてシームレスな統合を実現",
                         th1: "属性",
                         th2: "必須",
-                        th3: "例",
                         th4: "説明",
                         src: "AI chatbot widget 埋め込みのコアスクリプトをロード。",
                         position:
@@ -889,7 +899,7 @@
                 },
                 en: {
                     title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
-                    brand: "AI Chatbot Widget - Embed Smart AI Assistant Effortlessly",
+                    brand: "AI Chatbot Widget\nEmbed Smart AI Assistant Effortlessly",
                     copy: "Copy",
                     hero: {
                         title: "Best AI Chatbot Widget: Easily Embed 24/7 Customer Support on Your Site",
@@ -910,7 +920,6 @@
                         title: "Customize Your AI Chatbot Widget Parameters for Seamless Integration",
                         th1: "Attribute",
                         th2: "Required",
-                        th3: "Example",
                         th4: "Description",
                         src: "Load the core script for your AI chatbot widget embedding.",
                         position:
