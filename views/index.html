@@ -2,14 +2,237 @@
 <html lang="zh-TW">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Widget 測試頁</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>AI 助手 Widget 嵌入教學</title>
+        <style>
+            :root {
+                --bg: #f7f9fc;
+                --card: #fff;
+                --text: #1b2838;
+                --muted: #6b7a90;
+                --primary: #2563eb;
+                --border: #e6ecf2;
+                --mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                min-height: 100%;
+                background: var(--bg);
+                color: var(--text);
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
+                    sans-serif;
+            }
+            header {
+                padding: 24px 16px;
+                text-align: center;
+            }
+            header h1 {
+                margin: 0 0 6px;
+                font-size: clamp(20px, 4vw, 28px);
+            }
+            header p {
+                margin: 0;
+                color: var(--muted);
+                font-size: clamp(14px, 2.5vw, 16px);
+            }
+
+            .container {
+                max-width: 1080px;
+                margin: 0 auto;
+                padding: 16px;
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            @media (min-width: 900px) {
+                .container {
+                    grid-template-columns: 1.1fr 0.9fr;
+                }
+            }
+
+            .card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 18px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            }
+            h2 {
+                margin: 6px 0 12px;
+                font-size: 20px;
+            }
+            h3 {
+                margin: 18px 0 8px;
+                font-size: 16px;
+            }
+            p {
+                line-height: 1.6;
+            }
+
+            .code {
+                position: relative;
+                background: #0b1220;
+                color: #e6edf3;
+                border-radius: 8px;
+                padding: 12px;
+                margin: 10px 0;
+            }
+            pre {
+                margin: 0;
+                overflow: auto;
+                font-size: 13px;
+            }
+            code {
+                font-family: var(--mono);
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 12px;
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                background: #fff;
+                cursor: pointer;
+                font-size: 14px;
+            }
+            .btn.primary {
+                background: var(--primary);
+                color: #fff;
+                border-color: transparent;
+            }
+            .btn.small {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+                font-size: 14px;
+            }
+            th,
+            td {
+                padding: 8px 10px;
+                border-bottom: 1px solid var(--border);
+                text-align: left;
+            }
+            th {
+                background: #f0f4fa;
+            }
+            tr:last-child td {
+                border-bottom: 0;
+            }
+
+            .faq dt {
+                font-weight: 700;
+                margin-top: 12px;
+            }
+            .faq dd {
+                margin: 6px 0 14px 0;
+                color: var(--muted);
+                font-size: 14px;
+            }
+
+            footer {
+                max-width: 1080px;
+                margin: 40px auto 20px;
+                padding: 0 16px;
+                color: var(--muted);
+                font-size: 13px;
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
-        <h1>這是一個測試頁</h1>
-        <p>下面嵌入了台灣公構 AI 小幫手 widget：</p>
+        <header>
+            <h1>AI 助手 Widget 嵌入教學</h1>
+            <p>只需一行 script，即可在網站右下角顯示 AI 助手</p>
+        </header>
 
-        <!-- 嵌入 widget，只需一行 script -->
+        <main class="container">
+            <section class="card">
+                <h2>快速開始</h2>
+                <p>在網站 <code>&lt;/body&gt;</code> 前貼上這段程式碼：</p>
+                <div class="code">
+                    <pre><code>&lt;script
+  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+  data-position="bottom-right"
+  data-site="aitarf_15oJOoBsQFa3"
+  data-accent="#25d366"
+  data-width="360"
+  data-height="520"
+  data-z="2147483000"
+  defer
+&gt;&lt;/script&gt;</code></pre>
+                </div>
+
+                <h3>參數說明</h3>
+                <table>
+                    <tr>
+                        <th>屬性</th>
+                        <th>說明</th>
+                    </tr>
+                    <tr>
+                        <td><code>data-site</code></td>
+                        <td>必填，站點或專案 ID。</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-position</code></td>
+                        <td>
+                            面板位置，支援 <code>bottom-right</code> /
+                            <code>bottom-left</code>。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>data-accent</code></td>
+                        <td>主題色，HEX / RGB(A)。不合法則回退預設。</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-width</code></td>
+                        <td>寬度（px），最小 240。</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-height</code></td>
+                        <td>高度（px），最小 320。</td>
+                    </tr>
+                    <tr>
+                        <td><code>data-z</code></td>
+                        <td>z-index，避免被覆蓋。</td>
+                    </tr>
+                </table>
+
+                <h3>常見問題</h3>
+                <dl class="faq">
+                    <dt>看不到助理？</dt>
+                    <dd>檢查 script 是否載入，或調高 <code>data-z</code>。</dd>
+                    <dt>送出沒反應？</dt>
+                    <dd>
+                        確認後端
+                        <code>/query</code> 支援跨域（CORS），且回應格式正確。
+                    </dd>
+                </dl>
+            </section>
+
+            <aside class="card">
+                <h2>即時示範</h2>
+                <p>本頁右下角已載入一個 AI 助手 widget。</p>
+                <p>你可直接複製程式碼，換成自己的 <code>data-site</code>。</p>
+            </aside>
+        </main>
+
+        <footer>© 2025 AI 助手 Widget 教學頁 · RWD 響應式設計</footer>
+
+        <!-- 右下角實際示範 -->
         <script
             src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
             data-position="bottom-right"
