@@ -151,8 +151,20 @@ require("./start")().then(() => {
         return;
       }
 
+      const knowledge= await Lib.mongoDB.Client.collection('ai_secretary')
+  		.findOne({	'_id':`${site}`	})
+  		.then(d=>d);
+
+      if(!knowledge || !knowledge.knowledgeContext || knowledge.knowledgeContext.length == 0){
+        ctx.status = 400;
+        ctx.body = { error: 'Query is required' };
+        return;
+      }
+
+      console.log(`knowledge.knowledgeContext`,knowledge.knowledgeContext);
+
       // 呼叫你的 LLM / Prompt 程式（保持你的寫法）
-      const answer = await require('./prompt')(cleanQuery);
+      const answer = await require('./prompt')(cleanQuery,knowledge.knowledgeContext);
 
       // 萬一 answer 不是字串，做個保護
       const safeAnswer = (typeof answer === 'string') ? answer : String(answer ?? '');
