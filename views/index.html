@@ -11,6 +11,10 @@
             name="description"
             content="Embed AI chatbot widget effortlessly: Free 2025 tool for 24/7 smart customer support. Customize, integrate knowledge base, and rank higher with our AI assistant embedding guide. Boost site engagement today!"
         />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
         <style>
             :root {
                 --bg: #f7f9fc;
@@ -82,6 +86,7 @@
                 display: flex;
                 align-items: center;
                 gap: 8px;
+                margin-left: auto;
             }
             .lang-select {
                 padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
@@ -141,6 +146,9 @@
                 font-size: clamp(1.5rem, 6vw, 2rem);
                 margin: 0 0 clamp(8px, 2vw, 16px);
                 font-weight: 800;
+                white-space: normal;
+                word-wrap: break-word;
+                line-height: 1.3;
             }
             .hero p {
                 font-size: clamp(1rem, 3vw, 1.125rem);
@@ -204,6 +212,11 @@
                 background: var(--primary);
                 color: #fff;
                 border-color: transparent;
+                box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+            }
+            .hero .btn.primary {
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                margin-top: 12px;
             }
             .btn.small {
                 padding: clamp(4px, 1vw, 6px) clamp(6px, 1.5vw, 10px);
@@ -432,7 +445,7 @@
                     id="theme-toggle"
                     title="Toggle Theme"
                 >
-                    🌙
+                    <i class="fas fa-moon" style="color: black"></i>
                 </button>
             </div>
         </header>
@@ -454,28 +467,34 @@
                 </p>
                 <div class="benefits">
                     <div class="benefit-item">
-                        <div class="benefit-icon">🚀</div>
+                        <div class="benefit-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
                         <span data-i18n="hero.benefit1"
                             >One-Click Embed: Live in 5 Minutes for Instant
                             Setup</span
                         >
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">💬</div>
+                        <div class="benefit-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
                         <span data-i18n="hero.benefit2"
                             >Custom Knowledge Base: Professional, Tailored
                             Responses</span
                         >
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">📈</div>
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
                         <span data-i18n="hero.benefit3"
                             >24/7 Availability: Slash Support Costs and Scale
                             Effortlessly</span
                         >
                     </div>
                 </div>
-                <a href="#create" class="btn primary"
+                <a href="#create" class="btn primary" data-i18n="hero.cta"
                     >Start Free AI Chatbot Widget Trial Now</a
                 >
             </section>
@@ -699,7 +718,7 @@
   defer
 &gt;&lt;/script&gt;</code></pre>
                 </div>
-                <a href="#create" class="btn primary"
+                <a href="#create" class="btn primary" data-i18n="demo.cta"
                     >Embed Your Free AI Widget Today</a
                 >
             </aside>
@@ -724,6 +743,7 @@
                         benefit1: "一鍵嵌入：5 分鐘內上線，即時設定",
                         benefit2: "自訂知識庫：專業、量身訂製回應",
                         benefit3: "24/7 可用性：大幅降低支援成本，輕鬆擴展",
+                        cta: "立即啟動免費 AI Chatbot Widget 試用",
                     },
                     quickStart: {
                         title: "一鍵嵌入：數分鐘內啟動您的 AI 助手 Widget",
@@ -759,6 +779,7 @@
                     demo: {
                         title: "即時示範：觀看 AI Chatbot Widget 運作",
                         desc: "右下角的 AI 已準備示範 24/7 支援。將此嵌入您的網站以獲得相同輕鬆客戶參與與轉換提升。",
+                        cta: "立即嵌入您的免費 AI Widget",
                     },
                     footer: "© 2025 AI Chatbot Widget - 加入數千優化 AI 助手嵌入的網站。提升排名與收入—立即免費嵌入！",
                 },
@@ -772,6 +793,7 @@
                         benefit1: "一键嵌入：5 分钟内上线，即时设定",
                         benefit2: "自定义知识库：专业、量身定制回应",
                         benefit3: "24/7 可用性：大幅降低支持成本，轻松扩展",
+                        cta: "立即启动免费 AI Chatbot Widget 试用",
                     },
                     quickStart: {
                         title: "一键嵌入：数分钟内启动您的 AI 助手 Widget",
@@ -807,6 +829,7 @@
                     demo: {
                         title: "即时演示：观看 AI Chatbot Widget 运作",
                         desc: "右下角的 AI 已准备演示 24/7 支持。将此嵌入您的网站以获得相同轻松客户参与与转化提升。",
+                        cta: "立即嵌入您的免费 AI Widget",
                     },
                     footer: "© 2025 AI Chatbot Widget - 加入数千优化 AI 助手嵌入的网站。提升排名与收入—立即免费嵌入！",
                 },
@@ -823,6 +846,7 @@
                             "カスタム知識ベース：プロフェッショナルでカスタマイズされた応答",
                         benefit3:
                             "24/7 可用性：サポートコストを大幅削減、容易にスケール",
+                        cta: "今すぐ無料 AI Chatbot Widget トライアルを開始",
                     },
                     quickStart: {
                         title: "ワンクリック埋め込み：数分で AI アシスタント Widget を起動",
@@ -859,6 +883,7 @@
                     demo: {
                         title: "ライブデモ：AI Chatbot Widget の動作を見る",
                         desc: "右下の AI が 24/7 サポートをデモ準備完了。サイトに埋め込んで同じ簡単な顧客エンゲージメントとコンバージョン向上を実現。",
+                        cta: "今日から無料 AI Widget を埋め込み",
                     },
                     footer: "© 2025 AI Chatbot Widget - 数千の AI アシスタント埋め込み最適化サイトに参加。ランキングと収益を向上—今すぐ無料埋め込み！",
                 },
@@ -875,6 +900,7 @@
                             "Custom Knowledge Base: Professional, Tailored Responses",
                         benefit3:
                             "24/7 Availability: Slash Support Costs and Scale Effortlessly",
+                        cta: "Start Free AI Chatbot Widget Trial Now",
                     },
                     quickStart: {
                         title: "One-Click Embed: Launch Your AI Assistant Widget in Minutes",
@@ -911,6 +937,7 @@
                     demo: {
                         title: "Live Demo: See AI Chatbot Widget in Action",
                         desc: "The bottom-right AI is ready to demonstrate 24/7 support. Embed this on your site for the same effortless customer engagement and conversion boost.",
+                        cta: "Embed Your Free AI Widget Today",
                     },
                     footer: "© 2025 AI Chatbot Widget - Join thousands of sites optimizing with AI assistant embedding. Boost rankings and revenue—start embedding free now!",
                 },
@@ -933,7 +960,13 @@
             // Apply theme
             document.body.setAttribute("data-theme", savedTheme);
             const themeToggle = document.getElementById("theme-toggle");
-            themeToggle.textContent = savedTheme === "light" ? "🌙" : "☀️";
+            if (savedTheme === "light") {
+                themeToggle.innerHTML =
+                    '<i class="fas fa-moon" style="color: black;"></i>';
+            } else {
+                themeToggle.innerHTML =
+                    '<i class="fas fa-sun" style="color: white;"></i>';
+            }
 
             function applyLang() {
                 const T = STR[CUR_LANG];
@@ -987,7 +1020,13 @@
                 const newTheme = currentTheme === "light" ? "dark" : "light";
                 document.body.setAttribute("data-theme", newTheme);
                 localStorage.setItem("aiw_theme", newTheme);
-                themeToggle.textContent = newTheme === "light" ? "🌙" : "☀️";
+                if (newTheme === "light") {
+                    themeToggle.innerHTML =
+                        '<i class="fas fa-moon" style="color: black;"></i>';
+                } else {
+                    themeToggle.innerHTML =
+                        '<i class="fas fa-sun" style="color: white;"></i>';
+                }
             });
 
             // Counter and copy functionality
