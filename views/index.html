@@ -174,6 +174,8 @@
                 color: var(--muted);
                 font-size: clamp(0.8125rem, 2vw, 0.8125rem);
             }
+
+            /* Code block (click-to-copy) */
             .code {
                 position: relative;
                 background: #0b1220;
@@ -207,6 +209,7 @@
                 font-family: var(--mono);
                 font-size: inherit;
             }
+
             .btn {
                 display: inline-flex;
                 align-items: center;
@@ -265,55 +268,82 @@
                     transform: rotate(360deg);
                 }
             }
-            table {
+
+            /* ==== Parameters Table (極簡黑白版 + 深色主題) ==== */
+            .table-wrap {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .parameters-table {
                 width: 100%;
                 border-collapse: collapse;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                overflow: hidden;
-                display: block;
-                white-space: nowrap;
-                font-size: clamp(0.75rem, 2vw, 0.8125rem);
-                margin: clamp(12px, 3vw, 16px) 0;
+                table-layout: fixed;
+                background: #fff;
+                color: #000;
+                border: 1px solid #000;
             }
-            th,
-            td {
-                padding: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 12px);
-                border-bottom: 1px solid var(--border);
-                text-align: left;
+            .parameters-table th,
+            .parameters-table td {
+                border: 1px solid #000;
+                padding: 10px;
                 vertical-align: top;
+                font-size: 14px;
+                line-height: 1.5;
+                word-break: break-word;
+                white-space: normal;
             }
-            th {
-                background: #f0f4fa;
-                font-weight: 600;
-                min-width: 100px;
+            .parameters-table th {
+                font-weight: 700;
+                background: #fff;
             }
-            [data-theme="dark"] th {
-                background: #334155;
+            /* badges 可保留原色；若想黑白可解除以下註解
+      .parameters-table .badge{background:#fff;color:#000;border-color:#000}
+      */
+            @media (max-width: 768px) {
+                .parameters-table th,
+                .parameters-table td {
+                    font-size: 13px;
+                }
             }
-            tr:last-child td {
-                border-bottom: 0;
+            /* Dark theme：黑底白字、白線 */
+            [data-theme="dark"] .parameters-table {
+                background: #0b0b0b;
+                color: #fff;
+                border-color: #fff;
             }
-            .badge {
-                display: inline-block;
-                font-size: clamp(0.6875rem, 1.5vw, 0.6875rem);
-                padding: 4px 8px;
-                border-radius: 999px;
-                background: #eef2ff;
-                color: #354ab8;
-                border: 1px solid #d8defc;
-                margin: 2px 0;
+            [data-theme="dark"] .parameters-table th,
+            [data-theme="dark"] .parameters-table td {
+                border-color: #fff;
+                background: #0b0b0b;
+                color: #fff;
             }
-            [data-theme="dark"] .badge {
-                background: #1e40af;
-                color: #bfdbfe;
-                border-color: #1e40af;
+
+            /* Toast */
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: 24px;
+                transform: translateX(-50%);
+                background: rgba(15, 23, 42, 0.92);
+                color: #fff;
+                padding: 10px 14px;
+                border-radius: 10px;
+                font-size: 0.875rem;
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+                z-index: 2147483647;
+                opacity: 0;
+                transition:
+                    opacity 0.2s,
+                    transform 0.2s;
+                pointer-events: none;
             }
-            .note {
-                font-size: clamp(0.8125rem, 2vw, 0.8125rem);
-                color: var(--muted);
-                margin: clamp(8px, 2vw, 12px) 0;
+            .toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-4px);
             }
+
+            /* Layout helpers */
             footer {
                 max-width: 1120px;
                 margin: clamp(24px, 6vw, 40px) auto clamp(12px, 3vw, 24px);
@@ -388,27 +418,8 @@
                 font-size: clamp(0.875rem, 2.5vw, 1rem);
                 flex-shrink: 0;
             }
-            .toast {
-                position: fixed;
-                left: 50%;
-                bottom: 24px;
-                transform: translateX(-50%);
-                background: rgba(15, 23, 42, 0.92);
-                color: #fff;
-                padding: 10px 14px;
-                border-radius: 10px;
-                font-size: 0.875rem;
-                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-                z-index: 2147483647;
-                opacity: 0;
-                transition:
-                    opacity 0.2s,
-                    transform 0.2s;
-            }
-            .toast.show {
-                opacity: 1;
-                transform: translateX(-50%) translateY(-4px);
-            }
+
+            /* Mobile tweaks */
             @media (max-width: 480px) {
                 :root {
                     --font-size-base: 18px;
@@ -442,14 +453,6 @@
                 }
                 .card {
                     padding: clamp(16px, 8vw, 20px);
-                }
-                table {
-                    font-size: clamp(0.875rem, 3vw, 1rem);
-                }
-                th,
-                td {
-                    padding: clamp(10px, 4vw, 14px) clamp(6px, 2vw, 8px);
-                    min-width: 80px;
                 }
                 .btn {
                     width: 100%;
@@ -485,12 +488,6 @@
                 .grid.two {
                     grid-template-columns: 1fr;
                 }
-                table {
-                    font-size: 0.875rem;
-                }
-                .btn {
-                    margin: clamp(12px, 3vw, 16px) 0;
-                }
             }
         </style>
     </head>
@@ -525,15 +522,13 @@
                     Best AI Chatbot Widget: Easily Embed 24/7 Customer Support
                     on Your Site
                 </h1>
-                <!-- 文案已加入多語支援賣點 -->
                 <p data-i18n="hero.desc">
-                    Discover how to embed AI chatbot on website free in
-                    2025—boost conversions by 30% with our customizable AI
-                    assistant embedding tool. No coding required: add AI
-                    assistant to e-commerce site easily, integrate knowledge
-                    base, and provide instant responses. Now with multilingual
-                    input & replies—detects user language automatically and
-                    answers naturally in 50+ languages.
+                    Discover how to embed an AI chatbot for free in 2025—boost
+                    conversions by 30% with our customizable assistant. No
+                    coding needed: add to your shop, connect a knowledge base,
+                    and deliver instant answers. Now with multilingual input &
+                    replies—auto-detects user language and responds naturally in
+                    50+ languages.
                 </p>
                 <div class="benefits">
                     <div class="benefit-item">
@@ -554,7 +549,6 @@
                             Responses</span
                         >
                     </div>
-                    <!-- 新增多國語言優勢 -->
                     <div class="benefit-item">
                         <div class="benefit-icon">
                             <i class="fas fa-globe"></i>
@@ -617,101 +611,105 @@
                     Customize Your AI Chatbot Widget Parameters for Seamless
                     Integration
                 </h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th data-i18n="params.th1">Attribute</th>
-                            <th data-i18n="params.th2">Required</th>
-                            <th data-i18n="params.th4">Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>src</code></td>
-                            <td>
-                                <span class="badge" data-i18n="required"
-                                    >Required</span
-                                >
-                            </td>
-                            <td data-i18n="params.src">
-                                Load the core script for your AI chatbot widget
-                                embedding.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-position</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >Optional</span
-                                >
-                            </td>
-                            <td data-i18n="params.position">
-                                Position the floating button—default:
-                                bottom-right for optimal visibility.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-site</code></td>
-                            <td>
-                                <span class="badge" data-i18n="required"
-                                    >Required</span
-                                >
-                            </td>
-                            <td data-i18n="params.site">
-                                Your unique site ID for knowledge base
-                                integration in the AI assistant.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-accent</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >Optional</span
-                                >
-                            </td>
-                            <td data-i18n="params.accent">
-                                Brand theme color (HEX/RGB) to match your site's
-                                design seamlessly.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-width</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >Optional</span
-                                >
-                            </td>
-                            <td data-i18n="params.width">
-                                Chat panel width (px), minimum 240 for
-                                responsive display.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-height</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >Optional</span
-                                >
-                            </td>
-                            <td data-i18n="params.height">
-                                Panel height (px), minimum 320; auto-adjusts on
-                                mobile devices.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-z</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >Optional</span
-                                >
-                            </td>
-                            <td data-i18n="params.z">
-                                Z-index to ensure your AI widget stays on top
-                                without overlap.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <!-- 黑白極簡表格（外層容器負責橫向捲動；桌機一般不會外溢） -->
+                <div class="table-wrap">
+                    <table class="parameters-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="params.th1">Attribute</th>
+                                <th data-i18n="params.th2">Required</th>
+                                <th data-i18n="params.th4">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>src</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="required"
+                                        >Required</span
+                                    >
+                                </td>
+                                <td data-i18n="params.src">
+                                    Load the core script for your AI chatbot
+                                    widget embedding.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>data-position</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="optional"
+                                        >Optional</span
+                                    >
+                                </td>
+                                <td data-i18n="params.position">
+                                    Position the floating button—default:
+                                    bottom-right for optimal visibility.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>data-site</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="required"
+                                        >Required</span
+                                    >
+                                </td>
+                                <td data-i18n="params.site">
+                                    Your unique site ID for knowledge base
+                                    integration in the AI assistant.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>data-accent</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="optional"
+                                        >Optional</span
+                                    >
+                                </td>
+                                <td data-i18n="params.accent">
+                                    Brand theme color (HEX/RGB) to match your
+                                    site's design seamlessly.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>data-width</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="optional"
+                                        >Optional</span
+                                    >
+                                </td>
+                                <td data-i18n="params.width">
+                                    Chat panel width (px), minimum 240 for
+                                    responsive display.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>data-height</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="optional"
+                                        >Optional</span
+                                    >
+                                </td>
+                                <td data-i18n="params.height">
+                                    Panel height (px), minimum 320; auto-adjusts
+                                    on mobile devices.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>data-z</code></td>
+                                <td>
+                                    <span class="badge" data-i18n="optional"
+                                        >Optional</span
+                                    >
+                                </td>
+                                <td data-i18n="params.z">
+                                    Z-index to ensure your AI widget stays on
+                                    top without overlap.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <h3
                     data-i18n="create.title"
@@ -1141,7 +1139,6 @@
                     b.textContent = isReq ? T.required : T.optional;
                 });
 
-                // Localized titles
                 themeToggle.setAttribute("title", T.theme.toggle);
                 langSelect.setAttribute("title", T.common.languageTitle);
                 setCodeHints();
@@ -1260,13 +1257,11 @@
             }
 
             async function generateSiteId() {
-                // TODO: 將此函式替換為你的實際 API 呼叫，回傳字串 ID
+                // TODO: 替換為你的實際 API 呼叫，回傳字串 ID
                 // 例如：return (await fetch('/api/create',{method:'POST',body:JSON.stringify({kb:kb.value})})).text();
-                // 模擬成功 85% / 失敗 15% 與 700~1200ms 延遲
-                const delay = (700 + Math.random() * 500) | 0;
+                const delay = 700 + ((Math.random() * 500) | 0);
                 await new Promise((r) => setTimeout(r, delay));
                 if (Math.random() < 0.15) {
-                    // 模擬失敗
                     const err = new Error("NETWORK");
                     err.code = "NETWORK";
                     throw err;
@@ -1278,7 +1273,7 @@
                 const now = Date.now();
                 const T = STR[CUR_LANG];
 
-                // Throttle (節流)
+                // Throttle
                 if (now - lastClickAt < COOLDOWN_MS) {
                     toast(T.create.rateLimited);
                     return;
@@ -1286,7 +1281,7 @@
                 lastClickAt = now;
 
                 if (isBusy) return; // 重複點擊保護
-                if (!validateKB()) return; // 基本驗證失敗即不進入 busy
+                if (!validateKB()) return; // 驗證未過
 
                 isBusy = true;
                 setCreateBtnState("loading");
@@ -1295,15 +1290,12 @@
                     const id = await generateSiteId();
                     siteOut.value = id;
 
-                    // 成功：自動複製並 Toast（多語）
                     await copyText(id);
                     toast(T.create.toastSuccess + id);
 
-                    // 成功後短暫顯示「完成」感受
                     btnCreate.textContent = T.create.done;
                     setTimeout(() => setCreateBtnState("idle"), 800);
                 } catch (e) {
-                    // 失敗：依錯誤碼顯示 i18n 文案
                     if (
                         e &&
                         (e.code === "NETWORK" || e.message === "NETWORK")
@@ -1315,7 +1307,6 @@
                     setCreateBtnState("idle");
                 } finally {
                     isBusy = false;
-                    // 冷卻時間結束後才允許下一次點擊（加強使用者節奏）
                     setTimeout(() => {
                         lastClickAt = 0;
                     }, COOLDOWN_MS);
@@ -1326,7 +1317,7 @@
             applyLang();
         </script>
 
-        <!-- Demo widget -->
+        <!-- Demo widget（恢復正常點擊；Toast 已 pointer-events:none 不會遮擋） -->
         <script
             src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
             data-position="bottom-right"
