@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title data-i18n="title">
+        <title>
             AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free
             in 2025
         </title>
@@ -17,6 +17,29 @@
         />
 
         <style>
+            /* ====== 僅保留極少量的全域樣式，避免影響外掛 ====== */
+            html,
+            body {
+                margin: 0;
+                background: #f7f9fc;
+                color: #1b2838;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
+                    "Noto Sans SC", "PingFang SC", "Hiragino Sans",
+                    "Noto Sans JP", Arial, sans-serif;
+            }
+            body[data-theme="dark"] {
+                background: #0f172a;
+                color: #f1f5f9;
+            }
+
+            /* ====== 把真正的站內樣式通通關在 #app 裡 ====== */
+            #app,
+            #app * {
+                box-sizing: border-box;
+            }
+
             :root {
                 --bg: #f7f9fc;
                 --card: #fff;
@@ -27,7 +50,6 @@
                 --border: #e6ecf2;
                 --mono:
                     ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-                --font-size-base: 16px;
             }
             [data-theme="dark"] {
                 --bg: #0f172a;
@@ -38,36 +60,14 @@
                 --ok: #34d399;
                 --border: #334155;
             }
-            * {
-                box-sizing: border-box;
-            }
-            html,
-            body {
-                margin: 0;
-                min-height: 100vh;
-                background: var(--bg);
-                color: var(--text);
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
-                    "Noto Sans SC", "PingFang SC", "Hiragino Sans",
-                    "Noto Sans JP", Arial, sans-serif;
-                font-size: var(--font-size-base);
-                line-height: 1.6;
-                transition:
-                    background-color 0.3s,
-                    color 0.3s;
-            }
 
-            /* ===== 將樣式全部限制在 #app 作用域，避免影響右下角外掛 ===== */
             #app header {
-                padding: clamp(8px, 2vw, 12px) clamp(8px, 4vw, 16px);
+                padding: 12px 16px;
                 border-bottom: 1px solid var(--border);
                 background: var(--card);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                flex-wrap: wrap;
                 gap: 12px;
                 position: sticky;
                 top: 0;
@@ -82,7 +82,7 @@
             }
             #app .brand {
                 font-weight: 800;
-                font-size: clamp(1rem, 4vw, 1.375rem);
+                font-size: 1.25rem;
                 line-height: 1.2;
                 text-align: center;
             }
@@ -232,28 +232,17 @@
                 line-height: 1.5;
                 word-break: break-word;
             }
-            [data-theme="dark"] #app .parameters-table {
+            body[data-theme="dark"] #app .parameters-table {
                 background: #0b0b0b;
                 color: #fff;
                 border-color: #fff;
             }
-            [data-theme="dark"] #app .parameters-table th,
-            [data-theme="dark"] #app .parameters-table td {
+            body[data-theme="dark"] #app .parameters-table th,
+            body[data-theme="dark"] #app .parameters-table td {
                 border-color: #fff;
             }
 
-            #app footer {
-                max-width: 1120px;
-                margin: 40px auto 24px;
-                padding: 0 16px;
-                color: var(--muted);
-                font-size: 0.8125rem;
-                text-align: center;
-                border-top: 1px solid var(--border);
-                padding-top: 20px;
-            }
-
-            /* Toast：不攔截點擊以免擋住右下角外掛 */
+            /* Toast：不攔截點擊，避免擋住右下角外掛 */
             .toast {
                 position: fixed;
                 left: 50%;
@@ -277,21 +266,16 @@
     </head>
 
     <body data-theme="light">
-        <!-- 將站內內容全部包進 #app，避免外掛 DOM 受影響 -->
         <div id="app">
             <header>
                 <div class="wrap">
-                    <div class="brand" data-i18n="brand">
+                    <div class="brand">
                         AI Chatbot Widget - Embed Smart AI Assistant
                         Effortlessly
                     </div>
                 </div>
                 <div class="controls">
-                    <select
-                        class="lang-select"
-                        id="lang-select"
-                        title="Language"
-                    >
+                    <select class="lang-select" id="lang-select">
                         <option value="zh-TW">繁中</option>
                         <option value="zh-CN">简中</option>
                         <option value="ja">日本語</option>
@@ -309,10 +293,10 @@
 
             <main>
                 <section class="hero card">
-                    <h1 data-i18n="hero.title">
+                    <h1>
                         最佳 AI Chatbot Widget：輕鬆嵌入 24/7 客戶支援於您的網站
                     </h1>
-                    <p data-i18n="hero.desc">
+                    <p>
                         探索 2025 年如何免費嵌入 AI chatbot—提升轉換率
                         30%，並支援多國語言輸入與回覆。
                     </p>
@@ -321,38 +305,26 @@
                             <div class="benefit-icon">
                                 <i class="fas fa-rocket"></i>
                             </div>
-                            <span data-i18n="hero.benefit1"
-                                >一鍵嵌入：5 分鐘內上線</span
-                            >
+                            <span>一鍵嵌入：5 分鐘內上線</span>
                         </div>
                         <div class="benefit-item">
                             <div class="benefit-icon">
                                 <i class="fas fa-comments"></i>
                             </div>
-                            <span data-i18n="hero.benefit2"
-                                >自訂知識庫：專業回應</span
-                            >
+                            <span>自訂知識庫：專業回應</span>
                         </div>
                         <div class="benefit-item">
                             <div class="benefit-icon">
                                 <i class="fas fa-globe"></i>
                             </div>
-                            <span data-i18n="hero.benefit4"
-                                >多語支援：50+ 語言回覆</span
-                            >
+                            <span>多語支援：50+ 語言回覆</span>
                         </div>
                     </div>
-                    <a href="#create" class="btn primary" data-i18n="hero.cta"
-                        >立即啟動免費試用</a
-                    >
+                    <a href="#create" class="btn primary">立即啟動免費試用</a>
                 </section>
 
                 <section class="card" id="quickstart">
-                    <h2 data-i18n="quickStart.title">快速開始：嵌入程式碼</h2>
-                    <p data-i18n="quickStart.desc">
-                        將以下程式碼貼到你網站的
-                        <code>&lt;body&gt;</code> 底部即可。
-                    </p>
+                    <h2>快速開始：嵌入程式碼</h2>
                     <div class="code" id="codebox" title="Click to copy">
                         <pre><code id="embed-code">&lt;script
   src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
@@ -366,95 +338,53 @@
 &gt;&lt;/script&gt;</code></pre>
                     </div>
 
-                    <h3 data-i18n="params.title" style="margin-top: 16px">
+                    <h3 style="margin-top: 16px">
                         自訂您的 AI Chatbot Widget 參數，實現無縫整合
                     </h3>
                     <div class="table-wrap">
                         <table class="parameters-table">
                             <thead>
                                 <tr>
-                                    <th data-i18n="params.th1">屬性</th>
-                                    <th data-i18n="params.th2">必填</th>
-                                    <th data-i18n="params.th4">說明</th>
+                                    <th>屬性</th>
+                                    <th>必填</th>
+                                    <th>說明</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td><code>src</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="required"
-                                            >必填</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.src">
-                                        載入核心腳本。
-                                    </td>
+                                    <td>必填</td>
+                                    <td>載入核心腳本。</td>
                                 </tr>
                                 <tr>
                                     <td><code>data-position</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="optional"
-                                            >可選</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.position">
-                                        浮動按鈕位置（預設右下）。
-                                    </td>
+                                    <td>可選</td>
+                                    <td>浮動按鈕位置（預設右下）。</td>
                                 </tr>
                                 <tr>
                                     <td><code>data-site</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="required"
-                                            >必填</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.site">
-                                        你的站點 ID。
-                                    </td>
+                                    <td>必填</td>
+                                    <td>你的站點 ID。</td>
                                 </tr>
                                 <tr>
                                     <td><code>data-accent</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="optional"
-                                            >可選</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.accent">
-                                        品牌主色（HEX/RGB）。
-                                    </td>
+                                    <td>可選</td>
+                                    <td>品牌主色（HEX/RGB）。</td>
                                 </tr>
                                 <tr>
                                     <td><code>data-width</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="optional"
-                                            >可選</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.width">
-                                        聊天面板寬度（px）。
-                                    </td>
+                                    <td>可選</td>
+                                    <td>聊天面板寬度（px）。</td>
                                 </tr>
                                 <tr>
                                     <td><code>data-height</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="optional"
-                                            >可選</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.height">
-                                        聊天面板高度（px）。
-                                    </td>
+                                    <td>可選</td>
+                                    <td>聊天面板高度（px）。</td>
                                 </tr>
                                 <tr>
                                     <td><code>data-z</code></td>
-                                    <td>
-                                        <span class="badge" data-i18n="optional"
-                                            >可選</span
-                                        >
-                                    </td>
-                                    <td data-i18n="params.z">
-                                        z-index，確保浮在最上層。
-                                    </td>
+                                    <td>可選</td>
+                                    <td>z-index，確保浮在最上層。</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -462,11 +392,10 @@
                 </section>
 
                 <aside class="card" id="demo">
-                    <h2 data-i18n="demo.title">
-                        即時示範：觀看 AI Chatbot Widget
-                    </h2>
-                    <p class="muted" data-i18n="demo.desc">
-                        右下角 AI 已就緒（本區僅展示程式碼，不會重複載入）。
+                    <h2>即時示範（僅展示程式碼，不會實際載入）</h2>
+                    <p class="muted">
+                        右下角 AI 小幫手來自頁尾唯一的
+                        script；本區不會再次載入。
                     </p>
                     <div class="code" id="mini-code" title="Click to copy">
                         <pre><code id="embed-mini">&lt;script
@@ -475,20 +404,18 @@
   defer
 &gt;&lt;/script&gt;</code></pre>
                     </div>
-                    <a href="#create" class="btn primary" data-i18n="demo.cta"
+                    <a href="#create" class="btn primary"
                         >立即嵌入您的免費 AI Widget</a
                     >
                 </aside>
             </main>
 
-            <footer data-i18n="footer">
-                © 2025 AI Chatbot Widget - 加入數千網站，立即免費嵌入！
-            </footer>
+            <footer>© 2025 AI Chatbot Widget</footer>
         </div>
         <!-- /#app -->
 
         <script>
-            // ===== Toast（不阻擋點擊） =====
+            /* ===== 小工具：Toast（不擋點擊） ===== */
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
@@ -500,8 +427,7 @@
                     setTimeout(() => t.remove(), 250);
                 }, 1600);
             }
-
-            // ===== Click-to-copy（兩個區塊） =====
+            /* ===== Click-to-copy ===== */
             async function copyText(txt) {
                 try {
                     await navigator.clipboard.writeText(txt);
@@ -525,9 +451,15 @@
                     toast("已複製！");
                 });
 
-            // （可選）主題切換圖示
+            /* ===== 主題切換（作用域仍在 #app） ===== */
             (function () {
                 const themeToggle = document.getElementById("theme-toggle");
+                const savedTheme = localStorage.getItem("aiw_theme") || "light";
+                document.body.setAttribute("data-theme", savedTheme);
+                themeToggle.innerHTML =
+                    savedTheme === "light"
+                        ? '<i class="fas fa-moon" style="color:black;"></i>'
+                        : '<i class="fas fa-sun" style="color:white;"></i>';
                 themeToggle.addEventListener("click", () => {
                     const cur =
                         document.body.getAttribute("data-theme") || "light";
@@ -539,34 +471,75 @@
                             ? '<i class="fas fa-moon" style="color:black;"></i>'
                             : '<i class="fas fa-sun" style="color:white;"></i>';
                 });
-                const savedTheme = localStorage.getItem("aiw_theme") || "light";
-                document.body.setAttribute("data-theme", savedTheme);
-                themeToggle.innerHTML =
-                    savedTheme === "light"
-                        ? '<i class="fas fa-moon" style="color:black;"></i>'
-                        : '<i class="fas fa-sun" style="color:white;"></i>';
             })();
         </script>
 
-        <!-- ===== 唯一且防重複的外掛載入（動態插入，先檢查是否已存在） ===== -->
+        <!-- ===== 唯一且防重複的外掛載入：強化檢查 + 診斷 ===== -->
         <script>
             (function () {
                 const SRC =
                     "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
-                if (document.querySelector('script[src="' + SRC + '"]')) {
-                    console.warn("[AI Widget] Already loaded, skip duplicate.");
+
+                // 1) 檢查頁面是否已有同源 script（包含第三方注入）
+                const existing = Array.from(
+                    document.querySelectorAll(
+                        'script[src*="ai-helper-loader.js"]',
+                    ),
+                );
+                if (existing.length > 0) {
+                    console.warn(
+                        "[AI Widget] Found",
+                        existing.length,
+                        "script tag(s) with ai-helper-loader.js. Will keep only one.",
+                    );
+                    // 保留第一個，其他移除以免重複初始化
+                    existing.slice(1).forEach((s) => {
+                        try {
+                            s.parentNode && s.parentNode.removeChild(s);
+                        } catch (_) {}
+                    });
+                    if (existing[0].src !== SRC) {
+                        console.warn(
+                            "[AI Widget] First script src differs from expected. Using it as-is:",
+                            existing[0].src,
+                        );
+                        return; // 已有第一份，直接交給它
+                    }
+                    // 若第一份就是正確 SRC，也直接讓它工作，避免重載
                     return;
                 }
+
+                // 2) 動態插入唯一一份
                 const s = document.createElement("script");
                 s.src = SRC;
                 s.defer = true;
                 s.setAttribute("data-position", "bottom-right");
-                s.setAttribute("data-site", "aitarf_15oJOoBsQFa3");
+                s.setAttribute(
+                    "data-site",
+                    "aitarf_15oJOoBsQFa3",
+                ); /* 請換成你的正式 Site ID */
                 s.setAttribute("data-accent", "#25d366");
                 s.setAttribute("data-width", "360");
                 s.setAttribute("data-height", "520");
                 s.setAttribute("data-z", "2147483000");
+                s.onload = () => console.log("[AI Widget] Loader loaded.");
+                s.onerror = () =>
+                    console.error(
+                        "[AI Widget] Failed to load loader script. Check network/CSP.",
+                    );
                 document.body.appendChild(s);
+
+                // 3) 額外診斷：2 秒後檢查是否註冊成功（避免網域白名單/權限問題）
+                setTimeout(() => {
+                    const anyFrame =
+                        document.querySelector('iframe[src*="ai"]') ||
+                        document.querySelector("iframe");
+                    if (!anyFrame) {
+                        console.warn(
+                            "[AI Widget][Diag] No widget iframe detected yet. If button is visible but面板顯示錯誤：請檢查 data-site 是否有效、網域是否已加入白名單、或 CSP 是否允許 CloudFront。",
+                        );
+                    }
+                }, 2000);
             })();
         </script>
     </body>
