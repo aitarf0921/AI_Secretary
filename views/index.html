@@ -38,7 +38,7 @@
                 padding: 10px 14px;
                 border-radius: 10px;
                 font-size: 0.875rem;
-                z-index: 2147483647;
+                z-index: 2147483645; /* 降低 z-index，讓 widget 浮在上 */
                 opacity: 0;
                 transition: 0.2s;
                 pointer-events: none;
@@ -489,41 +489,50 @@
             (function () {
                 const SRC =
                     "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
-                // 若第三方 / CMS 已塞入 loader，僅保留第一份
+                console.log("[AI Widget] 開始檢查載入...");
+
+                // 改進的重複檢查：只檢查帶有 data-site 屬性的腳本，避免誤判
                 const existing = Array.from(
                     document.querySelectorAll(
-                        'script[src*="ai-helper-loader.js"]',
+                        'script[data-site="aitarf_15oJOoBsQFa3"]',
                     ),
                 );
-                if (existing.length > 0) {
+
+                if (existing.length > 1) {
+                    // 只在多於 1 個時移除多餘
                     existing.slice(1).forEach((s) => {
                         try {
-                            s.parentNode && s.parentNode.removeChild(s);
+                            if (s.parentNode) s.parentNode.removeChild(s);
                         } catch (_) {}
                     });
-                    console.warn(
-                        "[AI Widget] Loader already present, skipping duplicate.",
-                    );
-                    return; // 交給現有那份
+                    console.warn("[AI Widget] 移除重複腳本，保留第一份。");
+                } else if (existing.length === 1) {
+                    console.log("[AI Widget] 已存在有效腳本，跳過重複載入。");
+                    return; // 只有單一有效腳本時跳過
                 }
+
+                // 總是創建並附加新腳本（除非上述跳過）
                 const s = document.createElement("script");
                 s.src = SRC;
                 s.defer = true;
                 s.setAttribute("data-position", "bottom-right");
-                s.setAttribute(
-                    "data-site",
-                    "aitarf_15oJOoBsQFa3",
-                ); /* 換成你的正式 Site ID */
+                s.setAttribute("data-site", "aitarf_15oJOoBsQFa3"); // 若需換 ID，這裡修改
                 s.setAttribute("data-accent", "#25d366");
                 s.setAttribute("data-width", "360");
                 s.setAttribute("data-height", "520");
-                s.setAttribute("data-z", "2147483000");
-                s.onload = () => console.log("[AI Widget] loader loaded");
-                s.onerror = () =>
-                    console.error(
-                        "[AI Widget] loader failed to load (network/CSP?)",
+                s.setAttribute("data-z", "2147483646"); // 提高 z-index，避免被 toast 蓋住
+                s.onload = () => {
+                    console.log(
+                        "[AI Widget] loader 載入成功！檢查右下角聊天框。",
                     );
+                };
+                s.onerror = () => {
+                    console.error(
+                        "[AI Widget] loader 加載失敗：檢查網路、CSP 或 Site ID。",
+                    );
+                };
                 document.body.appendChild(s);
+                console.log("[AI Widget] 腳本附加完成。");
             })();
         </script>
     </body>
