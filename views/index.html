@@ -24,7 +24,7 @@
                 --card: #fff;
                 --text: #1b2838;
                 --muted: #6b7a90;
-                --primary: #2563eb; /* 主色：藍 */
+                --primary: #2563eb;
                 --ok: #10b981;
                 --border: #e6ecf2;
                 --mono:
@@ -59,10 +59,6 @@
                 transition:
                     background-color 0.3s,
                     color 0.3s;
-            }
-            /* 讓預設隱藏的卡片在 JS 尚未執行前也確實隱藏 */
-            .hidden {
-                display: none !important;
             }
 
             /* Header 與工具列（語言 & 主題） */
@@ -379,7 +375,7 @@
                 .grid.two {
                     grid-template-columns: 1fr;
                 }
-            } /* 這頁目前維持單欄 */
+            } /* 這頁維持單欄 */
 
             /* 表單欄位（此頁只用到 textarea） */
             .field {
@@ -586,9 +582,8 @@
                     class="btn primary"
                     id="start-trial-btn"
                     data-i18n="hero.cta"
+                    >立即開始免費試用</a
                 >
-                    立即開始免費試用
-                </a>
             </section>
 
             <!-- 卡片二：生成程式碼 -->
@@ -623,7 +618,7 @@
                 </div>
             </section>
 
-            <!-- 卡片三：顯示程式碼 + 參數說明表（已補回） -->
+            <!-- 卡片三：顯示程式碼 -->
             <section class="card hidden" id="card-snippet">
                 <h2 data-i18n="quickStart.title">
                     一鍵嵌入：複製下方 widget 程式碼
@@ -632,7 +627,7 @@
                     將以下程式碼貼到您的網站，即可快速啟用專屬 AI Chatbot。
                 </p>
 
-                <!-- 完整版 Snippet -->
+                <!-- snippet（完整） -->
                 <div
                     class="code"
                     id="codebox"
@@ -652,7 +647,7 @@
 &gt;&lt;/script&gt;</code></pre>
                 </div>
 
-                <!-- 簡版 Snippet -->
+                <!-- snippet（極簡） -->
                 <div
                     class="code"
                     id="mini-code"
@@ -668,8 +663,14 @@
 &gt;&lt;/script&gt;</code></pre>
                 </div>
 
-                <!-- 參數說明表（黑白極簡，深色主題同步） -->
-                <h3 data-i18n="params.title" style="margin-top: 8px">
+                <!-- 新增：提示右下角藍色 demo 已套用使用者 widget -->
+                <p class="muted" data-i18n="quickStart.liveApplied">
+                    右下角的藍色 AI 助理已即時套用您的
+                    widget，您可以立即測試互動效果。
+                </p>
+
+                <!-- 黑白極簡參數表（你要求保留） -->
+                <h3 data-i18n="params.title" style="margin-top: 12px">
                     自訂您的 AI Chatbot 參數，實現無縫整合
                 </h3>
                 <div class="table-wrap">
@@ -766,7 +767,7 @@
 
         <!-- [SECTION] 主腳本：i18n、語言/主題切換、Toast、點一下複製、Create 產生流程 -->
         <script>
-            /* ---------- 合法的多語 STR（簡化版） ---------- */
+            /* ---------- 合法的多語 STR（含新增 quickStart.liveApplied） ---------- */
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -791,6 +792,8 @@
                     quickStart: {
                         title: "一鍵嵌入：複製下方 widget 程式碼，幾分鐘內啟用 AI Chatbot",
                         desc: "將下方 <strong>widget 程式碼</strong> 貼到您的網站（通常是全站 Layout 或頁尾），即可在右下角啟用 24/7 智能客服。若你在「生成程式碼」卡片建立新的 <code>data-site</code>，此處程式碼也會自動更新。",
+                        liveApplied:
+                            "右下角的藍色 AI 助理已即時套用您的 widget，您可以立即測試互動效果。",
                     },
                     params: {
                         title: "自訂您的 AI Chatbot 參數，實現無縫整合",
@@ -852,6 +855,8 @@
                     quickStart: {
                         title: "一键嵌入：复制下方代码，几分钟启用 AI Chatbot",
                         desc: "将下方 <strong>widget 代码</strong> 粘贴到你的网站（全站 Layout 或页脚），右下角即启用 24/7 智能客服。如在「生成代码」卡片创建了新的 <code>data-site</code>，这里会自动更新。",
+                        liveApplied:
+                            "右下角的蓝色 AI 助理已实时加载您的 widget，立即可以测试效果。",
                     },
                     params: {
                         title: "自定义 AI Chatbot 参数以实现无缝集成",
@@ -913,6 +918,8 @@
                     quickStart: {
                         title: "ワンクリック埋め込み：数分で有効化",
                         desc: "以下の <strong>ウィジェットコード</strong> をサイト（レイアウト/フッター等）に貼り付けるだけで右下に常駐します。",
+                        liveApplied:
+                            "右下の青い AI アシスタントが、生成したウィジェットを反映して動作中です。すぐに体験できます。",
                     },
                     params: {
                         title: "AI Chatbot パラメータ",
@@ -975,6 +982,8 @@
                     quickStart: {
                         title: "One-Click Embed: Copy the widget code",
                         desc: "Paste the <strong>widget code</strong> into your site layout/footer to enable the bottom-right assistant.",
+                        liveApplied:
+                            "The blue AI assistant at the bottom-right is now running your widget — try interacting with it live.",
                     },
                     params: {
                         title: "Customize your AI Chatbot parameters",
@@ -1015,7 +1024,7 @@
                 },
             };
 
-            /* ---------- 語言 / 主題 ---------- */
+            /* ---------- 原本的語言/主題/複製/Toast 初始化（保留） ---------- */
             const savedLang = localStorage.getItem("aiw_lang");
             const savedTheme = localStorage.getItem("aiw_theme") || "light";
             const navLang = (navigator.language || "zh-TW").toLowerCase();
@@ -1158,7 +1167,7 @@
                     );
             })();
 
-            // 注入 .hidden 樣式（保險，CSS 已內建，這裡雙重保險）
+            // 注入 .hidden 樣式（保險）
             (function ensureHiddenCSS() {
                 if (!document.getElementById("aiw-hidden-style")) {
                     const st = document.createElement("style");
@@ -1178,6 +1187,7 @@
                 height: "520",
                 z: "2147483000",
             };
+
             function buildSnippet(siteId, opts = {}) {
                 const o = "<scr" + "ipt";
                 const c = "</scr" + "ipt>";
@@ -1228,10 +1238,11 @@
                 document.body.appendChild(s);
             }
 
-            /* ---------- Hero CTA → 顯示卡片二並捲動（這裡已用正確 ID） ---------- */
+            /* ---------- Hero CTA → 顯示卡片二並捲動（修正 ID） ---------- */
             const btnStartTrial = document.getElementById("start-trial-btn");
             const cardGenerate = document.getElementById("card-generate");
             const cardSnippet = document.getElementById("card-snippet");
+
             if (btnStartTrial && cardGenerate) {
                 btnStartTrial.addEventListener("click", (e) => {
                     e.preventDefault();
@@ -1244,8 +1255,12 @@
 
             /* ---------- 假回傳 SiteID（API 註解保留） ---------- */
             async function generateSiteIdFake(kbText) {
-                // 未來改為真實 API：
-                // const res = await fetch("/api/create", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ kb: kbText }) });
+                // 真實 API 範例（日後改這裡）：
+                // const res = await fetch("/api/create", {
+                //   method: "POST",
+                //   headers: {"Content-Type":"application/json"},
+                //   body: JSON.stringify({ kb: kbText })
+                // });
                 // if (!res.ok) throw new Error("NETWORK");
                 // return await res.text();
                 return "aitarf_15oJOoBsQFa3";
@@ -1256,8 +1271,8 @@
                 const btnCreate = document.getElementById("btn-create");
                 if (!btnCreate) return;
                 const COOLDOWN_MS = 1500;
-                let isBusy = false;
-                let lastClickAt = 0;
+                let isBusy = false,
+                    lastClickAt = 0;
 
                 function setCreateBtnState(state) {
                     const Tt = (STR[CUR_LANG] || STR["en"]).create;
@@ -1306,8 +1321,6 @@
                     setCreateBtnState("loading");
                     try {
                         const siteId = await generateSiteIdFake(v);
-
-                        // 更新卡片三兩段程式碼
                         const full = buildSnippet(siteId, {
                             position: WIDGET_DEFAULTS.position,
                             accent: ACCENT_BLUE,
@@ -1321,13 +1334,12 @@
                         if (codeFull) codeFull.innerText = full;
                         if (codeMini) codeMini.innerText = mini;
 
-                        // 顯示卡片三
                         if (cardSnippet) {
                             cardSnippet.classList.remove("hidden");
                             cardSnippet.scrollIntoView({ behavior: "smooth" });
                         }
 
-                        // 同步右下角 Demo widget（確保頁面上只載一份 loader）
+                        // 右下角 demo widget 套用使用者的 widget（藍色）
                         mountDemoWidget(siteId, ACCENT_BLUE, WIDGET_DEFAULTS);
 
                         await copyText(full);
@@ -1358,12 +1370,12 @@
             applyLang();
         </script>
 
-        <!-- [SECTION] Demo widget（頁面右下角，只載入一份 loader；預設藍色） -->
+        <!-- [SECTION] Demo widget（頁面右下角，只載入一份 loader；初始為預設綠色，生成後改藍色並套用使用者的 widget） -->
         <script
             src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
             data-position="bottom-right"
             data-site="aitarf_15oJOoBsQFa3"
-            data-accent="#2563eb"
+            data-accent="#25d366"
             data-width="360"
             data-height="520"
             data-z="2147483000"
