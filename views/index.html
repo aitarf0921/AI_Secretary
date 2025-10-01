@@ -60,6 +60,10 @@
                     background-color 0.3s,
                     color 0.3s;
             }
+            /* 讓預設隱藏的卡片在 JS 尚未執行前也確實隱藏 */
+            .hidden {
+                display: none !important;
+            }
 
             /* Header 與工具列（語言 & 主題） */
             header {
@@ -627,6 +631,7 @@
                 <p data-i18n="quickStart.desc">
                     將以下程式碼貼到您的網站，即可快速啟用專屬 AI Chatbot。
                 </p>
+
                 <div
                     class="code"
                     id="codebox"
@@ -635,16 +640,17 @@
                     title="Click to copy"
                 >
                     <pre><code id="embed-code">&lt;script
-          src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-          data-position="bottom-right"
-          data-site="aitarf_15oJOoBsQFa3"
-          data-accent="#2563eb"
-          data-width="360"
-          data-height="520"
-          data-z="2147483000"
-          defer
-        &gt;&lt;/script&gt;</code></pre>
+  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+  data-position="bottom-right"
+  data-site="aitarf_15oJOoBsQFa3"
+  data-accent="#2563eb"
+  data-width="360"
+  data-height="520"
+  data-z="2147483000"
+  defer
+&gt;&lt;/script&gt;</code></pre>
                 </div>
+
                 <div
                     class="code"
                     id="mini-code"
@@ -653,11 +659,11 @@
                     title="Click to copy"
                 >
                     <pre><code id="embed-mini">&lt;script
-          src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-          data-site="aitarf_15oJOoBsQFa3"
-          data-accent="#2563eb"
-          defer
-        &gt;&lt;/script&gt;</code></pre>
+  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+  data-site="aitarf_15oJOoBsQFa3"
+  data-accent="#2563eb"
+  defer
+&gt;&lt;/script&gt;</code></pre>
                 </div>
             </section>
         </main>
@@ -667,7 +673,7 @@
 
         <!-- [SECTION] 主腳本：i18n、語言/主題切換、Toast、點一下複製、Create 產生流程 -->
         <script>
-            /* ---------- 合法的多語 STR（簡化版，避免語法錯誤） ---------- */
+            /* ---------- 合法的多語 STR（簡化版） ---------- */
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -1059,7 +1065,7 @@
                     );
             })();
 
-            // 注入 .hidden 樣式（保險）
+            // 注入 .hidden 樣式（保險，CSS 已內建，這裡雙重保險）
             (function ensureHiddenCSS() {
                 if (!document.getElementById("aiw-hidden-style")) {
                     const st = document.createElement("style");
@@ -1096,26 +1102,26 @@
                     : "";
                 const z = opts.z ? `\n  data-z="${opts.z}"` : "";
                 return `${o}
-          src="${WIDGET_SRC}"${pos}
-          data-site="${siteId}"${accent}${width}${height}${z}
-          defer
-        >${c}`;
+  src="${WIDGET_SRC}"${pos}
+  data-site="${siteId}"${accent}${width}${height}${z}
+  defer
+>${c}`;
             }
             function buildMiniSnippet(siteId, accent) {
                 const o = "<scr" + "ipt";
                 const c = "</scr" + "ipt>";
                 return `${o}
-          src="${WIDGET_SRC}"
-          data-site="${siteId}"
-          data-accent="${accent}"
-          defer
-        >${c}`;
+  src="${WIDGET_SRC}"
+  data-site="${siteId}"
+  data-accent="${accent}"
+  defer
+>${c}`;
             }
 
             /* ---------- Demo widget 重新掛載（確保只有一份） ---------- */
             function mountDemoWidget(siteId, accent, more = WIDGET_DEFAULTS) {
                 document
-                    .querySelectorAll(`script[src*="ai-helper-loader.js"]`)
+                    .querySelectorAll('script[src*="ai-helper-loader.js"]')
                     .forEach((s) => s.remove());
                 const s = document.createElement("script");
                 s.src = WIDGET_SRC;
@@ -1129,10 +1135,10 @@
                 document.body.appendChild(s);
             }
 
-            /* ---------- Hero CTA → 顯示卡片二並捲動 ---------- */
+            /* ---------- Hero CTA → 顯示卡片二並捲動（這裡修正 ID） ---------- */
             const btnStartTrial = document.getElementById("start-trial-btn");
-            const cardGenerate = document.getElementById("create-card");
-            const cardSnippet = document.getElementById("quickstart");
+            const cardGenerate = document.getElementById("card-generate"); // ← 修正
+            const cardSnippet = document.getElementById("card-snippet"); // ← 修正
             if (btnStartTrial && cardGenerate) {
                 btnStartTrial.addEventListener("click", (e) => {
                     e.preventDefault();
@@ -1145,12 +1151,7 @@
 
             /* ---------- 假回傳 SiteID（API 註解保留） ---------- */
             async function generateSiteIdFake(kbText) {
-                // 真實 API 範例（日後改這裡）：
-                // const res = await fetch("/api/create", {
-                //   method: "POST",
-                //   headers: {"Content-Type":"application/json"},
-                //   body: JSON.stringify({ kb: kbText })
-                // });
+                // const res = await fetch("/api/create", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ kb: kbText }) });
                 // if (!res.ok) throw new Error("NETWORK");
                 // return await res.text();
                 return "aitarf_15oJOoBsQFa3";
@@ -1259,12 +1260,12 @@
             applyLang();
         </script>
 
-        <!-- [SECTION] Demo widget（頁面右下角，只載入一份 loader） -->
+        <!-- [SECTION] Demo widget（頁面右下角，只載入一份 loader；預設藍色） -->
         <script
             src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
             data-position="bottom-right"
             data-site="aitarf_15oJOoBsQFa3"
-            data-accent="#25d366"
+            data-accent="#2563eb"
             data-width="360"
             data-height="520"
             data-z="2147483000"
