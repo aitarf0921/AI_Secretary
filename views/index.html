@@ -3,333 +3,340 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>AI 助手 Widget 嵌入教學 · Create Your Own Assistant</title>
+        <title>
+            AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free
+            in 2025
+        </title>
+        <meta
+            name="description"
+            content="Embed AI chatbot widget effortlessly: Free 2025 tool for 24/7 smart customer support. Customize, integrate knowledge base, and rank higher with our AI assistant embedding guide. Boost site engagement today!"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+
         <style>
-            :root {
-                --bg: #f7f9fc;
-                --card: #fff;
-                --text: #1b2838;
-                --muted: #6b7a90;
-                --primary: #2563eb;
-                --ok: #10b981;
-                --warn: #f59e0b;
-                --danger: #ef4444;
-                --border: #e6ecf2;
-                --mono:
-                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            }
-            * {
-                box-sizing: border-box;
-            }
+            /* 只保留極小的全域 reset，避免影響外掛 */
             html,
             body {
                 margin: 0;
-                min-height: 100%;
-                background: var(--bg);
-                color: var(--text);
                 font-family:
                     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial,
-                    sans-serif;
+                    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
+                    "Noto Sans SC", "PingFang SC", "Hiragino Sans",
+                    "Noto Sans JP", Arial, sans-serif;
             }
-            a {
-                color: var(--primary);
-                text-decoration: none;
+            /* Toast：全域但不攔截點擊（不會擋住右下角外掛） */
+            .toast {
+                position: fixed;
+                left: 50%;
+                bottom: 24px;
+                transform: translateX(-50%);
+                background: rgba(15, 23, 42, 0.92);
+                color: #fff;
+                padding: 10px 14px;
+                border-radius: 10px;
+                font-size: 0.875rem;
+                z-index: 2147483647;
+                opacity: 0;
+                transition: 0.2s;
+                pointer-events: none;
             }
-            a:hover {
-                text-decoration: underline;
+            .toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-4px);
             }
-            header {
-                padding: 20px 16px;
-                border-bottom: 1px solid var(--border);
-                background: #fff;
+
+            /* ====== 把所有主題變數與樣式鎖在 #app，並用自家前綴 --aw-* ====== */
+            #app {
+                --aw-bg: #f7f9fc;
+                --aw-card: #fff;
+                --aw-text: #1b2838;
+                --aw-muted: #6b7a90;
+                --aw-primary: #2563eb;
+                --aw-ok: #10b981;
+                --aw-border: #e6ecf2;
+                --aw-mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                background: var(--aw-bg);
+                color: var(--aw-text);
+                min-height: 100vh;
             }
-            .wrap {
-                max-width: 1120px;
-                margin: 0 auto;
+            #app[data-theme="dark"] {
+                --aw-bg: #0f172a;
+                --aw-card: #1e293b;
+                --aw-text: #f1f5f9;
+                --aw-muted: #94a3b8;
+                --aw-primary: #3b82f6;
+                --aw-ok: #34d399;
+                --aw-border: #334155;
+                background: var(--aw-bg);
+                color: var(--aw-text);
+            }
+            #app,
+            #app * {
+                box-sizing: border-box;
+            }
+
+            /* Header */
+            #app header {
+                padding: 12px 16px;
+                border-bottom: 1px solid var(--aw-border);
+                background: var(--aw-card);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+            #app .wrap {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                flex-wrap: wrap;
-            }
-            .brand {
-                font-weight: 800;
-                font-size: clamp(18px, 2.8vw, 22px);
-            }
-            .spacer {
                 flex: 1;
+                min-width: 0;
             }
-            .btn {
+            #app .brand {
+                font-weight: 800;
+                font-size: 1.25rem;
+                line-height: 1.2;
+                text-align: center;
+            }
+            #app .controls {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-left: auto;
+            }
+            #app .lang-select {
+                padding: 6px 12px;
+                border: 1px solid var(--aw-border);
+                border-radius: 8px;
+                background: var(--aw-card);
+                color: var(--aw-text);
+                cursor: pointer;
+            }
+            #app .theme-toggle {
+                background: none;
+                border: 1px solid var(--aw-border);
+                border-radius: 50%;
+                width: 36px;
+                height: 36px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Main layout */
+            #app main {
+                max-width: 1120px;
+                margin: 0 auto;
+                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+            }
+            #app .card {
+                background: var(--aw-card);
+                border: 1px solid var(--aw-border);
+                border-radius: 14px;
+                padding: 24px;
+                box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
+            }
+            #app .hero {
+                text-align: center;
+                background: linear-gradient(135deg, var(--aw-primary), #3b82f6);
+                color: #fff;
+                padding: 40px;
+                border-radius: 14px;
+            }
+            #app .hero h1 {
+                font-size: 2rem;
+                margin: 0 0 16px;
+                font-weight: 800;
+            }
+            #app .hero p {
+                font-size: 1.125rem;
+                margin: 0 0 24px;
+                opacity: 0.95;
+            }
+            #app .benefits {
+                display: grid;
+                gap: 16px;
+                margin: 16px 0;
+                justify-items: center;
+            }
+            #app .benefit-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 0.9rem;
+            }
+            #app .benefit-icon {
+                background: var(--aw-ok);
+                color: #fff;
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #app .btn {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                padding: 8px 12px;
+                padding: 12px 20px;
                 border-radius: 10px;
-                border: 1px solid var(--border);
-                background: #fff;
-                cursor: pointer;
-            }
-            .btn.primary {
-                background: var(--primary);
+                border: 2px solid var(--aw-primary);
+                background: var(--aw-primary);
                 color: #fff;
-                border-color: transparent;
-            }
-            .btn.small {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            .btn:disabled {
-                opacity: 0.6;
-                cursor: not-allowed;
-            }
-            .lang {
-                display: inline-flex;
-                gap: 6px;
-                border: 1px solid var(--border);
-                border-radius: 999px;
-                padding: 4px;
-            }
-            .lang button {
-                border: 0;
-                background: transparent;
-                padding: 6px 10px;
-                border-radius: 999px;
                 cursor: pointer;
+                text-decoration: none;
+                transition: 0.3s;
+                font-weight: 600;
             }
-            .lang button.active {
-                background: #eef2ff;
-                color: #1f2a7a;
-                font-weight: 700;
-            }
-            .container {
-                max-width: 1120px;
-                margin: 24px auto 120px;
-                padding: 0 16px;
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            @media (min-width: 980px) {
-                .container {
-                    grid-template-columns: 1.15fr 0.85fr;
-                }
+            #app .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
             }
 
-            .card {
-                background: var(--card);
-                border: 1px solid var(--border);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 6px 24px rgba(16, 24, 40, 0.04);
-            }
-            h2 {
-                margin: 4px 0 12px;
-                font-size: 20px;
-            }
-            h3 {
-                margin: 18px 0 8px;
-                font-size: 16px;
-            }
-            p {
-                line-height: 1.65;
-            }
-            .muted {
-                color: var(--muted);
-            }
-
-            .row {
-                display: flex;
-                gap: 10px;
-                flex-wrap: wrap;
-                margin-top: 10px;
-            }
-            .grid {
-                display: grid;
-                gap: 12px;
-            }
-            .grid.two {
-                grid-template-columns: 1fr;
-            }
-            @media (min-width: 760px) {
-                .grid.two {
-                    grid-template-columns: 1fr 1fr;
-                }
-            }
-
-            .code {
+            /* Code block（點一下複製） */
+            #app .code {
                 position: relative;
                 background: #0b1220;
                 color: #e6edf3;
                 border-radius: 10px;
-                padding: 14px;
+                padding: 16px;
                 border: 1px solid #0f1b33;
+                overflow-x: auto;
+                font-size: 0.85rem;
+                margin: 16px 0;
+                cursor: pointer;
             }
-            pre {
+            #app pre {
                 margin: 0;
-                overflow: auto;
                 white-space: pre;
             }
-            code {
-                font-family: var(--mono);
-                font-size: 13px;
-            }
-            .copy-btn {
-                position: absolute;
-                top: 10px;
-                right: 10px;
+            #app code {
+                font-family: var(--aw-mono);
+                font-size: inherit;
             }
 
-            table {
+            /* 黑白表格（含 dark 模式） */
+            #app .table-wrap {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            #app .parameters-table {
                 width: 100%;
                 border-collapse: collapse;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                overflow: hidden;
-            }
-            th,
-            td {
-                padding: 10px 12px;
-                border-bottom: 1px solid var(--border);
-                text-align: left;
-                vertical-align: top;
-            }
-            th {
-                background: #f0f4fa;
-                font-weight: 600;
-            }
-            tr:last-child td {
-                border-bottom: 0;
-            }
-            .badge {
-                display: inline-block;
-                font-size: 11px;
-                padding: 2px 8px;
-                border-radius: 999px;
-                background: #eef2ff;
-                color: #354ab8;
-                border: 1px solid #d8defc;
-            }
-
-            /* Create Assistant form */
-            .field {
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-            }
-            .field textarea {
-                width: 100%;
-                min-height: 120px;
-                resize: vertical;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                padding: 10px 12px;
-                font-size: 14px;
+                table-layout: fixed;
                 background: #fff;
+                color: #000;
+                border: 1px solid #000;
             }
-            .counter {
-                font-size: 12px;
-                color: var(--muted);
-                text-align: right;
+            #app .parameters-table th,
+            #app .parameters-table td {
+                border: 1px solid #000;
+                padding: 10px;
+                text-align: left;
+                font-size: 14px;
+                line-height: 1.5;
+                word-break: break-word;
             }
-            .note {
-                font-size: 13px;
-                color: var(--muted);
+            #app[data-theme="dark"] .parameters-table {
+                background: #0b0b0b;
+                color: #fff;
+                border-color: #fff;
             }
-
-            .alert {
-                padding: 10px 12px;
-                border-radius: 10px;
-                border: 1px solid;
-                display: none;
-            }
-            .alert.ok {
-                border-color: #d1fae5;
-                background: #ecfdf5;
-                color: #065f46;
-            }
-            .alert.warn {
-                border-color: #fde68a;
-                background: #fffbeb;
-                color: #7c2d12;
-            }
-            .alert.err {
-                border-color: #fecaca;
-                background: #fef2f2;
-                color: #991b1b;
+            #app[data-theme="dark"] .parameters-table th,
+            #app[data-theme="dark"] .parameters-table td {
+                border-color: #fff;
             }
 
-            footer {
+            /* Footer */
+            #app footer {
                 max-width: 1120px;
                 margin: 40px auto 24px;
                 padding: 0 16px;
-                color: var(--muted);
-                font-size: 13px;
+                color: var(--aw-muted);
+                font-size: 0.8125rem;
                 text-align: center;
+                border-top: 1px solid var(--aw-border);
+                padding-top: 20px;
             }
         </style>
-        <!-- Google Identity Services（用於 Gmail 登入/註冊） -->
-        <script
-            src="https://accounts.google.com/gsi/client"
-            async
-            defer
-        ></script>
     </head>
+
     <body>
-        <header>
-            <div class="wrap">
-                <div class="brand">AI 助手 Widget</div>
-                <div class="spacer"></div>
-
-                <!-- 語言切換 -->
-                <div class="lang" id="lang-switch">
-                    <button data-lang="zh-TW" class="active">中文</button>
-                    <button data-lang="en">English</button>
-                </div>
-
-                <!-- 登入區 -->
-                <div id="auth-area" class="row" style="align-items: center">
-                    <!-- Google Sign-In 會掛在這裡 -->
-                    <div
-                        id="g_id_onload"
-                        data-client_id="YOUR_GOOGLE_CLIENT_ID"
-                        data-context="signin"
-                        data-auto_prompt="false"
-                        data-callback="onGoogleSignIn"
-                    ></div>
-                    <div
-                        class="g_id_signin"
-                        data-type="standard"
-                        data-shape="pill"
-                        data-theme="outline"
-                        data-size="medium"
-                        data-text="signin_with"
-                        data-logo_alignment="left"
-                    ></div>
-
-                    <!-- 已登入顯示 -->
-                    <div
-                        id="user-info"
-                        style="display: none; gap: 8px; align-items: center"
-                    >
-                        <span id="user-email" class="muted"></span>
-                        <button class="btn small" id="btn-logout">登出</button>
+        <!-- 把站內所有內容都放在 #app，外掛在 #app 之外，不會吃到我們的變數 -->
+        <div id="app" data-theme="light">
+            <header>
+                <div class="wrap">
+                    <div class="brand">
+                        AI Chatbot Widget - Embed Smart AI Assistant
+                        Effortlessly
                     </div>
                 </div>
-            </div>
-        </header>
+                <div class="controls">
+                    <select class="lang-select" id="lang-select">
+                        <option value="zh-TW">繁中</option>
+                        <option value="zh-CN">简中</option>
+                        <option value="ja">日本語</option>
+                        <option value="en">English</option>
+                    </select>
+                    <button
+                        class="theme-toggle"
+                        id="theme-toggle"
+                        title="Toggle Theme"
+                    >
+                        <i class="fas fa-moon" style="color: black"></i>
+                    </button>
+                </div>
+            </header>
 
-        <main class="container">
-            <!-- 左：教學 & 建立助手 -->
-            <section class="card">
-                <h2 data-i18n="quickStart.title">快速開始</h2>
-                <p data-i18n="quickStart.desc">
-                    在網站 <code>&lt;/body&gt;</code> 前貼上這段程式碼：
-                </p>
+            <main>
+                <section class="hero card">
+                    <h1>
+                        最佳 AI Chatbot Widget：輕鬆嵌入 24/7 客戶支援於您的網站
+                    </h1>
+                    <p>
+                        探索 2025 年如何免費嵌入 AI chatbot—提升轉換率
+                        30%，並支援多國語言輸入與回覆。
+                    </p>
+                    <div class="benefits">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <span>一鍵嵌入：5 分鐘內上線</span>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <span>自訂知識庫：專業回應</span>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <span>多語支援：50+ 語言回覆</span>
+                        </div>
+                    </div>
+                    <a href="#quickstart" class="btn">立即啟動免費試用</a>
+                </section>
 
-                <!-- 安裝碼 -->
-                <div class="code" id="codebox">
-                    <button class="btn small copy-btn" id="copy">複製</button>
-                    <pre><code id="embed-code">&lt;script
+                <section class="card" id="quickstart">
+                    <h2>快速開始：嵌入程式碼</h2>
+                    <div class="code" id="codebox" title="Click to copy">
+                        <pre><code id="embed-code">&lt;script
   src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
   data-position="bottom-right"
   data-site="aitarf_15oJOoBsQFa3"
@@ -339,531 +346,185 @@
   data-z="2147483000"
   defer
 &gt;&lt;/script&gt;</code></pre>
-                </div>
-
-                <h3 data-i18n="params.title">參數說明</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th data-i18n="params.th1">屬性</th>
-                            <th data-i18n="params.th2">必填</th>
-                            <th data-i18n="params.th3">範例</th>
-                            <th data-i18n="params.th4">說明</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>src</code></td>
-                            <td>
-                                <span class="badge" data-i18n="required"
-                                    >必填</span
-                                >
-                            </td>
-                            <td>
-                                <code
-                                    >https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js</code
-                                >
-                            </td>
-                            <td data-i18n="params.src">
-                                載入 widget 的 loader 腳本。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-position</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >可選</span
-                                >
-                            </td>
-                            <td>
-                                <code>bottom-right</code> /
-                                <code>bottom-left</code>
-                            </td>
-                            <td data-i18n="params.position">
-                                懸浮按鈕位置，預設 <code>bottom-right</code>。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-site</code></td>
-                            <td>
-                                <span class="badge" data-i18n="required"
-                                    >必填</span
-                                >
-                            </td>
-                            <td><code>aitarf_15oJOoBsQFa3</code></td>
-                            <td data-i18n="params.site">
-                                站點/專案 ID，用於後端選擇知識庫。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-accent</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >可選</span
-                                >
-                            </td>
-                            <td><code>#25d366</code></td>
-                            <td data-i18n="params.accent">
-                                主題色（HEX 或 RGB(A)）。不合法值會回退預設。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-width</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >可選</span
-                                >
-                            </td>
-                            <td><code>360</code></td>
-                            <td data-i18n="params.width">
-                                面板寬度（px），最小 240。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-height</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >可選</span
-                                >
-                            </td>
-                            <td><code>520</code></td>
-                            <td data-i18n="params.height">
-                                面板高度（px），最小 320；手機自動 RWD。
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><code>data-z</code></td>
-                            <td>
-                                <span class="badge" data-i18n="optional"
-                                    >可選</span
-                                >
-                            </td>
-                            <td><code>2147483000</code></td>
-                            <td data-i18n="params.z">
-                                元件 z-index，避免被覆蓋。
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 data-i18n="create.title" style="margin-top: 18px">
-                    建立你的 AI 助手
-                </h3>
-                <p class="note" data-i18n="create.note">
-                    需要先登入 Google（Gmail 驗證）。輸入最多 500
-                    字的知識庫文字，送出後會產生專屬 <code>data-site</code>。
-                </p>
-
-                <div class="alert ok" id="alert-ok"></div>
-                <div class="alert warn" id="alert-warn"></div>
-                <div class="alert err" id="alert-err"></div>
-
-                <div class="grid two">
-                    <div class="field">
-                        <label for="kb" data-i18n="create.label"
-                            >知識庫文字（最多 500 字）</label
-                        >
-                        <textarea
-                            id="kb"
-                            maxlength="500"
-                            placeholder="請輸入你的產品/品牌/服務重點…"
-                        ></textarea>
-                        <div class="counter">
-                            <span id="kb-count">0</span> / 500
-                        </div>
-                        <button
-                            class="btn primary"
-                            id="btn-create"
-                            disabled
-                            data-i18n="create.btn"
-                        >
-                            建立專屬助手
-                        </button>
                     </div>
-                    <div class="field">
-                        <label data-i18n="create.result">建立結果</label>
-                        <input
-                            id="site-out"
-                            type="text"
-                            readonly
-                            placeholder="data-site 會顯示在這裡"
-                            style="
-                                border: 1px solid var(--border);
-                                border-radius: 10px;
-                                padding: 10px 12px;
-                                background: #f8fafc;
-                            "
-                        />
-                        <p class="note" data-i18n="create.embedTip">
-                            下方安裝碼會自動套用新的
-                            <code>data-site</code>，右下角也會即時預覽。
-                        </p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- 右：示範/FAQ -->
-            <aside class="card">
-                <h2 data-i18n="demo.title">即時示範</h2>
-                <p class="muted" data-i18n="demo.desc">
-                    本頁面右下角已載入一個 AI 助手
-                    widget。你亦可用下方最小安裝碼：
-                </p>
-                <div class="code" style="margin-top: 10px">
-                    <pre><code id="embed-mini">&lt;script
+                    <h3 style="margin-top: 16px">
+                        自訂您的 AI Chatbot Widget 參數，實現無縫整合
+                    </h3>
+                    <div class="table-wrap">
+                        <table class="parameters-table">
+                            <thead>
+                                <tr>
+                                    <th>屬性</th>
+                                    <th>必填</th>
+                                    <th>說明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>src</code></td>
+                                    <td>必填</td>
+                                    <td>載入核心腳本。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data-position</code></td>
+                                    <td>可選</td>
+                                    <td>浮動按鈕位置（預設右下）。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data-site</code></td>
+                                    <td>必填</td>
+                                    <td>你的站點 ID。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data-accent</code></td>
+                                    <td>可選</td>
+                                    <td>品牌主色（HEX/RGB）。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data-width</code></td>
+                                    <td>可選</td>
+                                    <td>聊天面板寬度（px）。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data-height</code></td>
+                                    <td>可選</td>
+                                    <td>聊天面板高度（px）。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data-z</code></td>
+                                    <td>可選</td>
+                                    <td>z-index，確保浮在最上層。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <aside class="card" id="demo">
+                    <h2>即時示範（僅展示程式碼，不會實際載入）</h2>
+                    <p class="muted">
+                        右下角 AI 小幫手由頁尾唯一 script
+                        載入；本區只顯示範例碼。
+                    </p>
+                    <div class="code" id="mini-code" title="Click to copy">
+                        <pre><code id="embed-mini">&lt;script
   src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
   data-site="aitarf_15oJOoBsQFa3"
   defer
 &gt;&lt;/script&gt;</code></pre>
-                </div>
+                    </div>
+                    <a href="#quickstart" class="btn"
+                        >立即嵌入您的免費 AI Widget</a
+                    >
+                </aside>
+            </main>
 
-                <h3 data-i18n="faq.title">常見問題</h3>
-                <dl class="faq">
-                    <dt data-i18n="faq.q1">看不到 AI 助手？</dt>
-                    <dd class="muted" data-i18n="faq.a1">
-                        檢查 script 是否載入、瀏覽器未阻擋、或調高
-                        <code>data-z</code>。
-                    </dd>
-                    <dt data-i18n="faq.q2">送出沒反應？</dt>
-                    <dd class="muted" data-i18n="faq.a2">
-                        確認後端 <code>/query</code> 支援 CORS，並回傳
-                        <code>{ answer: "..." }</code> 或純文字。
-                    </dd>
-                    <dt data-i18n="faq.q3">如何限制配額？</dt>
-                    <dd class="muted" data-i18n="faq.a3">
-                        在後端以
-                        <code>site + clientIP</code> 做速率限制或每日次數限制。
-                    </dd>
-                </dl>
-            </aside>
-        </main>
-
-        <footer>
-            © 2025 AI 助手 Widget 教學頁 · RWD 支援 · Google 登入 · 自建助手
-        </footer>
+            <footer>© 2025 AI Chatbot Widget</footer>
+        </div>
+        <!-- /#app -->
 
         <script>
-            // ====== I18N 文案 ======
-            const STR = {
-                "zh-TW": {
-                    quickStart: {
-                        title: "快速開始",
-                        desc: "在網站 </body> 前貼上這段程式碼：",
-                    },
-                    params: {
-                        title: "參數說明",
-                        th1: "屬性",
-                        th2: "必填",
-                        th3: "範例",
-                        th4: "說明",
-                        src: "載入 widget 的 loader 腳本。",
-                        position: "懸浮按鈕位置，預設 bottom-right。",
-                        site: "站點/專案 ID，用於後端選擇知識庫。",
-                        accent: "主題色（HEX 或 RGB(A)）。不合法值會回退預設。",
-                        width: "面板寬度（px），最小 240。",
-                        height: "面板高度（px），最小 320；手機自動 RWD。",
-                        z: "元件 z-index，避免被覆蓋。",
-                    },
-                    required: "必填",
-                    optional: "可選",
-                    create: {
-                        title: "建立你的 AI 助手",
-                        note: "需要先登入 Google（Gmail 驗證）。輸入最多 500 字的知識庫文字，送出後會產生專屬 data-site。",
-                        label: "知識庫文字（最多 500 字）",
-                        btn: "建立專屬助手",
-                        result: "建立結果",
-                        embedTip:
-                            "下方安裝碼會自動套用新的 data-site，右下角也會即時預覽。",
-                    },
-                    demo: {
-                        title: "即時示範",
-                        desc: "本頁面右下角已載入一個 AI 助手 widget。你亦可用下方最小安裝碼：",
-                    },
-                    faq: {
-                        title: "常見問題",
-                        q1: "看不到 AI 助手？",
-                        a1: "檢查 script 是否載入、瀏覽器未阻擋、或調高 data-z。",
-                        q2: "送出沒反應？",
-                        a2: '確認後端 /query 支援 CORS，並回傳 { answer: "..." } 或純文字。',
-                        q3: "如何限制配額？",
-                        a3: "在後端以 site + clientIP 做速率限制或每日次數限制。",
-                    },
-                    login: {
-                        signout: "登出",
-                        needLogin: "請先登入 Google（Gmail）",
-                        created: "建立成功！已產生 data-site：",
-                        err: "發生錯誤，請稍後再試。",
-                        notGmail: "需要 Gmail 帳號或 email_verified=true",
-                    },
-                },
-                en: {
-                    quickStart: {
-                        title: "Quick Start",
-                        desc: "Paste this snippet before </body> on your site:",
-                    },
-                    params: {
-                        title: "Parameters",
-                        th1: "Attr",
-                        th2: "Req",
-                        th3: "Example",
-                        th4: "Description",
-                        src: "Loader script for the widget.",
-                        position:
-                            "Floating button position. Default is bottom-right.",
-                        site: "Your site/project ID used by backend to pick the knowledge base.",
-                        accent: "Theme color (HEX or RGB(A)). Invalid values fall back to default.",
-                        width: "Panel width (px), minimum 240.",
-                        height: "Panel height (px), minimum 320; mobile is responsive.",
-                        z: "z-index of the widget, to avoid being covered.",
-                    },
-                    required: "Required",
-                    optional: "Optional",
-                    create: {
-                        title: "Create Your Assistant",
-                        note: "Sign in with Google first. Enter up to 500 chars of knowledge. We will return a unique data-site key.",
-                        label: "Knowledge (max 500 chars)",
-                        btn: "Create Assistant",
-                        result: "Result",
-                        embedTip:
-                            "The embed code below updates with your data-site and the demo widget refreshes.",
-                    },
-                    demo: {
-                        title: "Live Demo",
-                        desc: "This page already embeds the widget at bottom-right. Minimal snippet:",
-                    },
-                    faq: {
-                        title: "FAQ",
-                        q1: "Can’t see the assistant?",
-                        a1: "Ensure the script loads, not blocked by browser, or increase data-z.",
-                        q2: "No response on send?",
-                        a2: 'Check your /query CORS and response format { answer: "..." } or plain text.',
-                        q3: "How to rate-limit?",
-                        a3: "Rate limit by site + clientIP server-side.",
-                    },
-                    login: {
-                        signout: "Sign out",
-                        needLogin: "Please sign in with Google (Gmail).",
-                        created: "Created! Your data-site: ",
-                        err: "Something went wrong. Please try again later.",
-                        notGmail: "Gmail or email_verified=true is required.",
-                    },
-                },
-            };
-
-            // ====== 語言切換 ======
-            const langSwitch = document.getElementById("lang-switch");
-            let CUR =
-                localStorage.getItem("aiw_lang") ||
-                (navigator.language || "zh-TW").startsWith("zh")
-                    ? "zh-TW"
-                    : "en";
-            function applyLang() {
-                const T = STR[CUR];
-                document.querySelectorAll("[data-i18n]").forEach((el) => {
-                    const path = el.getAttribute("data-i18n").split(".");
-                    let v = T;
-                    for (const k of path) {
-                        v = v?.[k];
-                    }
-                    if (typeof v === "string") el.innerHTML = v;
-                });
-                // 按鈕文字
-                document.getElementById("btn-logout").textContent =
-                    T.login.signout;
-                // 參數表徽章
-                document.querySelectorAll(".badge").forEach((b) => {
-                    const isReq =
-                        b.textContent.includes("必填") ||
-                        b.textContent.includes("Required");
-                    b.textContent = isReq ? T.required : T.optional;
-                });
+            // Toast（不擋點擊）
+            function toast(msg) {
+                const t = document.createElement("div");
+                t.className = "toast";
+                t.textContent = msg;
+                document.body.appendChild(t);
+                requestAnimationFrame(() => t.classList.add("show"));
+                setTimeout(() => {
+                    t.classList.remove("show");
+                    setTimeout(() => t.remove(), 250);
+                }, 1600);
             }
-            langSwitch.addEventListener("click", (e) => {
-                const b = e.target.closest("button");
-                if (!b) return;
-                CUR = b.getAttribute("data-lang");
-                localStorage.setItem("aiw_lang", CUR);
-                langSwitch
-                    .querySelectorAll("button")
-                    .forEach((x) => x.classList.toggle("active", x === b));
-                applyLang();
-            });
-
-            // ====== 文字計數 & 狀態 ======
-            const kb = document.getElementById("kb");
-            const kbCount = document.getElementById("kb-count");
-            kb.addEventListener("input", () => {
-                kbCount.textContent = kb.value.length;
-            });
-
-            // ====== 登入狀態 ======
-            let ID_TOKEN = "";
-            let USER_EMAIL = "";
-            const userInfo = document.getElementById("user-info");
-            const emailEl = document.getElementById("user-email");
-            const btnLogout = document.getElementById("btn-logout");
-            btnLogout.addEventListener("click", () => {
-                ID_TOKEN = "";
-                USER_EMAIL = "";
-                userInfo.style.display = "none";
-                // 移除 GIS session（可選）
-                google.accounts.id.disableAutoSelect();
-                alert(STR[CUR].login.needLogin);
-                document.getElementById("btn-create").disabled = true;
-            });
-
-            // Google Sign-In callback（由 GIS script 呼叫）
-            window.onGoogleSignIn = (resp) => {
+            // Click-to-copy
+            async function copyText(txt) {
                 try {
-                    const token = resp.credential; // ID token (JWT)
-                    // 解析 payload（僅前端顯示，真正驗簽請在後端）
-                    const payload = JSON.parse(atob(token.split(".")[1]));
-                    const email = payload.email || "";
-                    const verified = payload.email_verified === true;
-                    if (!email || !verified) {
-                        alert(STR[CUR].login.notGmail);
-                        return;
-                    }
-                    ID_TOKEN = token;
-                    USER_EMAIL = email;
-                    emailEl.textContent = email;
-                    userInfo.style.display = "inline-flex";
-                    document.getElementById("btn-create").disabled = false;
-                } catch (e) {
-                    console.error(e);
-                    alert(STR[CUR].login.err);
-                }
-            };
-
-            // ====== 建立專屬助手 ======
-            const alertOK = document.getElementById("alert-ok");
-            const alertWarn = document.getElementById("alert-warn");
-            const alertErr = document.getElementById("alert-err");
-            function showAlert(el, msg) {
-                el.textContent = msg;
-                el.style.display = "block";
-                setTimeout(() => (el.style.display = "none"), 4000);
-            }
-
-            const embedCodeEl = document.getElementById("embed-code");
-            const embedMiniEl = document.getElementById("embed-mini");
-            const siteOut = document.getElementById("site-out");
-            const btnCreate = document.getElementById("btn-create");
-
-            btnCreate.addEventListener("click", async () => {
-                if (!ID_TOKEN) {
-                    alert(STR[CUR].login.needLogin);
-                    return;
-                }
-                const knowledge = kb.value.trim();
-                if (!knowledge) {
-                    showAlert(
-                        alertWarn,
-                        CUR === "zh-TW"
-                            ? "請輸入知識庫內容"
-                            : "Please enter your knowledge text.",
-                    );
-                    return;
-                }
-
-                btnCreate.disabled = true;
-                try {
-                    const res = await fetch("/api/create-assistant", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ idToken: ID_TOKEN, knowledge }),
-                    });
-                    if (!res.ok) {
-                        const txt = await res.text().catch(() => "");
-                        throw new Error(txt || "HTTP " + res.status);
-                    }
-                    const data = await res.json();
-                    const site = data.site || "";
-                    if (!site) {
-                        throw new Error("missing site");
-                    }
-                    siteOut.value = site;
-                    // 更新安裝碼中的 data-site
-                    const full = embedCodeEl.innerText.replace(
-                        /data-site="[^"]+"/,
-                        `data-site="${site}"`,
-                    );
-                    const mini = embedMiniEl.innerText.replace(
-                        /data-site="[^"]+"/,
-                        `data-site="${site}"`,
-                    );
-                    embedCodeEl.innerText = full;
-                    embedMiniEl.innerText = mini;
-                    // 同時刷新本頁右下角預覽：動態插入一段新 script（可與原本示範共存）
-                    const s = document.createElement("script");
-                    s.src =
-                        "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
-                    s.defer = true;
-                    s.setAttribute("data-site", site);
-                    document.body.appendChild(s);
-
-                    showAlert(alertOK, STR[CUR].login.created + site);
-                } catch (e) {
-                    console.error(e);
-                    showAlert(alertErr, STR[CUR].login.err);
-                } finally {
-                    btnCreate.disabled = false;
-                }
-            });
-
-            // 複製
-            const copyBtn = document.getElementById("copy");
-            copyBtn.addEventListener("click", async () => {
-                try {
-                    await navigator.clipboard.writeText(embedCodeEl.innerText);
-                    copyBtn.textContent =
-                        CUR === "zh-TW" ? "已複製！" : "Copied!";
-                    setTimeout(
-                        () =>
-                            (copyBtn.textContent =
-                                CUR === "zh-TW" ? "複製" : "Copy"),
-                        1200,
-                    );
-                } catch (_) {
+                    await navigator.clipboard.writeText(txt);
+                } catch {
                     const ta = document.createElement("textarea");
-                    ta.value = embedCodeEl.innerText;
+                    ta.value = txt;
                     document.body.appendChild(ta);
                     ta.select();
                     document.execCommand("copy");
-                    document.body.removeChild(ta);
-                    copyBtn.textContent =
-                        CUR === "zh-TW" ? "已複製！" : "Copied!";
-                    setTimeout(
-                        () =>
-                            (copyBtn.textContent =
-                                CUR === "zh-TW" ? "複製" : "Copy"),
-                        1200,
-                    );
+                    ta.remove();
                 }
+            }
+            document.getElementById("codebox").addEventListener("click", () => {
+                copyText(document.getElementById("embed-code").innerText);
+                toast("已複製！");
             });
+            document
+                .getElementById("mini-code")
+                .addEventListener("click", () => {
+                    copyText(document.getElementById("embed-mini").innerText);
+                    toast("已複製！");
+                });
 
-            // 初始化語言
-            langSwitch
-                .querySelectorAll("button")
-                .forEach((b) =>
-                    b.classList.toggle(
-                        "active",
-                        b.getAttribute("data-lang") === CUR,
-                    ),
-                );
-            applyLang();
+            // 主題切換：只切 #app，不動 body（避免外掛吃到）
+            (function () {
+                const app = document.getElementById("app");
+                const themeToggle = document.getElementById("theme-toggle");
+                const saved = localStorage.getItem("aw_theme") || "light";
+                app.setAttribute("data-theme", saved);
+                themeToggle.innerHTML =
+                    saved === "light"
+                        ? '<i class="fas fa-moon" style="color:black;"></i>'
+                        : '<i class="fas fa-sun" style="color:white;"></i>';
+                themeToggle.addEventListener("click", () => {
+                    const cur = app.getAttribute("data-theme") || "light";
+                    const next = cur === "light" ? "dark" : "light";
+                    app.setAttribute("data-theme", next);
+                    localStorage.setItem("aw_theme", next);
+                    themeToggle.innerHTML =
+                        next === "light"
+                            ? '<i class="fas fa-moon" style="color:black;"></i>'
+                            : '<i class="fas fa-sun" style="color:white;"></i>';
+                });
+            })();
         </script>
 
-        <!-- 右下角：示範用 AI 助手（初始以你的 demo site 代號啟動，建立新助手後會再插入一個新的預覽） -->
-        <script
-            src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-            data-position="bottom-right"
-            data-site="aitarf_15oJOoBsQFa3"
-            data-accent="#25d366"
-            data-width="360"
-            data-height="520"
-            data-z="2147483000"
-            defer
-        ></script>
+        <!-- 唯一且防重複的外掛載入（外掛在 #app 之外，完全不會吃到 #app 變數） -->
+        <script>
+            (function () {
+                const SRC =
+                    "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
+                // 若第三方 / CMS 已塞入 loader，僅保留第一份
+                const existing = Array.from(
+                    document.querySelectorAll(
+                        'script[src*="ai-helper-loader.js"]',
+                    ),
+                );
+                if (existing.length > 0) {
+                    existing.slice(1).forEach((s) => {
+                        try {
+                            s.parentNode && s.parentNode.removeChild(s);
+                        } catch (_) {}
+                    });
+                    console.warn(
+                        "[AI Widget] Loader already present, skipping duplicate.",
+                    );
+                    return; // 交給現有那份
+                }
+                const s = document.createElement("script");
+                s.src = SRC;
+                s.defer = true;
+                s.setAttribute("data-position", "bottom-right");
+                s.setAttribute(
+                    "data-site",
+                    "aitarf_15oJOoBsQFa3",
+                ); /* 換成你的正式 Site ID */
+                s.setAttribute("data-accent", "#25d366");
+                s.setAttribute("data-width", "360");
+                s.setAttribute("data-height", "520");
+                s.setAttribute("data-z", "2147483000");
+                s.onload = () => console.log("[AI Widget] loader loaded");
+                s.onerror = () =>
+                    console.error(
+                        "[AI Widget] loader failed to load (network/CSP?)",
+                    );
+                document.body.appendChild(s);
+            })();
+        </script>
     </body>
 </html>
