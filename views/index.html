@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>
+        <title data-i18n="title">
             AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free
             in 2025
         </title>
@@ -15,20 +15,372 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
-
         <style>
-            /* 只保留極小的全域 reset，避免影響外掛 */
+            :root {
+                --bg: #f7f9fc;
+                --card: #fff;
+                --text: #1b2838;
+                --muted: #6b7a90;
+                --primary: #2563eb;
+                --ok: #10b981;
+                --border: #e6ecf2;
+                --mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --font-size-base: 16px;
+            }
+            [data-theme="dark"] {
+                --bg: #0f172a;
+                --card: #1e293b;
+                --text: #f1f5f9;
+                --muted: #94a3b8;
+                --primary: #3b82f6;
+                --ok: #34d399;
+                --border: #334155;
+            }
+            * {
+                box-sizing: border-box;
+            }
             html,
             body {
                 margin: 0;
+                min-height: 100vh;
+                background: var(--bg);
+                color: var(--text);
                 font-family:
                     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                     "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
                     "Noto Sans SC", "PingFang SC", "Hiragino Sans",
                     "Noto Sans JP", Arial, sans-serif;
-                overflow: auto; /* 確保頁面不鎖滾動 */
+                font-size: var(--font-size-base);
+                line-height: 1.6;
+                transition:
+                    background-color 0.3s ease,
+                    color 0.3s ease;
             }
-            /* Toast：全域但不攔截點擊（不會擋住右下角外掛） */
+            header {
+                padding: clamp(8px, 2vw, 12px) clamp(8px, 4vw, 16px);
+                border-bottom: 1px solid var(--border);
+                background: var(--card);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 12px;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+            .wrap {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex: 1;
+                min-width: 0;
+            }
+            .brand {
+                font-weight: 800;
+                font-size: clamp(1rem, 4vw, 1.375rem);
+                white-space: normal;
+                word-wrap: break-word;
+                line-height: 1.2;
+                text-align: center;
+            }
+            @media (max-width: 480px) {
+                .brand {
+                    font-size: clamp(1rem, 5vw, 1.125rem);
+                }
+            }
+            .controls {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-left: auto;
+            }
+            .lang-select {
+                padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: var(--card);
+                color: var(--text);
+                font-size: clamp(0.875rem, 2vw, 0.875rem);
+                cursor: pointer;
+                min-width: 80px;
+            }
+            .theme-toggle {
+                background: none;
+                border: 1px solid var(--border);
+                border-radius: 50%;
+                width: clamp(32px, 6vw, 40px);
+                height: clamp(32px, 6vw, 40px);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text);
+                font-size: clamp(1rem, 3vw, 1.25rem);
+                transition: background-color 0.3s ease;
+            }
+            .theme-toggle:hover {
+                background: var(--border);
+            }
+            main {
+                max-width: 1120px;
+                margin: 0 auto;
+                padding: clamp(8px, 2vw, 16px);
+                display: flex;
+                flex-direction: column;
+                gap: clamp(24px, 4vw, 32px);
+            }
+            .card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: clamp(16px, 4vw, 24px);
+                box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
+                transition:
+                    background-color 0.3s ease,
+                    border-color 0.3s ease;
+                width: 100%;
+            }
+            .hero {
+                text-align: center;
+                background: linear-gradient(135deg, var(--primary), #3b82f6);
+                color: #fff;
+                padding: clamp(24px, 8vw, 40px);
+                border-radius: 14px;
+                margin-bottom: clamp(0, 2vw, 16px);
+            }
+            .hero h1 {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+                margin: 0 0 clamp(8px, 2vw, 16px);
+                font-weight: 800;
+                white-space: normal;
+                word-wrap: break-word;
+                line-height: 1.3;
+            }
+            .hero p {
+                font-size: clamp(1rem, 3vw, 1.125rem);
+                margin: 0 0 clamp(16px, 4vw, 24px);
+                opacity: 0.95;
+            }
+            h2 {
+                margin: 0 0 clamp(8px, 2vw, 12px) 0;
+                font-size: clamp(1.25rem, 4vw, 1.25rem);
+            }
+            h3 {
+                margin: clamp(16px, 4vw, 24px) 0 clamp(8px, 2vw, 12px);
+                font-size: clamp(1rem, 2.5vw, 1rem);
+            }
+            p {
+                line-height: 1.65;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+            }
+            .muted {
+                color: var(--muted);
+                font-size: clamp(0.8125rem, 2vw, 0.8125rem);
+            }
+
+            /* 程式碼方塊：移除按鈕，加入可長按複製提示 */
+            .code {
+                position: relative;
+                background: #0b1220;
+                color: #e6edf3;
+                border-radius: 10px;
+                padding: clamp(12px, 3vw, 16px);
+                border: 1px solid #0f1b33;
+                overflow-x: auto;
+                font-size: clamp(0.75rem, 2vw, 0.8125rem);
+                margin: clamp(12px, 3vw, 16px) 0;
+            }
+            .code[data-copyable="true"] {
+                cursor: pointer;
+            }
+            /* 動態提示（語言切換時由 JS 更新 data-hint） */
+            .code[data-copyable="true"]::after {
+                content: attr(data-hint);
+                position: absolute;
+                right: 12px;
+                bottom: 10px;
+                font-size: 0.75em;
+                color: #9fb4d0;
+                opacity: 0.85;
+                pointer-events: none;
+            }
+            pre {
+                margin: 0;
+                overflow: auto;
+                white-space: pre;
+            }
+            code {
+                font-family: var(--mono);
+                font-size: inherit;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: clamp(10px, 2.5vw, 12px) clamp(16px, 4vw, 20px);
+                border-radius: 10px;
+                border: 2px solid var(--primary);
+                background: var(--primary);
+                color: #fff;
+                cursor: pointer;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                white-space: nowrap;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+                font-weight: 600;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+                margin: clamp(8px, 2vw, 12px) 0;
+            }
+            .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+            }
+            .btn.primary {
+                background: var(--primary);
+                color: #fff;
+                border-color: var(--primary);
+            }
+            .hero .btn.primary {
+                margin-top: clamp(16px, 4vw, 24px);
+                border: 2px solid rgba(255, 255, 255, 0.4);
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            }
+            .btn.small {
+                padding: clamp(6px, 1.5vw, 8px) clamp(12px, 3vw, 16px);
+                font-size: clamp(0.75rem, 2vw, 0.875rem);
+                margin: clamp(8px, 2vw, 12px) 0;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                overflow: hidden;
+                overflow-x: auto;
+                display: block;
+                white-space: nowrap;
+                font-size: clamp(0.75rem, 2vw, 0.8125rem);
+                margin: clamp(12px, 3vw, 16px) 0;
+            }
+            th,
+            td {
+                padding: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 12px);
+                border-bottom: 1px solid var(--border);
+                text-align: left;
+                vertical-align: top;
+            }
+            th {
+                background: #f0f4fa;
+                font-weight: 600;
+                min-width: 100px;
+            }
+            [data-theme="dark"] th {
+                background: #334155;
+            }
+            tr:last-child td {
+                border-bottom: 0;
+            }
+            .badge {
+                display: inline-block;
+                font-size: clamp(0.6875rem, 1.5vw, 0.6875rem);
+                padding: 4px 8px;
+                border-radius: 999px;
+                background: #eef2ff;
+                color: #354ab8;
+                border: 1px solid #d8defc;
+                margin: 2px 0;
+            }
+            [data-theme="dark"] .badge {
+                background: #1e40af;
+                color: #bfdbfe;
+                border-color: #1e40af;
+            }
+            .note {
+                font-size: clamp(0.8125rem, 2vw, 0.8125rem);
+                color: var(--muted);
+                margin: clamp(8px, 2vw, 12px) 0;
+            }
+            footer {
+                max-width: 1120px;
+                margin: clamp(24px, 6vw, 40px) auto clamp(12px, 3vw, 24px);
+                padding: 0 clamp(8px, 2vw, 16px);
+                color: var(--muted);
+                font-size: clamp(0.8125rem, 2vw, 0.8125rem);
+                text-align: center;
+                border-top: 1px solid var(--border);
+                padding-top: clamp(16px, 4vw, 20px);
+            }
+            .grid {
+                display: grid;
+                gap: clamp(16px, 4vw, 20px);
+            }
+            .grid.two {
+                grid-template-columns: 1fr;
+            }
+            @media (min-width: 760px) {
+                .grid.two {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+            .field {
+                display: flex;
+                flex-direction: column;
+                gap: clamp(8px, 2vw, 12px);
+            }
+            .field textarea,
+            .field input {
+                width: 100%;
+                min-height: clamp(80px, 20vw, 120px);
+                resize: vertical;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: clamp(8px, 2vw, 12px);
+                font-size: clamp(0.875rem, 2.5vw, 0.875rem);
+                background: var(--card);
+                color: var(--text);
+                transition:
+                    background-color 0.3s ease,
+                    color 0.3s ease;
+                margin-bottom: clamp(4px, 1vw, 8px);
+            }
+            .counter {
+                font-size: clamp(0.75rem, 2vw, 0.75rem);
+                color: var(--muted);
+                text-align: right;
+            }
+            .benefits {
+                display: grid;
+                gap: clamp(12px, 3vw, 16px);
+                margin: clamp(12px, 3vw, 16px) 0;
+                justify-items: center;
+            }
+            .benefit-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+                max-width: 100%;
+                text-align: left;
+                font-size: clamp(0.875rem, 2.5vw, 0.875rem);
+            }
+            .benefit-icon {
+                background: var(--ok);
+                color: #fff;
+                width: clamp(24px, 6vw, 28px);
+                height: clamp(24px, 6vw, 28px);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: clamp(0.875rem, 2.5vw, 1rem);
+                flex-shrink: 0;
+            }
+
+            /* Toast */
             .toast {
                 position: fixed;
                 left: 50%;
@@ -39,587 +391,740 @@
                 padding: 10px 14px;
                 border-radius: 10px;
                 font-size: 0.875rem;
-                z-index: 2147483645; /* 降低 z-index，讓 widget 浮在上 */
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+                z-index: 2147483647;
                 opacity: 0;
-                transition: 0.2s;
-                pointer-events: none;
+                transition:
+                    opacity 0.2s ease,
+                    transform 0.2s ease;
             }
             .toast.show {
                 opacity: 1;
                 transform: translateX(-50%) translateY(-4px);
             }
 
-            /* ====== 把所有主題變數與樣式鎖在 #app，並用自家前綴 --aw-* ====== */
-            #app {
-                --aw-bg: #f7f9fc;
-                --aw-card: #fff;
-                --aw-text: #1b2838;
-                --aw-muted: #6b7a90;
-                --aw-primary: #2563eb;
-                --aw-ok: #10b981;
-                --aw-border: #e6ecf2;
-                --aw-mono:
-                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-                background: var(--aw-bg);
-                color: var(--aw-text);
-                min-height: 100vh;
-            }
-            #app[data-theme="dark"] {
-                --aw-bg: #0f172a;
-                --aw-card: #1e293b;
-                --aw-text: #f1f5f9;
-                --aw-muted: #94a3b8;
-                --aw-primary: #3b82f6;
-                --aw-ok: #34d399;
-                --aw-border: #334155;
-                background: var(--aw-bg);
-                color: var(--aw-text);
-            }
-            #app,
-            #app * {
-                box-sizing: border-box;
-            }
-
-            /* Header */
-            #app header {
-                padding: 12px 16px;
-                border-bottom: 1px solid var(--aw-border);
-                background: var(--aw-card);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 12px;
-                position: sticky;
-                top: 0;
-                z-index: 100;
-            }
-            #app .wrap {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                flex: 1;
-                min-width: 0;
-            }
-            #app .brand {
-                font-weight: 800;
-                font-size: 1.25rem;
-                line-height: 1.2;
-                text-align: center;
-            }
-            #app .controls {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                margin-left: auto;
-            }
-            #app .lang-select {
-                padding: 6px 12px;
-                border: 1px solid var(--aw-border);
-                border-radius: 8px;
-                background: var(--aw-card);
-                color: var(--aw-text);
-                cursor: pointer;
-            }
-            #app .theme-toggle {
-                background: none;
-                border: 1px solid var(--aw-border);
-                border-radius: 50%;
-                width: 36px;
-                height: 36px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Main layout */
-            #app main {
-                max-width: 1120px;
-                margin: 0 auto;
-                padding: 16px;
-                display: flex;
-                flex-direction: column;
-                gap: 32px;
-            }
-            #app .card {
-                background: var(--aw-card);
-                border: 1px solid var(--aw-border);
-                border-radius: 14px;
-                padding: 24px;
-                box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
-            }
-            #app .hero {
-                text-align: center;
-                background: linear-gradient(135deg, var(--aw-primary), #3b82f6);
-                color: #fff;
-                padding: 40px;
-                border-radius: 14px;
-            }
-            #app .hero h1 {
-                font-size: 2rem;
-                margin: 0 0 16px;
-                font-weight: 800;
-            }
-            #app .hero p {
-                font-size: 1.125rem;
-                margin: 0 0 24px;
-                opacity: 0.95;
-            }
-            #app .benefits {
-                display: grid;
-                gap: 16px;
-                margin: 16px 0;
-                justify-items: center;
-            }
-            #app .benefit-item {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                font-size: 0.9rem;
-            }
-            #app .benefit-icon {
-                background: var(--aw-ok);
-                color: #fff;
-                width: 28px;
-                height: 28px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            #app .btn {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                padding: 12px 20px;
-                border-radius: 10px;
-                border: 2px solid var(--aw-primary);
-                background: var(--aw-primary);
-                color: #fff;
-                cursor: pointer;
-                text-decoration: none;
-                transition: 0.3s;
-                font-weight: 600;
-            }
-            #app .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
-            }
-
-            /* Code block（點一下複製） */
-            #app .code {
-                position: relative;
-                background: #0b1220;
-                color: #e6edf3;
-                border-radius: 10px;
-                padding: 16px;
-                border: 1px solid #0f1b33;
-                overflow-x: auto;
-                font-size: 0.85rem;
-                margin: 16px 0;
-                cursor: pointer;
-            }
-            #app pre {
-                margin: 0;
-                white-space: pre;
-            }
-            #app code {
-                font-family: var(--aw-mono);
-                font-size: inherit;
-            }
-
-            /* 黑白表格（含 dark 模式） */
-            #app .table-wrap {
-                width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            #app .parameters-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed;
-                background: #fff;
-                color: #000;
-                border: 1px solid #000;
-            }
-            #app .parameters-table th,
-            #app .parameters-table td {
-                border: 1px solid #000;
-                padding: 10px;
-                text-align: left;
-                font-size: 14px;
-                line-height: 1.5;
-                word-break: break-word;
-            }
-            #app[data-theme="dark"] .parameters-table {
-                background: #0b0b0b;
-                color: #fff;
-                border-color: #fff;
-            }
-            #app[data-theme="dark"] .parameters-table th,
-            #app[data-theme="dark"] .parameters-table td {
-                border-color: #fff;
-            }
-
-            /* Footer */
-            #app footer {
-                max-width: 1120px;
-                margin: 40px auto 24px;
-                padding: 0 16px;
-                color: var(--aw-muted);
-                font-size: 0.8125rem;
-                text-align: center;
-                border-top: 1px solid var(--aw-border);
-                padding-top: 20px;
-            }
-
-            /* 修正版：OpenAI Widget 樣式（右下角浮動，隔離布局避免污染） */
-            #openai-widget {
-                position: fixed !important;
-                bottom: 20px !important;
-                right: 20px !important;
-                width: 360px !important;
-                height: 520px !important;
-                max-width: 90vw !important;
-                max-height: 90vh !important;
-                background: white !important;
-                border-radius: 12px !important;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
-                display: none !important;
-                flex-direction: column !important;
-                z-index: 2147483646 !important;
-                font-family: -apple-system, sans-serif !important;
-                overflow: hidden !important; /* 防止內部內容溢出污染 */
-                border: 1px solid #ddd !important;
-            }
-            #openai-widget.open {
-                display: flex !important;
-                animation: slideIn 0.3s ease-out; /* 平滑顯示 */
-            }
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
+            /* Enhanced Mobile RWD */
+            @media (max-width: 480px) {
+                :root {
+                    --font-size-base: 18px;
                 }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
+                html,
+                body {
+                    line-height: 1.7;
+                }
+                header {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 8px;
+                }
+                .wrap {
+                    justify-content: center;
+                    order: 2;
+                }
+                .controls {
+                    width: 100%;
+                    justify-content: center;
+                    order: 1;
+                }
+                .hero {
+                    padding: clamp(20px, 10vw, 24px);
+                }
+                .hero h1 {
+                    font-size: clamp(1.75rem, 8vw, 2rem);
+                }
+                .hero p {
+                    font-size: clamp(1.125rem, 4vw, 1.25rem);
+                }
+                .card {
+                    padding: clamp(16px, 8vw, 20px);
+                }
+                table {
+                    font-size: clamp(0.875rem, 3vw, 1rem);
+                }
+                th,
+                td {
+                    padding: clamp(10px, 4vw, 14px) clamp(6px, 2vw, 8px);
+                    min-width: 80px;
+                }
+                .btn {
+                    width: 100%;
+                    padding: clamp(12px, 4vw, 16px);
+                    font-size: clamp(1rem, 3vw, 1rem);
+                    margin: clamp(12px, 4vw, 16px) 0;
+                }
+                .benefits {
+                    grid-template-columns: 1fr;
+                    gap: clamp(16px, 5vw, 20px);
+                }
+                .benefit-item {
+                    justify-content: center;
+                    text-align: center;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 8px;
+                }
+                .grid.two {
+                    grid-template-columns: 1fr;
+                    gap: clamp(20px, 6vw, 24px);
+                }
+                .field textarea,
+                .field input {
+                    font-size: clamp(1rem, 3vw, 1rem);
+                    padding: clamp(12px, 4vw, 16px);
+                }
+                footer {
+                    font-size: clamp(0.875rem, 3vw, 1rem);
                 }
             }
-            #widget-toggle {
-                position: fixed !important;
-                bottom: 20px !important;
-                right: 20px !important;
-                width: 60px !important;
-                height: 60px !important;
-                background: #25d366 !important;
-                border-radius: 50% !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                cursor: pointer !important;
-                z-index: 2147483646 !important;
-                color: white !important;
-                font-size: 24px !important;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-                transition: transform 0.2s !important;
-            }
-            #widget-toggle:hover {
-                transform: scale(1.05);
-            }
-            #widget-header {
-                padding: 16px !important;
-                background: #25d366 !important;
-                color: white !important;
-                border-radius: 12px 12px 0 0 !important;
-                display: flex !important;
-                justify-content: space-between !important;
-                align-items: center !important;
-                flex-shrink: 0 !important;
-            }
-            #widget-header i {
-                cursor: pointer;
-            }
-            #widget-messages {
-                flex: 1 !important;
-                padding: 16px !important;
-                overflow-y: auto !important;
-                background: #f9f9f9 !important;
-                margin: 0 !important;
-            }
-            .message {
-                margin-bottom: 12px !important;
-                padding: 8px 12px !important;
-                border-radius: 8px !important;
-                word-wrap: break-word !important;
-                max-width: 80% !important;
-            }
-            .user {
-                background: #25d366 !important;
-                color: white !important;
-                margin-left: auto !important;
-                margin-right: 0 !important;
-            }
-            .bot {
-                background: white !important;
-                color: #333 !important;
-                margin-left: 0 !important;
-                margin-right: auto !important;
-                border: 1px solid #ddd !important;
-            }
-            #widget-input {
-                display: flex !important;
-                padding: 16px !important;
-                border-top: 1px solid #ddd !important;
-                gap: 8px !important;
-                flex-shrink: 0 !important;
-                background: white !important;
-            }
-            #message-input {
-                flex: 1 !important;
-                padding: 8px !important;
-                border: 1px solid #ddd !important;
-                border-radius: 4px !important;
-                outline: none !important;
-            }
-            #send-btn {
-                background: #25d366 !important;
-                color: white !important;
-                border: none !important;
-                padding: 8px 12px !important;
-                border-radius: 4px !important;
-                cursor: pointer !important;
-            }
-            #send-btn:hover {
-                background: #1da851 !important;
-            }
-            /* 確保主題切換不影響 widget */
-            #app[data-theme="dark"] #openai-widget {
-                background: #1e293b !important;
-                color: #f1f5f9 !important;
-            }
-            #app[data-theme="dark"] #widget-messages {
-                background: #334155 !important;
-            }
-            #app[data-theme="dark"] .bot {
-                background: #334155 !important;
-                color: #f1f5f9 !important;
-                border-color: #475569 !important;
-            }
-            #app[data-theme="dark"] #widget-input {
-                background: #1e293b !important;
-                border-color: #475569 !important;
-            }
-            #app[data-theme="dark"] #message-input {
-                background: #1e293b !important;
-                color: #f1f5f9 !important;
-                border-color: #475569 !important;
+            @media (min-width: 481px) and (max-width: 768px) {
+                .grid.two {
+                    grid-template-columns: 1fr;
+                }
+                table {
+                    font-size: 0.875rem;
+                }
+                .btn {
+                    margin: clamp(12px, 3vw, 16px) 0;
+                }
             }
         </style>
     </head>
+    <body data-theme="light">
+        <header>
+            <div class="wrap">
+                <div class="brand" data-i18n="brand">
+                    AI Chatbot Widget - Embed Smart AI Assistant Effortlessly
+                </div>
+            </div>
+            <div class="controls">
+                <select class="lang-select" id="lang-select">
+                    <option value="zh-TW">繁中</option>
+                    <option value="zh-CN">简中</option>
+                    <option value="ja">日本語</option>
+                    <option value="en">English</option>
+                </select>
+                <!-- 新增 data-i18n 以便本地化 title -->
+                <button
+                    class="theme-toggle"
+                    id="theme-toggle"
+                    data-i18n="theme.toggle"
+                    title="Toggle Theme"
+                >
+                    <i class="fas fa-moon" style="color: black"></i>
+                </button>
+            </div>
+        </header>
 
-    <body>
-        <!-- 把站內所有內容都放在 #app，外掛在 #app 之外，不會吃到我們的變數 -->
-        <div id="app" data-theme="light">
-            <header>
-                <div class="wrap">
-                    <div class="brand">
-                        AI Chatbot Widget - Embed Smart AI Assistant
-                        Effortlessly
+        <main>
+            <!-- Hero Section -->
+            <section class="hero card">
+                <h1 data-i18n="hero.title">
+                    Best AI Chatbot Widget: Easily Embed 24/7 Customer Support
+                    on Your Site
+                </h1>
+                <p data-i18n="hero.desc">
+                    Discover how to embed AI chatbot on website free in
+                    2025—boost conversions by 30% with our customizable AI
+                    assistant embedding tool. No coding required: add AI
+                    assistant to e-commerce site easily, integrate knowledge
+                    base, and provide instant responses. Start your free trial
+                    today for seamless AI helper widget integration.
+                </p>
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <span data-i18n="hero.benefit1"
+                            >One-Click Embed: Live in 5 Minutes for Instant
+                            Setup</span
+                        >
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <span data-i18n="hero.benefit2"
+                            >Custom Knowledge Base: Professional, Tailored
+                            Responses</span
+                        >
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span data-i18n="hero.benefit3"
+                            >24/7 Availability: Slash Support Costs and Scale
+                            Effortlessly</span
+                        >
                     </div>
                 </div>
-                <div class="controls">
-                    <select class="lang-select" id="lang-select">
-                        <option value="zh-TW">繁中</option>
-                        <option value="zh-CN">简中</option>
-                        <option value="ja">日本語</option>
-                        <option value="en">English</option>
-                    </select>
-                    <button
-                        class="theme-toggle"
-                        id="theme-toggle"
-                        title="Toggle Theme"
-                    >
-                        <i class="fas fa-moon" style="color: black"></i>
-                    </button>
+                <a href="#create" class="btn primary" data-i18n="hero.cta"
+                    >Start Free AI Chatbot Widget Trial Now</a
+                >
+            </section>
+
+            <section class="card" id="quickstart">
+                <h2 data-i18n="quickStart.title">
+                    One-Click Embed: Launch Your AI Assistant Widget in Minutes
+                </h2>
+                <p data-i18n="quickStart.desc">
+                    Learn how to add AI assistant to your site with our simple
+                    embedding tutorial. Perfect for 24/7 customer service—try
+                    the best AI widget for website support now and elevate your
+                    user engagement.
+                </p>
+
+                <div
+                    class="code"
+                    id="codebox"
+                    data-copyable="true"
+                    data-hint="Long-press to copy"
+                >
+                    <!-- 移除按鈕，保留程式碼 -->
+                    <pre><code id="embed-code">&lt;script
+  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+  data-position="bottom-right"
+  data-site="aitarf_15oJOoBsQFa3"
+  data-accent="#25d366"
+  data-width="360"
+  data-height="520"
+  data-z="2147483000"
+  defer
+&gt;&lt;/script&gt;</code></pre>
                 </div>
-            </header>
 
-            <main>
-                <section class="hero card">
-                    <h1>
-                        最佳 AI Chatbot Widget：輕鬆嵌入 24/7 客戶支援於您的網站
-                    </h1>
-                    <p>
-                        探索 2025 年如何免費嵌入 AI chatbot—提升轉換率
-                        30%，並支援多國語言輸入與回覆。
-                    </p>
-                    <div class="benefits">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <span>一鍵嵌入：5 分鐘內上線</span>
+                <h3
+                    data-i18n="params.title"
+                    style="margin-top: clamp(16px, 4vw, 24px)"
+                >
+                    Customize Your AI Chatbot Widget Parameters for Seamless
+                    Integration
+                </h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="params.th1">Attribute</th>
+                            <th data-i18n="params.th2">Required</th>
+                            <th data-i18n="params.th4">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>src</code></td>
+                            <td>
+                                <span class="badge" data-i18n="required"
+                                    >Required</span
+                                >
+                            </td>
+                            <td data-i18n="params.src">
+                                Load the core script for your AI chatbot widget
+                                embedding.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-position</code></td>
+                            <td>
+                                <span class="badge" data-i18n="optional"
+                                    >Optional</span
+                                >
+                            </td>
+                            <td data-i18n="params.position">
+                                Position the floating button—default:
+                                bottom-right for optimal visibility.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-site</code></td>
+                            <td>
+                                <span class="badge" data-i18n="required"
+                                    >Required</span
+                                >
+                            </td>
+                            <td data-i18n="params.site">
+                                Your unique site ID for knowledge base
+                                integration in the AI assistant.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-accent</code></td>
+                            <td>
+                                <span class="badge" data-i18n="optional"
+                                    >Optional</span
+                                >
+                            </td>
+                            <td data-i18n="params.accent">
+                                Brand theme color (HEX/RGB) to match your site's
+                                design seamlessly.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-width</code></td>
+                            <td>
+                                <span class="badge" data-i18n="optional"
+                                    >Optional</span
+                                >
+                            </td>
+                            <td data-i18n="params.width">
+                                Chat panel width (px), minimum 240 for
+                                responsive display.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-height</code></td>
+                            <td>
+                                <span class="badge" data-i18n="optional"
+                                    >Optional</span
+                                >
+                            </td>
+                            <td data-i18n="params.height">
+                                Panel height (px), minimum 320; auto-adjusts on
+                                mobile devices.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-z</code></td>
+                            <td>
+                                <span class="badge" data-i18n="optional"
+                                    >Optional</span
+                                >
+                            </td>
+                            <td data-i18n="params.z">
+                                Z-index to ensure your AI widget stays on top
+                                without overlap.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3
+                    data-i18n="create.title"
+                    style="margin-top: clamp(16px, 4vw, 24px)"
+                >
+                    Build Your Custom AI Chatbot Widget: Free Starter Plan
+                    Available
+                </h3>
+                <p class="note" data-i18n="create.note">
+                    Input your product knowledge (up to 500 characters) to
+                    generate a unique ID. Free tier includes basic embedding;
+                    upgrade for unlimited conversations and advanced features.
+                </p>
+
+                <div class="grid two" id="create">
+                    <div class="field">
+                        <label for="kb" data-i18n="create.label"
+                            >Knowledge Base Content (Max 500 Characters)</label
+                        >
+                        <textarea
+                            id="kb"
+                            maxlength="500"
+                            placeholder="Describe your products, services, or FAQs for smart AI responses in the chatbot widget..."
+                            data-i18n-ph="create.ph"
+                        ></textarea>
+                        <div class="counter">
+                            <span id="kb-count">0</span> / 500
                         </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-comments"></i>
-                            </div>
-                            <span>自訂知識庫：專業回應</span>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <span>多語支援：50+ 語言回覆</span>
-                        </div>
+                        <button
+                            class="btn primary"
+                            id="btn-create"
+                            data-i18n="create.btn"
+                        >
+                            Generate Free AI Assistant ID
+                        </button>
                     </div>
-                    <a href="#quickstart" class="btn">立即啟動免費試用</a>
-                </section>
-
-                <section class="card" id="quickstart">
-                    <h2>快速開始：嵌入程式碼</h2>
-                    <div class="code" id="codebox" title="Click to copy">
-                        <pre><code id="embed-code">&lt;script&gt;
-  // 替換 YOUR_OPENAI_API_KEY 為您的 OpenAI API Key
-  const API_KEY = 'YOUR_OPENAI_API_KEY';
-  // 新增：OpenAI Widget 初始化腳本（修正版，使用 addEventListener 避免 inline 事件污染）
-  (function() {
-    const widget = document.createElement('div');
-    widget.id = 'openai-widget';
-    widget.innerHTML = `
-      &lt;div id="widget-header"&gt;
-        &lt;span&gt;AI 助手&lt;/span&gt;
-        &lt;i class="fas fa-times" id="close-widget"&gt;&lt;/i&gt;
-      &lt;/div&gt;
-      &lt;div id="widget-messages"&gt;&lt;/div&gt;
-      &lt;div id="widget-input"&gt;
-        &lt;input id="message-input" placeholder="輸入訊息..."&gt;
-        &lt;button id="send-btn"&gt;傳送&lt;/button&gt;
-      &lt;/div&gt;
-    `;
-    document.body.appendChild(widget);
-
-    const toggle = document.createElement('div');
-    toggle.id = 'widget-toggle';
-    toggle.innerHTML = '&lt;i class="fas fa-comment-dots"&gt;&lt;/i&gt;';
-    document.body.appendChild(toggle);
-
-    // 使用 addEventListener 綁定事件，避免 inline 事件導致污染
-    const closeBtn = document.getElementById('close-widget');
-    closeBtn.addEventListener('click', (e) =&gt; { e.preventDefault(); e.stopPropagation(); widget.classList.remove('open'); });
-    toggle.addEventListener('click', (e) =&gt; { e.preventDefault(); e.stopPropagation(); widget.classList.toggle('open'); });
-
-    const messageInput = document.getElementById('message-input');
-    const sendBtn = document.getElementById('send-btn');
-    messageInput.addEventListener('keypress', (e) =&gt; {
-      if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
-    });
-    sendBtn.addEventListener('click', (e) =&gt; { e.preventDefault(); sendMessage(); });
-
-    async function sendMessage() {
-      const msg = messageInput.value.trim();
-      if (!msg) return;
-      const messages = document.getElementById('widget-messages');
-      messages.innerHTML += `&lt;div class="message user"&gt;${msg}&lt;/div&gt;`;
-      messageInput.value = '';
-      messages.scrollTop = messages.scrollHeight;
-
-      try {
-        const res = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: { 'Authorization': \`Bearer \${API_KEY}\`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ model: 'gpt-3.5-turbo', messages: [{ role: 'user', content: msg }] })
-        });
-        if (!res.ok) throw new Error(\`HTTP \${res.status}: \${res.statusText}\`);
-        const data = await res.json();
-        messages.innerHTML += `&lt;div class="message bot"&gt;\${data.choices[0].message.content}&lt;/div&gt;`;
-        messages.scrollTop = messages.scrollHeight;
-      } catch (e) {
-        messages.innerHTML += `&lt;div class="message bot"&gt;錯誤：\${e.message}&lt;/div&gt;`;
-      }
-    }
-    console.log('[OpenAI Widget] 載入成功！');
-  })();
-&lt;/script&gt;</code></pre>
+                    <div class="field">
+                        <label data-i18n="create.result"
+                            >Your Unique Site ID</label
+                        >
+                        <input
+                            id="site-out"
+                            type="text"
+                            readonly
+                            placeholder="Generated ID will appear here—copy to embed"
+                            data-i18n-ph="create.sitePh"
+                        />
+                        <p class="note" data-i18n="create.embedTip">
+                            Embed code updates automatically; preview your AI
+                            chatbot widget in real-time below.
+                        </p>
+                        <!-- 新增 data-i18n 讓此按鈕語系切換 -->
+                        <a
+                            href="#pricing"
+                            class="btn small"
+                            data-i18n="create.upgrade"
+                            >Explore Premium Upgrades</a
+                        >
                     </div>
+                </div>
+            </section>
 
-                    <h3 style="margin-top: 16px">
-                        自訂您的 AI Chatbot Widget 參數，實現無縫整合
-                    </h3>
-                    <div class="table-wrap">
-                        <table class="parameters-table">
-                            <thead>
-                                <tr>
-                                    <th>屬性</th>
-                                    <th>必填</th>
-                                    <th>說明</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><code>API_KEY</code></td>
-                                    <td>必填</td>
-                                    <td>
-                                        OpenAI API 金鑰（從 platform.openai.com
-                                        獲取）。
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><code>model</code></td>
-                                    <td>可選</td>
-                                    <td>模型（如 'gpt-3.5-turbo'，預設）。</td>
-                                </tr>
-                                <tr>
-                                    <td><code>position</code></td>
-                                    <td>可選</td>
-                                    <td>浮動按鈕位置（預設右下）。</td>
-                                </tr>
-                                <tr>
-                                    <td><code>accent</code></td>
-                                    <td>可選</td>
-                                    <td>品牌主色（HEX，如 '#25d366'）。</td>
-                                </tr>
-                                <tr>
-                                    <td><code>width/height</code></td>
-                                    <td>可選</td>
-                                    <td>聊天面板尺寸（px，預設 360x520）。</td>
-                                </tr>
-                                <tr>
-                                    <td><code>z-index</code></td>
-                                    <td>可選</td>
-                                    <td>層級，確保浮在最上層。</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+            <aside class="card" id="demo">
+                <h2 data-i18n="demo.title">
+                    Live Demo: See AI Chatbot Widget in Action
+                </h2>
+                <p class="muted" data-i18n="demo.desc">
+                    The bottom-right AI is ready to demonstrate 24/7 support.
+                    Embed this on your site for the same effortless customer
+                    engagement and conversion boost.
+                </p>
+                <div
+                    class="code"
+                    data-copyable="true"
+                    id="mini-code"
+                    data-hint="Long-press to copy"
+                >
+                    <pre><code id="embed-mini">&lt;script
+  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+  data-site="aitarf_15oJOoBsQFa3"
+  defer
+&gt;&lt;/script&gt;</code></pre>
+                </div>
+                <a href="#create" class="btn primary" data-i18n="demo.cta"
+                    >Embed Your Free AI Widget Today</a
+                >
+            </aside>
+        </main>
 
-                <aside class="card" id="demo">
-                    <h2>即時示範（右下角 AI 小幫手）</h2>
-                    <p class="muted">
-                        點擊右下角綠色按鈕開啟聊天；本區只顯示範例碼。
-                    </p>
-                    <div class="code" id="mini-code" title="Click to copy">
-                        <pre><code id="embed-mini">&lt;script&gt;
-  // 最小嵌入：替換 API_KEY
-  const API_KEY = 'YOUR_OPENAI_API_KEY';
-  // ... (同上完整腳本，使用 addEventListener 版)
-&lt;/script&gt;</code></pre>
-                    </div>
-                    <a href="#quickstart" class="btn"
-                        >立即嵌入您的免費 AI Widget</a
-                    >
-                </aside>
-            </main>
-
-            <footer>© 2025 AI Chatbot Widget</footer>
-        </div>
-        <!-- /#app -->
+        <footer data-i18n="footer">
+            © 2025 AI Chatbot Widget - Join thousands of sites optimizing with
+            AI assistant embedding. Boost rankings and revenue—start embedding
+            free now!
+        </footer>
 
         <script>
-            // Toast（不擋點擊）
-            function toast(msg) {
+            // ========= Multilingual dictionary =========
+            const STR = {
+                "zh-TW": {
+                    title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
+                    brand: "AI Chatbot Widget\nEmbed Smart AI Assistant Effortlessly",
+                    theme: { toggle: "切換主題" },
+                    common: { copied: "已複製！", copyHint: "長按複製" },
+                    hero: {
+                        title: "最佳 AI Chatbot Widget：輕鬆嵌入 24/7 客戶支援於您的網站",
+                        desc: "探索 2025 年如何免費嵌入 AI chatbot 於網站—使用我們的客製化 AI 助手嵌入工具，提升轉換率 30%。無需編碼：輕鬆將 AI 助手新增至電商網站，整合知識庫，提供即時回應。今天啟動免費試用，實現無縫 AI 助手 widget 整合。",
+                        benefit1: "一鍵嵌入：5 分鐘內上線，即時設定",
+                        benefit2: "自訂知識庫：專業、量身訂製回應",
+                        benefit3: "24/7 可用性：大幅降低支援成本，輕鬆擴展",
+                        cta: "立即啟動免費 AI Chatbot Widget 試用",
+                    },
+                    quickStart: {
+                        title: "一鍵嵌入：數分鐘內啟動您的 AI 助手 Widget",
+                        desc: "透過我們的簡單嵌入教學學習如何將 AI 助手新增至您的網站。完美適合 24/7 客戶服務—立即試用最佳 AI widget 網站支援，提升使用者參與度。",
+                    },
+                    params: {
+                        title: "自訂您的 AI Chatbot Widget 參數，實現無縫整合",
+                        th1: "屬性",
+                        th2: "必填",
+                        th4: "說明",
+                        src: "載入您的 AI chatbot widget 嵌入核心腳本。",
+                        position: "定位浮動按鈕—預設：右下角以達最佳可見度。",
+                        site: "您的獨特網站 ID，用於 AI 助手中的知識庫整合。",
+                        accent: "品牌主題顏色 (HEX/RGB)，無縫匹配您的網站設計。",
+                        width: "聊天面板寬度 (px)，最小 240 以達響應式顯示。",
+                        height: "面板高度 (px)，最小 320；行動裝置自動調整。",
+                        z: "Z-index 確保您的 AI widget 保持在上層無重疊。",
+                    },
+                    required: "必填",
+                    optional: "可選",
+                    create: {
+                        title: "建置您的自訂 AI Chatbot Widget：免費入門方案可用",
+                        note: "輸入您的產品知識 (最多 500 字元) 以產生獨特 ID。免費方案包含基本嵌入；升級以享無限對話與進階功能。",
+                        label: "知識庫內容 (最多 500 字元)",
+                        btn: "產生免費 AI 助手 ID",
+                        result: "您的獨特網站 ID",
+                        embedTip:
+                            "嵌入程式碼自動更新；下方即時預覽您的 AI chatbot widget。",
+                        ph: "描述您的產品、服務或 FAQ 以供 chatbot widget 中的智能 AI 回應...",
+                        sitePh: "產生 ID 將在此顯示—複製以嵌入",
+                        upgrade: "探索進階付費方案",
+                    },
+                    demo: {
+                        title: "即時示範：觀看 AI Chatbot Widget 運作",
+                        desc: "右下角的 AI 已準備示範 24/7 支援。將此嵌入您的網站以獲得相同輕鬆客戶參與與轉換提升。",
+                        cta: "立即嵌入您的免費 AI Widget",
+                    },
+                    footer: "© 2025 AI Chatbot Widget - 加入數千優化 AI 助手嵌入的網站。提升排名與收入—立即免費嵌入！",
+                },
+                "zh-CN": {
+                    title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
+                    brand: "AI Chatbot Widget\n轻松嵌入智能 AI 助手",
+                    theme: { toggle: "切换主题" },
+                    common: { copied: "已复制！", copyHint: "长按复制" },
+                    hero: {
+                        title: "最佳 AI Chatbot Widget：轻松嵌入 24/7 客户支持于您的网站",
+                        desc: "探索 2025 年如何免费嵌入 AI chatbot 于网站—使用我们的定制化 AI 助手嵌入工具，提升转化率 30%。无需编码：轻松将 AI 助手新增至电商网站，整合知识库，提供即时回应。今天启动免费试用，实现无缝 AI 助手 widget 整合。",
+                        benefit1: "一键嵌入：5 分钟内上线，即时设定",
+                        benefit2: "自定义知识库：专业、量身定制回应",
+                        benefit3: "24/7 可用性：大幅降低支持成本，轻松扩展",
+                        cta: "立即启动免费 AI Chatbot Widget 试用",
+                    },
+                    quickStart: {
+                        title: "一键嵌入：数分钟内启动您的 AI 助手 Widget",
+                        desc: "通过我们的简单嵌入教学学习如何将 AI 助手新增至您的网站。完美适合 24/7 客户服务—立即试用最佳 AI widget 网站支持，提升使用者参与度。",
+                    },
+                    params: {
+                        title: "自定义您的 AI Chatbot Widget 参数，实现无缝整合",
+                        th1: "属性",
+                        th2: "必填",
+                        th4: "说明",
+                        src: "加载您的 AI chatbot widget 嵌入核心脚本。",
+                        position: "定位浮动按钮—默认：右下角以达最佳可见度。",
+                        site: "您的独特网站 ID，用于 AI 助手中的知识库整合。",
+                        accent: "品牌主题颜色 (HEX/RGB)，无缝匹配您的网站设计。",
+                        width: "聊天面板宽度 (px)，最小 240 以达响应式显示。",
+                        height: "面板高度 (px)，最小 320；移动设备自动调整。",
+                        z: "Z-index 确保您的 AI widget 保持在上层无重叠。",
+                    },
+                    required: "必填",
+                    optional: "可选",
+                    create: {
+                        title: "构建您的自定义 AI Chatbot Widget：免费入门方案可用",
+                        note: "输入您的产品知识 (最多 500 字符) 以产生独特 ID。免费方案包含基本嵌入；升级以享无限对话与进阶功能。",
+                        label: "知识库内容 (最多 500 字符)",
+                        btn: "产生免费 AI 助手 ID",
+                        result: "您的独特网站 ID",
+                        embedTip:
+                            "嵌入代码自动更新；下方即时预览您的 AI chatbot widget。",
+                        ph: "描述您的产品、服务或 FAQ 以供 chatbot widget 中的智能 AI 回应...",
+                        sitePh: "产生 ID 将在此显示—复制以嵌入",
+                        upgrade: "探索高级升级",
+                    },
+                    demo: {
+                        title: "即时演示：观看 AI Chatbot Widget 运作",
+                        desc: "右下角的 AI 已准备演示 24/7 支持。将此嵌入您的网站以获得相同轻松客户参与与转化提升。",
+                        cta: "立即嵌入您的免费 AI Widget",
+                    },
+                    footer: "© 2025 AI Chatbot Widget - 加入数千优化 AI 助手嵌入的网站。提升排名与收入—立即免费嵌入！",
+                },
+                ja: {
+                    title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
+                    brand: "AI Chatbot Widget\nスマート AI アシスタントを簡単に埋め込み",
+                    theme: { toggle: "テーマを切り替え" },
+                    common: {
+                        copied: "コピーしました！",
+                        copyHint: "長押しでコピー",
+                    },
+                    hero: {
+                        title: "最高の AI Chatbot Widget：簡単に 24/7 カスタマーサポートをサイトに埋め込み",
+                        desc: "2025 年にウェブサイトに無料で AI chatbot を埋め込む方法を発見—カスタマイズ可能な AI アシスタント埋め込みツールでコンバージョン率を 30% 向上。コーディング不要：eコマースサイトに簡単に AI アシスタントを追加、知識ベースを統合、即時応答を提供。今日無料トライアルを開始し、シームレスな AI ヘルパーワイジェット統合を実現。",
+                        benefit1:
+                            "ワンクリック埋め込み：5 分でライブ、即時セットアップ",
+                        benefit2:
+                            "カスタム知識ベース：プロフェッショナルでカスタマイズされた応答",
+                        benefit3:
+                            "24/7 可用性：サポートコストを大幅削減、容易にスケール",
+                        cta: "今すぐ無料 AI Chatbot Widget トライアルを開始",
+                    },
+                    quickStart: {
+                        title: "ワンクリック埋め込み：数分で AI アシスタント Widget を起動",
+                        desc: "シンプルな埋め込みチュートリアルでサイトに AI アシスタントを追加する方法を学びます。24/7 カスタマーサービスに最適—今すぐ最高の AI ウィジェット ウェブサイトサポートを試して、ユーザーエンゲージメントを向上。",
+                    },
+                    params: {
+                        title: "AI Chatbot Widget パラメータをカスタマイズしてシームレスな統合を実現",
+                        th1: "属性",
+                        th2: "必須",
+                        th4: "説明",
+                        src: "AI chatbot widget 埋め込みのコアスクリプトをロード。",
+                        position:
+                            "フローティングボタンの位置—デフォルト：右下で最適な視認性。",
+                        site: "ユニークなサイト ID、AI アシスタントの知識ベース統合用。",
+                        accent: "ブランドテーマカラー (HEX/RGB)、サイトデザインにシームレスにマッチ。",
+                        width: "チャットパネル幅 (px)、最小 240 でレスポンシブ表示。",
+                        height: "パネル高さ (px)、最小 320；モバイルで自動調整。",
+                        z: "Z-index で AI ウィジェットを上層に保ち、重複なし。",
+                    },
+                    required: "必須",
+                    optional: "任意",
+                    create: {
+                        title: "カスタム AI Chatbot Widget を構築：無料スタータープラン利用可能",
+                        note: "製品知識を入力 (最大 500 文字) でユニーク ID を生成。無料プランは基本埋め込みを含む；アップグレードで無制限会話と高度機能。",
+                        label: "知識ベースコンテンツ (最大 500 文字)",
+                        btn: "無料 AI アシスタント ID を生成",
+                        result: "ユニークサイト ID",
+                        embedTip:
+                            "埋め込みコードが自動更新；下部のリアルタイムプレビューで AI chatbot widget を確認。",
+                        ph: "製品、サービス、FAQ を記述して chatbot widget のスマート AI 応答用...",
+                        sitePh: "生成 ID がここに表示—埋め込み用にコピー",
+                        upgrade: "プレミアム機能を確認",
+                    },
+                    demo: {
+                        title: "ライブデモ：AI Chatbot Widget の動作を見る",
+                        desc: "右下の AI が 24/7 サポートをデモ準備完了。サイトに埋め込んで同じ簡単な顧客エンゲージメントとコンバージョン向上を実現。",
+                        cta: "今日から無料 AI Widget を埋め込み",
+                    },
+                    footer: "© 2025 AI Chatbot Widget - 数千の AI アシスタント埋め込み最適化サイトに参加。ランキングと収益を向上—今すぐ無料埋め込み！",
+                },
+                en: {
+                    title: "AI Chatbot Widget: Embed 24/7 Smart Assistant on Your Website Free in 2025",
+                    brand: "AI Chatbot Widget\nEmbed Smart AI Assistant Effortlessly",
+                    theme: { toggle: "Toggle Theme" },
+                    common: {
+                        copied: "Copied!",
+                        copyHint: "Long-press to copy",
+                    },
+                    hero: {
+                        title: "Best AI Chatbot Widget: Easily Embed 24/7 Customer Support on Your Site",
+                        desc: "Discover how to embed AI chatbot on website free in 2025—boost conversions by 30% with our customizable AI assistant embedding tool. No coding required: add AI assistant to e-commerce site easily, integrate knowledge base, and provide instant responses. Start your free trial today for seamless AI helper widget integration.",
+                        benefit1:
+                            "One-Click Embed: Live in 5 Minutes for Instant Setup",
+                        benefit2:
+                            "Custom Knowledge Base: Professional, Tailored Responses",
+                        benefit3:
+                            "24/7 Availability: Slash Support Costs and Scale Effortlessly",
+                        cta: "Start Free AI Chatbot Widget Trial Now",
+                    },
+                    quickStart: {
+                        title: "One-Click Embed: Launch Your AI Assistant Widget in Minutes",
+                        desc: "Learn how to add AI assistant to your site with our simple embedding tutorial. Perfect for 24/7 customer service—try the best AI widget for website support now and elevate your user engagement.",
+                    },
+                    params: {
+                        title: "Customize Your AI Chatbot Widget Parameters for Seamless Integration",
+                        th1: "Attribute",
+                        th2: "Required",
+                        th4: "Description",
+                        src: "Load the core script for your AI chatbot widget embedding.",
+                        position:
+                            "Position the floating button—default: bottom-right for optimal visibility.",
+                        site: "Your unique site ID for knowledge base integration in the AI assistant.",
+                        accent: "Brand theme color (HEX/RGB) to match your site's design seamlessly.",
+                        width: "Chat panel width (px), minimum 240 for responsive display.",
+                        height: "Panel height (px), minimum 320; auto-adjusts on mobile devices.",
+                        z: "Z-index to ensure your AI widget stays on top without overlap.",
+                    },
+                    required: "Required",
+                    optional: "Optional",
+                    create: {
+                        title: "Build Your Custom AI Chatbot Widget: Free Starter Plan Available",
+                        note: "Input your product knowledge (up to 500 characters) to generate a unique ID. Free tier includes basic embedding; upgrade for unlimited conversations and advanced features.",
+                        label: "Knowledge Base Content (Max 500 Characters)",
+                        btn: "Generate Free AI Assistant ID",
+                        result: "Your Unique Site ID",
+                        embedTip:
+                            "Embed code updates automatically; preview your AI chatbot widget in real-time below.",
+                        ph: "Describe your products, services, or FAQs for smart AI responses in the chatbot widget...",
+                        sitePh: "Generated ID will appear here—copy to embed",
+                        upgrade: "Explore Premium Upgrades",
+                    },
+                    demo: {
+                        title: "Live Demo: See AI Chatbot Widget in Action",
+                        desc: "The bottom-right AI is ready to demonstrate 24/7 support. Embed this on your site for the same effortless customer engagement and conversion boost.",
+                        cta: "Embed Your Free AI Widget Today",
+                    },
+                    footer: "© 2025 AI Chatbot Widget - Join thousands of sites optimizing with AI assistant embedding. Boost rankings and revenue—start embedding free now!",
+                },
+            };
+
+            // ========= Language & Theme =========
+            const savedLang = localStorage.getItem("aiw_lang");
+            const savedTheme = localStorage.getItem("aiw_theme") || "light";
+            const navLang = (navigator.language || "zh-TW").toLowerCase();
+            const guessLang =
+                navLang.startsWith("zh-cn") || navLang === "zh"
+                    ? "zh-CN"
+                    : navLang.startsWith("zh")
+                      ? "zh-TW"
+                      : navLang.startsWith("ja")
+                        ? "ja"
+                        : "en";
+            let CUR_LANG = savedLang || guessLang;
+
+            document.body.setAttribute("data-theme", savedTheme);
+            const themeToggle = document.getElementById("theme-toggle");
+            if (savedTheme === "light") {
+                themeToggle.innerHTML =
+                    '<i class="fas fa-moon" style="color: black;"></i>';
+            } else {
+                themeToggle.innerHTML =
+                    '<i class="fas fa-sun" style="color: white;"></i>';
+            }
+
+            function setCodeHintText() {
+                const T = STR[CUR_LANG];
+                document
+                    .querySelectorAll('.code[data-copyable="true"]')
+                    .forEach((el) => {
+                        el.setAttribute("data-hint", T.common.copyHint);
+                    });
+            }
+
+            function applyLang() {
+                const T = STR[CUR_LANG];
+                document.getElementById("lang-select").value = CUR_LANG;
+
+                // data-i18n elements
+                document.querySelectorAll("[data-i18n]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n");
+                    const parts = key.split(".");
+                    let v = T;
+                    for (const p of parts) v = v?.[p];
+                    if (typeof v === "string") {
+                        if (el.tagName.toLowerCase() === "title")
+                            document.title = v;
+                        else {
+                            // 若是按鈕或連結，使用 textContent 避免內部圖示被覆蓋
+                            if (el.matches("a,button")) el.textContent = v;
+                            else el.innerHTML = v;
+                        }
+                    }
+                });
+
+                // placeholders
+                document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n-ph");
+                    const parts = key.split(".");
+                    let v = T;
+                    for (const p of parts) v = v?.[p];
+                    if (typeof v === "string")
+                        el.setAttribute("placeholder", v);
+                });
+
+                // Parameter table badges
+                document.querySelectorAll(".badge").forEach((b) => {
+                    const attr = b.getAttribute("data-i18n");
+                    const isReq = attr && /required/i.test(attr);
+                    b.textContent = isReq ? T.required : T.optional;
+                });
+
+                // 主題切換按鈕的 title 也做本地化
+                themeToggle.setAttribute("title", T.theme.toggle);
+
+                // 程式碼方塊提示文案
+                setCodeHintText();
+
+                document.documentElement.setAttribute("lang", CUR_LANG);
+            }
+
+            document
+                .getElementById("lang-select")
+                .addEventListener("change", (e) => {
+                    CUR_LANG = e.target.value;
+                    localStorage.setItem("aiw_lang", CUR_LANG);
+                    applyLang();
+                });
+
+            themeToggle.addEventListener("click", () => {
+                const currentTheme = document.body.getAttribute("data-theme");
+                const newTheme = currentTheme === "light" ? "dark" : "light";
+                document.body.setAttribute("data-theme", newTheme);
+                localStorage.setItem("aiw_theme", newTheme);
+                if (newTheme === "light") {
+                    themeToggle.innerHTML =
+                        '<i class="fas fa-moon" style="color: black;"></i>';
+                } else {
+                    themeToggle.innerHTML =
+                        '<i class="fas fa-sun" style="color: white;"></i>';
+                }
+            });
+
+            // ========= Counter =========
+            const kb = document.getElementById("kb");
+            const kbCount = document.getElementById("kb-count");
+            kb.addEventListener("input", () => {
+                kbCount.textContent = kb.value.length;
+            });
+
+            // ========= Copy Helpers (長按/點擊複製) =========
+            function showToast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
                 t.textContent = msg;
@@ -628,147 +1133,84 @@
                 setTimeout(() => {
                     t.classList.remove("show");
                     setTimeout(() => t.remove(), 250);
-                }, 1600);
+                }, 1200);
             }
-            // Click-to-copy
-            async function copyText(txt) {
+
+            async function copyText(text) {
                 try {
-                    await navigator.clipboard.writeText(txt);
+                    await navigator.clipboard.writeText(text);
                 } catch {
+                    // 後備方案
                     const ta = document.createElement("textarea");
-                    ta.value = txt;
+                    ta.value = text;
                     document.body.appendChild(ta);
                     ta.select();
                     document.execCommand("copy");
-                    ta.remove();
+                    document.body.removeChild(ta);
                 }
+                showToast(STR[CUR_LANG].common.copied);
             }
-            document.getElementById("codebox").addEventListener("click", () => {
-                copyText(document.getElementById("embed-code").innerText);
-                toast("已複製！");
-            });
-            document
-                .getElementById("mini-code")
-                .addEventListener("click", () => {
-                    copyText(document.getElementById("embed-mini").innerText);
-                    toast("已複製！");
-                });
 
-            // 主題切換：只切 #app，不動 body（避免外掛吃到）
-            (function () {
-                const app = document.getElementById("app");
-                const themeToggle = document.getElementById("theme-toggle");
-                const saved = localStorage.getItem("aw_theme") || "light";
-                app.setAttribute("data-theme", saved);
-                themeToggle.innerHTML =
-                    saved === "light"
-                        ? '<i class="fas fa-moon" style="color:black;"></i>'
-                        : '<i class="fas fa-sun" style="color:white;"></i>';
-                themeToggle.addEventListener("click", () => {
-                    const cur = app.getAttribute("data-theme") || "light";
-                    const next = cur === "light" ? "dark" : "light";
-                    app.setAttribute("data-theme", next);
-                    localStorage.setItem("aw_theme", next);
-                    themeToggle.innerHTML =
-                        next === "light"
-                            ? '<i class="fas fa-moon" style="color:black;"></i>'
-                            : '<i class="fas fa-sun" style="color:white;"></i>';
-                });
-            })();
+            function attachLongPressCopy(container, getText) {
+                let timer = null;
+                let isPressing = false;
 
-            // 修正版：OpenAI Widget 初始化（替換原失效腳本，使用 addEventListener 避免事件污染）
-            (function () {
-                console.log("[OpenAI Widget] 開始載入...");
-                // 替換為您的 OpenAI API Key
-                const API_KEY = "YOUR_OPENAI_API_KEY"; // 這裡換成真實 key！
-                if (!API_KEY || API_KEY === "YOUR_OPENAI_API_KEY") {
-                    console.warn("[OpenAI Widget] 請設定 API_KEY 才能使用！");
-                    return;
-                }
-
-                const widget = document.createElement("div");
-                widget.id = "openai-widget";
-                widget.innerHTML = `
-                    <div id="widget-header">
-                        <span>AI 助手</span>
-                        <i class="fas fa-times" id="close-widget"></i>
-                    </div>
-                    <div id="widget-messages"></div>
-                    <div id="widget-input">
-                        <input id="message-input" placeholder="輸入訊息...">
-                        <button id="send-btn">傳送</button>
-                    </div>
-                `;
-                document.body.appendChild(widget);
-
-                const toggle = document.createElement("div");
-                toggle.id = "widget-toggle";
-                toggle.innerHTML = '<i class="fas fa-comment-dots"></i>';
-                document.body.appendChild(toggle);
-
-                // 使用 addEventListener 綁定事件，避免 inline 事件導致 DOM 污染
-                const closeBtn = document.getElementById("close-widget");
-                closeBtn.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    widget.classList.remove("open");
-                });
-                toggle.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    widget.classList.toggle("open");
-                });
-
-                const messageInput = document.getElementById("message-input");
-                const sendBtn = document.getElementById("send-btn");
-                messageInput.addEventListener("keypress", (e) => {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        sendMessage();
+                const start = (e) => {
+                    isPressing = true;
+                    timer = setTimeout(() => {
+                        if (isPressing) copyText(getText());
+                    }, 500); // 長按 500ms 觸發
+                };
+                const cancel = () => {
+                    isPressing = false;
+                    if (timer) {
+                        clearTimeout(timer);
+                        timer = null;
                     }
-                });
-                sendBtn.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    sendMessage();
-                });
+                };
 
-                async function sendMessage() {
-                    const msg = messageInput.value.trim();
-                    if (!msg) return;
-                    const messages = document.getElementById("widget-messages");
-                    messages.innerHTML += `<div class="message user">${msg}</div>`;
-                    messageInput.value = "";
-                    messages.scrollTop = messages.scrollHeight;
+                // 觸控
+                container.addEventListener("touchstart", start, {
+                    passive: true,
+                });
+                container.addEventListener("touchend", cancel);
+                container.addEventListener("touchmove", cancel);
+                container.addEventListener("touchcancel", cancel);
 
-                    try {
-                        const res = await fetch(
-                            "https://api.openai.com/v1/chat/completions",
-                            {
-                                method: "POST",
-                                headers: {
-                                    Authorization: `Bearer ${API_KEY}`,
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({
-                                    model: "gpt-3.5-turbo",
-                                    messages: [{ role: "user", content: msg }],
-                                }),
-                            },
-                        );
-                        if (!res.ok)
-                            throw new Error(
-                                `HTTP ${res.status}: ${res.statusText}`,
-                            );
-                        const data = await res.json();
-                        messages.innerHTML += `<div class="message bot">${data.choices[0].message.content}</div>`;
-                        messages.scrollTop = messages.scrollHeight;
-                    } catch (e) {
-                        messages.innerHTML += `<div class="message bot">錯誤：${e.message}</div>`;
-                        console.error("[OpenAI Widget] API 錯誤：", e);
-                    }
-                }
-                console.log("[OpenAI Widget] 載入成功！檢查右下角綠色按鈕。");
-            })();
+                // 滑鼠
+                container.addEventListener("mousedown", start);
+                container.addEventListener("mouseup", cancel);
+                container.addEventListener("mouseleave", cancel);
+
+                // 一般點擊也可複製（UX 更友善）
+                container.addEventListener("click", (e) => {
+                    // 避免和長按重複觸發
+                    if (!isPressing) copyText(getText());
+                });
+            }
+
+            attachLongPressCopy(
+                document.getElementById("codebox"),
+                () => document.getElementById("embed-code").innerText,
+            );
+            attachLongPressCopy(
+                document.getElementById("mini-code"),
+                () => document.getElementById("embed-mini").innerText,
+            );
+
+            applyLang();
         </script>
+
+        <!-- Bottom-right demo widget -->
+        <script
+            src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+            data-position="bottom-right"
+            data-site="aitarf_15oJOoBsQFa3"
+            data-accent="#25d366"
+            data-width="360"
+            data-height="520"
+            data-z="2147483000"
+            defer
+        ></script>
     </body>
 </html>
