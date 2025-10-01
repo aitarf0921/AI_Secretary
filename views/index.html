@@ -532,29 +532,23 @@
         </header>
 
         <main>
-            <!-- [SECTION] Hero：標題＋主賣點文案＋四個優點（圖示＋台詞） -->
-            <section class="hero card" id="hero">
+            <!-- Hero Section -->
+            <section class="hero card">
                 <h1 data-i18n="hero.title">
-                    Best AI Chatbot: Easily Embed 24/7 Customer Support on Your
-                    Site
+                    Best AI Chatbot: Easily Embed 24/7 Customer Support
                 </h1>
                 <p data-i18n="hero.desc">
-                    Embed a free AI chatbot—boost conversions with a
-                    customizable assistant. No coding required: add to your
-                    shop, connect a knowledge base, and deliver instant answers.
-                    Multilingual in/out: auto-detects user language and replies
-                    in 50+ languages.
+                    輕鬆嵌入免費的 AI
+                    Chatbot：客製化助手可提升轉換率。無需程式碼，支援串接知識庫、即時回覆；並能自動偵測語言，以
+                    50+ 語言自然應答。
                 </p>
-
-                <!-- [SECTION] Hero 優點（圖示＋廣告台詞） -->
                 <div class="benefits">
                     <div class="benefit-item">
                         <div class="benefit-icon">
                             <i class="fas fa-rocket"></i>
                         </div>
                         <span data-i18n="hero.benefit1"
-                            >One-Click Embed: Live in 5 Minutes for Instant
-                            Setup</span
+                            >一鍵嵌入：5 分鐘內上線</span
                         >
                     </div>
                     <div class="benefit-item">
@@ -562,8 +556,7 @@
                             <i class="fas fa-comments"></i>
                         </div>
                         <span data-i18n="hero.benefit2"
-                            >Custom Knowledge Base: Professional, Tailored
-                            Responses</span
+                            >自訂知識庫：專業、量身訂製回應</span
                         >
                     </div>
                     <div class="benefit-item">
@@ -571,8 +564,7 @@
                             <i class="fas fa-globe"></i>
                         </div>
                         <span data-i18n="hero.benefit4"
-                            >Multilingual In/Out: Auto-detect & reply in 50+
-                            languages</span
+                            >多語雙向：自動偵測並以 50+ 語言回覆</span
                         >
                     </div>
                     <div class="benefit-item">
@@ -580,81 +572,61 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <span data-i18n="hero.benefit3"
-                            >24/7 Availability: Slash Support Costs and Scale
-                            Effortlessly</span
+                            >24/7 可用性：大幅降低支援成本</span
                         >
                     </div>
                 </div>
-
-                <a href="#create-card" class="btn primary" data-i18n="hero.cta"
-                    >Start Free AI Chatbot Trial Now</a
+                <!-- CTA 按鈕，會顯示卡片二 -->
+                <a
+                    href="javascript:void(0)"
+                    class="btn primary"
+                    id="start-trial-btn"
+                    data-i18n="hero.cta"
                 >
+                    立即開始免費試用
+                </a>
             </section>
 
-            <!-- ===================== -->
-            <!-- [SECTION] 卡片 B（原第三）先顯示：Create（生成程式碼） -->
-            <!-- ===================== -->
-            <section class="card" id="create-card">
-                <h3
-                    data-i18n="create.title"
-                    style="margin-top: clamp(0px, 2vw, 8px)"
-                >
+            <!-- 卡片二：生成程式碼 -->
+            <section class="card hidden" id="card-generate">
+                <h2 data-i18n="create.title">
                     生成專屬 AI Chatbot 程式碼：免費入門
-                </h3>
+                </h2>
                 <p class="note" data-i18n="create.note">
-                    請輸入您的產品／服務知識（最多 500
-                    字），系統將生成一段<strong
-                        >含你專屬 <code>data-site</code></strong
-                    >
-                    的完整 widget
-                    程式碼；產生後會自動更新「嵌入教學」卡片中的兩段範例，並複製到剪貼簿。
+                    輸入知識庫內容（最多 500 字元），即可生成含有您專屬
+                    data-site 的 widget 程式碼。
                 </p>
-
-                <div class="grid two">
-                    <div class="field">
-                        <label for="kb" data-i18n="create.label"
-                            >知識庫內容（最多 500 字）</label
-                        >
-                        <textarea
-                            id="kb"
-                            maxlength="500"
-                            placeholder="描述你的產品、服務或 FAQ…（內容會用於產生專屬 widget 程式碼）"
-                            data-i18n-ph="create.ph"
-                        ></textarea>
-                        <div class="counter">
-                            <span id="kb-count">0</span> / 500
-                        </div>
-
-                        <!-- [SECTION] 生成按鈕（含 loading/節流/錯誤 i18n/成功 Toast） -->
-                        <button
-                            class="btn primary"
-                            id="btn-create"
-                            data-i18n="create.btn"
-                        >
-                            生成 AI Chatbot Widget 程式碼
-                        </button>
+                <div class="field">
+                    <label for="kb" data-i18n="create.label"
+                        >知識庫內容 (最多 500 字元)</label
+                    >
+                    <textarea
+                        id="kb"
+                        maxlength="500"
+                        placeholder="描述您的產品、服務或 FAQ..."
+                        data-i18n-ph="create.ph"
+                    ></textarea>
+                    <div class="counter">
+                        <span id="kb-count">0</span> / 500
                     </div>
+                    <button
+                        class="btn primary"
+                        id="btn-create"
+                        data-i18n="create.btn"
+                    >
+                        生成 AI Chatbot Widget 程式碼
+                    </button>
                 </div>
             </section>
 
-            <!-- ===================== -->
-            <!-- [SECTION] 卡片 A（原第二）後顯示：QuickStart（展示 widget 程式碼 + 黑白表格） -->
-            <!-- ===================== -->
-            <section class="card" id="quickstart">
+            <!-- 卡片三：顯示程式碼 -->
+            <section class="card hidden" id="card-snippet">
                 <h2 data-i18n="quickStart.title">
-                    一鍵嵌入：複製下方 widget 程式碼，幾分鐘內啟用 AI Chatbot
+                    一鍵嵌入：複製下方 widget 程式碼
                 </h2>
                 <p data-i18n="quickStart.desc">
-                    將下方
-                    <strong>widget 程式碼</strong> 貼到您的網站（通常是全站
-                    Layout 或頁尾），即可在右下角啟用 24/7 智能客服。若你在「<a
-                        href="#create-card"
-                        >生成程式碼</a
-                    >」卡片建立新的
-                    <code>data-site</code>，此處展示的程式碼也會自動更新。
+                    將以下程式碼貼到您的網站，即可快速啟用專屬 AI Chatbot。
                 </p>
-
-                <!-- [SECTION] 程式碼區塊：完整 snippet（點一下即可複製） -->
                 <div
                     class="code"
                     id="codebox"
@@ -663,136 +635,29 @@
                     title="Click to copy"
                 >
                     <pre><code id="embed-code">&lt;script
-  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-  data-position="bottom-right"
-  data-site="aitarf_15oJOoBsQFa3"
-  data-accent="#25d366"
-  data-width="360"
-  data-height="520"
-  data-z="2147483000"
-  defer
-&gt;&lt;/script&gt;</code></pre>
+          src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+          data-position="bottom-right"
+          data-site="aitarf_15oJOoBsQFa3"
+          data-accent="#2563eb"
+          data-width="360"
+          data-height="520"
+          data-z="2147483000"
+          defer
+        &gt;&lt;/script&gt;</code></pre>
                 </div>
-
-                <!-- [SECTION] 參數表：黑白極簡＋深色主題 -->
-                <h3
-                    data-i18n="params.title"
-                    style="margin-top: clamp(16px, 4vw, 24px)"
-                >
-                    Customize Your AI Chatbot Parameters for Seamless
-                    Integration
-                </h3>
-                <div class="table-wrap">
-                    <table class="parameters-table">
-                        <thead>
-                            <tr>
-                                <th data-i18n="params.th1">Attribute</th>
-                                <th data-i18n="params.th2">Required</th>
-                                <th data-i18n="params.th4">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><code>src</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="required"
-                                        >Required</span
-                                    >
-                                </td>
-                                <td data-i18n="params.src">
-                                    Load the core script for your AI chatbot
-                                    embedding.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><code>data-position</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="optional"
-                                        >Optional</span
-                                    >
-                                </td>
-                                <td data-i18n="params.position">
-                                    Position the floating button—default:
-                                    bottom-right for optimal visibility.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><code>data-site</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="required"
-                                        >Required</span
-                                    >
-                                </td>
-                                <td data-i18n="params.site">
-                                    Your unique site ID for knowledge base
-                                    integration.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><code>data-accent</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="optional"
-                                        >Optional</span
-                                    >
-                                </td>
-                                <td data-i18n="params.accent">
-                                    Brand theme color (HEX/RGB) to match your
-                                    site's design.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><code>data-width</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="optional"
-                                        >Optional</span
-                                    >
-                                </td>
-                                <td data-i18n="params.width">
-                                    Chat panel width (px), minimum 240 for
-                                    responsive display.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><code>data-height</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="optional"
-                                        >Optional</span
-                                    >
-                                </td>
-                                <td data-i18n="params.height">
-                                    Panel height (px), minimum 320; auto-adjusts
-                                    on mobile devices.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><code>data-z</code></td>
-                                <td>
-                                    <span class="badge" data-i18n="optional"
-                                        >Optional</span
-                                    >
-                                </td>
-                                <td data-i18n="params.z">
-                                    Z-index to ensure your AI chatbot stays on
-                                    top without overlap.
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- [SECTION] 簡易版 snippet（demo/最小設定） -->
                 <div
                     class="code"
-                    data-copyable="true"
                     id="mini-code"
+                    data-copyable="true"
                     data-hint="Click to copy"
                     title="Click to copy"
                 >
                     <pre><code id="embed-mini">&lt;script
-  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-  data-site="aitarf_15oJOoBsQFa3"
-  defer
-&gt;&lt;/script&gt;</code></pre>
+          src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+          data-site="aitarf_15oJOoBsQFa3"
+          data-accent="#2563eb"
+          defer
+        &gt;&lt;/script&gt;</code></pre>
                 </div>
             </section>
         </main>
@@ -1061,9 +926,7 @@
                 },
             };
 
-            // ==============================
-            // [JS] 語言與主題初始化與套用
-            // ==============================
+            // ====== 原本的語言/主題/複製/Toast 等初始化（保留） ======
             const savedLang = localStorage.getItem("aiw_lang");
             const savedTheme = localStorage.getItem("aiw_theme") || "light";
             const navLang = (navigator.language || "zh-TW").toLowerCase();
@@ -1086,13 +949,19 @@
                 document
                     .querySelectorAll('.code[data-copyable="true"]')
                     .forEach((el) => {
-                        el.setAttribute("data-hint", T.common.copyHint);
-                        el.setAttribute("title", T.common.copyHint);
+                        el.setAttribute(
+                            "data-hint",
+                            T.common?.copyHint || "Click to copy",
+                        );
+                        el.setAttribute(
+                            "title",
+                            T.common?.copyHint || "Click to copy",
+                        );
                     });
             }
 
             function applyLang() {
-                const T = STR[CUR_LANG];
+                const T = STR[CUR_LANG] || STR["en"];
                 langSelect.value = CUR_LANG;
 
                 document.querySelectorAll("[data-i18n]").forEach((el) => {
@@ -1122,11 +991,18 @@
                 document.querySelectorAll(".badge").forEach((b) => {
                     const attr = b.getAttribute("data-i18n");
                     const isReq = attr && /required/i.test(attr);
-                    b.textContent = isReq ? T.required : T.optional;
+                    const tDict = STR[CUR_LANG] || STR["en"];
+                    b.textContent = isReq ? tDict.required : tDict.optional;
                 });
 
-                themeToggle.setAttribute("title", T.theme.toggle);
-                langSelect.setAttribute("title", T.common.languageTitle);
+                themeToggle.setAttribute(
+                    "title",
+                    T.theme?.toggle || "Toggle Theme",
+                );
+                langSelect.setAttribute(
+                    "title",
+                    T.common?.languageTitle || "Select language",
+                );
                 setCodeHints();
 
                 document.documentElement.setAttribute("lang", CUR_LANG);
@@ -1162,12 +1038,10 @@
                         : '<i class="fas fa-sun" style="color:white;"></i>';
             });
 
-            // ==============================
-            // [JS] 計數器 / Toast / 复制工具
-            // ==============================
+            // ====== Counter / Toast / Copy（保留） ======
             const kb = document.getElementById("kb");
             const kbCount = document.getElementById("kb-count");
-            if (kb) {
+            if (kb && kbCount) {
                 kb.addEventListener("input", () => {
                     kbCount.textContent = kb.value.length;
                 });
@@ -1197,29 +1071,54 @@
                     ta.remove();
                 }
             }
-
             function bindClickCopy(container, getter) {
+                const T = STR[CUR_LANG] || STR["en"];
                 container.addEventListener("click", async () => {
                     await copyText(getter());
-                    toast(STR[CUR_LANG].common.copied);
+                    toast(T.common?.copied || "Copied!");
                 });
             }
-            bindClickCopy(
-                document.getElementById("codebox"),
-                () => document.getElementById("embed-code").innerText,
-            );
-            bindClickCopy(
-                document.getElementById("mini-code"),
-                () => document.getElementById("embed-mini").innerText,
-            );
 
-            // ==============================
-            // [JS] 產生程式碼（Create 卡片）與更新上方 snippet
-            // ==============================
+            // 綁定複製（卡片三）
+            (function bindCopies() {
+                const box1 = document.getElementById("codebox");
+                const box2 = document.getElementById("mini-code");
+                if (box1)
+                    bindClickCopy(
+                        box1,
+                        () => document.getElementById("embed-code").innerText,
+                    );
+                if (box2)
+                    bindClickCopy(
+                        box2,
+                        () => document.getElementById("embed-mini").innerText,
+                    );
+            })();
+
+            // ====== [AIW_CHANGE] 補上一個 .hidden 樣式（不改動 head） ======
+            (function ensureHiddenCSS() {
+                if (!document.getElementById("aiw-hidden-style")) {
+                    const st = document.createElement("style");
+                    st.id = "aiw-hidden-style";
+                    st.textContent = ".hidden{display:none !important;}";
+                    document.head.appendChild(st);
+                }
+            })();
+
+            // ====== [AIW_CHANGE] 產生 snippet 的工具（藍色 accent） ======
+            const WIDGET_SRC =
+                "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
+            const ACCENT_BLUE = "#2563eb"; // 藍色
+            const WIDGET_DEFAULTS = {
+                position: "bottom-right",
+                width: "360",
+                height: "520",
+                z: "2147483000",
+            };
+
             function buildSnippet(siteId, opts = {}) {
                 const o = "<scr" + "ipt";
                 const c = "</scr" + "ipt>";
-
                 const pos = opts.position
                     ? `\n  data-position="${opts.position}"`
                     : "";
@@ -1233,101 +1132,171 @@
                     ? `\n  data-height="${opts.height}"`
                     : "";
                 const z = opts.z ? `\n  data-z="${opts.z}"` : "";
-
                 return `${o}
-  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"${pos}
-  data-site="${siteId}"${accent}${width}${height}${z}
-  defer
->${c}`;
+              src="${WIDGET_SRC}"${pos}
+              data-site="${siteId}"${accent}${width}${height}${z}
+              defer
+            >${c}`;
+            }
+            function buildMiniSnippet(siteId, accent) {
+                const o = "<scr" + "ipt";
+                const c = "</scr" + "ipt>";
+                return `${o}
+              src="${WIDGET_SRC}"
+              data-site="${siteId}"
+              data-accent="${accent}"
+              defer
+            >${c}`;
             }
 
-            function updateSnippets(siteId) {
-                const full = buildSnippet(siteId, {
-                    position: "bottom-right",
-                    accent: "#25d366",
-                    width: "360",
-                    height: "520",
-                    z: "2147483000",
+            // ====== [AIW_CHANGE] Demo widget 重新掛載（確保只有一份） ======
+            function mountDemoWidget(siteId, accent, more = WIDGET_DEFAULTS) {
+                // 移除所有舊 loader
+                document
+                    .querySelectorAll(`script[src*="ai-helper-loader.js"]`)
+                    .forEach((s) => s.remove());
+                // 新增一份
+                const s = document.createElement("script");
+                s.src = WIDGET_SRC;
+                s.defer = true;
+                if (more.position) s.dataset.position = more.position;
+                s.dataset.site = siteId;
+                if (accent) s.dataset.accent = accent;
+                if (more.width) s.dataset.width = more.width;
+                if (more.height) s.dataset.height = more.height;
+                if (more.z) s.dataset.z = more.z;
+                document.body.appendChild(s);
+            }
+
+            // ====== [AIW_CHANGE] Hero CTA → 顯示卡片二並捲動 ======
+            const btnStartTrial = document.getElementById("start-trial-btn");
+            const cardGenerate = document.getElementById("create-card");
+            const cardSnippet = document.getElementById("quickstart");
+            if (btnStartTrial && cardGenerate) {
+                btnStartTrial.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    cardGenerate.classList.remove("hidden");
+                    cardGenerate.scrollIntoView({ behavior: "smooth" });
+                    const kbEl = document.getElementById("kb");
+                    if (kbEl) kbEl.focus();
                 });
-                const mini = buildSnippet(siteId);
-
-                document.getElementById("embed-code").innerText = full;
-                document.getElementById("embed-mini").innerText = mini;
             }
 
-            const btnCreate = document.getElementById("btn-create");
-            let isBusy = false;
-            let lastClickAt = 0;
-            const COOLDOWN_MS = 1500;
-
-            function setCreateBtnState(state) {
-                const T = STR[CUR_LANG];
-                if (state === "loading") {
-                    btnCreate.setAttribute("aria-busy", "true");
-                    btnCreate.setAttribute("disabled", "disabled");
-                    btnCreate.textContent = T.create.loading;
-                } else {
-                    btnCreate.removeAttribute("aria-busy");
-                    btnCreate.removeAttribute("disabled");
-                    btnCreate.textContent = T.create.btn;
-                }
+            // ====== [AIW_CHANGE] 假回傳 SiteID（API 註解保留以便日後接後端） ======
+            async function generateSiteIdFake(kbText) {
+                // 真實 API 範例（保留）：
+                // const res = await fetch("/api/create", {
+                //   method: "POST",
+                //   headers: {"Content-Type":"application/json"},
+                //   body: JSON.stringify({ kb: kbText })
+                // });
+                // if (!res.ok) throw new Error("NETWORK");
+                // return await res.text(); // 假設後端回傳純文字 siteId
+                return "aitarf_15oJOoBsQFa3";
             }
 
-            function validateKB() {
-                const T = STR[CUR_LANG];
-                const v = (kb.value || "").trim();
-                if (!v) {
-                    toast(T.create.toastEmpty);
-                    return false;
-                }
-                if (v.length < 20) {
-                    toast(T.create.toastTooShort);
-                    return false;
-                }
-                return true;
-            }
+            // ====== [AIW_CHANGE] 卡片二：生成 → 顯示卡片三、更新 snippet（藍色）、同步 Demo widget ======
+            (function bindCreateFlow() {
+                const btnCreate = document.getElementById("btn-create");
+                if (!btnCreate) return;
 
-            async function generateSiteId() {
-                const delay = 700 + ((Math.random() * 500) | 0);
-                await new Promise((r) => setTimeout(r, delay));
-                if (Math.random() < 0.15) {
-                    const err = new Error("NETWORK");
-                    err.code = "NETWORK";
-                    throw err;
-                }
-                return "aitarf_" + Math.random().toString(36).slice(2, 10);
-            }
+                const COOLDOWN_MS = 1500;
+                let isBusy = false;
+                let lastClickAt = 0;
 
-            if (btnCreate) {
+                function setCreateBtnState(state) {
+                    const Tt = (STR[CUR_LANG] || STR["en"]).create;
+                    if (state === "loading") {
+                        btnCreate.setAttribute("aria-busy", "true");
+                        btnCreate.setAttribute("disabled", "disabled");
+                        btnCreate.textContent = Tt.loading || "Generating…";
+                    } else if (state === "done") {
+                        btnCreate.removeAttribute("aria-busy");
+                        btnCreate.removeAttribute("disabled");
+                        btnCreate.textContent = Tt.done || "Done";
+                    } else {
+                        btnCreate.removeAttribute("aria-busy");
+                        btnCreate.removeAttribute("disabled");
+                        btnCreate.textContent =
+                            Tt.btn || "Generate AI Chatbot Widget Code";
+                    }
+                }
+
                 btnCreate.addEventListener("click", async () => {
+                    const Tt = (STR[CUR_LANG] || STR["en"]).create;
                     const now = Date.now();
-                    const T = STR[CUR_LANG];
                     if (now - lastClickAt < COOLDOWN_MS) {
-                        toast(T.create.rateLimited);
+                        toast(
+                            Tt.rateLimited || "Too many attempts. Please wait.",
+                        );
                         return;
                     }
                     lastClickAt = now;
                     if (isBusy) return;
-                    if (!validateKB()) return;
+
+                    const v = (
+                        document.getElementById("kb").value || ""
+                    ).trim();
+                    if (!v) {
+                        toast(
+                            Tt.toastEmpty ||
+                                "Please enter some knowledge first.",
+                        );
+                        return;
+                    }
+                    if (v.length < 20) {
+                        toast(Tt.toastTooShort || "Content too short.");
+                        return;
+                    }
 
                     isBusy = true;
                     setCreateBtnState("loading");
                     try {
-                        const id = await generateSiteId();
-                        updateSnippets(id);
-                        await copyText(
-                            document.getElementById("embed-code").innerText,
+                        // 取得（假）siteId
+                        const siteId = await generateSiteIdFake(v);
+
+                        // 更新卡片三 snippet（藍色）
+                        const full = buildSnippet(siteId, {
+                            position: WIDGET_DEFAULTS.position,
+                            accent: ACCENT_BLUE,
+                            width: WIDGET_DEFAULTS.width,
+                            height: WIDGET_DEFAULTS.height,
+                            z: WIDGET_DEFAULTS.z,
+                        });
+                        const mini = buildMiniSnippet(siteId, ACCENT_BLUE);
+                        const codeFull = document.getElementById("embed-code");
+                        const codeMini = document.getElementById("embed-mini");
+                        if (codeFull) codeFull.innerText = full;
+                        if (codeMini) codeMini.innerText = mini;
+
+                        // 顯示卡片三並捲動
+                        if (cardSnippet) {
+                            cardSnippet.classList.remove("hidden");
+                            cardSnippet.scrollIntoView({ behavior: "smooth" });
+                        }
+
+                        // 同步更新右下角 demo widget（確保頁面只有一份 loader）
+                        mountDemoWidget(siteId, ACCENT_BLUE, WIDGET_DEFAULTS);
+
+                        // 複製完整 snippet 並提示
+                        await copyText(full);
+                        toast(
+                            Tt.toastSuccess ||
+                                "Widget code generated and copied.",
                         );
-                        toast(T.create.toastSuccess);
-                        btnCreate.textContent = T.create.done;
+
+                        setCreateBtnState("done");
                         setTimeout(() => setCreateBtnState("idle"), 800);
                     } catch (e) {
                         if (
                             e &&
                             (e.code === "NETWORK" || e.message === "NETWORK")
                         )
-                            toast(T.create.toastFailNetwork);
-                        else toast(T.create.toastFailGeneric);
+                            toast(
+                                Tt.toastFailNetwork ||
+                                    "Network error or timeout.",
+                            );
+                        else toast(Tt.toastFailGeneric || "Generation failed.");
                         setCreateBtnState("idle");
                     } finally {
                         isBusy = false;
@@ -1336,9 +1305,9 @@
                         }, COOLDOWN_MS);
                     }
                 });
-            }
+            })();
 
-            // 初次套用語言
+            // ====== 啟動（套用語言） ======
             applyLang();
         </script>
 
