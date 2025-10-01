@@ -488,21 +488,21 @@
     const widget = document.createElement('div');
     widget.id = 'openai-widget';
     widget.innerHTML = `
-      &lt;div id=&quot;widget-header&quot;&gt;
+      &lt;div id="widget-header"&gt;
         &lt;span&gt;AI 助手&lt;/span&gt;
-        &lt;i class=&quot;fas fa-times&quot; id=&quot;close-widget&quot;&gt;&lt;/i&gt;
+        &lt;i class="fas fa-times" id="close-widget"&gt;&lt;/i&gt;
       &lt;/div&gt;
-      &lt;div id=&quot;widget-messages&quot;&gt;&lt;/div&gt;
-      &lt;div id=&quot;widget-input&quot;&gt;
-        &lt;input id=&quot;message-input&quot; placeholder=&quot;輸入訊息...&quot;&gt;
-        &lt;button id=&quot;send-btn&quot;&gt;傳送&lt;/button&gt;
+      &lt;div id="widget-messages"&gt;&lt;/div&gt;
+      &lt;div id="widget-input"&gt;
+        &lt;input id="message-input" placeholder="輸入訊息..."&gt;
+        &lt;button id="send-btn"&gt;傳送&lt;/button&gt;
       &lt;/div&gt;
     `;
     document.body.appendChild(widget);
 
     const toggle = document.createElement('div');
     toggle.id = 'widget-toggle';
-    toggle.innerHTML = '&lt;i class=&quot;fas fa-comment-dots&quot;&gt;&lt;/i&gt;';
+    toggle.innerHTML = '&lt;i class="fas fa-comment-dots"&gt;&lt;/i&gt;';
     document.body.appendChild(toggle);
 
     // 使用 addEventListener 綁定事件，避免 inline 事件導致污染
@@ -521,22 +521,22 @@
       const msg = messageInput.value.trim();
       if (!msg) return;
       const messages = document.getElementById('widget-messages');
-      messages.innerHTML += `&lt;div class=&quot;message user&quot;&gt;${msg}&lt;/div&gt;`;
+      messages.innerHTML += `&lt;div class="message user"&gt;${msg}&lt;/div&gt;`;
       messageInput.value = '';
       messages.scrollTop = messages.scrollHeight;
 
       try {
         const res = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
-          headers: { 'Authorization': `Bearer ${API_KEY}`, 'Content-Type': 'application/json' },
+          headers: { 'Authorization': \`Bearer \${API_KEY}\`, 'Content-Type': 'application/json' },
           body: JSON.stringify({ model: 'gpt-3.5-turbo', messages: [{ role: 'user', content: msg }] })
         });
-        if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        if (!res.ok) throw new Error(\`HTTP \${res.status}: \${res.statusText}\`);
         const data = await res.json();
-        messages.innerHTML += `&lt;div class=&quot;message bot&quot;&gt;${data.choices[0].message.content}&lt;/div&gt;`;
+        messages.innerHTML += `&lt;div class="message bot"&gt;\${data.choices[0].message.content}&lt;/div&gt;`;
         messages.scrollTop = messages.scrollHeight;
       } catch (e) {
-        messages.innerHTML += `&lt;div class=&quot;message bot&quot;&gt;錯誤：${e.message}&lt;/div&gt;`;
+        messages.innerHTML += `&lt;div class="message bot"&gt;錯誤：\${e.message}&lt;/div&gt;`;
       }
     }
     console.log('[OpenAI Widget] 載入成功！');
