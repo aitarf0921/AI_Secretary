@@ -271,6 +271,149 @@
                 border-top: 1px solid var(--aw-border);
                 padding-top: 20px;
             }
+
+            /* 修正版：OpenAI Widget 樣式（右下角浮動，隔離布局避免污染） */
+            #openai-widget {
+                position: fixed !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                width: 360px !important;
+                height: 520px !important;
+                max-width: 90vw !important;
+                max-height: 90vh !important;
+                background: white !important;
+                border-radius: 12px !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+                display: none !important;
+                flex-direction: column !important;
+                z-index: 2147483646 !important;
+                font-family: -apple-system, sans-serif !important;
+                overflow: hidden !important; /* 防止內部內容溢出污染 */
+                border: 1px solid #ddd !important;
+            }
+            #openai-widget.open {
+                display: flex !important;
+                animation: slideIn 0.3s ease-out; /* 平滑顯示 */
+            }
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            #widget-toggle {
+                position: fixed !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                width: 60px !important;
+                height: 60px !important;
+                background: #25d366 !important;
+                border-radius: 50% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                cursor: pointer !important;
+                z-index: 2147483646 !important;
+                color: white !important;
+                font-size: 24px !important;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+                transition: transform 0.2s !important;
+            }
+            #widget-toggle:hover {
+                transform: scale(1.05);
+            }
+            #widget-header {
+                padding: 16px !important;
+                background: #25d366 !important;
+                color: white !important;
+                border-radius: 12px 12px 0 0 !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                flex-shrink: 0 !important;
+            }
+            #widget-header i {
+                cursor: pointer;
+            }
+            #widget-messages {
+                flex: 1 !important;
+                padding: 16px !important;
+                overflow-y: auto !important;
+                background: #f9f9f9 !important;
+                margin: 0 !important;
+            }
+            .message {
+                margin-bottom: 12px !important;
+                padding: 8px 12px !important;
+                border-radius: 8px !important;
+                word-wrap: break-word !important;
+                max-width: 80% !important;
+            }
+            .user {
+                background: #25d366 !important;
+                color: white !important;
+                margin-left: auto !important;
+                margin-right: 0 !important;
+            }
+            .bot {
+                background: white !important;
+                color: #333 !important;
+                margin-left: 0 !important;
+                margin-right: auto !important;
+                border: 1px solid #ddd !important;
+            }
+            #widget-input {
+                display: flex !important;
+                padding: 16px !important;
+                border-top: 1px solid #ddd !important;
+                gap: 8px !important;
+                flex-shrink: 0 !important;
+                background: white !important;
+            }
+            #message-input {
+                flex: 1 !important;
+                padding: 8px !important;
+                border: 1px solid #ddd !important;
+                border-radius: 4px !important;
+                outline: none !important;
+            }
+            #send-btn {
+                background: #25d366 !important;
+                color: white !important;
+                border: none !important;
+                padding: 8px 12px !important;
+                border-radius: 4px !important;
+                cursor: pointer !important;
+            }
+            #send-btn:hover {
+                background: #1da851 !important;
+            }
+            /* 確保主題切換不影響 widget */
+            #app[data-theme="dark"] #openai-widget {
+                background: #1e293b !important;
+                color: #f1f5f9 !important;
+            }
+            #app[data-theme="dark"] #widget-messages {
+                background: #334155 !important;
+            }
+            #app[data-theme="dark"] .bot {
+                background: #334155 !important;
+                color: #f1f5f9 !important;
+                border-color: #475569 !important;
+            }
+            #app[data-theme="dark"] #widget-input {
+                background: #1e293b !important;
+                border-color: #475569 !important;
+            }
+            #app[data-theme="dark"] #message-input {
+                background: #1e293b !important;
+                color: #f1f5f9 !important;
+                border-color: #475569 !important;
+            }
         </style>
     </head>
 
@@ -336,16 +479,67 @@
                 <section class="card" id="quickstart">
                     <h2>快速開始：嵌入程式碼</h2>
                     <div class="code" id="codebox" title="Click to copy">
-                        <pre><code id="embed-code">&lt;script
-  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-  data-position="bottom-right"
-  data-site="aitarf_15oJOoBsQFa3"
-  data-accent="#25d366"
-  data-width="360"
-  data-height="520"
-  data-z="2147483000"
-  defer
-&gt;&lt;/script&gt;</code></pre>
+                        <pre><code id="embed-code">&lt;script&gt;
+  // 替換 YOUR_OPENAI_API_KEY 為您的 OpenAI API Key
+  const API_KEY = 'YOUR_OPENAI_API_KEY';
+  // 新增：OpenAI Widget 初始化腳本（修正版，使用 addEventListener 避免 inline 事件污染）
+  (function() {
+    const widget = document.createElement('div');
+    widget.id = 'openai-widget';
+    widget.innerHTML = `
+      &lt;div id="widget-header"&gt;
+        &lt;span&gt;AI 助手&lt;/span&gt;
+        &lt;i class="fas fa-times" id="close-widget"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div id="widget-messages"&gt;&lt;/div&gt;
+      &lt;div id="widget-input"&gt;
+        &lt;input id="message-input" placeholder="輸入訊息..."&gt;
+        &lt;button id="send-btn"&gt;傳送&lt;/button&gt;
+      &lt;/div&gt;
+    `;
+    document.body.appendChild(widget);
+
+    const toggle = document.createElement('div');
+    toggle.id = 'widget-toggle';
+    toggle.innerHTML = '&lt;i class="fas fa-comment-dots"&gt;&lt;/i&gt;';
+    document.body.appendChild(toggle);
+
+    // 使用 addEventListener 綁定事件，避免 inline 事件導致污染
+    const closeBtn = document.getElementById('close-widget');
+    closeBtn.addEventListener('click', () => widget.classList.remove('open'));
+    toggle.addEventListener('click', () => widget.classList.toggle('open'));
+
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+    sendBtn.addEventListener('click', sendMessage);
+
+    async function sendMessage() {
+      const msg = messageInput.value.trim();
+      if (!msg) return;
+      const messages = document.getElementById('widget-messages');
+      messages.innerHTML += `&lt;div class="message user"&gt;${msg}&lt;/div&gt;`;
+      messageInput.value = '';
+      messages.scrollTop = messages.scrollHeight;
+
+      try {
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Authorization': \`Bearer \${API_KEY}\`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: 'gpt-3.5-turbo', messages: [{ role: 'user', content: msg }] })
+        });
+        const data = await res.json();
+        messages.innerHTML += `&lt;div class="message bot"&gt;${data.choices[0].message.content}&lt;/div&gt;`;
+        messages.scrollTop = messages.scrollHeight;
+      } catch (e) {
+        messages.innerHTML += `&lt;div class="message bot"&gt;錯誤：\${e.message}&lt;/div&gt;`;
+      }
+    }
+    console.log('[OpenAI Widget] 載入成功！');
+  })();
+&lt;/script&gt;</code></pre>
                     </div>
 
                     <h3 style="margin-top: 16px">
@@ -362,39 +556,37 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><code>src</code></td>
+                                    <td><code>API_KEY</code></td>
                                     <td>必填</td>
-                                    <td>載入核心腳本。</td>
+                                    <td>
+                                        OpenAI API 金鑰（從 platform.openai.com
+                                        獲取）。
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td><code>data-position</code></td>
+                                    <td><code>model</code></td>
+                                    <td>可選</td>
+                                    <td>模型（如 'gpt-3.5-turbo'，預設）。</td>
+                                </tr>
+                                <tr>
+                                    <td><code>position</code></td>
                                     <td>可選</td>
                                     <td>浮動按鈕位置（預設右下）。</td>
                                 </tr>
                                 <tr>
-                                    <td><code>data-site</code></td>
-                                    <td>必填</td>
-                                    <td>你的站點 ID。</td>
+                                    <td><code>accent</code></td>
+                                    <td>可選</td>
+                                    <td>品牌主色（HEX，如 '#25d366'）。</td>
                                 </tr>
                                 <tr>
-                                    <td><code>data-accent</code></td>
+                                    <td><code>width/height</code></td>
                                     <td>可選</td>
-                                    <td>品牌主色（HEX/RGB）。</td>
+                                    <td>聊天面板尺寸（px，預設 360x520）。</td>
                                 </tr>
                                 <tr>
-                                    <td><code>data-width</code></td>
+                                    <td><code>z-index</code></td>
                                     <td>可選</td>
-                                    <td>聊天面板寬度（px）。</td>
-                                </tr>
-                                <tr>
-                                    <td><code>data-height</code></td>
-                                    <td>可選</td>
-                                    <td>聊天面板高度（px）。</td>
-                                </tr>
-                                <tr>
-                                    <td><code>data-z</code></td>
-                                    <td>可選</td>
-                                    <td>z-index，確保浮在最上層。</td>
+                                    <td>層級，確保浮在最上層。</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -402,17 +594,16 @@
                 </section>
 
                 <aside class="card" id="demo">
-                    <h2>即時示範（僅展示程式碼，不會實際載入）</h2>
+                    <h2>即時示範（右下角 AI 小幫手）</h2>
                     <p class="muted">
-                        右下角 AI 小幫手由頁尾唯一 script
-                        載入；本區只顯示範例碼。
+                        點擊右下角綠色按鈕開啟聊天；本區只顯示範例碼。
                     </p>
                     <div class="code" id="mini-code" title="Click to copy">
-                        <pre><code id="embed-mini">&lt;script
-  src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
-  data-site="aitarf_15oJOoBsQFa3"
-  defer
-&gt;&lt;/script&gt;</code></pre>
+                        <pre><code id="embed-mini">&lt;script&gt;
+  // 最小嵌入：替換 API_KEY
+  const API_KEY = 'YOUR_OPENAI_API_KEY';
+  // ... (同上完整腳本，使用 addEventListener 版)
+&lt;/script&gt;</code></pre>
                     </div>
                     <a href="#quickstart" class="btn"
                         >立即嵌入您的免費 AI Widget</a
@@ -482,57 +673,89 @@
                             : '<i class="fas fa-sun" style="color:white;"></i>';
                 });
             })();
-        </script>
 
-        <!-- 唯一且防重複的外掛載入（外掛在 #app 之外，完全不會吃到 #app 變數） -->
-        <script>
+            // 修正版：OpenAI Widget 初始化（替換原失效腳本，使用 addEventListener 避免事件污染）
             (function () {
-                const SRC =
-                    "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
-                console.log("[AI Widget] 開始檢查載入...");
-
-                // 改進的重複檢查：只檢查帶有 data-site 屬性的腳本，避免誤判
-                const existing = Array.from(
-                    document.querySelectorAll(
-                        'script[data-site="aitarf_15oJOoBsQFa3"]',
-                    ),
-                );
-
-                if (existing.length > 1) {
-                    // 只在多於 1 個時移除多餘
-                    existing.slice(1).forEach((s) => {
-                        try {
-                            if (s.parentNode) s.parentNode.removeChild(s);
-                        } catch (_) {}
-                    });
-                    console.warn("[AI Widget] 移除重複腳本，保留第一份。");
-                } else if (existing.length === 1) {
-                    console.log("[AI Widget] 已存在有效腳本，跳過重複載入。");
-                    return; // 只有單一有效腳本時跳過
+                console.log("[OpenAI Widget] 開始載入...");
+                // 替換為您的 OpenAI API Key
+                const API_KEY = "YOUR_OPENAI_API_KEY"; // 這裡換成真實 key！
+                if (!API_KEY || API_KEY === "YOUR_OPENAI_API_KEY") {
+                    console.warn("[OpenAI Widget] 請設定 API_KEY 才能使用！");
+                    return;
                 }
 
-                // 總是創建並附加新腳本（除非上述跳過）
-                const s = document.createElement("script");
-                s.src = SRC;
-                s.defer = true;
-                s.setAttribute("data-position", "bottom-right");
-                s.setAttribute("data-site", "aitarf_15oJOoBsQFa3"); // 若需換 ID，這裡修改
-                s.setAttribute("data-accent", "#25d366");
-                s.setAttribute("data-width", "360");
-                s.setAttribute("data-height", "520");
-                s.setAttribute("data-z", "2147483646"); // 提高 z-index，避免被 toast 蓋住
-                s.onload = () => {
-                    console.log(
-                        "[AI Widget] loader 載入成功！檢查右下角聊天框。",
-                    );
-                };
-                s.onerror = () => {
-                    console.error(
-                        "[AI Widget] loader 加載失敗：檢查網路、CSP 或 Site ID。",
-                    );
-                };
-                document.body.appendChild(s);
-                console.log("[AI Widget] 腳本附加完成。");
+                const widget = document.createElement("div");
+                widget.id = "openai-widget";
+                widget.innerHTML = `
+                    <div id="widget-header">
+                        <span>AI 助手</span>
+                        <i class="fas fa-times" id="close-widget"></i>
+                    </div>
+                    <div id="widget-messages"></div>
+                    <div id="widget-input">
+                        <input id="message-input" placeholder="輸入訊息...">
+                        <button id="send-btn">傳送</button>
+                    </div>
+                `;
+                document.body.appendChild(widget);
+
+                const toggle = document.createElement("div");
+                toggle.id = "widget-toggle";
+                toggle.innerHTML = '<i class="fas fa-comment-dots"></i>';
+                document.body.appendChild(toggle);
+
+                // 使用 addEventListener 綁定事件，避免 inline 事件導致 DOM 污染
+                const closeBtn = document.getElementById("close-widget");
+                closeBtn.addEventListener("click", () => {
+                    widget.classList.remove("open");
+                });
+                toggle.addEventListener("click", () => {
+                    widget.classList.toggle("open");
+                });
+
+                const messageInput = document.getElementById("message-input");
+                const sendBtn = document.getElementById("send-btn");
+                messageInput.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") sendMessage();
+                });
+                sendBtn.addEventListener("click", sendMessage);
+
+                async function sendMessage() {
+                    const msg = messageInput.value.trim();
+                    if (!msg) return;
+                    const messages = document.getElementById("widget-messages");
+                    messages.innerHTML += `<div class="message user">${msg}</div>`;
+                    messageInput.value = "";
+                    messages.scrollTop = messages.scrollHeight;
+
+                    try {
+                        const res = await fetch(
+                            "https://api.openai.com/v1/chat/completions",
+                            {
+                                method: "POST",
+                                headers: {
+                                    Authorization: `Bearer ${API_KEY}`,
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    model: "gpt-3.5-turbo",
+                                    messages: [{ role: "user", content: msg }],
+                                }),
+                            },
+                        );
+                        if (!res.ok)
+                            throw new Error(
+                                `HTTP ${res.status}: ${res.statusText}`,
+                            );
+                        const data = await res.json();
+                        messages.innerHTML += `<div class="message bot">${data.choices[0].message.content}</div>`;
+                        messages.scrollTop = messages.scrollHeight;
+                    } catch (e) {
+                        messages.innerHTML += `<div class="message bot">錯誤：${e.message}</div>`;
+                        console.error("[OpenAI Widget] API 錯誤：", e);
+                    }
+                }
+                console.log("[OpenAI Widget] 載入成功！檢查右下角綠色按鈕。");
             })();
         </script>
     </body>
