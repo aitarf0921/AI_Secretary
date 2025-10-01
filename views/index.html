@@ -355,7 +355,7 @@
             }
             @media (min-width: 760px) {
                 .grid.two {
-                    grid-template-columns: 1fr 1fr;
+                    grid-template-columns: 1fr;
                 }
             }
             .field {
@@ -383,32 +383,6 @@
                 font-size: 0.75rem;
                 color: var(--muted);
                 text-align: right;
-            }
-            .benefits {
-                display: grid;
-                gap: clamp(12px, 3vw, 16px);
-                margin: clamp(12px, 3vw, 16px) 0;
-                justify-items: center;
-            }
-            .benefit-item {
-                display: flex;
-                align-items: flex-start;
-                gap: 12px;
-                max-width: 100%;
-                text-align: left;
-                font-size: 0.875rem;
-            }
-            .benefit-icon {
-                background: var(--ok);
-                color: #fff;
-                width: clamp(24px, 6vw, 28px);
-                height: clamp(24px, 6vw, 28px);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: clamp(0.875rem, 2.5vw, 1rem);
-                flex-shrink: 0;
             }
 
             @media (max-width: 480px) {
@@ -450,17 +424,6 @@
                     padding: clamp(12px, 4vw, 16px);
                     font-size: 1rem;
                     margin: clamp(12px, 4vw, 16px) 0;
-                }
-                .benefits {
-                    grid-template-columns: 1fr;
-                    gap: clamp(16px, 5vw, 20px);
-                }
-                .benefit-item {
-                    justify-content: center;
-                    text-align: center;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 8px;
                 }
                 .grid.two {
                     grid-template-columns: 1fr;
@@ -514,51 +477,12 @@
                     Site
                 </h1>
                 <p data-i18n="hero.desc">
-                    Discover how to embed an AI chatbot for free—boost
-                    conversions by 30% with our customizable assistant. No
-                    coding needed: add to your shop, connect a knowledge base,
-                    and deliver instant answers. Now with multilingual input &
-                    replies—auto-detects user language and responds naturally in
-                    50+ languages.
+                    Embed a free AI chatbot—boost conversions with a
+                    customizable assistant. No coding required: add to your
+                    shop, connect a knowledge base, and deliver instant answers.
+                    Multilingual in/out: auto-detects user language and replies
+                    in 50+ languages.
                 </p>
-                <div class="benefits">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <span data-i18n="hero.benefit1"
-                            >One-Click Embed: Live in 5 Minutes for Instant
-                            Setup</span
-                        >
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <span data-i18n="hero.benefit2"
-                            >Custom Knowledge Base: Professional, Tailored
-                            Responses</span
-                        >
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <span data-i18n="hero.benefit4"
-                            >Multilingual In/Out: Auto-detect & reply in 50+
-                            languages</span
-                        >
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <span data-i18n="hero.benefit3"
-                            >24/7 Availability: Slash Support Costs and Scale
-                            Effortlessly</span
-                        >
-                    </div>
-                </div>
                 <a href="#create" class="btn primary" data-i18n="hero.cta"
                     >Start Free AI Chatbot Trial Now</a
                 >
@@ -566,15 +490,17 @@
 
             <section class="card" id="quickstart">
                 <h2 data-i18n="quickStart.title">
-                    One-Click Embed: Launch Your AI Chatbot in Minutes
+                    一鍵嵌入：複製下方 widget 程式碼，幾分鐘內啟用 AI Chatbot
                 </h2>
                 <p data-i18n="quickStart.desc">
-                    Learn how to add an AI assistant to your site with our
-                    simple embedding tutorial. Perfect for 24/7 customer
-                    service—try the best AI chatbot for website support now and
-                    elevate your user engagement.
+                    將下方
+                    <strong>widget 程式碼</strong> 貼到您的網站（通常是全站
+                    Layout 或頁尾），即可在右下角啟用 24/7
+                    智能客服。之後如果你在下方「生成程式碼」產生了新的
+                    <code>data-site</code>，此處展示的程式碼也會自動更新。
                 </p>
 
+                <!-- 點一下即可複製 -->
                 <div
                     class="code"
                     id="codebox"
@@ -704,23 +630,26 @@
                     data-i18n="create.title"
                     style="margin-top: clamp(16px, 4vw, 24px)"
                 >
-                    Build Your Custom AI Chatbot: Free Starter Plan Available
+                    生成專屬 AI Chatbot 程式碼：免費入門
                 </h3>
                 <p class="note" data-i18n="create.note">
-                    Input your product knowledge (up to 500 characters) to
-                    generate a unique ID. Free tier includes basic embedding;
-                    upgrade for unlimited conversations and advanced features.
+                    請輸入您的產品／服務知識（最多 500
+                    字），系統將生成一段<strong
+                        >含你專屬 <code>data-site</code></strong
+                    >
+                    的完整 widget
+                    程式碼；產生後會自動更新頁面展示的程式碼並複製到剪貼簿。
                 </p>
 
                 <div class="grid two" id="create">
                     <div class="field">
                         <label for="kb" data-i18n="create.label"
-                            >Knowledge Base Content (Max 500 Characters)</label
+                            >知識庫內容（最多 500 字）</label
                         >
                         <textarea
                             id="kb"
                             maxlength="500"
-                            placeholder="Describe your products, services, or FAQs for smart AI responses…"
+                            placeholder="描述你的產品、服務或 FAQ…（內容會用於產生專屬 widget 程式碼）"
                             data-i18n-ph="create.ph"
                         ></textarea>
                         <div class="counter">
@@ -731,30 +660,8 @@
                             id="btn-create"
                             data-i18n="create.btn"
                         >
-                            Generate Free AI Assistant ID
+                            生成 AI Chatbot Widget 程式碼
                         </button>
-                    </div>
-                    <div class="field">
-                        <label data-i18n="create.result"
-                            >Your Unique Site ID</label
-                        >
-                        <input
-                            id="site-out"
-                            type="text"
-                            readonly
-                            placeholder="Generated ID will appear here—copy to embed"
-                            data-i18n-ph="create.sitePh"
-                        />
-                        <p class="note" data-i18n="create.embedTip">
-                            Embed code updates automatically; preview your AI
-                            chatbot in real-time below.
-                        </p>
-                        <a
-                            href="#pricing"
-                            class="btn small"
-                            data-i18n="create.upgrade"
-                            >Explore Premium Upgrades</a
-                        >
                     </div>
                 </div>
             </section>
@@ -790,7 +697,7 @@
         <footer data-i18n="footer">© AI Chatbot — Start free today</footer>
 
         <script>
-            // ====== i18n strings (已去除年份；全部改稱 AI Chatbot) ======
+            // ====== i18n strings ======
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -805,16 +712,12 @@
                     },
                     hero: {
                         title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
-                        desc: "免費將 AI chatbot 嵌入網站—使用可自訂的助手，轉換率提升可達 30%。無需編碼：輕鬆接入商店、整合知識庫並即時回應。支援多國語言輸入與回覆—自動偵測語言並以 50+ 語言自然回應。",
-                        benefit1: "一鍵嵌入：5 分鐘內上線，即時設定",
-                        benefit2: "自訂知識庫：專業、量身訂製回應",
-                        benefit3: "24/7 可用性：大幅降低支援成本，輕鬆擴展",
-                        benefit4: "多語雙向：自動偵測並以 50+ 語言回覆",
+                        desc: "輕鬆嵌入免費的 AI Chatbot：客製化助手可提升轉換率。無需程式碼，支援串接知識庫、即時回覆；並能自動偵測語言，以 50+ 語言自然應答。",
                         cta: "立即開始免費試用",
                     },
                     quickStart: {
-                        title: "一鍵嵌入：數分鐘內啟動您的 AI Chatbot",
-                        desc: "依循簡易步驟，快速為網站加入 24/7 客服。",
+                        title: "一鍵嵌入：複製下方 widget 程式碼，幾分鐘內啟用 AI Chatbot",
+                        desc: "將下方 <strong>widget 程式碼</strong> 貼到您的網站（通常是全站 Layout 或頁尾），即可在右下角啟用 24/7 智能客服。若之後生成新的 <code>data-site</code>，此處程式碼也會自動更新。",
                     },
                     params: {
                         title: "自訂您的 AI Chatbot 參數，實現無縫整合",
@@ -832,18 +735,14 @@
                     required: "必填",
                     optional: "可選",
                     create: {
-                        title: "建置您的自訂 AI Chatbot：免費入門方案",
-                        note: "輸入產品知識（最多 500 字元）以產生唯一 ID。",
-                        label: "知識庫內容（最多 500 字元）",
-                        btn: "產生免費 AI 助手 ID",
-                        result: "您的網站 ID",
-                        embedTip: "嵌入程式碼將自動更新。",
-                        ph: "描述您的產品、服務或 FAQ…",
-                        sitePh: "產生的 ID 會顯示在此—複製即可嵌入",
-                        upgrade: "探索進階付費方案",
+                        title: "生成專屬 AI Chatbot 程式碼：免費入門",
+                        note: "輸入產品／服務知識（最多 500 字），系統會產生<strong>包含你專屬 <code>data-site</code></strong> 的完整 widget 程式碼，並自動更新上方展示與複製到剪貼簿。",
+                        label: "知識庫內容（最多 500 字）",
+                        ph: "描述你的產品、服務或 FAQ…（內容會用於產生專屬 widget 程式碼）",
+                        btn: "生成 AI Chatbot Widget 程式碼",
                         loading: "正在產生…",
                         done: "已完成",
-                        toastSuccess: "已產生 Site ID 並已複製：",
+                        toastSuccess: "Widget 程式碼已生成並已複製。",
                         toastFailGeneric: "產生失敗，請稍後再試。",
                         toastFailNetwork: "連線逾時或網路異常，請重試。",
                         toastEmpty: "請先輸入知識庫內容。",
@@ -870,16 +769,12 @@
                     },
                     hero: {
                         title: "最佳 AI Chatbot：轻松为网站嵌入 24/7 客服",
-                        desc: "免费把 AI chatbot 嵌入网站——可自定义助手助你提升转化率。无需编码：接入电商、整合知识库并即时响应。支持多语言输入与回复——自动识别并以 50+ 语言自然回应。",
-                        benefit1: "一键嵌入：5 分钟上线",
-                        benefit2: "自定义知识库：专业回应",
-                        benefit3: "24/7 可用性：降低支持成本",
-                        benefit4: "多语双向：自动识别并以 50+ 语言回复",
+                        desc: "轻松嵌入免费的 AI Chatbot：可定制的助手帮助提升转化。无需编码，支持连接知识库、即时回复；并能自动识别语言，以 50+ 语言自然应答。",
                         cta: "立即开始免费试用",
                     },
                     quickStart: {
-                        title: "一键嵌入：几分钟启动 AI Chatbot",
-                        desc: "按照简单指引，为网站加入 24/7 客服。",
+                        title: "一键嵌入：复制下方 widget 程式码，几分钟内启用 AI Chatbot",
+                        desc: "将下方<strong>widget 程式码</strong>粘贴到您的网站（通常在站点布局或页脚），即可在右下角启用 24/7 智能客服。若之后生成新的 <code>data-site</code>，此处代码会自动更新。",
                     },
                     params: {
                         title: "自定义 AI Chatbot 参数，实现无缝整合",
@@ -897,18 +792,14 @@
                     required: "必填",
                     optional: "可选",
                     create: {
-                        title: "构建您的自定义 AI Chatbot：免费入门",
-                        note: "输入产品知识（最多 500 字符）以生成唯一 ID。",
+                        title: "生成专属 AI Chatbot 程式码：免费入门",
+                        note: "输入产品／服务知识（最多 500 字符），系统将生成<strong>包含您专属 <code>data-site</code></strong> 的完整 widget 程式码，并自动更新上方展示且复制到剪贴板。",
                         label: "知识库内容（最多 500 字符）",
-                        btn: "生成免费 AI 助手 ID",
-                        result: "您的网站 ID",
-                        embedTip: "嵌入代码会自动更新。",
-                        ph: "描述您的产品、服务或常见问题…",
-                        sitePh: "生成的 ID 将显示在此处—复制即可嵌入",
-                        upgrade: "探索高级升级",
+                        ph: "描述您的产品、服务或 FAQ……（用于生成专属 widget 程式码）",
+                        btn: "生成 AI Chatbot Widget 程式码",
                         loading: "正在生成…",
                         done: "已完成",
-                        toastSuccess: "已生成 Site ID 并已复制：",
+                        toastSuccess: "Widget 程式码已生成并已复制。",
                         toastFailGeneric: "生成失败，请稍后再试。",
                         toastFailNetwork: "网络异常或超时，请重试。",
                         toastEmpty: "请先输入知识库内容。",
@@ -935,24 +826,20 @@
                     },
                     hero: {
                         title: "最高の AI Chatbot：24/7 カスタマーサポートを簡単に実装",
-                        desc: "AI チャットボットを無料でサイトに埋め込み。カスタマイズ可能なアシスタントでコンバージョンを向上。コーディング不要：EC 連携・ナレッジ統合・即時応答に対応。多言語入出力—ユーザー言語を自動検出し、50 以上の言語で自然に応答します。",
-                        benefit1: "ワンクリック：5 分で公開",
-                        benefit2: "カスタム知識ベース：プロ品質の応答",
-                        benefit3: "24/7 稼働：コスト削減＆スケール",
-                        benefit4: "多言語双方向：50+ 言語で自動応答",
+                        desc: "無料で AI Chatbot を導入。カスタマイズ可能なアシスタントでコンバージョンを向上。コーディング不要でナレッジ統合・即時応答に対応。50 以上の言語で自動検出＆自然応答。",
                         cta: "無料トライアルを開始",
                     },
                     quickStart: {
-                        title: "ワンクリックで数分起動",
-                        desc: "シンプル手順で 24/7 サポートを導入。",
+                        title: "ワンクリック：下の widget コードをコピーして数分で有効化",
+                        desc: "以下の<strong>widget コード</strong>をサイトのレイアウト（通常はフッター）に貼り付けるだけで、右下に 24/7 サポートが表示されます。下で新しい <code>data-site</code> を生成した場合、ここに表示されるコードも自動更新されます。",
                     },
                     params: {
-                        title: "AI Chatbot のパラメータをカスタマイズ",
+                        title: "AI Chatbot パラメータをカスタマイズ",
                         th1: "属性",
                         th2: "必須",
                         th4: "説明",
                         src: "コアスクリプトをロード。",
-                        position: "フローティングボタンの位置（右下が既定）。",
+                        position: "フローティングボタンの位置（既定は右下）。",
                         site: "サイト ID。",
                         accent: "ブランドカラー（HEX/RGB）。",
                         width: "パネル幅。",
@@ -962,25 +849,22 @@
                     required: "必須",
                     optional: "任意",
                     create: {
-                        title: "カスタム AI Chatbot を構築：無料プラン",
-                        note: "製品知識（最大 500 文字）を入力してユニーク ID を生成。",
-                        label: "知識ベース（最大 500 文字）",
-                        btn: "無料 AI アシスタント ID を生成",
-                        result: "ユニークサイト ID",
-                        embedTip: "埋め込みコードは自動更新されます。",
-                        ph: "製品・サービス・FAQ を記述…",
-                        sitePh: "ID はここに表示されます—コピーして埋め込み",
-                        upgrade: "プレミアムを確認",
+                        title: "専用 AI Chatbot コードを生成：無料プラン",
+                        note: "製品／サービスの知識（最大 500 文字）を入力すると、<strong>あなた専用の <code>data-site</code></strong> を含む完全な widget コードを生成します。生成後はページ上のコードを自動更新し、クリップボードにコピーします。",
+                        label: "ナレッジ内容（最大 500 文字）",
+                        ph: "製品・サービス・FAQ を記述…（専用コードの生成に使用）",
+                        btn: "AI Chatbot Widget コードを生成",
                         loading: "生成中…",
                         done: "完了",
-                        toastSuccess: "Site ID を生成・コピーしました：",
+                        toastSuccess: "Widget コードを生成し、コピーしました。",
                         toastFailGeneric:
                             "生成に失敗しました。時間をおいて再試行してください。",
                         toastFailNetwork:
                             "ネットワークエラー/タイムアウト。再試行してください。",
-                        toastEmpty: "まず知識ベース内容を入力してください。",
+                        toastEmpty: "まずナレッジ内容を入力してください。",
                         toastTooShort: "内容が短すぎます（20 文字以上）。",
-                        rateLimited: "操作が多すぎます。しばらくしてから。",
+                        rateLimited:
+                            "操作が多すぎます。しばらくお待ちください。",
                     },
                     demo: {
                         title: "ライブデモ：AI Chatbot",
@@ -1003,17 +887,11 @@
                     hero: {
                         title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
                         desc: "Embed a free AI chatbot—boost conversions with a customizable assistant. No coding required: add to your shop, connect a knowledge base, and deliver instant answers. Multilingual in/out: auto-detects user language and replies in 50+ languages.",
-                        benefit1: "One-Click Embed: Live in 5 Minutes",
-                        benefit2:
-                            "Custom Knowledge Base: Professional, Tailored",
-                        benefit3: "24/7 Availability: Cut Costs & Scale",
-                        benefit4:
-                            "Multilingual In/Out: Auto-detect & reply in 50+ languages",
                         cta: "Start Free AI Chatbot Trial Now",
                     },
                     quickStart: {
-                        title: "One-Click Embed: Launch Your AI Chatbot in Minutes",
-                        desc: "Follow the simple guide to add 24/7 support.",
+                        title: "One-Click Embed: Copy the widget code below to enable your AI Chatbot in minutes",
+                        desc: "Paste the <strong>widget code</strong> into your site (usually your global layout or footer) to enable a bottom-right 24/7 assistant. If you later generate a new <code>data-site</code> below, the code shown here will update automatically.",
                     },
                     params: {
                         title: "Customize Your AI Chatbot Parameters for Seamless Integration",
@@ -1031,22 +909,18 @@
                     required: "Required",
                     optional: "Optional",
                     create: {
-                        title: "Build Your Custom AI Chatbot: Free Starter Plan",
-                        note: "Enter up to 500 characters of product knowledge to generate a unique ID.",
-                        label: "Knowledge Base Content (Max 500 Characters)",
-                        btn: "Generate Free AI Assistant ID",
-                        result: "Your Unique Site ID",
-                        embedTip: "Embed code updates automatically.",
-                        ph: "Describe your products, services, or FAQs…",
-                        sitePh: "Generated ID will appear here—copy to embed",
-                        upgrade: "Explore Premium Upgrades",
+                        title: "Generate Your AI Chatbot Code: Free Starter",
+                        note: "Enter up to 500 characters of product/service knowledge. We’ll generate a complete widget snippet with <strong>your own <code>data-site</code></strong>. The snippet will update on this page and be copied to your clipboard.",
+                        label: "Knowledge Base Content (max 500 chars)",
+                        ph: "Describe your products, services, or FAQs… (used to generate your widget code)",
+                        btn: "Generate AI Chatbot Widget Code",
                         loading: "Generating…",
                         done: "Done",
-                        toastSuccess: "Site ID generated & copied: ",
+                        toastSuccess: "Widget code generated and copied.",
                         toastFailGeneric:
                             "Generation failed. Please try again.",
                         toastFailNetwork:
-                            "Network error or timeout. Please check and retry.",
+                            "Network error or timeout. Please retry.",
                         toastEmpty: "Please enter some knowledge first.",
                         toastTooShort:
                             "Content is too short (min 20 characters).",
@@ -1088,11 +962,9 @@
                         el.setAttribute("title", T.common.copyHint);
                     });
             }
-
             function applyLang() {
                 const T = STR[CUR_LANG];
                 langSelect.value = CUR_LANG;
-
                 document.querySelectorAll("[data-i18n]").forEach((el) => {
                     const key = el.getAttribute("data-i18n");
                     const parts = key.split(".");
@@ -1107,26 +979,22 @@
                         }
                     }
                 });
-
                 document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
                     const key = el.getAttribute("data-i18n-ph");
                     const parts = key.split(".");
-                    let v = STR[CUR_LANG];
+                    let v = T;
                     for (const p of parts) v = v?.[p];
                     if (typeof v === "string")
                         el.setAttribute("placeholder", v);
                 });
-
                 document.querySelectorAll(".badge").forEach((b) => {
                     const attr = b.getAttribute("data-i18n");
                     const isReq = attr && /required/i.test(attr);
                     b.textContent = isReq ? T.required : T.optional;
                 });
-
                 themeToggle.setAttribute("title", T.theme.toggle);
                 langSelect.setAttribute("title", T.common.languageTitle);
                 setCodeHints();
-
                 document.documentElement.setAttribute("lang", CUR_LANG);
                 const cur = document.body.getAttribute("data-theme");
                 themeToggle.innerHTML =
@@ -1134,13 +1002,11 @@
                         ? '<i class="fas fa-moon" style="color:black;"></i>'
                         : '<i class="fas fa-sun" style="color:white;"></i>';
             }
-
             langSelect.addEventListener("change", (e) => {
                 CUR_LANG = e.target.value;
                 localStorage.setItem("aiw_lang", CUR_LANG);
                 applyLang();
             });
-
             if (savedTheme === "light") {
                 themeToggle.innerHTML =
                     '<i class="fas fa-moon" style="color:black;"></i>';
@@ -1205,85 +1071,78 @@
                 () => document.getElementById("embed-mini").innerText,
             );
 
-            // Create button logic
-            const btnCreate = document.getElementById("btn-create");
-            const siteOut = document.getElementById("site-out");
-            let isBusy = false;
-            let lastClickAt = 0;
-            const COOLDOWN_MS = 1500;
+            // 依據新產生的 siteId 更新兩段 snippet（注意：必須把
+        </script>
+        寫成 <\/script> 才不會中斷本段 inline script） function
+        updateSnippets(siteId){ const full = `
+        <script
+            src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+            data-position="bottom-right"
+            data-site="${siteId}"
+            data-accent="#25d366"
+            data-width="360"
+            data-height="520"
+            data-z="2147483000"
+            defer
+        >
+            <\/script>`;
+                    const mini = `<script
+              src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
+              data-site="${siteId}"
+              defer
+            ><\/script>`;
+                    document.getElementById("embed-code").innerText = full;
+                    document.getElementById("embed-mini").innerText = mini;
+                  }
 
-            function setCreateBtnState(state) {
-                const T = STR[CUR_LANG];
-                if (state === "loading") {
-                    btnCreate.setAttribute("aria-busy", "true");
-                    btnCreate.setAttribute("disabled", "disabled");
-                    btnCreate.textContent = T.create.loading;
-                } else {
-                    btnCreate.removeAttribute("aria-busy");
-                    btnCreate.removeAttribute("disabled");
-                    btnCreate.textContent = T.create.btn;
-                }
-            }
-            function validateKB() {
-                const T = STR[CUR_LANG];
-                const v = (kb.value || "").trim();
-                if (!v) {
-                    toast(T.create.toastEmpty);
-                    return false;
-                }
-                if (v.length < 20) {
-                    toast(T.create.toastTooShort);
-                    return false;
-                }
-                return true;
-            }
-            async function generateSiteId() {
-                const delay = 700 + ((Math.random() * 500) | 0);
-                await new Promise((r) => setTimeout(r, delay));
-                if (Math.random() < 0.15) {
-                    const err = new Error("NETWORK");
-                    err.code = "NETWORK";
-                    throw err;
-                }
-                return "aitarf_" + Math.random().toString(36).slice(2, 10);
-            }
-            btnCreate.addEventListener("click", async () => {
-                const now = Date.now();
-                const T = STR[CUR_LANG];
-                if (now - lastClickAt < COOLDOWN_MS) {
-                    toast(T.create.rateLimited);
-                    return;
-                }
-                lastClickAt = now;
-                if (isBusy) return;
-                if (!validateKB()) return;
-                isBusy = true;
-                setCreateBtnState("loading");
-                try {
-                    const id = await generateSiteId();
-                    siteOut.value = id;
-                    await copyText(id);
-                    toast(T.create.toastSuccess + id);
-                    btnCreate.textContent = T.create.done;
-                    setTimeout(() => setCreateBtnState("idle"), 800);
-                } catch (e) {
-                    if (e && (e.code === "NETWORK" || e.message === "NETWORK"))
-                        toast(T.create.toastFailNetwork);
-                    else toast(T.create.toastFailGeneric);
-                    setCreateBtnState("idle");
-                } finally {
-                    isBusy = false;
-                    setTimeout(() => {
-                        lastClickAt = 0;
-                    }, COOLDOWN_MS);
-                }
-            });
+                  // Create button logic
+                  const btnCreate=document.getElementById("btn-create");
+                  let isBusy=false; let lastClickAt=0; const COOLDOWN_MS=1500;
 
-            // init
-            applyLang();
+                  function setCreateBtnState(state){
+                    const T=STR[CUR_LANG];
+                    if(state==="loading"){btnCreate.setAttribute("aria-busy","true");btnCreate.setAttribute("disabled","disabled");btnCreate.textContent=T.create.loading;}
+                    else{btnCreate.removeAttribute("aria-busy");btnCreate.removeAttribute("disabled");btnCreate.textContent=T.create.btn;}
+                  }
+                  function validateKB(){
+                    const T=STR[CUR_LANG]; const v=(kb.value||"").trim();
+                    if(!v){toast(T.create.toastEmpty);return false;}
+                    if(v.length<20){toast(T.create.toastTooShort);return false;}
+                    return true;
+                  }
+                  async function generateSiteId(){
+                    const delay=700+((Math.random()*500)|0); await new Promise(r=>setTimeout(r,delay));
+                    if(Math.random()<0.15){const err=new Error("NETWORK"); err.code="NETWORK"; throw err;}
+                    return "aitarf_"+Math.random().toString(36).slice(2,10);
+                  }
+                  btnCreate.addEventListener("click",async()=>{
+                    const now=Date.now(); const T=STR[CUR_LANG];
+                    if(now-lastClickAt<COOLDOWN_MS){toast(T.create.rateLimited);return;}
+                    lastClickAt=now;
+                    if(isBusy) return;
+                    if(!validateKB()) return;
+                    isBusy=true; setCreateBtnState("loading");
+                    try{
+                      const id=await generateSiteId();
+                      updateSnippets(id);
+                      await copyText(document.getElementById("embed-code").innerText);
+                      toast(T.create.toastSuccess);
+                      btnCreate.textContent=T.create.done;
+                      setTimeout(()=>setCreateBtnState("idle"),800);
+                    }catch(e){
+                      if(e && (e.code==="NETWORK"||e.message==="NETWORK")) toast(T.create.toastFailNetwork);
+                      else toast(T.create.toastFailGeneric);
+                      setCreateBtnState("idle");
+                    }finally{
+                      isBusy=false; setTimeout(()=>{lastClickAt=0;},COOLDOWN_MS);
+                    }
+                  });
+
+                  // init
+                  applyLang();
         </script>
 
-        <!-- Demo widget -->
+        <!-- Demo widget（僅一份 loader，避免重複載入） -->
         <script
             src="https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js"
             data-position="bottom-right"
