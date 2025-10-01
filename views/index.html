@@ -278,20 +278,25 @@
                 }
             }
 
-            /* ===== 卡片1「優點」排版修正 ===== */
+            /* ===== 卡片1「優點」：容器置中＋icon 垂直對齊（修正版） ===== */
             .benefits {
+                /* 以最長那句決定內容寬度，整塊置中 */
+                width: max-content;
+                max-width: 100%;
+                margin: clamp(12px, 3vw, 16px) auto;
+                text-align: left;
+
                 display: grid;
                 gap: clamp(12px, 3vw, 16px);
-                margin: clamp(12px, 3vw, 16px) 0;
-                justify-items: center;
+                justify-items: start; /* 每列左對齊，避免 icon 飄移 */
             }
             .benefit-item {
                 display: grid;
-                grid-template-columns: 28px auto;
+                grid-template-columns: 28px minmax(0, 1fr); /* 左 icon 固定、右欄可換行 */
                 column-gap: 12px;
-                align-items: center;
+                align-items: center; /* 垂直置中 icon 與文字 */
                 max-width: 100%;
-                text-align: center;
+                text-align: left; /* 右欄文字左對齊 */
                 font-size: 0.875rem;
             }
             .benefit-icon {
@@ -304,7 +309,14 @@
                 align-items: center;
                 justify-content: center;
                 font-size: 0.9rem;
-                flex-shrink: 0;
+                flex-shrink: 0; /* 防窄螢幕擠壓 */
+            }
+            .benefit-item span {
+                display: block;
+                line-height: 1.5;
+                word-break: break-word; /* 多語長詞可斷行 */
+                white-space: normal;
+                text-align: left;
             }
 
             /* 參數表（黑白 + 深色） */
@@ -353,7 +365,7 @@
                 color: #fff;
             }
 
-            /* badge 基礎樣式（避免不同瀏覽器表現不一致） */
+            /* badge 基礎樣式 */
             .badge {
                 display: inline-block;
                 padding: 2px 6px;
@@ -496,7 +508,16 @@
                 footer {
                     font-size: clamp(0.875rem, 3vw, 1rem);
                 }
+
+                /* 手機：icon 左、文字右同一行；文字只在右欄換行 */
+                .benefits {
+                    max-width: 92vw;
+                }
+                .benefit-item {
+                    grid-template-columns: 28px 1fr;
+                }
             }
+
             @media (min-width: 481px) and (max-width: 768px) {
                 .grid.two {
                     grid-template-columns: 1fr;
