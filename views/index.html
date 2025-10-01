@@ -667,9 +667,7 @@
 
         <!-- [SECTION] 主腳本：i18n、語言/主題切換、Toast、點一下複製、Create 產生流程 -->
         <script>
-            // ==============================
-            // [JS] i18n 字典（四語）
-            // ==============================
+            /* ---------- 合法的多語 STR（簡化版，避免語法錯誤） ---------- */
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -733,7 +731,7 @@
                     footer: "© AI Chatbot — 立即免費開始",
                 },
                 "zh-CN": {
-                    title: "AI Chatbot：在您的网站轻松嵌入 24/7 智能助手",
+                    title: "AI Chatbot：轻松在你的网站嵌入 24/7 智能助手",
                     brand: "AI Chatbot\n轻松嵌入智能 AI 助手",
                     theme: { toggle: "切换主题" },
                     common: {
@@ -744,57 +742,57 @@
                         error: "发生错误",
                     },
                     hero: {
-                        title: "最佳 AI Chatbot：轻松为网站嵌入 24/7 客服",
-                        desc: "轻松嵌入免费的 AI Chatbot：可定制的助手帮助提升转化。无需编码，支持连接知识库、即时回复；并能自动识别语言，以 50+ 语言自然应答。",
-                        benefit1: "一键嵌入：5 分钟内上线",
-                        benefit2: "自定义知识库：专业回应",
-                        benefit3: "24/7 可用性：降低成本",
-                        benefit4: "多语双向：自动识别与 50+ 语言回复",
+                        title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
+                        desc: "轻松嵌入免费的 AI Chatbot：定制助手助你提升转化。无需编码，可接入知识库、即时回复，并自动识别语言，以 50+ 语言自然应答。",
+                        benefit1: "一键嵌入：5 分钟上线",
+                        benefit2: "自定义知识库：专业回复",
+                        benefit3: "24/7 可用：降低成本、易扩展",
+                        benefit4: "多语双向：50+ 语言自动应答",
                         cta: "立即开始免费试用",
                     },
                     quickStart: {
-                        title: "一键嵌入：复制下方 widget 程式码，几分钟内启用 AI Chatbot",
-                        desc: "将下方 <strong>widget 程式码</strong>粘贴到您的网站（通常在站点布局或页脚），即可在右下角启用 24/7 智能客服。若在「生成程式码」卡片创建新的 <code>data-site</code>，此处代码会自动更新。",
+                        title: "一键嵌入：复制下方代码，几分钟启用 AI Chatbot",
+                        desc: "将下方 <strong>widget 代码</strong> 粘贴到你的网站（全站 Layout 或页脚），右下角即启用 24/7 智能客服。如在「生成代码」卡片创建了新的 <code>data-site</code>，这里会自动更新。",
                     },
                     params: {
-                        title: "自定义 AI Chatbot 参数，实现无缝整合",
+                        title: "自定义 AI Chatbot 参数以实现无缝集成",
                         th1: "属性",
                         th2: "必填",
                         th4: "说明",
-                        src: "加载 AI chatbot 嵌入核心脚本。",
+                        src: "加载核心脚本。",
                         position: "浮动按钮位置（默认右下）。",
-                        site: "您的网站 ID。",
-                        accent: "品牌主色（HEX/RGB）。",
-                        width: "聊天面板宽度。",
-                        height: "聊天面板高度。",
+                        site: "你的网站 ID。",
+                        accent: "品牌主色。",
+                        width: "面板宽度。",
+                        height: "面板高度。",
                         z: "置顶层级。",
                     },
                     required: "必填",
                     optional: "可选",
                     create: {
-                        title: "生成专属 AI Chatbot 程式码：免费入门",
-                        note: "输入产品／服务知识（最多 500 字符），系统将生成<strong>包含您专属 <code>data-site</code></strong> 的完整 widget 程式码，并自动更新“嵌入教学”卡片且复制到剪贴板。",
-                        label: "知识库内容（最多 500 字符）",
-                        ph: "描述您的产品、服务或 FAQ……（用于生成专属 widget 程式码）",
-                        btn: "生成 AI Chatbot Widget 程式码",
+                        title: "生成专属 AI Chatbot 代码：免费入门",
+                        note: "输入产品/服务知识（最多 500 字），系统会生成<strong>包含你的 <code>data-site</code></strong> 的完整 widget 代码，并自动更新「嵌入教学」卡片与复制到剪贴板。",
+                        label: "知识库内容（最多 500 字）",
+                        ph: "描述你的产品、服务或 FAQ…",
+                        btn: "生成 AI Chatbot Widget 代码",
                         loading: "正在生成…",
                         done: "已完成",
-                        toastSuccess: "Widget 程式码已生成并已复制。",
-                        toastFailGeneric: "生成失败，请稍后再试。",
+                        toastSuccess: "Widget 代码已生成并复制。",
+                        toastFailGeneric: "生成失败，请稍后重试。",
                         toastFailNetwork: "网络异常或超时，请重试。",
                         toastEmpty: "请先输入知识库内容。",
-                        toastTooShort: "内容过短，至少需要 20 个字符。",
-                        rateLimited: "操作过于频繁，请稍后再试。",
+                        toastTooShort: "内容过短，至少 20 字。",
+                        rateLimited: "操作过于频繁，请稍后重试。",
                     },
                     demo: {
-                        title: "即时演示：AI Chatbot",
+                        title: "即时演示",
                         desc: "右下角 AI 已就绪。",
                         cta: "立即嵌入免费的 AI Chatbot",
                     },
                     footer: "© AI Chatbot — 立即免费开始",
                 },
                 ja: {
-                    title: "AI Chatbot：Webサイトに 24/7 のスマートアシスタントを簡単埋め込み",
+                    title: "AI Chatbot：サイトに 24/7 スマートアシスタントを簡単埋め込み",
                     brand: "AI Chatbot\nスマート AI アシスタントを簡単に埋め込み",
                     theme: { toggle: "テーマを切り替え" },
                     common: {
@@ -805,55 +803,52 @@
                         error: "エラー",
                     },
                     hero: {
-                        title: "最高の AI Chatbot：24/7 カスタマーサポートを簡単に実装",
-                        desc: "無料で AI Chatbot を導入。カスタマイズ可能なアシスタントでコンバージョンを向上。コーディング不要でナレッジ統合・即時応答に対応。50 以上の言語で自動検出＆自然応答。",
-                        benefit1: "ワンクリック：5 分で公開",
+                        title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
+                        desc: "無料の AI Chatbot を簡単導入。ナレッジ連携・即時応答・多言語（50+）自動判別に対応、コンバージョン向上に貢献します。",
+                        benefit1: "ワンクリック導入：5 分で公開",
                         benefit2: "カスタム知識ベース：プロ品質の応答",
                         benefit3: "24/7 稼働：コスト削減＆スケール",
-                        benefit4: "多言語双方向：50+ 言語で自動応答",
-                        cta: "無料トライアルを開始",
+                        benefit4: "多言語：50+ 言語で自然応答",
+                        cta: "今すぐ無料で開始",
                     },
                     quickStart: {
-                        title: "ワンクリック：下の widget コードをコピーして数分で有効化",
-                        desc: "以下の<strong>widget コード</strong>をサイトのレイアウト（通常はフッター）に貼り付けるだけで、右下に 24/7 サポートが表示されます。「コード生成」カードで新しい <code>data-site</code> を作成すると、ここに表示されるコードも自動更新されます。",
+                        title: "ワンクリック埋め込み：数分で有効化",
+                        desc: "以下の <strong>ウィジェットコード</strong> をサイト（レイアウト/フッター等）に貼り付けるだけで右下に常駐します。",
                     },
                     params: {
-                        title: "AI Chatbot パラメータをカスタマイズ",
+                        title: "AI Chatbot パラメータ",
                         th1: "属性",
                         th2: "必須",
                         th4: "説明",
-                        src: "コアスクリプトをロード。",
-                        position: "フローティングボタンの位置（既定は右下）。",
-                        site: "サイト ID。",
-                        accent: "ブランドカラー（HEX/RGB）。",
-                        width: "パネル幅。",
-                        height: "パネル高さ。",
-                        z: "最前面に固定。",
+                        src: "コアスクリプト",
+                        position: "ボタン位置",
+                        site: "サイト ID",
+                        accent: "ブランド色",
+                        width: "幅",
+                        height: "高さ",
+                        z: "最前面",
                     },
                     required: "必須",
                     optional: "任意",
                     create: {
-                        title: "専用 AI Chatbot コードを生成：無料プラン",
-                        note: "製品／サービスの知識（最大 500 文字）を入力すると、<strong>あなた専用の <code>data-site</code></strong> を含む完全な widget コードを生成します。生成後は「埋め込みガイド」カードのコードを自動更新し、クリップボードにコピーします。",
-                        label: "ナレッジ内容（最大 500 文字）",
-                        ph: "製品・サービス・FAQ を記述…（専用コードの生成に使用）",
-                        btn: "AI Chatbot Widget コードを生成",
+                        title: "専用 AI Chatbot コードを生成：無料",
+                        note: "製品/サービスの知識（最大 500 文字）を入力すると、<code>data-site</code> を含むコードを生成します。",
+                        label: "ナレッジ（最大 500 文字）",
+                        ph: "製品・サービス・FAQ を記述…",
+                        btn: "AI Chatbot ウィジェットコードを生成",
                         loading: "生成中…",
                         done: "完了",
-                        toastSuccess: "Widget コードを生成し、コピーしました。",
-                        toastFailGeneric:
-                            "生成に失敗しました。時間をおいて再試行してください。",
-                        toastFailNetwork:
-                            "ネットワークエラー/タイムアウト。再試行してください。",
-                        toastEmpty: "まずナレッジ内容を入力してください。",
-                        toastTooShort: "内容が短すぎます（20 文字以上）。",
-                        rateLimited:
-                            "操作が多すぎます。しばらくお待ちください。",
+                        toastSuccess: "コードを生成し、コピーしました。",
+                        toastFailGeneric: "生成に失敗しました。",
+                        toastFailNetwork: "ネットワークエラー/タイムアウト。",
+                        toastEmpty: "ナレッジを入力してください。",
+                        toastTooShort: "20 文字以上で入力してください。",
+                        rateLimited: "操作が頻繁です。少し待ってください。",
                     },
                     demo: {
-                        title: "ライブデモ：AI Chatbot",
-                        desc: "右下の AI が待機中。",
-                        cta: "無料の AI Chatbot を埋め込む",
+                        title: "ライブデモ",
+                        desc: "右下の AI が稼働中。",
+                        cta: "今すぐ埋め込み",
                     },
                     footer: "© AI Chatbot — 今すぐ無料で開始",
                 },
@@ -870,22 +865,20 @@
                     },
                     hero: {
                         title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
-                        desc: "Embed a free AI chatbot—boost conversions with a customizable assistant. No coding required: add to your shop, connect a knowledge base, and deliver instant answers. Multilingual in/out: auto-detects user language and replies in 50+ languages.",
-                        benefit1:
-                            "One-Click Embed: Live in 5 Minutes for Instant Setup",
+                        desc: "Embed a free AI Chatbot—boost conversions with a customizable assistant. No coding required, knowledge base integration, instant replies, multilingual (50+).",
+                        benefit1: "One-Click Embed: Live in 5 Minutes",
                         benefit2:
-                            "Custom Knowledge Base: Professional, Tailored Responses",
+                            "Custom Knowledge Base: Professional, Tailored",
                         benefit3: "24/7 Availability: Cut Costs & Scale",
-                        benefit4:
-                            "Multilingual In/Out: Auto-detect & reply in 50+ languages",
+                        benefit4: "Multilingual In/Out: 50+ languages",
                         cta: "Start Free AI Chatbot Trial Now",
                     },
                     quickStart: {
-                        title: "One-Click Embed: Copy the widget code below to enable your AI Chatbot in minutes",
-                        desc: "Paste the <strong>widget code</strong> into your site (usually your global layout or footer) to enable a bottom-right 24/7 assistant. If you create a new <code>data-site</code> in the “Generate Code” card, the code shown here will update automatically.",
+                        title: "One-Click Embed: Copy the widget code",
+                        desc: "Paste the <strong>widget code</strong> into your site layout/footer to enable the bottom-right assistant.",
                     },
                     params: {
-                        title: "Customize Your AI Chatbot Parameters for Seamless Integration",
+                        title: "Customize your AI Chatbot parameters",
                         th1: "Attribute",
                         th2: "Required",
                         th4: "Description",
@@ -900,33 +893,30 @@
                     required: "Required",
                     optional: "Optional",
                     create: {
-                        title: "Generate Your AI Chatbot Code: Free Starter",
-                        note: "Enter up to 500 characters of product/service knowledge. We’ll generate a complete widget snippet with <strong>your own <code>data-site</code></strong>. It will update the snippets in the “Embed Guide” card and be copied to your clipboard.",
-                        label: "Knowledge Base Content (max 500 chars)",
-                        ph: "Describe your products, services, or FAQs… (used to generate your widget code)",
+                        title: "Generate your AI Chatbot code: free",
+                        note: "Enter up to 500 chars of knowledge. We'll generate the widget code with your <code>data-site</code>.",
+                        label: "Knowledge Base (max 500)",
+                        ph: "Describe your products/services/FAQ…",
                         btn: "Generate AI Chatbot Widget Code",
                         loading: "Generating…",
                         done: "Done",
-                        toastSuccess: "Widget code generated and copied.",
-                        toastFailGeneric:
-                            "Generation failed. Please try again.",
-                        toastFailNetwork:
-                            "Network error or timeout. Please retry.",
+                        toastSuccess: "Widget code generated & copied.",
+                        toastFailGeneric: "Generation failed. Try again.",
+                        toastFailNetwork: "Network error or timeout.",
                         toastEmpty: "Please enter some knowledge first.",
-                        toastTooShort:
-                            "Content is too short (min 20 characters).",
-                        rateLimited: "Too many attempts. Please wait a moment.",
+                        toastTooShort: "Content too short (min 20 chars).",
+                        rateLimited: "Too many attempts. Please wait.",
                     },
                     demo: {
-                        title: "Live Demo: See AI Chatbot in Action",
-                        desc: "The bottom-right AI is ready to help 24/7.",
-                        cta: "Embed Your Free AI Chatbot Today",
+                        title: "Live Demo",
+                        desc: "Bottom-right AI is ready.",
+                        cta: "Embed your free AI Chatbot",
                     },
                     footer: "© AI Chatbot — Start free today",
                 },
             };
 
-            // ====== 原本的語言/主題/複製/Toast 等初始化（保留） ======
+            /* ---------- 原本的語言/主題/複製/Toast 初始化（保留） ---------- */
             const savedLang = localStorage.getItem("aiw_lang");
             const savedTheme = localStorage.getItem("aiw_theme") || "light";
             const navLang = (navigator.language || "zh-TW").toLowerCase();
@@ -945,25 +935,17 @@
             const langSelect = document.getElementById("lang-select");
 
             function setCodeHints() {
-                const T = STR[CUR_LANG];
+                const T = STR[CUR_LANG] || STR["en"];
                 document
                     .querySelectorAll('.code[data-copyable="true"]')
                     .forEach((el) => {
-                        el.setAttribute(
-                            "data-hint",
-                            T.common?.copyHint || "Click to copy",
-                        );
-                        el.setAttribute(
-                            "title",
-                            T.common?.copyHint || "Click to copy",
-                        );
+                        el.setAttribute("data-hint", T.common.copyHint);
+                        el.setAttribute("title", T.common.copyHint);
                     });
             }
-
             function applyLang() {
                 const T = STR[CUR_LANG] || STR["en"];
                 langSelect.value = CUR_LANG;
-
                 document.querySelectorAll("[data-i18n]").forEach((el) => {
                     const key = el.getAttribute("data-i18n");
                     const parts = key.split(".");
@@ -978,7 +960,6 @@
                         }
                     }
                 });
-
                 document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
                     const key = el.getAttribute("data-i18n-ph");
                     const parts = key.split(".");
@@ -987,39 +968,26 @@
                     if (typeof v === "string")
                         el.setAttribute("placeholder", v);
                 });
-
                 document.querySelectorAll(".badge").forEach((b) => {
                     const attr = b.getAttribute("data-i18n");
                     const isReq = attr && /required/i.test(attr);
-                    const tDict = STR[CUR_LANG] || STR["en"];
-                    b.textContent = isReq ? tDict.required : tDict.optional;
+                    b.textContent = isReq ? T.required : T.optional;
                 });
-
-                themeToggle.setAttribute(
-                    "title",
-                    T.theme?.toggle || "Toggle Theme",
-                );
-                langSelect.setAttribute(
-                    "title",
-                    T.common?.languageTitle || "Select language",
-                );
+                themeToggle.setAttribute("title", T.theme.toggle);
+                langSelect.setAttribute("title", T.common.languageTitle);
                 setCodeHints();
-
                 document.documentElement.setAttribute("lang", CUR_LANG);
-
                 const cur = document.body.getAttribute("data-theme");
                 themeToggle.innerHTML =
                     cur === "light"
                         ? '<i class="fas fa-moon" style="color:black;"></i>'
                         : '<i class="fas fa-sun" style="color:white;"></i>';
             }
-
             langSelect.addEventListener("change", (e) => {
                 CUR_LANG = e.target.value;
                 localStorage.setItem("aiw_lang", CUR_LANG);
                 applyLang();
             });
-
             if (savedTheme === "light") {
                 themeToggle.innerHTML =
                     '<i class="fas fa-moon" style="color:black;"></i>';
@@ -1038,7 +1006,7 @@
                         : '<i class="fas fa-sun" style="color:white;"></i>';
             });
 
-            // ====== Counter / Toast / Copy（保留） ======
+            // Counter / Toast / Copy（保留）
             const kb = document.getElementById("kb");
             const kbCount = document.getElementById("kb-count");
             if (kb && kbCount) {
@@ -1046,7 +1014,6 @@
                     kbCount.textContent = kb.value.length;
                 });
             }
-
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
@@ -1058,7 +1025,6 @@
                     setTimeout(() => t.remove(), 250);
                 }, 1600);
             }
-
             async function copyText(text) {
                 try {
                     await navigator.clipboard.writeText(text);
@@ -1075,11 +1041,9 @@
                 const T = STR[CUR_LANG] || STR["en"];
                 container.addEventListener("click", async () => {
                     await copyText(getter());
-                    toast(T.common?.copied || "Copied!");
+                    toast(T.common.copied);
                 });
             }
-
-            // 綁定複製（卡片三）
             (function bindCopies() {
                 const box1 = document.getElementById("codebox");
                 const box2 = document.getElementById("mini-code");
@@ -1095,7 +1059,7 @@
                     );
             })();
 
-            // ====== [AIW_CHANGE] 補上一個 .hidden 樣式（不改動 head） ======
+            // 注入 .hidden 樣式（保險）
             (function ensureHiddenCSS() {
                 if (!document.getElementById("aiw-hidden-style")) {
                     const st = document.createElement("style");
@@ -1105,17 +1069,16 @@
                 }
             })();
 
-            // ====== [AIW_CHANGE] 產生 snippet 的工具（藍色 accent） ======
+            /* ---------- 生成 snippet 的工具（藍色 accent） ---------- */
             const WIDGET_SRC =
                 "https://d1apwn2mo5o5aj.cloudfront.net/js/ai-helper-loader.js";
-            const ACCENT_BLUE = "#2563eb"; // 藍色
+            const ACCENT_BLUE = "#2563eb";
             const WIDGET_DEFAULTS = {
                 position: "bottom-right",
                 width: "360",
                 height: "520",
                 z: "2147483000",
             };
-
             function buildSnippet(siteId, opts = {}) {
                 const o = "<scr" + "ipt";
                 const c = "</scr" + "ipt>";
@@ -1133,29 +1096,27 @@
                     : "";
                 const z = opts.z ? `\n  data-z="${opts.z}"` : "";
                 return `${o}
-              src="${WIDGET_SRC}"${pos}
-              data-site="${siteId}"${accent}${width}${height}${z}
-              defer
-            >${c}`;
+          src="${WIDGET_SRC}"${pos}
+          data-site="${siteId}"${accent}${width}${height}${z}
+          defer
+        >${c}`;
             }
             function buildMiniSnippet(siteId, accent) {
                 const o = "<scr" + "ipt";
                 const c = "</scr" + "ipt>";
                 return `${o}
-              src="${WIDGET_SRC}"
-              data-site="${siteId}"
-              data-accent="${accent}"
-              defer
-            >${c}`;
+          src="${WIDGET_SRC}"
+          data-site="${siteId}"
+          data-accent="${accent}"
+          defer
+        >${c}`;
             }
 
-            // ====== [AIW_CHANGE] Demo widget 重新掛載（確保只有一份） ======
+            /* ---------- Demo widget 重新掛載（確保只有一份） ---------- */
             function mountDemoWidget(siteId, accent, more = WIDGET_DEFAULTS) {
-                // 移除所有舊 loader
                 document
                     .querySelectorAll(`script[src*="ai-helper-loader.js"]`)
                     .forEach((s) => s.remove());
-                // 新增一份
                 const s = document.createElement("script");
                 s.src = WIDGET_SRC;
                 s.defer = true;
@@ -1168,7 +1129,7 @@
                 document.body.appendChild(s);
             }
 
-            // ====== [AIW_CHANGE] Hero CTA → 顯示卡片二並捲動 ======
+            /* ---------- Hero CTA → 顯示卡片二並捲動 ---------- */
             const btnStartTrial = document.getElementById("start-trial-btn");
             const cardGenerate = document.getElementById("create-card");
             const cardSnippet = document.getElementById("quickstart");
@@ -1182,24 +1143,23 @@
                 });
             }
 
-            // ====== [AIW_CHANGE] 假回傳 SiteID（API 註解保留以便日後接後端） ======
+            /* ---------- 假回傳 SiteID（API 註解保留） ---------- */
             async function generateSiteIdFake(kbText) {
-                // 真實 API 範例（保留）：
+                // 真實 API 範例（日後改這裡）：
                 // const res = await fetch("/api/create", {
                 //   method: "POST",
                 //   headers: {"Content-Type":"application/json"},
                 //   body: JSON.stringify({ kb: kbText })
                 // });
                 // if (!res.ok) throw new Error("NETWORK");
-                // return await res.text(); // 假設後端回傳純文字 siteId
+                // return await res.text();
                 return "aitarf_15oJOoBsQFa3";
             }
 
-            // ====== [AIW_CHANGE] 卡片二：生成 → 顯示卡片三、更新 snippet（藍色）、同步 Demo widget ======
+            /* ---------- 卡片二：生成 → 顯示卡片三、更新 snippet（藍色）、同步 Demo widget ---------- */
             (function bindCreateFlow() {
                 const btnCreate = document.getElementById("btn-create");
                 if (!btnCreate) return;
-
                 const COOLDOWN_MS = 1500;
                 let isBusy = false;
                 let lastClickAt = 0;
@@ -1226,9 +1186,7 @@
                     const Tt = (STR[CUR_LANG] || STR["en"]).create;
                     const now = Date.now();
                     if (now - lastClickAt < COOLDOWN_MS) {
-                        toast(
-                            Tt.rateLimited || "Too many attempts. Please wait.",
-                        );
+                        toast(Tt.rateLimited || "Too many attempts.");
                         return;
                     }
                     lastClickAt = now;
@@ -1252,10 +1210,7 @@
                     isBusy = true;
                     setCreateBtnState("loading");
                     try {
-                        // 取得（假）siteId
                         const siteId = await generateSiteIdFake(v);
-
-                        // 更新卡片三 snippet（藍色）
                         const full = buildSnippet(siteId, {
                             position: WIDGET_DEFAULTS.position,
                             accent: ACCENT_BLUE,
@@ -1269,22 +1224,18 @@
                         if (codeFull) codeFull.innerText = full;
                         if (codeMini) codeMini.innerText = mini;
 
-                        // 顯示卡片三並捲動
                         if (cardSnippet) {
                             cardSnippet.classList.remove("hidden");
                             cardSnippet.scrollIntoView({ behavior: "smooth" });
                         }
 
-                        // 同步更新右下角 demo widget（確保頁面只有一份 loader）
                         mountDemoWidget(siteId, ACCENT_BLUE, WIDGET_DEFAULTS);
 
-                        // 複製完整 snippet 並提示
                         await copyText(full);
                         toast(
                             Tt.toastSuccess ||
-                                "Widget code generated and copied.",
+                                "Widget code generated & copied.",
                         );
-
                         setCreateBtnState("done");
                         setTimeout(() => setCreateBtnState("idle"), 800);
                     } catch (e) {
@@ -1292,10 +1243,7 @@
                             e &&
                             (e.code === "NETWORK" || e.message === "NETWORK")
                         )
-                            toast(
-                                Tt.toastFailNetwork ||
-                                    "Network error or timeout.",
-                            );
+                            toast(Tt.toastFailNetwork || "Network error.");
                         else toast(Tt.toastFailGeneric || "Generation failed.");
                         setCreateBtnState("idle");
                     } finally {
@@ -1307,7 +1255,7 @@
                 });
             })();
 
-            // ====== 啟動（套用語言） ======
+            /* ---------- 啟動語系文字 ---------- */
             applyLang();
         </script>
 
