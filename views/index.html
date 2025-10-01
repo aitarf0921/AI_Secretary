@@ -641,32 +641,97 @@
 
         <script type="application/ld+json">
             {
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": [
+                "@context": [
+                    "https://schema.org",
                     {
-                        "@type": "Question",
-                        "name": "How do I embed the AI Chatbot widget on my website?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Copy the script tag provided in the snippet and paste it into your site's layout or footer. Set your unique data-site and optional data-accent, width, height, and z parameters."
-                        }
+                        "@language": "en"
+                    }
+                ],
+                "@type": "SoftwareApplication",
+                "name": [
+                    { "@language": "en", "@value": "AI Chatbot" },
+                    { "@language": "zh-TW", "@value": "AI Chatbot" },
+                    { "@language": "zh-CN", "@value": "AI Chatbot" },
+                    { "@language": "ja", "@value": "AI Chatbot" }
+                ],
+                "applicationCategory": [
+                    "BusinessApplication",
+                    "WebApplication"
+                ],
+                "operatingSystem": ["Web", "Browser"],
+                "description": [
+                    {
+                        "@language": "en",
+                        "@value": "Embed an AI Chatbot widget for 24/7 customer support. Multilingual support with auto-detection, knowledge base integration, and easy copy-paste installation."
                     },
                     {
-                        "@type": "Question",
-                        "name": "Does the AI Chatbot support multilingual conversations?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes. It auto-detects user language and replies naturally in 50+ languages."
-                        }
+                        "@language": "zh-TW",
+                        "@value": "輕鬆嵌入 AI Chatbot 小工具，提供 24/7 客戶支援。支援多語系自動偵測、知識庫整合，並能以複製貼上快速安裝。"
                     },
                     {
-                        "@type": "Question",
-                        "name": "Can I connect a knowledge base?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes. Provide your domain knowledge during setup to tailor responses and improve accuracy."
-                        }
+                        "@language": "zh-CN",
+                        "@value": "轻松嵌入 AI Chatbot 小工具，实现 24/7 客服。支持多语系自动识别、知识库集成，并可通过复制粘贴快速安装。"
+                    },
+                    {
+                        "@language": "ja",
+                        "@value": "AI Chatbot ウィジェットを簡単に埋め込み、24/7 のカスタマーサポートを実現。多言語対応の自動判別、ナレッジベース連携、コピー＆ペーストで導入可能。"
+                    }
+                ],
+                "keywords": [
+                    {
+                        "@language": "en",
+                        "@value": "AI chatbot, customer service bot, virtual assistant, AI secretary, conversational AI, support agent, helpdesk bot, digital aide, automated helper, chatbot program, text virtual assistant, social bot, artificial intelligence conversationalist, virtual agent, virtual human, conversational interface, customer service automation, automated customer support, self-service customer support, digital customer service, aide, apprentice, associate, attendant, backup, colleague, companion, deputy, friend, partner, representative, secretary, AI agent, customer support optimization, employee assistance, human resources bot, sales chatbot, marketing assistant, lead generation helper, no-code support tool, 24/7 digital secretary, interactive AI companion, query resolution bot, feedback collector, appointment scheduler, multilingual support agent, knowledge base navigator, e-commerce helper, FAQ responder, instant reply system, user engagement booster, website integration tool, embeddable AI aide, floating chat secretary"
+                    },
+                    {
+                        "@language": "zh-TW",
+                        "@value": "AI, 客服, 助手, 秘書, AI 客服, AI 助手, AI 秘書, 智能客服, 虛擬助手, 聊天秘書, 自動客服, 線上助手, 24小時秘書, 知識庫助手, 多語系客服, 對話式 AI, 支援代理, 幫助台機器人, 數位助理, 自動化幫手, 聊天程式, 文字虛擬助理, 社交機器人, 人工智慧對話者, 虛擬代理, 虛擬人類, 對話介面, 客服自動化, 自助式客戶支援, 數位客服, 夥伴, 副手, 代表, 客戶支援優化, 員工協助, 人力資源機器人, 銷售聊天機器人, 行銷助理, 潛在客戶擷取, 無程式碼工具, 24/7 數位秘書, 互動 AI 夥伴, 查詢解決, 回饋收集, 預約排程, 多語系支援, 知識庫導航, 電商幫手, FAQ 回應, 即時回覆系統, 用戶參與提升, 網站整合工具, 可嵌入 AI 助理, 浮動聊天秘書"
+                    },
+                    {
+                        "@language": "zh-CN",
+                        "@value": "AI, 客服, 助手, 秘书, AI 客服, AI 助手, AI 秘书, 智能客服, 虚拟助手, 聊天秘书, 自动客服, 在线助手, 24小时秘书, 知识库助手, 多语系客服, 对话式 AI, 支持代理, 帮助台机器人, 数字助理, 自动化帮手, 聊天程序, 文字虚拟助理, 社交机器人, 人工智能对话者, 虚拟代理, 虚拟人类, 对话界面, 客服自动化, 自助式客户支持, 数字客服, 伙伴, 副手, 代表, 客户支持优化, 员工协助, 人力资源机器人, 销售聊天机器人, 营销助理, 潜在客户捕获, 无代码工具, 24/7 数字秘书, 互动 AI 伙伴, 查询解决, 反馈收集, 预约排程, 多语系支持, 知识库导航, 电商帮手, FAQ 响应, 即时回复系统, 用户参与提升, 网站集成工具, 可嵌入 AI 助理, 浮动聊天秘书"
+                    },
+                    {
+                        "@language": "ja",
+                        "@value": "AI, カスタマーサービス, アシスタント, 秘書, AIチャットボット, サポートエージェント, ヘルプデスクボット, デジタルエイド, 自動化ヘルパー, チャットボットプログラム, テキスト仮想アシスタント, ソーシャルボット, 人工知能会話, 仮想エージェント, 仮想ヒューマン, 会話インターフェース, カスタマーサービス自動化, 自動化カスタマーサポート, セルフサービス, デジタルカスタマーサービス, コンパニオン, 代表, AIエージェント, サポート最適化, 社内支援, 人事ロボット, セールスチャットボット, マーケティングアシスタント, リード獲得, ノーコードツール, 24/7 デジタル秘書, インタラクティブAI, 問い合わせ解決, フィードバック収集, 予約スケジューラー, 多言語サポート, ナレッジベースナビゲーター, EC支援, FAQ レスポンダー, 即時返信, ユーザーエンゲージメント向上, ウェブサイト統合ツール, 埋め込み可能AI, フローティングチャット"
+                    }
+                ],
+                "knowsAbout": [
+                    {
+                        "@language": "en",
+                        "@value": "AI chatbot widget, customer service automation, multilingual AI assistant, knowledge base QA, website chat integration, copy-paste embed, floating chat button, lead capture chatbot, 24/7 support, no-code AI tools, generative AI integration"
+                    },
+                    {
+                        "@language": "zh-TW",
+                        "@value": "AI 聊天機器人小工具, 客戶服務自動化, 多語系 AI 助理, 知識庫問答, 網站聊天整合, 複製貼上嵌入, 浮動聊天按鈕, 潛在客戶擷取聊天機器人, 24/7 支援, 無程式碼 AI 工具, 生成式 AI 整合"
+                    },
+                    {
+                        "@language": "zh-CN",
+                        "@value": "AI 聊天机器人小工具, 客户服务自动化, 多语系 AI 助理, 知识库问答, 网站聊天集成, 复制粘贴嵌入, 浮动聊天按钮, 潜在客户捕获聊天机器人, 24/7 支持, 无代码 AI 工具, 生成式 AI 集成"
+                    },
+                    {
+                        "@language": "ja",
+                        "@value": "AIチャットボットウィジェット, カスタマーサービス自動化, 多言語対応 AI アシスタント, ナレッジベース QA, ウェブサイトチャット統合, コピー&ペースト埋め込み, 浮動チャットボタン, リード獲得ボット, 24/7 サポート, ノーコード AI ツール, 生成 AI 統合"
+                    }
+                ],
+                "url": "https://example.com/ai-chatbot",
+                "version": "1.0",
+                "author": { "@type": "Organization", "name": "Your Company" },
+                "featureList": [
+                    {
+                        "@language": "en",
+                        "@value": "One-click embed, Instant live, Custom knowledge base integration, Multilingual auto-detection, 24/7 availability for cost reduction, No-code customization, Lead capture and analytics"
+                    },
+                    {
+                        "@language": "zh-TW",
+                        "@value": "一鍵嵌入 立刻上線, 自訂知識庫整合, 多語系自動偵測, 24/7 可用性降低成本, 無程式碼客製化, 潛在客戶擷取與分析"
+                    },
+                    {
+                        "@language": "zh-CN",
+                        "@value": "一键嵌入 立刻上线, 自定义知识库集成, 多语系自动识别, 24/7 可用性降低成本, 无代码自定义, 潜在客户捕获与分析"
+                    },
+                    {
+                        "@language": "ja",
+                        "@value": "ワンクリック導入 すぐに公開, カスタムナレッジベース統合, 多言語自動判別, 24/7 稼働でコスト削減, ノーコードカスタマイズ, リード獲得と分析"
                     }
                 ]
             }
@@ -952,11 +1017,11 @@
                     },
                     hero: {
                         title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
-                        desc: "輕鬆嵌入免費的 AI Chatbot：客製化助手可提升轉換率。無需程式碼，支援串接知識庫、即時回覆；並能自動偵測語言，以 50+ 語言自然應答。",
-                        benefit1: "一鍵嵌入：5 分鐘內上線",
+                        desc: "輕鬆嵌入免費的 AI Chatbot：客製化助手可提升轉換率。無需程式碼，支援串接知識庫、即時回覆；並能自動偵測語言，多語系自然應答。",
+                        benefit1: "一鍵嵌入：立刻上線",
                         benefit2: "自訂知識庫：專業、量身訂製回應",
                         benefit3: "24/7 可用性：大幅降低支援成本",
-                        benefit4: "多語雙向：50+ 語言自動回覆",
+                        benefit4: "多語系雙向：自動偵測並自然回覆",
                         cta: "立即開始免費試用",
                     },
                     quickStart: {
@@ -1009,11 +1074,11 @@
                     },
                     hero: {
                         title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
-                        desc: "轻松嵌入免费的 AI Chatbot：定制助手助你提升转化。无需编码，可接入知识库、即时回复，并自动识别语言，以 50+ 语言自然应答。",
-                        benefit1: "一键嵌入：5 分钟上线",
+                        desc: "轻松嵌入免费的 AI Chatbot：定制助手助你提升转化。无需编码，可接入知识库、即时回复，并自动识别语言，多语系自然应答。",
+                        benefit1: "一键嵌入：立刻上线",
                         benefit2: "自定义知识库：专业回复",
                         benefit3: "24/7 可用：降低成本、易扩展",
-                        benefit4: "多语双向：50+ 语言自动应答",
+                        benefit4: "多语系双向：自动识别并自然应答",
                         cta: "立即开始免费试用",
                     },
                     quickStart: {
@@ -1066,11 +1131,11 @@
                     },
                     hero: {
                         title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
-                        desc: "無料の AI Chatbot を簡単導入。ナレッジ連携・即時応答・多言語（50+）自動判別に対応、コンバージョン向上に貢献します。",
-                        benefit1: "ワンクリック導入：5 分で公開",
+                        desc: "無料の AI Chatbot を簡単導入。ナレッジ連携・即時応答・多言語対応により、自然な応答でコンバージョン向上に貢献します。",
+                        benefit1: "ワンクリック導入：すぐに公開",
                         benefit2: "カスタム知識ベース：プロ品質の応答",
                         benefit3: "24/7 稼働：コスト削減＆スケール",
-                        benefit4: "多言語：50+ 言語で自然応答",
+                        benefit4: "多言語対応：自動判別し自然に応答",
                         cta: "今すぐ無料で開始",
                     },
                     quickStart: {
@@ -1123,12 +1188,13 @@
                     },
                     hero: {
                         title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
-                        desc: "Embed a free AI Chatbot—boost conversions with a customizable assistant. No coding required, knowledge base integration, instant replies, multilingual (50+).",
-                        benefit1: "One-Click Embed: Live in 5 Minutes",
+                        desc: "Embed a free AI Chatbot—boost conversions with a customizable assistant. No coding required, knowledge base integration, instant replies, multilingual support with natural responses.",
+                        benefit1: "One-Click Embed: Instant Live",
                         benefit2:
                             "Custom Knowledge Base: Professional, Tailored",
                         benefit3: "24/7 Availability: Cut Costs & Scale",
-                        benefit4: "Multilingual In/Out: 50+ languages",
+                        benefit4:
+                            "Multilingual In/Out: Auto-detect & natural replies",
                         cta: "Start Free AI Chatbot Trial Now",
                     },
                     quickStart: {
