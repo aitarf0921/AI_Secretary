@@ -17,7 +17,7 @@
 
         <style>
             :root {
-                --bg: #f7f9fc;
+                --bg: #ffffff;
                 --card: #fff;
                 --text: #1b2838;
                 --muted: #6b7a90;
@@ -124,6 +124,9 @@
             }
             .theme-toggle:hover {
                 background: var(--border);
+            }
+            .theme-toggle i {
+                transition: color 0.3s;
             }
 
             main {
@@ -394,13 +397,14 @@
 
             footer {
                 max-width: 1120px;
-                margin: clamp(24px, 6vw, 40px) auto clamp(12px, 3vw, 24px);
+                margin: clamp(24px, 6vw, 40px) auto 0;
                 padding: 0 clamp(8px, 2vw, 16px);
                 color: var(--muted);
                 font-size: 0.8125rem;
                 text-align: center;
                 border-top: 1px solid var(--border);
                 padding-top: clamp(16px, 4vw, 20px);
+                background: var(--card);
             }
 
             .grid {
@@ -668,7 +672,7 @@
                     data-i18n="theme.toggle"
                     title="Toggle Theme"
                 >
-                    <i class="fas fa-moon" style="color: black"></i>
+                    <i class="fas fa-moon"></i>
                 </button>
             </div>
         </header>
@@ -1173,6 +1177,16 @@
                     });
             }
 
+            function updateThemeIcon() {
+                const cur = document.body.getAttribute("data-theme");
+                if (themeToggle) {
+                    themeToggle.innerHTML =
+                        cur === "light"
+                            ? '<i class="fas fa-moon"></i>'
+                            : '<i class="fas fa-sun"></i>';
+                }
+            }
+
             function applyLang() {
                 const T = STR[CUR_LANG] || STR["en"];
                 if (langSelect) langSelect.value = CUR_LANG;
@@ -1214,13 +1228,7 @@
                 setCodeHints();
                 document.documentElement.setAttribute("lang", CUR_LANG);
 
-                const cur = document.body.getAttribute("data-theme");
-                if (themeToggle) {
-                    themeToggle.innerHTML =
-                        cur === "light"
-                            ? '<i class="fas fa-moon" style="color:black;"></i>'
-                            : '<i class="fas fa-sun" style="color:white;"></i>';
-                }
+                updateThemeIcon();
             }
 
             if (langSelect) {
@@ -1231,25 +1239,15 @@
                 });
             }
 
-            if (savedTheme === "light") {
-                if (themeToggle)
-                    themeToggle.innerHTML =
-                        '<i class="fas fa-moon" style="color:black;"></i>';
-            } else {
-                if (themeToggle)
-                    themeToggle.innerHTML =
-                        '<i class="fas fa-sun" style="color:white;"></i>';
-            }
+            updateThemeIcon();
+
             if (themeToggle) {
                 themeToggle.addEventListener("click", () => {
                     const current = document.body.getAttribute("data-theme");
                     const next = current === "light" ? "dark" : "light";
                     document.body.setAttribute("data-theme", next);
                     localStorage.setItem("aiw_theme", next);
-                    themeToggle.innerHTML =
-                        next === "light"
-                            ? '<i class="fas fa-moon" style="color:black;"></i>'
-                            : '<i class="fas fa-sun" style="color:white;"></i>';
+                    updateThemeIcon();
                 });
             }
 
