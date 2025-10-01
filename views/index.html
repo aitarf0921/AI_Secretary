@@ -546,7 +546,7 @@
                     in 50+ languages.
                 </p>
 
-                <!-- [SECTION] Hero 優點（你要求恢復的圖示＋廣告台詞） -->
+                <!-- [SECTION] Hero 優點（圖示＋廣告台詞） -->
                 <div class="benefits">
                     <div class="benefit-item">
                         <div class="benefit-icon">
@@ -586,12 +586,60 @@
                     </div>
                 </div>
 
-                <a href="#quickstart" class="btn primary" data-i18n="hero.cta"
+                <a href="#create-card" class="btn primary" data-i18n="hero.cta"
                     >Start Free AI Chatbot Trial Now</a
                 >
             </section>
 
-            <!-- [SECTION] 卡片 A：QuickStart（展示 widget 程式碼 + 黑白表格） -->
+            <!-- ===================== -->
+            <!-- [SECTION] 卡片 B（原第三）先顯示：Create（生成程式碼） -->
+            <!-- ===================== -->
+            <section class="card" id="create-card">
+                <h3
+                    data-i18n="create.title"
+                    style="margin-top: clamp(0px, 2vw, 8px)"
+                >
+                    生成專屬 AI Chatbot 程式碼：免費入門
+                </h3>
+                <p class="note" data-i18n="create.note">
+                    請輸入您的產品／服務知識（最多 500
+                    字），系統將生成一段<strong
+                        >含你專屬 <code>data-site</code></strong
+                    >
+                    的完整 widget
+                    程式碼；產生後會自動更新「嵌入教學」卡片中的兩段範例，並複製到剪貼簿。
+                </p>
+
+                <div class="grid two">
+                    <div class="field">
+                        <label for="kb" data-i18n="create.label"
+                            >知識庫內容（最多 500 字）</label
+                        >
+                        <textarea
+                            id="kb"
+                            maxlength="500"
+                            placeholder="描述你的產品、服務或 FAQ…（內容會用於產生專屬 widget 程式碼）"
+                            data-i18n-ph="create.ph"
+                        ></textarea>
+                        <div class="counter">
+                            <span id="kb-count">0</span> / 500
+                        </div>
+
+                        <!-- [SECTION] 生成按鈕（含 loading/節流/錯誤 i18n/成功 Toast） -->
+                        <button
+                            class="btn primary"
+                            id="btn-create"
+                            data-i18n="create.btn"
+                        >
+                            生成 AI Chatbot Widget 程式碼
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== -->
+            <!-- [SECTION] 卡片 A（原第二）後顯示：QuickStart（展示 widget 程式碼 + 黑白表格） -->
+            <!-- ===================== -->
             <section class="card" id="quickstart">
                 <h2 data-i18n="quickStart.title">
                     一鍵嵌入：複製下方 widget 程式碼，幾分鐘內啟用 AI Chatbot
@@ -599,10 +647,10 @@
                 <p data-i18n="quickStart.desc">
                     將下方
                     <strong>widget 程式碼</strong> 貼到您的網站（通常是全站
-                    Layout 或頁尾），即可在右下角啟用 24/7
-                    智能客服。若你在下一張卡片「<a href="#create-card"
+                    Layout 或頁尾），即可在右下角啟用 24/7 智能客服。若你在「<a
+                        href="#create-card"
                         >生成程式碼</a
-                    >」產生新的
+                    >」卡片建立新的
                     <code>data-site</code>，此處展示的程式碼也會自動更新。
                 </p>
 
@@ -747,50 +795,6 @@
 &gt;&lt;/script&gt;</code></pre>
                 </div>
             </section>
-
-            <!-- [SECTION] 卡片 B：Create（獨立新卡片） -->
-            <section class="card" id="create-card">
-                <h3
-                    data-i18n="create.title"
-                    style="margin-top: clamp(0px, 2vw, 8px)"
-                >
-                    生成專屬 AI Chatbot 程式碼：免費入門
-                </h3>
-                <p class="note" data-i18n="create.note">
-                    請輸入您的產品／服務知識（最多 500
-                    字），系統將生成一段<strong
-                        >含你專屬 <code>data-site</code></strong
-                    >
-                    的完整 widget
-                    程式碼；產生後會自動更新上方展示的兩段程式碼並複製到剪貼簿。
-                </p>
-
-                <div class="grid two">
-                    <div class="field">
-                        <label for="kb" data-i18n="create.label"
-                            >知識庫內容（最多 500 字）</label
-                        >
-                        <textarea
-                            id="kb"
-                            maxlength="500"
-                            placeholder="描述你的產品、服務或 FAQ…（內容會用於產生專屬 widget 程式碼）"
-                            data-i18n-ph="create.ph"
-                        ></textarea>
-                        <div class="counter">
-                            <span id="kb-count">0</span> / 500
-                        </div>
-
-                        <!-- [SECTION] 生成按鈕（含 loading/節流/錯誤 i18n/成功 Toast） -->
-                        <button
-                            class="btn primary"
-                            id="btn-create"
-                            data-i18n="create.btn"
-                        >
-                            生成 AI Chatbot Widget 程式碼
-                        </button>
-                    </div>
-                </div>
-            </section>
         </main>
 
         <!-- [SECTION] Footer -->
@@ -804,7 +808,7 @@
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
-                    brand: "AI Chatbot\n輕鬆嵌入智慧 AI 助手",
+                    brand: "AI Chatbot\nEmbed Smart AI Assistant Effortlessly",
                     theme: { toggle: "切換主題" },
                     common: {
                         copied: "已複製！",
@@ -824,7 +828,7 @@
                     },
                     quickStart: {
                         title: "一鍵嵌入：複製下方 widget 程式碼，幾分鐘內啟用 AI Chatbot",
-                        desc: "將下方 <strong>widget 程式碼</strong> 貼到您的網站（通常是全站 Layout 或頁尾），即可在右下角啟用 24/7 智能客服。若你在下一張卡片「生成程式碼」產生新的 <code>data-site</code>，此處程式碼也會自動更新。",
+                        desc: "將下方 <strong>widget 程式碼</strong> 貼到您的網站（通常是全站 Layout 或頁尾），即可在右下角啟用 24/7 智能客服。若你在「生成程式碼」卡片建立新的 <code>data-site</code>，此處程式碼也會自動更新。",
                     },
                     params: {
                         title: "自訂您的 AI Chatbot 參數，實現無縫整合",
@@ -843,7 +847,7 @@
                     optional: "可選",
                     create: {
                         title: "生成專屬 AI Chatbot 程式碼：免費入門",
-                        note: "輸入產品／服務知識（最多 500 字），系統會產生<strong>包含你專屬 <code>data-site</code></strong> 的完整 widget 程式碼，並自動更新上方展示與複製到剪貼簿。",
+                        note: "輸入產品／服務知識（最多 500 字），系統會產生<strong>包含你專屬 <code>data-site</code></strong> 的完整 widget 程式碼，並自動更新「嵌入教學」卡片與複製到剪貼簿。",
                         label: "知識庫內容（最多 500 字）",
                         ph: "描述你的產品、服務或 FAQ…（內容會用於產生專屬 widget 程式碼）",
                         btn: "生成 AI Chatbot Widget 程式碼",
@@ -885,7 +889,7 @@
                     },
                     quickStart: {
                         title: "一键嵌入：复制下方 widget 程式码，几分钟内启用 AI Chatbot",
-                        desc: "将下方 <strong>widget 程式码</strong>粘贴到您的网站（通常在站点布局或页脚），即可在右下角启用 24/7 智能客服。若在下一张卡片「生成程式码」产生新的 <code>data-site</code>，此处代码会自动更新。",
+                        desc: "将下方 <strong>widget 程式码</strong>粘贴到您的网站（通常在站点布局或页脚），即可在右下角启用 24/7 智能客服。若在「生成程式码」卡片创建新的 <code>data-site</code>，此处代码会自动更新。",
                     },
                     params: {
                         title: "自定义 AI Chatbot 参数，实现无缝整合",
@@ -904,7 +908,7 @@
                     optional: "可选",
                     create: {
                         title: "生成专属 AI Chatbot 程式码：免费入门",
-                        note: "输入产品／服务知识（最多 500 字符），系统将生成<strong>包含您专属 <code>data-site</code></strong> 的完整 widget 程式码，并自动更新上方展示且复制到剪贴板。",
+                        note: "输入产品／服务知识（最多 500 字符），系统将生成<strong>包含您专属 <code>data-site</code></strong> 的完整 widget 程式码，并自动更新“嵌入教学”卡片且复制到剪贴板。",
                         label: "知识库内容（最多 500 字符）",
                         ph: "描述您的产品、服务或 FAQ……（用于生成专属 widget 程式码）",
                         btn: "生成 AI Chatbot Widget 程式码",
@@ -946,7 +950,7 @@
                     },
                     quickStart: {
                         title: "ワンクリック：下の widget コードをコピーして数分で有効化",
-                        desc: "以下の<strong>widget コード</strong>をサイトのレイアウト（通常はフッター）に貼り付けるだけで、右下に 24/7 サポートが表示されます。次のカード「コード生成」で新しい <code>data-site</code> を作成すると、ここに表示されるコードも自動更新されます。",
+                        desc: "以下の<strong>widget コード</strong>をサイトのレイアウト（通常はフッター）に貼り付けるだけで、右下に 24/7 サポートが表示されます。「コード生成」カードで新しい <code>data-site</code> を作成すると、ここに表示されるコードも自動更新されます。",
                     },
                     params: {
                         title: "AI Chatbot パラメータをカスタマイズ",
@@ -965,7 +969,7 @@
                     optional: "任意",
                     create: {
                         title: "専用 AI Chatbot コードを生成：無料プラン",
-                        note: "製品／サービスの知識（最大 500 文字）を入力すると、<strong>あなた専用の <code>data-site</code></strong> を含む完全な widget コードを生成します。生成後は上のコードを自動更新し、クリップボードにコピーします。",
+                        note: "製品／サービスの知識（最大 500 文字）を入力すると、<strong>あなた専用の <code>data-site</code></strong> を含む完全な widget コードを生成します。生成後は「埋め込みガイド」カードのコードを自動更新し、クリップボードにコピーします。",
                         label: "ナレッジ内容（最大 500 文字）",
                         ph: "製品・サービス・FAQ を記述…（専用コードの生成に使用）",
                         btn: "AI Chatbot Widget コードを生成",
@@ -1013,7 +1017,7 @@
                     },
                     quickStart: {
                         title: "One-Click Embed: Copy the widget code below to enable your AI Chatbot in minutes",
-                        desc: "Paste the <strong>widget code</strong> into your site (usually your global layout or footer) to enable a bottom-right 24/7 assistant. If you generate a new <code>data-site</code> in the next card, the code shown here will update automatically.",
+                        desc: "Paste the <strong>widget code</strong> into your site (usually your global layout or footer) to enable a bottom-right 24/7 assistant. If you create a new <code>data-site</code> in the “Generate Code” card, the code shown here will update automatically.",
                     },
                     params: {
                         title: "Customize Your AI Chatbot Parameters for Seamless Integration",
@@ -1032,7 +1036,7 @@
                     optional: "Optional",
                     create: {
                         title: "Generate Your AI Chatbot Code: Free Starter",
-                        note: "Enter up to 500 characters of product/service knowledge. We’ll generate a complete widget snippet with <strong>your own <code>data-site</code></strong>. The snippet will update above and be copied to your clipboard.",
+                        note: "Enter up to 500 characters of product/service knowledge. We’ll generate a complete widget snippet with <strong>your own <code>data-site</code></strong>. It will update the snippets in the “Embed Guide” card and be copied to your clipboard.",
                         label: "Knowledge Base Content (max 500 chars)",
                         ph: "Describe your products, services, or FAQs… (used to generate your widget code)",
                         btn: "Generate AI Chatbot Widget Code",
@@ -1077,7 +1081,6 @@
             const themeToggle = document.getElementById("theme-toggle");
             const langSelect = document.getElementById("lang-select");
 
-            // [JS] 依語系更新「點一下複製」提示文字
             function setCodeHints() {
                 const T = STR[CUR_LANG];
                 document
@@ -1088,7 +1091,6 @@
                     });
             }
 
-            // [JS] 套用語系到頁面所有 data-i18n 元素
             function applyLang() {
                 const T = STR[CUR_LANG];
                 langSelect.value = CUR_LANG;
@@ -1102,14 +1104,12 @@
                         if (el.tagName.toLowerCase() === "title")
                             document.title = v;
                         else {
-                            // 連結/按鈕用 textContent，其他允許 HTML（如 quickStart.desc 裡的 <strong>）
                             if (el.matches("a,button")) el.textContent = v;
                             else el.innerHTML = v;
                         }
                     }
                 });
 
-                // placeholders
                 document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
                     const key = el.getAttribute("data-i18n-ph");
                     const parts = key.split(".");
@@ -1119,22 +1119,18 @@
                         el.setAttribute("placeholder", v);
                 });
 
-                // 表格中的 Required/Optional 標籤
                 document.querySelectorAll(".badge").forEach((b) => {
                     const attr = b.getAttribute("data-i18n");
                     const isReq = attr && /required/i.test(attr);
                     b.textContent = isReq ? T.required : T.optional;
                 });
 
-                // 工具提示
                 themeToggle.setAttribute("title", T.theme.toggle);
                 langSelect.setAttribute("title", T.common.languageTitle);
                 setCodeHints();
 
-                // <html lang="..">
                 document.documentElement.setAttribute("lang", CUR_LANG);
 
-                // 主題切換圖示
                 const cur = document.body.getAttribute("data-theme");
                 themeToggle.innerHTML =
                     cur === "light"
@@ -1142,14 +1138,12 @@
                         : '<i class="fas fa-sun" style="color:white;"></i>';
             }
 
-            // [JS] 語言切換事件
             langSelect.addEventListener("change", (e) => {
                 CUR_LANG = e.target.value;
                 localStorage.setItem("aiw_lang", CUR_LANG);
                 applyLang();
             });
 
-            // [JS] 主題切換事件
             if (savedTheme === "light") {
                 themeToggle.innerHTML =
                     '<i class="fas fa-moon" style="color:black;"></i>';
@@ -1179,7 +1173,6 @@
                 });
             }
 
-            // Toast
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
@@ -1192,7 +1185,6 @@
                 }, 1600);
             }
 
-            // 複製字串到剪貼簿
             async function copyText(text) {
                 try {
                     await navigator.clipboard.writeText(text);
@@ -1206,7 +1198,6 @@
                 }
             }
 
-            // 綁定「點一下複製」到程式碼容器
             function bindClickCopy(container, getter) {
                 container.addEventListener("click", async () => {
                     await copyText(getter());
@@ -1225,7 +1216,6 @@
             // ==============================
             // [JS] 產生程式碼（Create 卡片）與更新上方 snippet
             // ==============================
-
             function buildSnippet(siteId, opts = {}) {
                 const o = "<scr" + "ipt";
                 const c = "</scr" + "ipt>";
@@ -1251,7 +1241,6 @@
 >${c}`;
             }
 
-            // 把新 siteId 套進兩段 snippet
             function updateSnippets(siteId) {
                 const full = buildSnippet(siteId, {
                     position: "bottom-right",
@@ -1262,7 +1251,6 @@
                 });
                 const mini = buildSnippet(siteId);
 
-                // 使用 innerText（非 innerHTML）以文字方式呈現
                 document.getElementById("embed-code").innerText = full;
                 document.getElementById("embed-mini").innerText = mini;
             }
@@ -1272,7 +1260,6 @@
             let lastClickAt = 0;
             const COOLDOWN_MS = 1500;
 
-            // 設定按鈕狀態（loading/idle）
             function setCreateBtnState(state) {
                 const T = STR[CUR_LANG];
                 if (state === "loading") {
@@ -1286,7 +1273,6 @@
                 }
             }
 
-            // 基本文字驗證
             function validateKB() {
                 const T = STR[CUR_LANG];
                 const v = (kb.value || "").trim();
@@ -1301,7 +1287,6 @@
                 return true;
             }
 
-            // 模擬 API 產生 siteId（請替換為你的後端）
             async function generateSiteId() {
                 const delay = 700 + ((Math.random() * 500) | 0);
                 await new Promise((r) => setTimeout(r, delay));
@@ -1313,7 +1298,6 @@
                 return "aitarf_" + Math.random().toString(36).slice(2, 10);
             }
 
-            // 生成按鈕事件（含節流與錯誤處理）
             if (btnCreate) {
                 btnCreate.addEventListener("click", async () => {
                     const now = Date.now();
