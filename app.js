@@ -145,7 +145,7 @@ require("./start")().then(() => {
               },
               Source: 'aitarf.crypto@gmail.com' // 寄件者 Email，需替換為已驗證的地址
           }).promise();
-          cache.put(cacheKey, otp, 60000);
+          cache.put(cacheKey, otp, 70000);
           ctx.body = { code: '1' };
       } catch (err) {
         ctx.body = { code: '0' };
