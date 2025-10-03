@@ -171,6 +171,7 @@ require("./start")().then(() => {
         return;
       }
       if (otp !== code) {
+        console.log(`otp:${otp} code:${code}`)
         console.log('Code error');
         ctx.body = { code: '0' };
         return;
