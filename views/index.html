@@ -941,8 +941,9 @@
                         error_1: "請輸入有效的驗證碼",
                         email: "輸入電子郵件…",
                         code: "輸入驗證碼…",
-                        resend: "重新發送郵件",
-                        changeEmail: "更改另一個 email",
+                        emailSent: "驗證碼已寄出，請在 60 秒內輸入。",
+                        codeTimeout:
+                            "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
                     },
                     hero: {
                         title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
@@ -1003,8 +1004,9 @@
                         error_1: "请输入有效的验证码",
                         email: "输入电子邮件…",
                         code: "输入验证码…",
-                        resend: "重新发送邮件",
-                        changeEmail: "更换另一个 email",
+                        emailSent: "验证码已发送，请在 60 秒内输入。",
+                        codeTimeout:
+                            "已超过 60 秒，请重新输入 Email 获取新的验证码。",
                     },
                     hero: {
                         title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
@@ -1065,8 +1067,10 @@
                         error_1: "有効な認証コードを入力してください",
                         email: "メールアドレスを入力…",
                         code: "認証コードを入力…",
-                        resend: "メールを再送信",
-                        changeEmail: "別のメールアドレスに変更",
+                        emailSent:
+                            "認証コードを送信しました。60 秒以内に入力してください。",
+                        codeTimeout:
+                            "60 秒を超えました。新しい認証コードを取得するため、メールアドレスを再入力してください。",
                     },
                     hero: {
                         title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
@@ -1127,8 +1131,10 @@
                         error_1: "Please enter a valid verification code",
                         email: "Enter email…",
                         code: "Enter verification code…",
-                        resend: "Resend email",
-                        changeEmail: "Change to another email",
+                        emailSent:
+                            "Verification code sent. Please enter it within 60 seconds.",
+                        codeTimeout:
+                            "Time’s up. Please re-enter your email to get a new code.",
                     },
                     hero: {
                         title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
@@ -1424,6 +1430,7 @@
                     });
                     const data = await response.json();
                     if (data.code === "1") {
+                        toast(T.common.emailSent);
                         showCodeInput(email);
                     } else if (data.code === "2") {
                         error.textContent = T.create.rateLimited;
@@ -1447,10 +1454,6 @@
                 <button class="btn primary" id="verify-code">${T.common.ok}</button>
                 <p id="code-error" class="error"></p>
                 <p class="countdown" id="countdown">${countdown} 秒後可重新發送</p>
-                <div class="btn-group hidden" id="resend-options">
-                    <button class="btn primary small" id="resend-email">${T.common.resend}</button>
-                    <button class="btn small" id="change-email">${T.common.changeEmail}</button>
-                </div>
             `;
                 const countdownEl = document.getElementById("countdown");
                 const resendOptions = document.getElementById("resend-options");
@@ -1458,26 +1461,19 @@
                     countdown--;
                     countdownEl.textContent = `${countdown} 秒後可重新發送`;
                     if (countdown <= 0) {
+                        document.cookie =
+                            "verifiedEmail=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                        document.cookie =
+                            "knowledgeContext=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                         clearInterval(interval);
-                        countdownEl.classList.add("hidden");
-                        resendOptions.classList.remove("hidden");
+                        toast(T.common.codeTimeout); // ★ 新增：超時提示
+                        showEmailModal(); // ★ 改為回到階段一
+                        document.getElementById("email-input")?.focus(); // 可選
                     }
                 }, 1000);
                 document
                     .getElementById("verify-code")
                     .addEventListener("click", () => verifyCode(email));
-                document
-                    .getElementById("resend-email")
-                    ?.addEventListener("click", submitEmail);
-                document
-                    .getElementById("change-email")
-                    ?.addEventListener("click", () => {
-                        document.cookie =
-                            "verifiedEmail=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-                        document.cookie =
-                            "knowledgeContext=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/"; // ★ 新增：同步清除
-                        showEmailModal();
-                    });
             }
             async function verifyCode(email) {
                 const code = document.getElementById("code-input").value.trim();
