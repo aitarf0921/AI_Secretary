@@ -983,7 +983,7 @@
                         note: "輸入產品／服務知識（最多 500 字），系統會產生包含你的 data-site 的完整 widget 程式碼，並自動更新與複製。",
                         label: "知識庫內容（最多 500 字）",
                         ph: "描述你的產品、服務或 FAQ…",
-                        btn: "生成 AI Chatbot Widget 程式碼",
+                        btn: "產生程式碼",
                         loading: "正在產生…",
                         done: "已完成",
                         toastSuccess: "Widget 程式碼已生成並已複製。",
@@ -1049,7 +1049,7 @@
                         note: "输入产品/服务知识（最多 500 字），系统会生成包含你的 data-site 的完整 widget 代码，并自动更新与复制。",
                         label: "知识库内容（最多 500 字）",
                         ph: "描述你的产品、服务或 FAQ…",
-                        btn: "生成 AI Chatbot Widget 代码",
+                        btn: "生成嵌入代码",
                         loading: "正在生成…",
                         done: "已完成",
                         toastSuccess: "Widget 代码已生成并复制。",
@@ -1116,7 +1116,7 @@
                         note: "製品/サービスの知識（最大 500 文字）を入力すると、data-site を含むコードを生成（自動更新＆コピー）。",
                         label: "ナレッジ（最大 500 文字）",
                         ph: "製品・サービス・FAQ を記述…",
-                        btn: "AI Chatbot ウィジェットコードを生成",
+                        btn: "コードを生成",
                         loading: "生成中…",
                         done: "完了",
                         toastSuccess: "コードを生成し、コピーしました。",
@@ -1185,7 +1185,7 @@
                         note: "Enter up to 500 chars of knowledge. We'll generate the widget code with your data-site and auto-update + copy it.",
                         label: "Knowledge Base (max 500)",
                         ph: "Describe your products/services/FAQ…",
-                        btn: "Generate AI Chatbot Widget Code",
+                        btn: "Generate code",
                         loading: "Generating…",
                         done: "Done",
                         toastSuccess: "Widget code generated & copied.",
@@ -1276,24 +1276,19 @@
                 if (!btn) return;
 
                 const T = STR[CUR_LANG] || STR["en"];
-                // 預設使用 i18n 已填的 hero.cta（或 ctaStart）
                 let label = T.hero?.ctaStart || T.hero?.cta || btn.textContent;
 
                 const email = getCookie("verifiedEmail");
-                const kc = getCookie("knowledgeContext");
+                // const kc = getCookie("knowledgeContext"); // ← 不再需要用它決定 CTA
 
-                if (email && !kc) {
-                    // 已驗證 email、尚未填知識庫
+                if (email) {
+                    // 有 cookie：引導去輸入知識庫（卡片二）
                     label = T.hero?.ctaKB || label;
-                } else if (email && kc) {
-                    // 已驗證且已有知識庫
-                    label = T.hero?.ctaCode || label;
                 } else {
-                    // 尚未驗證 email
+                    // 無 cookie：預設開始試用
                     label = T.hero?.ctaStart || label;
                 }
 
-                // 覆寫 CTA 顯示與無障礙屬性
                 btn.textContent = label;
                 btn.setAttribute("aria-label", label);
                 btn.setAttribute("title", label);
