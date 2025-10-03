@@ -204,6 +204,8 @@ require("./start")().then(() => {
       console.log('site-id');
       ctx.status = 200;
       const { email, knowledge } = ctx.request.body;
+      console.log('email', email);
+      console.log('knowledge', knowledge);
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!email || !emailRegex.test(email)) {
         console.log('111111');
