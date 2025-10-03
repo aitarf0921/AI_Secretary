@@ -954,6 +954,9 @@
                         benefit3: "24/7 可用性：大幅降低支援成本",
                         benefit4: "多語系雙向：自動偵測並自然回覆",
                         cta: "立即開始免費試用",
+                        ctaStart: "立即開始免費試用", // ★ 新增：尚未驗證 Email
+                        ctaKB: "輸入知識庫", // ★ 新增：已驗證但未填知識庫
+                        ctaCode: "產生程式碼",
                     },
                     quickStart: {
                         title: "一鍵嵌入：複製下方 widget 程式碼",
@@ -1017,6 +1020,9 @@
                         benefit3: "24/7 可用：降低成本、易扩展",
                         benefit4: "多语系双向：自动识别并自然应答",
                         cta: "立即开始免费试用",
+                        ctaStart: "立即开始免费试用",
+                        ctaKB: "输入知识库",
+                        ctaCode: "生成嵌入代码",
                     },
                     quickStart: {
                         title: "一键嵌入：复制下方代码",
@@ -1081,6 +1087,9 @@
                         benefit3: "24/7 稼働：コスト削減＆スケール",
                         benefit4: "多言語対応：自動判別し自然に応答",
                         cta: "今すぐ無料で開始",
+                        ctaStart: "今すぐ無料で開始",
+                        ctaKB: "ナレッジを入力",
+                        ctaCode: "コードを生成",
                     },
                     quickStart: {
                         title: "ワンクリック埋め込み：コードをコピー",
@@ -1147,6 +1156,9 @@
                         benefit4:
                             "Multilingual In/Out: Auto-detect & natural replies",
                         cta: "Start Free AI Chatbot Trial Now",
+                        ctaStart: "Start free trial",
+                        ctaKB: "Add knowledge",
+                        ctaCode: "Generate code",
                     },
                     quickStart: {
                         title: "One-Click Embed: Copy the widget code",
@@ -1256,12 +1268,43 @@
                 setCodeHints();
                 document.documentElement.setAttribute("lang", CUR_LANG);
                 updateThemeIcon();
+                updateCTAByProgress();
             }
+
+            function updateCTAByProgress() {
+                const btn = document.getElementById("start-trial-btn");
+                if (!btn) return;
+
+                const T = STR[CUR_LANG] || STR["en"];
+                // 預設使用 i18n 已填的 hero.cta（或 ctaStart）
+                let label = T.hero?.ctaStart || T.hero?.cta || btn.textContent;
+
+                const email = getCookie("verifiedEmail");
+                const kc = getCookie("knowledgeContext");
+
+                if (email && !kc) {
+                    // 已驗證 email、尚未填知識庫
+                    label = T.hero?.ctaKB || label;
+                } else if (email && kc) {
+                    // 已驗證且已有知識庫
+                    label = T.hero?.ctaCode || label;
+                } else {
+                    // 尚未驗證 email
+                    label = T.hero?.ctaStart || label;
+                }
+
+                // 覆寫 CTA 顯示與無障礙屬性
+                btn.textContent = label;
+                btn.setAttribute("aria-label", label);
+                btn.setAttribute("title", label);
+            }
+
             if (langSelect) {
                 langSelect.addEventListener("change", (e) => {
                     CUR_LANG = e.target.value;
                     localStorage.setItem("aiw_lang", CUR_LANG);
                     applyLang();
+                    updateCTAByProgress();
                 });
             }
             if (themeToggle) {
@@ -1537,6 +1580,7 @@
                         }
                         cardGenerate.scrollIntoView({ behavior: "smooth" });
                         kb.focus();
+                        updateCTAByProgress();
                     } else if (data.code === "2") {
                         error.textContent = T.create.rateLimited;
                         error.style.display = "block";
@@ -1563,7 +1607,7 @@
                         const kbEl = document.getElementById("kb");
                         const kcRaw = getCookie("knowledgeContext");
                         if (kcRaw && kbEl && !kbEl.value.trim()) {
-                            kbEl.value = kc.slice(0, 500);
+                            kbEl.value = kcRaw.slice(0, 500);
                             kbEl.dispatchEvent(new Event("input"));
                         }
 
@@ -1664,6 +1708,7 @@
                             );
 
                             setCookie("knowledgeContext", v, 30);
+                            updateCTAByProgress();
 
                             await copyText(full);
                             toast(Tt.toastSuccess);
