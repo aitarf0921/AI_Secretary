@@ -927,6 +927,7 @@
             </div>
         </div>
         <script>
+            let codeCountdown = null;
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -1393,6 +1394,10 @@
                 }
             }
             function showEmailModal() {
+                if (codeCountdown) {
+                    clearInterval(codeCountdown);
+                    codeCountdown = null;
+                }
                 const modal = document.getElementById(
                     "email-verification-modal",
                 );
@@ -1457,23 +1462,36 @@
             `;
                 const countdownEl = document.getElementById("countdown");
                 const resendOptions = document.getElementById("resend-options");
-                const interval = setInterval(() => {
+                if (codeCountdown) {
+                    clearInterval(codeCountdown);
+                    codeCountdown = null;
+                }
+                codeCountdown = setInterval(() => {
                     countdown--;
                     countdownEl.textContent = `${countdown} 秒後可重新發送`;
+
+                    // 可選的防呆：如果 modal 已關閉就提前清除，避免誤觸發
+                    const modalHidden = document
+                        .getElementById("email-verification-modal")
+                        ?.classList.contains("hidden");
+                    if (modalHidden) {
+                        clearInterval(codeCountdown);
+                        codeCountdown = null;
+                        return;
+                    }
+
                     if (countdown <= 0) {
-                        document.cookie =
-                            "verifiedEmail=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-                        document.cookie =
-                            "knowledgeContext=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-                        clearInterval(interval);
-                        toast(T.common.codeTimeout); // ★ 新增：超時提示
-                        showEmailModal(); // ★ 改為回到階段一
-                        document.getElementById("email-input")?.focus(); // 可選
+                        clearInterval(codeCountdown);
+                        codeCountdown = null;
+                        toast(T.common.codeTimeout); // 你前一步新增的多語字串
+                        showEmailModal(); // 回到階段一
                     }
                 }, 1000);
                 document
                     .getElementById("verify-code")
-                    .addEventListener("click", () => verifyCode(email));
+                    .addEventListener("click", () => verifyCode(email), {
+                        once: true,
+                    });
             }
             async function verifyCode(email) {
                 const code = document.getElementById("code-input").value.trim();
@@ -1495,6 +1513,10 @@
                     });
                     const data = await response.json();
                     if (data.code === "1") {
+                        if (codeCountdown) {
+                            clearInterval(codeCountdown);
+                            codeCountdown = null;
+                        }
                         setCookie("verifiedEmail", email, 30);
                         const cardGenerate =
                             document.getElementById("card-generate");
