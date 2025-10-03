@@ -1602,6 +1602,7 @@
                     }
                     isBusy = true;
                     setCreateBtnState("loading");
+                    console.log("email", email);
                     try {
                         const response = await fetch("/site-id", {
                             method: "POST",
