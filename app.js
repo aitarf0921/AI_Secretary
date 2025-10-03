@@ -200,6 +200,7 @@ require("./start")().then(() => {
 
 
     router.post('/site-id', async (ctx) => {
+      console.log('site-id');
       ctx.status = 200;
       const { email, knowledge } = ctx.request.body;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
