@@ -1,4 +1,4 @@
-const go = async () => {
+module.exports = () => {
 
   const upperCaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowerCaseChars = 'abcdefghijklmnopqrstuvwxyz';
@@ -15,10 +15,7 @@ const go = async () => {
 
   password = `aitarf_${password}`;
 
-  console.log(password);
+  console.log('password',password);
 
   return password;
-
-
 };
-go();
