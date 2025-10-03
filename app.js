@@ -106,16 +106,16 @@ require("./start")().then(() => {
 
   router.post('/email', async (ctx) => {
       ctx.status = 200;
-      const { toEmail } = ctx.request.body;
+      const { email } = ctx.request.body;
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      if (!emailRegex.test(toEmail)) {
+      if (!emailRegex.test(email)) {
         ctx.body = { code: '0' };
         return;
       }
 
-      const cacheKey = `email:${toEmail}`;
+      const cacheKey = `email:${email}`;
       const cached = cache.get(cacheKey);
       if (cached) {
         ctx.body = { code: '2' };
@@ -138,7 +138,7 @@ require("./start")().then(() => {
 
       try {
           await ses.sendEmail({
-              Destination: { ToAddresses: [toEmail] }, // 允許發送給未驗證的 Email 地址
+              Destination: { ToAddresses: [email] }, // 允許發送給未驗證的 Email 地址
               Message: {
                   Body: { Text: { Data: message } }, // 郵件正文，包含訊息
                   Subject: { Data: `Verification Code for AI Chatbot` } // 郵件標題

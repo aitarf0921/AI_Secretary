@@ -14,6 +14,33 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
+
+        <!-- 新增：效能預連線（不影響功能） -->
+        <link
+            rel="preconnect"
+            href="https://d1apwn2mo5o5aj.cloudfront.net"
+            crossorigin
+        />
+        <link
+            rel="preconnect"
+            href="https://cdnjs.cloudflare.com"
+            crossorigin
+        />
+
+        <!-- 新增：社群分享預覽（不影響功能） -->
+        <meta property="og:type" content="website" />
+        <meta
+            property="og:title"
+            content="AI Chatbot — Embed a 24/7 Smart Assistant"
+        />
+        <meta
+            property="og:description"
+            content="Embed an AI Chatbot for 24/7 support. No code, multilingual, knowledge base integration."
+        />
+        <meta property="og:url" content="https://example.com/ai-chatbot" />
+        <meta property="og:image" content="https://example.com/og-image.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+
         <style>
             :root {
                 --bg: #ffffff;
@@ -808,9 +835,10 @@
                     <table class="parameters-table">
                         <thead>
                             <tr>
-                                <th data-i18n="params.th1">屬性</th>
-                                <th data-i18n="params.th2">必填</th>
-                                <th data-i18n="params.th4">說明</th>
+                                <!-- 新增 scope="col"：無障礙改善，不影響功能 -->
+                                <th scope="col" data-i18n="params.th1">屬性</th>
+                                <th scope="col" data-i18n="params.th2">必填</th>
+                                <th scope="col" data-i18n="params.th4">說明</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -978,7 +1006,7 @@
                         error: "请输入有效的电子邮件",
                         error_1: "请输入有效的验证码",
                         email: "输入电子邮件…",
-                        code: "输入驗證碼…",
+                        code: "输入验证码…" /* 修正：簡繁一致 */,
                         resend: "重新发送邮件",
                         changeEmail: "更换另一个 email",
                     },
@@ -1022,7 +1050,7 @@
                         toastSuccess: "Widget 代码已生成并复制。",
                         toastFailGeneric: "生成失败，请稍后重试。",
                         toastFailNetwork: "网络异常或超时，请重试。",
-                        toastEmpty: "请先输入知识库内容。",
+                        toastEmpty: "请先输入一些内容。",
                         toastTooShort: "内容过短，至少 20 字。",
                         rateLimited: "操作过于频繁，请稍后重试。",
                     },
@@ -1348,7 +1376,8 @@
             function setCookie(name, value, days = 30) {
                 const d = new Date();
                 d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-                document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+                const isHttps = location.protocol === "https:";
+                document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/;SameSite=Lax${isHttps ? ";Secure" : ""}`;
             }
             function getCookie(name) {
                 const c = document.cookie.match(`(^|;)\\s*${name}=\\s*([^;]+)`);
@@ -1379,7 +1408,7 @@
                 const error = document.getElementById("email-error");
                 const T = STR[CUR_LANG] || STR["en"];
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                // 修正：將 toEmail 改為 email
+                // 修正：將送出的欄位改為 email（與後端一致）
                 if (!email || !emailRegex.test(email)) {
                     error.textContent = T.common.error;
                     error.style.display = "block";
@@ -1389,7 +1418,7 @@
                     const response = await fetch("/email", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ toEmail: email }),
+                        body: JSON.stringify({ email }) /* 修正重點 */,
                     });
                     const data = await response.json();
                     if (data.code === "1") {
@@ -1443,6 +1472,8 @@
                     ?.addEventListener("click", () => {
                         document.cookie =
                             "verifiedEmail=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                        document.cookie =
+                            "knowledgeContext=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                         showEmailModal();
                     });
             }
@@ -1467,19 +1498,23 @@
                     const data = await response.json();
                     if (data.code === "1") {
                         setCookie("verifiedEmail", email, 30);
-                        modal.classList.add("hidden");
                         const cardGenerate =
                             document.getElementById("card-generate");
+                        modal.classList.add("hidden");
                         cardGenerate.classList.remove("hidden");
                         const kb = document.getElementById("kb");
-                        // 新增：處理 knowledgeContext，僅在非空字串時預填
+                        // 新增：若 knowledgeContext 有值，也寫入 cookie
                         if (
                             data.knowledgeContext &&
                             typeof data.knowledgeContext === "string" &&
                             data.knowledgeContext.trim() !== ""
                         ) {
-                            kb.value = data.knowledgeContext.slice(0, 500);
-                            kb.dispatchEvent(new Event("input")); // 更新字數計數器
+                            const kc = data.knowledgeContext
+                                .trim()
+                                .slice(0, 500);
+                            setCookie("knowledgeContext", kc, 30); // ★ 新增：存 cookie
+                            kb.value = kc; // 預填入欄位（維持原有行為）
+                            kb.dispatchEvent(new Event("input"));
                         }
                         cardGenerate.scrollIntoView({ behavior: "smooth" });
                         kb.focus();
@@ -1505,6 +1540,19 @@
                             document.getElementById("card-generate");
                         cardGenerate.classList.remove("hidden");
                         cardGenerate.scrollIntoView({ behavior: "smooth" });
+
+                        // ★ 新增：跳過驗證 → 卡片二預填 knowledgeContext（若 cookie 有）
+                        const kbEl = document.getElementById("kb");
+                        const kcRaw = getCookie("knowledgeContext");
+                        if (kcRaw && kbEl && !kbEl.value.trim()) {
+                            let kc = kcRaw;
+                            try {
+                                kc = decodeURIComponent(kcRaw);
+                            } catch {}
+                            kbEl.value = kc.slice(0, 500);
+                            kbEl.dispatchEvent(new Event("input"));
+                        }
+
                         document.getElementById("kb").focus();
                     } else {
                         showEmailModal();
@@ -1599,6 +1647,10 @@
                                 ACCENT_BLUE,
                                 WIDGET_DEFAULTS,
                             );
+
+                            // ★ 新增：成功後以當前 #kb 值更新 cookie 的 knowledgeContext
+                            setCookie("knowledgeContext", v, 30);
+
                             await copyText(full);
                             toast(Tt.toastSuccess);
                             setCreateBtnState("done");
