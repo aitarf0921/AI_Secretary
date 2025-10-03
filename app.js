@@ -206,10 +206,12 @@ require("./start")().then(() => {
       const { email, knowledge } = ctx.request.body;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!email || !emailRegex.test(email)) {
+        console.log('111111');
         ctx.body = { code: '0', message: 'Invalid email' };
         return;
       }
       if (!knowledge || knowledge.trim().length < 20) {
+        console.log('22222222');
         ctx.body = { code: '0' };
         return;
       }
@@ -219,6 +221,7 @@ require("./start")().then(() => {
   		.then(d=>d);
 
       if(!check){
+        console.log('33333333');
         ctx.body = { code: '0', message: 'Invalid email' };
         return;
       }
