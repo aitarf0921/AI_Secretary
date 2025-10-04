@@ -12,7 +12,7 @@ const sanitizeHtml = require('sanitize-html');
 const cache = require('memory-cache');
 const path = require('path');
 const AWS = require('aws-sdk');
-// 使用 AWS CLI 配置的預設地區 ap-southeast-1
+
 const ses = new AWS.SES({ region: 'ap-southeast-1' });
 
 const app = new Koa();
@@ -29,6 +29,18 @@ const CORS_WHITELIST = (process.env.CORS_WHITELIST || '').split(',').map(s => s.
 require("./start")().then(() => {
 
   app.proxy = true;
+
+  app.use(async (ctx, next) => {
+
+    const token = ctx.get('X-Origin-Verify');
+    // 注意：這裡做簡單相等比較即可；如需更嚴謹可實作 constant-time compare
+    if (!token || token !== 'aitarf') {
+      ctx.status = 403;
+      ctx.body = { error: 'Forbidden' };
+      return;
+    }
+    await next();
+  });
 
   // Helmet 全域安全（先用安全預設）
   app.use(helmet({
@@ -55,6 +67,20 @@ require("./start")().then(() => {
     }
   });
 
+  const limiter = RateLimit.middleware({
+    interval: { min: 1 },
+    max: 60*10,
+  });
+
+  const queryLimiter = RateLimit.middleware({
+    interval: { sec: 1 },
+    max: 1,
+    keyGenerator: (ctx) => ctx.get('CF-Connecting-IP') || ctx.ip,
+    message: 'Too many requests',
+  });
+
+  app.use(limiter);
+
   // 解析 JSON Body（適度提高限制，避免過早 413）
   app.use(bodyParser({
     enableTypes: ['json'],
@@ -69,18 +95,11 @@ require("./start")().then(() => {
     maxage: 1000 * 60 * 5, // 5 分鐘
   }));
 
-  // 範例視圖（如不需要可移除）
   app.use(views(path.join(__dirname, 'views'), {
     extension: 'html',
     map: { html: 'ejs' }
   }));
 
-  // Rate limit（每分鐘最多 1 萬次；可調小）
-  const limiter = RateLimit.middleware({
-    interval: { min: 1 },
-    max: 10000,
-  });
-  app.use(limiter);
 
   // CORS：允許第三方網站呼叫 /query
   app.use(cors({
@@ -88,7 +107,7 @@ require("./start")().then(() => {
     allowHeaders: ['Content-Type'],
     exposeHeaders: [],
     credentials: false, // 若要帶 cookie，必須改為 true、且 origin 不能是 *（要回傳具體來源）
-    methods: ['GET', 'POST', 'OPTIONS'],
+    methods: ['GET', 'POST'],
     maxAge: 86400,
     preflightContinue: false,
     optionsSuccessStatus: 204
@@ -104,7 +123,7 @@ require("./start")().then(() => {
     await ctx.render('widget');
   });
 
-  router.post('/email', async (ctx) => {
+  router.post('/email',queryLimiter, async (ctx) => {
       ctx.status = 200;
       const { email } = ctx.request.body;
 
@@ -145,7 +164,7 @@ require("./start")().then(() => {
               },
               Source: 'aitarf.crypto@gmail.com' // 寄件者 Email，需替換為已驗證的地址
           }).promise();
-          cache.put(cacheKey, otp, 70000);
+          cache.put(cacheKey, otp, 65000);
           ctx.body = { code: '1' };
       } catch (err) {
         ctx.body = { code: '0' };
@@ -153,7 +172,7 @@ require("./start")().then(() => {
   });
 
   // 新增路由：驗證 OTP
-    router.post('/verify-code', async (ctx) => {
+    router.post('/verify-code',queryLimiter, async (ctx) => {
       ctx.status = 200;
       const { email, code } = ctx.request.body;
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -200,20 +219,18 @@ require("./start")().then(() => {
     });
 
 
-    router.post('/site-id', async (ctx) => {
+    router.post('/site-id',queryLimiter, async (ctx) => {
       console.log('site-id');
       ctx.status = 200;
       const { email, knowledge } = ctx.request.body;
-      console.log('email', email);
-      console.log('knowledge', knowledge);
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
       if (!email || !emailRegex.test(email)) {
-        console.log('111111');
         ctx.body = { code: '0', message: 'Invalid email' };
         return;
       }
       if (!knowledge || knowledge.trim().length < 20) {
-        console.log('22222222');
         ctx.body = { code: '0' };
         return;
       }
@@ -223,7 +240,6 @@ require("./start")().then(() => {
   		.then(d=>d);
 
       if(!check){
-        console.log('33333333');
         ctx.body = { code: '0', message: 'Invalid email' };
         return;
       }
@@ -244,17 +260,15 @@ require("./start")().then(() => {
     });
 
 
-  // 供 widget.js 呼叫的 AI 端點
-  router.options('/query', (ctx) => { ctx.status = 204; }); // 額外保險的預檢處理
-  router.post('/query', async (ctx) => {
+  router.post('/query', queryLimiter,async (ctx) => {
 
     console.log('query');
+    ctx.status = 200;
+
     try {
       const { query, site } = ctx.request.body || {};
 
       console.log('site',site);
-
-      // const clientIP = extractClientIP(ctx);
 
       console.log('clientIP',ctx.ip);
 
@@ -308,7 +322,6 @@ require("./start")().then(() => {
 
 
       cache.put(cacheKey, safeAnswer, 3600000*24*24);
-      ctx.status = 200;
       ctx.body = { answer: safeAnswer };
 
     } catch (e) {
