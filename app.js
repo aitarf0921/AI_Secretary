@@ -162,7 +162,7 @@ require("./start")().then(() => {
                   Body: { Text: { Data: message } }, // 郵件正文，包含訊息
                   Subject: { Data: `Verification Code for AI Chatbot` } // 郵件標題
               },
-              Source: 'aitarf.crypto@gmail.com' // 寄件者 Email，需替換為已驗證的地址
+              Source: 'contact-us@aitarf.us' // 寄件者 Email，需替換為已驗證的地址
           }).promise();
           cache.put(cacheKey, otp, 65000);
           ctx.body = { code: '1' };
