@@ -705,8 +705,12 @@
             </section>
         </main>
 
-        <footer>
-            <div>© AiTarf</div>
+        <footer class="site-footer" role="contentinfo">
+            <div class="inner">
+                <span>© <span id="year"></span></span>
+                <span> · </span>
+                <span data-i18n="footer"></span>
+            </div>
         </footer>
 
         <!-- Email 驗證 Modal -->
@@ -717,6 +721,10 @@
         </div>
 
         <script>
+            (function () {
+                var y = document.getElementById("year");
+                if (y) y.textContent = new Date().getFullYear();
+            })();
             // ==============================
             // i18n 多國語系字串（★ 修改：新增 consentRequired / cooldownWait / networkError）
             // ==============================
