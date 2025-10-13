@@ -571,6 +571,44 @@
                     word-break: break-all;
                 }
             }
+            /* ==== Mobile 安全防護：卡片三不被放大、程式碼不撐版 ==== */
+
+            /* 1) 阻止 Safari 在手機上自動放大字體造成整卡看起來變大 */
+            html {
+                -webkit-text-size-adjust: 100%;
+                text-size-adjust: 100%;
+            }
+
+            /* 2) 卡片三本身別超出版心（避免觸發瀏覽器縮放補償） */
+            #card-snippet {
+                max-width: 100%;
+                overflow: hidden; /* 以防內部陰影/邊框造成溢出 */
+            }
+
+            /* 3) 程式碼框：容器不撐版，內文只橫向捲動 */
+            .code {
+                max-width: 100%;
+                overflow: hidden; /* 容器自己不出橫向卷軸 */
+            }
+
+            /* 4) 真正可捲動的層：讓超長的行只在這裡橫向捲動，不改變整頁寬度 */
+            .code pre,
+            .code code {
+                display: block;
+                max-width: 100%;
+                white-space: pre; /* 保留原始縮排/不強制斷行 */
+                word-break: normal; /* 不把單字硬切開 */
+                overflow-x: auto; /* 超長行只出水平卷軸 */
+                -webkit-overflow-scrolling: touch; /* 手機滑動更順 */
+                text-align: left; /* 依你需求：靠左閱讀 */
+            }
+
+            /* 5) 保險：在超小螢幕時，卡片內的文字不要撐出卡片 */
+            @media (max-width: 420px) {
+                #card-snippet * {
+                    min-width: 0;
+                }
+            }
         </style>
     </head>
     <body data-theme="light">
