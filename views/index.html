@@ -322,7 +322,7 @@
                 font-size: 0.85rem;
                 margin-top: 6px;
             }
-            /* ★ 修改：讓「勾選框＋文案」同行排列（保留你的寫法） */
+            /* 原有：單行 flex 版，保留不動 */
             .consent-line {
                 display: flex;
                 align-items: center;
@@ -330,6 +330,33 @@
                 font-size: 0.85rem;
                 color: #6b7a90;
                 margin: 6px 0 10px;
+            }
+
+            /* ★ 修正：手機友善的二欄一行表格排版（文字左、勾選右） */
+            .consent-wrap {
+                margin: 6px 0 10px;
+            }
+            .consent-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed; /* 防止內容把版面撐爆 */
+            }
+            .consent-text {
+                font-size: 0.85rem;
+                color: #6b7a90;
+                padding-right: 8px;
+                text-align: left;
+                vertical-align: middle;
+                word-break: break-word;
+            }
+            .consent-check {
+                width: 40px; /* 固定右欄寬度確保靠右 */
+                text-align: right;
+                vertical-align: middle;
+            }
+            .consent-check input[type="checkbox"] {
+                width: 20px;
+                height: 20px; /* 提升手機點擊性 */
             }
         </style>
     </head>
@@ -518,7 +545,7 @@
 
         <script>
             // ==============================
-            // i18n 多國語系字串（已包含 consentRequired / cooldownWait / networkError / countdown / otpValidity）
+            // i18n 多國語系字串（★ 修改：新增 consentRequired / cooldownWait / networkError）
             // ==============================
             const STR = {
                 "zh-TW": {
@@ -539,10 +566,10 @@
                             "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
                         consent:
                             "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
-                        consentRequired: "請勾選同意後再送出。",
-                        cooldownWait: "請稍候再試（冷卻中）",
+                        consentRequired: "請勾選同意後再送出。", // ★ 新增
+                        cooldownWait: "請稍候再試（冷卻中）", // ★ 新增
                         networkError: "連線逾時或網路異常，請重試。",
-                        countdown: "{n} 秒後可重新發送",
+                        countdown: "{n} 秒後可重新發送", // ← 新增：倒數文字（帶 {n} 佔位）
                         otpValidity:
                             "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
                     },
@@ -617,9 +644,9 @@
                             "已超过 60 秒，请重新输入 Email 获取新的验证码。",
                         consent:
                             "我同意本站仅发送登录/注册所需的 OTP 验证码与安全通知，不发送任何营销邮件。",
-                        consentRequired: "请勾选同意后再提交。",
-                        cooldownWait: "请稍候再试（冷却中）",
-                        networkError: "网络超时或异常，请重试。",
+                        consentRequired: "请勾选同意后再提交。", // ★ 新增
+                        cooldownWait: "请稍候再试（冷却中）", // ★ 新增
+                        networkError: "网络超时或异常，请重试。", // ★ 新增
                         countdown: "{n} 秒后可重新发送",
                         otpValidity:
                             "OTP 验证码有效时间：<strong>{n}</strong> 秒。",
@@ -697,11 +724,11 @@
                         consent:
                             "当サイトはログイン/登録に必要な OTP とセキュリティ通知のみを送信し、マーケティングメールは送りません。",
                         consentRequired:
-                            "同意にチェックを入れてから送信してください。",
+                            "同意にチェックを入れてから送信してください。", // ★ 新增
                         cooldownWait:
-                            "しばらくしてからお試しください（クールダウン中）",
+                            "しばらくしてからお試しください（クールダウン中）", // ★ 新增
                         networkError:
-                            "ネットワークのタイムアウトまたはエラーです。再試行してください。",
+                            "ネットワークのタイムアウトまたはエラーです。再試行してください。", // ★ 新增
                         countdown: "{n} 秒後に再送できます",
                         otpValidity:
                             "OTP の有効時間：<strong>{n}</strong> 秒。",
@@ -780,11 +807,11 @@
                         consent:
                             "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails.",
                         consentRequired:
-                            "Please check the consent box before submitting.",
+                            "Please check the consent box before submitting.", // ★ 新增
                         cooldownWait:
-                            "Please try again later (cooldown in effect).",
+                            "Please try again later (cooldown in effect).", // ★ 新增
                         networkError:
-                            "Network timeout or error. Please try again.",
+                            "Network timeout or error. Please try again.", // ★ 新增
                         countdown: "{n}s before you can resend",
                         otpValidity:
                             "OTP code validity: <strong>{n}</strong> seconds.",
@@ -1072,14 +1099,6 @@
             // ==============================
             let codeCountdown = null;
 
-            // ★ 修正：簡單的模板取代（僅做 {n} 參數替換，不改動任何流程）
-            function tFormat(tpl, map) {
-                if (typeof tpl !== "string") return "";
-                return tpl.replace(/\{(\w+)\}/g, (_, k) =>
-                    map.hasOwnProperty(k) ? String(map[k]) : "",
-                );
-            }
-
             function showEmailModal() {
                 if (codeCountdown) {
                     clearInterval(codeCountdown);
@@ -1093,11 +1112,17 @@
                 inner.innerHTML = `
           <p>${T.common.email}</p>
           <input type="email" id="email-input" placeholder="${T.common.email}">
-          <!-- 勾選框與文案同一行，使用 i18n 的 consent（保留你的寫法） -->
-          <label class="consent-line">
-            <input type="checkbox" id="consent-checkbox" checked>
-            <span>${T.common.consent}</span>
-          </label>
+          <!-- ★ 修正：把同意聲明改為二欄一行表格，文字左、打勾右 -->
+          <div class="consent-wrap">
+            <table class="consent-table" role="presentation" aria-hidden="false">
+              <tr>
+                <td class="consent-text" id="consent-text">${T.common.consent}</td>
+                <td class="consent-check">
+                  <input type="checkbox" id="consent-checkbox" checked aria-labelledby="consent-text">
+                </td>
+              </tr>
+            </table>
+          </div>
           <button class="btn primary" id="submit-email">${T.common.ok}</button>
           <p id="email-error" class="error"></p>
         `;
@@ -1106,6 +1131,15 @@
                 document
                     .getElementById("submit-email")
                     .addEventListener("click", submitEmail);
+
+                // ★ 修正（可點文字切換勾選；不影響既有流程）
+                const consentTextEl = document.getElementById("consent-text");
+                if (consentTextEl) {
+                    consentTextEl.addEventListener("click", () => {
+                        const cb = document.getElementById("consent-checkbox");
+                        cb.checked = !cb.checked;
+                    });
+                }
             }
 
             async function submitEmail() {
@@ -1115,14 +1149,8 @@
                 const consent =
                     document.getElementById("consent-checkbox").checked;
                 const error = document.getElementById("email-error");
-                const btn = document.getElementById("submit-email"); // ★ 修正：避免連點
                 const T = STR[CUR_LANG] || STR["en"];
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                // ★ 修正：送出前先清空錯誤訊息（UI 一致）
-                error.textContent = "";
-                error.style.display = "none";
-
                 if (!emailRegex.test(email)) {
                     error.textContent = T.common.error;
                     error.style.display = "block";
@@ -1132,12 +1160,9 @@
                     error.textContent = T.common.consentRequired;
                     error.style.display = "block";
                     return;
-                }
+                } // 保持原有多國語處理
 
                 try {
-                    // ★ 修正：避免連點重複送出，但不改動你的 API 流程
-                    btn.setAttribute("disabled", "disabled");
-
                     const response = await fetch("/email", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -1157,9 +1182,6 @@
                 } catch {
                     error.textContent = T.common.networkError;
                     error.style.display = "block";
-                } finally {
-                    // ★ 修正：無論結果如何都解除 disabled，以維持原本互動流程
-                    btn.removeAttribute("disabled");
                 }
             }
 
@@ -1167,45 +1189,30 @@
                 const inner = document.getElementById("modal-inner");
                 const T = STR[CUR_LANG] || STR["en"];
                 let countdown = 60;
-
-                // ★ 修正：用 i18n 模板顯示倒數與 OTP 有效時間
-                const countdownText = tFormat(T.common.countdown, {
-                    n: countdown,
-                });
-                const otpValidityHtml = tFormat(T.common.otpValidity, {
-                    n: 60,
-                });
-
                 inner.innerHTML = `
           <p>${T.common.code}</p>
           <input type="text" id="code-input" placeholder="${T.common.code}" inputmode="numeric" maxlength="6">
           <button class="btn primary" id="verify-code">${T.common.ok}</button>
           <p id="code-error" class="error"></p>
-          <p class="countdown" id="countdown">${countdownText}</p>
-          <p class="inline-note">${otpValidityHtml}</p>
+          <p class="countdown" id="countdown">${countdown} 秒後可重新發送</p>
+          <p class="inline-note">OTP 驗證碼有效時間：<strong>60 秒</strong>。</p>
         `;
-
                 const countdownEl = document.getElementById("countdown");
                 if (codeCountdown) {
                     clearInterval(codeCountdown);
                     codeCountdown = null;
                 }
                 codeCountdown = setInterval(() => {
-                    // ★ 修正：防止 countdownEl 為 null（例如 modal 被關閉/切換）
+                    countdown--;
+                    countdownEl.textContent = `${countdown} 秒後可重新發送`;
                     const modalHidden = document
                         .getElementById("email-verification-modal")
                         ?.classList.contains("hidden");
-                    if (!countdownEl || modalHidden) {
+                    if (modalHidden) {
                         clearInterval(codeCountdown);
                         codeCountdown = null;
                         return;
                     }
-
-                    countdown--;
-                    countdownEl.textContent = tFormat(T.common.countdown, {
-                        n: countdown,
-                    });
-
                     if (countdown <= 0) {
                         clearInterval(codeCountdown);
                         codeCountdown = null;
@@ -1213,7 +1220,6 @@
                         showEmailModal();
                     }
                 }, 1000);
-
                 document
                     .getElementById("verify-code")
                     .addEventListener("click", () => verifyCode(email), {
