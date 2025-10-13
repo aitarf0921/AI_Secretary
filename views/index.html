@@ -4,7 +4,6 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-        <!-- 【SES修正-SEO/透明度】統一標題與說明，強調僅寄「交易型」驗證信，非行銷 -->
         <title data-i18n="title">
             AI Chatbot: Embed a 24/7 Smart Assistant on Your Website
         </title>
@@ -12,7 +11,6 @@
             name="description"
             content="Transactional-only emails (OTP codes). No marketing. Embed an AI chatbot effortlessly for 24/7 support."
         />
-        <!-- 【SES修正-SEO/透明度】加入 canonical 避免鏡像混淆，強化品牌一致 -->
         <link rel="canonical" href="https://chatbot.aitarf.us/" />
 
         <link
@@ -23,7 +21,6 @@
         <link rel="preconnect" href="https://chatbot.aitarf.us" crossorigin />
 
         <meta property="og:type" content="website" />
-        <!-- 【SES修正-SEO/透明度】OG 標題與描述同步強調交易型 -->
         <meta
             property="og:title"
             content="AI Chatbot — Transactional OTP Only | AiTarf Ltd."
@@ -39,7 +36,6 @@
         />
         <meta name="twitter:card" content="summary_large_image" />
 
-        <!-- 【SES修正-結構化資料】改為 schema.org 正確格式，公開公司資訊以利審核 -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -59,12 +55,7 @@
                 "publisher": {
                     "@type": "Organization",
                     "name": "AiTarf Ltd. (鈊塔科技)"
-                },
-                "sameAs": [
-                    "https://x.com/_aitarf",
-                    "https://t.me/aitarf",
-                    "https://line.me/ti/p/O5UsDr2cN9"
-                ]
+                }
             }
         </script>
 
@@ -331,6 +322,15 @@
                 font-size: 0.85rem;
                 margin-top: 6px;
             }
+            /* ★ 修改：讓「勾選框＋文案」同行排列 */
+            .consent-line {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.85rem;
+                color: #6b7a90;
+                margin: 6px 0 10px;
+            }
         </style>
     </head>
     <body data-theme="light">
@@ -360,7 +360,6 @@
 
         <main>
             <section class="hero card">
-                <!-- 【SES修正-文案】首屏即聲明「只寄交易型驗證碼、非行銷」 -->
                 <h1 data-i18n="hero.title">
                     Best AI Chatbot: Easily Embed 24/7 Customer Support
                 </h1>
@@ -382,7 +381,6 @@
                         <div class="benefit-icon">
                             <i class="fas fa-shield-halved"></i>
                         </div>
-                        <!-- 【SES修正-文案】突出濫發防護 -->
                         <span data-i18n="hero.benefit_safety"
                             >濫發防護：單一有效 OTP、60 秒冷卻</span
                         >
@@ -403,7 +401,6 @@
                     data-i18n="hero.cta"
                     >立即開始免費試用</a
                 >
-                <!-- 【SES修正-固定聲明】 -->
                 <p class="inline-note" data-i18n="hero.notice_txn">
                     ※ 我們只會寄出登入/註冊所需的 OTP
                     驗證碼與安全通知，絕不會寄送行銷或廣告郵件。
@@ -439,7 +436,6 @@
                         生成 AI Chatbot Widget 程式碼
                     </button>
                 </div>
-                <!-- 【SES修正-固定聲明】 -->
                 <p class="inline-note" data-i18n="create.txn_note">
                     我們僅在你主動要求寄送時發信；不發送任何行銷郵件。OTP 有效
                     60 秒、每信箱 60 秒冷卻。
@@ -494,7 +490,6 @@
         </main>
 
         <footer>
-            <!-- 【SES修正-聯絡資訊公開】 -->
             <div>
                 © AiTarf Ltd. (鈊塔科技) —
                 <strong data-i18n="footer.txn_only"
@@ -523,7 +518,7 @@
 
         <script>
             // ==============================
-            // i18n 字串（保留原四語，新增 SES 合規文案與同意勾選字串）
+            // i18n 多國語系字串（★ 修改：新增 consentRequired / cooldownWait / networkError）
             // ==============================
             const STR = {
                 "zh-TW": {
@@ -542,9 +537,11 @@
                         emailSent: "驗證碼已寄出，請在 60 秒內輸入。",
                         codeTimeout:
                             "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
-                        // 【SES修正-同意勾選文案】
                         consent:
-                            "我同意本網站僅寄送登入/註冊所需之 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
+                            "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
+                        consentRequired: "請勾選同意後再送出。", // ★ 新增
+                        cooldownWait: "請稍候再試（冷卻中）", // ★ 新增
+                        networkError: "連線逾時或網路異常，請重試。", // ★ 新增
                     },
                     hero: {
                         title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
@@ -592,12 +589,10 @@
                         toastEmpty: "請先輸入知識庫內容。",
                         toastTooShort: "內容過短，至少需 20 個字。",
                         rateLimited: "操作太頻繁，請稍後再試。",
-                        // 【SES修正-固定聲明】
                         txn_note:
                             "我們僅在你主動要求寄送時發信；不發送任何行銷郵件。OTP 有效 60 秒、每信箱 60 秒冷卻。",
                     },
                     footer: "© AI Chatbot — 立即免費開始",
-                    // 【SES修正-頁尾聲明】
                     "footer.txn_only":
                         "只發送交易型郵件：OTP 驗證碼與帳號安全通知",
                 },
@@ -619,6 +614,9 @@
                             "已超过 60 秒，请重新输入 Email 获取新的验证码。",
                         consent:
                             "我同意本站仅发送登录/注册所需的 OTP 验证码与安全通知，不发送任何营销邮件。",
+                        consentRequired: "请勾选同意后再提交。", // ★ 新增
+                        cooldownWait: "请稍候再试（冷却中）", // ★ 新增
+                        networkError: "网络超时或异常，请重试。", // ★ 新增
                     },
                     hero: {
                         title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
@@ -692,6 +690,12 @@
                             "60 秒を超えました。メールを再入力して新しいコードを取得してください。",
                         consent:
                             "当サイトはログイン/登録に必要な OTP とセキュリティ通知のみを送信し、マーケティングメールは送りません。",
+                        consentRequired:
+                            "同意にチェックを入れてから送信してください。", // ★ 新增
+                        cooldownWait:
+                            "しばらくしてからお試しください（クールダウン中）", // ★ 新增
+                        networkError:
+                            "ネットワークのタイムアウトまたはエラーです。再試行してください。", // ★ 新增
                     },
                     hero: {
                         title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
@@ -766,6 +770,12 @@
                             "Time’s up. Please re-enter your email to get a new code.",
                         consent:
                             "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails.",
+                        consentRequired:
+                            "Please check the consent box before submitting.", // ★ 新增
+                        cooldownWait:
+                            "Please try again later (cooldown in effect).", // ★ 新增
+                        networkError:
+                            "Network timeout or error. Please try again.", // ★ 新增
                     },
                     hero: {
                         title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
@@ -826,7 +836,7 @@
             };
 
             // ==============================
-            // 介面初始化與切換（保留原邏輯）
+            // 初始化語系/主題
             // ==============================
             const savedLang = localStorage.getItem("aiw_lang");
             const savedTheme = localStorage.getItem("aiw_theme") || "light";
@@ -887,17 +897,8 @@
                     if (typeof v === "string")
                         el.setAttribute("placeholder", v);
                 });
-                document.querySelectorAll(".badge").forEach((b) => {
-                    const attr = b.getAttribute("data-i18n");
-                    const isReq = attr && /required/i.test(attr);
-                    b.textContent = isReq ? T.required : T.optional;
-                });
-                if (themeToggle)
-                    themeToggle.setAttribute("title", T.theme.toggle);
-                if (langSelect)
-                    langSelect.setAttribute("title", T.common.languageTitle);
-                setCodeHints();
                 document.documentElement.setAttribute("lang", CUR_LANG);
+                setCodeHints();
                 updateThemeIcon();
                 updateCTAByProgress();
             }
@@ -906,11 +907,7 @@
                 const btn = document.getElementById("start-trial-btn");
                 if (!btn) return;
                 const T = STR[CUR_LANG] || STR["en"];
-                let label = T.hero?.cta || btn.textContent;
-                const email = getCookie("verifiedEmail");
-                if (email) {
-                    label = T.hero?.cta || label;
-                } // 仍以 CTA 為主
+                const label = T.hero?.cta || btn.textContent;
                 btn.textContent = label;
                 btn.setAttribute("aria-label", label);
                 btn.setAttribute("title", label);
@@ -921,7 +918,6 @@
                     CUR_LANG = e.target.value;
                     localStorage.setItem("aiw_lang", CUR_LANG);
                     applyLang();
-                    updateCTAByProgress();
                 });
             }
             if (themeToggle) {
@@ -1060,7 +1056,7 @@
             }
 
             // ==============================
-            // 【SES修正-同意勾選＋60秒有效/冷卻】Email 驗證流程
+            // Email 驗證流程（60秒有效/冷卻）
             // ==============================
             let codeCountdown = null;
 
@@ -1077,10 +1073,10 @@
                 inner.innerHTML = `
           <p>${T.common.email}</p>
           <input type="email" id="email-input" placeholder="${T.common.email}">
-          <!-- 【SES修正-新增同意勾選】未勾選不可送出 -->
-          <label style="display:block;font-size:.85rem;color:#6b7a90;margin:6px 0;">
-            <input type="checkbox" id="consent-checkbox" checked style="margin-right:6px;">
-            ${T.common.consent}
+          <!-- ★ 修改：勾選框與文案同一行，並使用 i18n 的 consent -->
+          <label class="consent-line">
+            <input type="checkbox" id="consent-checkbox" checked>
+            <span>${T.common.consent}</span>
           </label>
           <button class="btn primary" id="submit-email">${T.common.ok}</button>
           <p id="email-error" class="error"></p>
@@ -1097,7 +1093,7 @@
                     .getElementById("email-input")
                     .value.trim();
                 const consent =
-                    document.getElementById("consent-checkbox").checked; // 【SES修正-同意檢查】
+                    document.getElementById("consent-checkbox").checked;
                 const error = document.getElementById("email-error");
                 const T = STR[CUR_LANG] || STR["en"];
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1107,10 +1103,10 @@
                     return;
                 }
                 if (!consent) {
-                    error.textContent = "請勾選同意後再送出。";
+                    error.textContent = T.common.consentRequired;
                     error.style.display = "block";
                     return;
-                } // 【SES修正-同意必填】
+                } // ★ 修改：多國語系
 
                 try {
                     const response = await fetch("/email", {
@@ -1123,14 +1119,14 @@
                         toast(T.common.emailSent);
                         showCodeInput(email);
                     } else if (data.code === "2") {
-                        error.textContent = "請稍後再試（60 秒冷卻中）"; // 【SES修正-冷卻提示】
+                        error.textContent = T.common.cooldownWait; // ★ 修改：多國語系
                         error.style.display = "block";
                     } else {
                         error.textContent = T.common.error;
                         error.style.display = "block";
                     }
                 } catch {
-                    error.textContent = "連線逾時或網路異常，請重試。";
+                    error.textContent = T.common.networkError; // ★ 修改：多國語系
                     error.style.display = "block";
                 }
             }
@@ -1138,7 +1134,7 @@
             function showCodeInput(email) {
                 const inner = document.getElementById("modal-inner");
                 const T = STR[CUR_LANG] || STR["en"];
-                let countdown = 60; // 【SES修正-60秒有效/冷卻：倒數顯示】
+                let countdown = 60;
                 inner.innerHTML = `
           <p>${T.common.code}</p>
           <input type="text" id="code-input" placeholder="${T.common.code}" inputmode="numeric" maxlength="6">
@@ -1167,7 +1163,7 @@
                         clearInterval(codeCountdown);
                         codeCountdown = null;
                         toast(T.common.codeTimeout);
-                        showEmailModal(); // 回到輸入 Email 階段
+                        showEmailModal();
                     }
                 }, 1000);
                 document
@@ -1223,14 +1219,14 @@
                         kb.focus();
                         updateCTAByProgress();
                     } else if (data.code === "2") {
-                        error.textContent = "請稍候再試（冷卻中）";
+                        error.textContent = T.common.cooldownWait; // ★ 修改：多國語系
                         error.style.display = "block";
                     } else {
                         error.textContent = T.common.error_1;
                         error.style.display = "block";
                     }
                 } catch {
-                    error.textContent = "連線逾時或網路異常，請重試。";
+                    error.textContent = T.common.networkError; // ★ 修改：多國語系
                     error.style.display = "block";
                 }
             }
@@ -1253,7 +1249,7 @@
                         }
                         document.getElementById("kb").focus();
                     } else {
-                        showEmailModal(); // 【SES修正-會看到同意勾選與 60 秒文案】
+                        showEmailModal();
                     }
                 });
             }
@@ -1376,7 +1372,7 @@
             applyLang();
         </script>
 
-        <!-- 保留你的 demo 載入腳本 -->
+        <!-- Demo loader -->
         <script
             src="https://chatbot.aitarf.us/js/ai-helper-loader.js"
             data-position="bottom-right"
