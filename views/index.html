@@ -475,14 +475,14 @@
                 -webkit-text-size-adjust: 100%;
             }
 
-            /* 將 inline-grid 改回 block-level 的 grid，避免影響後面的按鈕 */
+            /* === 卡片一好處表以最長行為基準置中（不影響按鈕） === */
             @media (min-width: 768px) {
                 .hero .benefits {
-                    display: grid; /* ⬅️ 從 inline-grid 改回 grid（block-level） */
-                    width: fit-content; /* 仍以最長那列為寬度基準 */
+                    display: grid; /* 改回 block-level grid，不影響按鈕排版 */
+                    width: fit-content; /* 以最長行為基準置中 */
                     max-width: 100%;
-                    margin: clamp(12px, 3vw, 16px) auto; /* 置中 */
-                    justify-items: start; /* 左欄圖示右對齊由下方規則負責 */
+                    margin: clamp(12px, 3vw, 16px) auto;
+                    justify-items: start;
                     row-gap: clamp(12px, 3vw, 16px);
                 }
                 .hero .benefit-item {
@@ -493,13 +493,19 @@
                     width: 100%;
                 }
                 .hero .benefit-icon {
-                    justify-self: end; /* 圖示彼此右對齊 */
+                    justify-self: end;
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
                 }
                 .hero .benefit-item span {
+                    text-align: left;
                     overflow-wrap: anywhere;
                     word-break: break-word;
                     min-width: 0;
-                    text-align: left;
                 }
             }
         </style>
