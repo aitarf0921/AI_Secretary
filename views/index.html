@@ -2,7 +2,10 @@
 <html lang="zh-TW">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+        />
 
         <title data-i18n="title">
             AI Chatbot: Embed a 24/7 Smart Assistant on Your Website
@@ -608,6 +611,22 @@
                 #card-snippet * {
                     min-width: 0;
                 }
+            }
+            /* 限制卡片三內容不要撐爆畫面 */
+            #card-snippet,
+            #card-snippet pre,
+            #card-snippet code {
+                max-width: 100%;
+                overflow-x: auto;
+                white-space: pre;
+                word-break: normal;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* 防止 Safari 為小字自動放大字體 */
+            html {
+                -webkit-text-size-adjust: 100%;
+                text-size-adjust: 100%;
             }
         </style>
     </head>
