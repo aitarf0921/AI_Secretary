@@ -208,7 +208,6 @@
                 box-sizing: border-box;
             }
 
-            /* 讓頁面成貼底版型（保留你原本設定） */
             html,
             body {
                 height: 100%;
@@ -216,10 +215,8 @@
             body {
                 display: flex;
                 flex-direction: column;
-                /* 防止任何元素造成水平溢出，避免 footer 右側留白視覺錯覺 */
                 overflow-x: hidden;
             }
-
             html,
             body {
                 margin: 0;
@@ -314,7 +311,7 @@
                 box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
             }
 
-            /* ===== Hero（只針對需求必要調整） ===== */
+            /* === Hero === */
             .hero {
                 text-align: center;
                 background: linear-gradient(135deg, var(--primary), #3b82f6);
@@ -325,28 +322,26 @@
             .hero h1 {
                 white-space: normal;
                 line-height: 1.25;
-                overflow-wrap: anywhere; /* 長字/無空白可換行 */
+                overflow-wrap: anywhere;
                 word-break: break-word;
             }
 
-            /* 整塊置中（移除造成撐爆的 max-content） */
             .benefits {
                 margin: clamp(12px, 3vw, 16px) auto;
                 display: grid;
                 gap: clamp(12px, 3vw, 16px);
-                justify-items: center; /* 讓每列置中 */
+                justify-items: center;
                 width: 100%;
-                max-width: 720px; /* 適度限制，避免過寬 */
+                max-width: 720px;
             }
-            /* 每一列兩欄：左圖右文。左欄圖示靠右、右欄文字靠左。圖示彼此對齊 */
             .benefit-item {
                 display: grid;
                 grid-template-columns: 32px minmax(0, 1fr);
                 align-items: center;
                 column-gap: 12px;
                 width: 100%;
-                min-width: 0; /* 允許收縮避免把圖示擠開 */
-                text-align: left; /* 右欄（文字）靠左對齊 */
+                min-width: 0;
+                text-align: left;
             }
             .benefit-icon {
                 background: var(--ok);
@@ -359,11 +354,11 @@
                 justify-content: center;
                 font-size: 0.9rem;
                 flex-shrink: 0;
-                justify-self: end; /* 左欄圖示靠右 */
+                justify-self: end;
             }
             .benefit-item span {
                 font-size: 0.875rem;
-                overflow-wrap: anywhere; /* 長字自動換行，不撐開圖示欄 */
+                overflow-wrap: anywhere;
                 word-break: break-word;
                 min-width: 0;
             }
@@ -406,7 +401,7 @@
                 color: var(--muted);
             }
 
-            /* 程式碼區塊（一般行為：可水平卷動） */
+            /* 程式碼區塊 */
             .code {
                 position: relative;
                 background: #0b1220;
@@ -418,7 +413,6 @@
                 font-size: 0.8rem;
                 margin: clamp(12px, 3vw, 16px) 0;
             }
-            /* 右上角複製圖示按鈕（取代文字提示） */
             .code .copy-btn {
                 position: absolute;
                 top: 8px;
@@ -438,7 +432,6 @@
                 filter: brightness(1.1);
             }
 
-            /* <pre><code> 內文靠左顯示（不改你的卡片整體置中） */
             .code pre {
                 text-align: left;
                 margin: 0;
@@ -447,19 +440,12 @@
             .code code {
                 display: block;
                 max-width: 100%;
-                white-space: pre; /* 一般情況保留原始縮排 */
+                white-space: pre;
                 word-break: normal;
-                overflow-x: auto; /* 超長行只在這層捲動 */
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .table-wrap {
-                width: 100%;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
 
-            /* footer：外層鋪滿（保留你的設定） */
             footer,
             .site-footer {
                 margin-top: auto;
@@ -477,179 +463,49 @@
                 text-align: center;
             }
 
-            /* Modal */
-            #email-verification-modal {
-                position: fixed;
-                inset: 0;
-                background: rgba(15, 23, 42, 0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 2000;
-            }
-            .modal-content {
-                max-width: 90%;
-                width: 420px;
-            }
-            .modal-content input {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                font-size: 0.95rem;
-                margin-bottom: 10px;
-            }
-            .modal-content .btn {
-                width: 100%;
-            }
-            .modal-content .error {
-                color: #dc2626;
-                font-size: 0.85rem;
-                margin-top: 6px;
-                display: none;
-            }
-            .modal-content .countdown {
-                color: var(--muted);
-                font-size: 0.85rem;
-                margin-top: 6px;
-            }
-
-            .consent-line {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-size: 0.85rem;
-                color: #6b7a90;
-                margin: 6px 0 10px;
-            }
-            .consent-wrap {
-                margin: 6px 0 10px;
-            }
-            .consent-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed;
-            }
-            .consent-text {
-                font-size: 0.85rem;
-                color: #6b7a90;
-                padding-right: 8px;
-                text-align: left;
-                vertical-align: middle;
-                word-break: break-word;
-            }
-            .consent-check {
-                width: 40px;
-                text-align: right;
-                vertical-align: middle;
-            }
-            .consent-check input[type="checkbox"] {
-                width: 20px;
-                height: 20px;
-            }
-
-            /* 卡片二欄位 */
-            .field {
-                width: 100%;
-            }
-            .field textarea,
-            .field input[type="text"],
-            .field input[type="email"] {
-                width: 100%;
-                display: block;
-                padding: 10px;
-                border: 1px solid var(--border);
-                border-radius: 10px;
-                background: var(--card);
-                color: var(--text);
-                font-size: 0.95rem;
-            }
-            #kb {
-                min-height: 140px;
-                resize: vertical;
-            }
-
-            /* 保留原本：卡片一與卡片三文字置中（不影響程式碼區塊的對齊） */
-            #card-generate,
-            #card-snippet {
-                text-align: center;
-            }
-
-            /* ==== Mobile 保險：更激進斷字避免撐版（Hero 文字區） ==== */
-            @media (max-width: 420px) {
-                .hero,
-                .benefit-item span {
-                    word-break: break-all;
-                }
-            }
-
-            /* ==== Mobile 安全防護：卡片三不被放大、程式碼不撐版 ==== */
-
-            /* 阻止 Safari 在手機上自動放大字體造成整卡看起來變大 */
-            html {
-                -webkit-text-size-adjust: 100%;
-                text-size-adjust: 100%;
-            }
-
-            /* 卡片三本身別超出版心（避免觸發瀏覽器縮放補償） */
-            #card-snippet {
-                max-width: 100%;
-                overflow: hidden;
-            }
-
-            /* 保險：在超小螢幕時，卡片內的文字不要撐出卡片 */
-            @media (max-width: 420px) {
-                #card-snippet * {
-                    min-width: 0;
-                }
-            }
-
-            /* === 統一卡片三：所有文字（含 code）自動換行，不撐版 === */
+            /* === 卡片三防撐版 & 自動換行 === */
             #card-snippet .code,
             #card-snippet pre,
             #card-snippet code {
-                white-space: pre-wrap !important; /* 長行自動換行 */
-                word-break: break-all !important; /* 英文/連續字串也可折行 */
-                overflow-wrap: anywhere !important; /* CJK 亦能自然換行 */
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+                overflow-wrap: anywhere !important;
                 max-width: 100%;
-                overflow-x: hidden; /* 不出橫向捲軸 */
+                overflow-x: hidden;
                 -webkit-text-size-adjust: 100%;
             }
-            /* === 桌機版：以最長一行為基準，整體置中且圖示對齊 === */
+
+            /* === 好處表以最長行為基準置中（不影響按鈕） === */
             @media (min-width: 768px) {
                 .hero .benefits {
-                    display: inline-grid; /* 讓容器依最長列自動收縮 */
-                    width: auto; /* 寬度根據內容決定 */
-                    max-width: 100%; /* 防止超出卡片邊界 */
-                    margin: 0 auto; /* 置中 */
-                    justify-items: start; /* 每列從左開始排（由圖示靠右控制對齊） */
+                    display: inline-grid;
+                    width: max-content; /* 以最長一列為寬度基準 */
+                    max-width: 100%;
+                    margin: clamp(12px, 3vw, 16px) auto; /* 保留原有上下間距 */
+                    justify-items: start;
                     row-gap: clamp(12px, 3vw, 16px);
                 }
-
                 .hero .benefit-item {
                     grid-template-columns: 32px minmax(0, 1fr);
                     align-items: center;
+                    column-gap: 12px;
                     min-width: 0;
-                }
-
-                .hero .benefit-icon {
-                    justify-self: end; /* 每列圖示靠右 ⇒ 對齊 */
-                }
-
-                .hero .benefit-item span {
-                    text-align: left; /* 右欄文字靠左 */
-                    word-break: break-word;
-                    overflow-wrap: anywhere;
-                    min-width: 0;
-                }
-            }
-
-            /* === 手機版維持現有寬度與置中 === */
-            @media (max-width: 767px) {
-                .hero .benefits {
                     width: 100%;
-                    display: grid;
-                    justify-items: center;
+                }
+                .hero .benefit-icon {
+                    justify-self: end;
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                }
+                .hero .benefit-item span {
+                    text-align: left;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                    min-width: 0;
                 }
             }
         </style>
