@@ -638,6 +638,49 @@
             .hero .benefit-item {
                 min-width: 0;
             }
+            /* ===== FINAL OVERRIDE：卡片一（Hero）長字不溢出 ===== */
+
+            /* 允許整塊與其子元素縮小 */
+            .hero,
+            .hero * {
+                min-width: 0;
+            }
+
+            /* 覆蓋原本的 max-content，讓容器能縮 */
+            .hero .benefits {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* grid 第二欄固定用 1fr，確保可換行 */
+            .hero .benefit-item {
+                grid-template-columns: 28px 1fr !important;
+            }
+
+            /* 文字一律允許換行（含 CJK 長字、URL、無空白字串） */
+            .hero,
+            .hero h1,
+            .hero .benefit-item span {
+                overflow-wrap: anywhere !important; /* 新版引擎 */
+                word-break: break-word !important; /* 舊版相容 */
+                hyphens: auto;
+            }
+
+            /* CTA 允許斷行、不可把容器撐爆 */
+            #start-trial-btn {
+                white-space: normal !important;
+                line-height: 1.3;
+                max-width: 100%;
+            }
+
+            /* 極窄螢幕時，再加一道保險：允許更激進斷字 */
+            @media (max-width: 420px) {
+                .hero {
+                    word-break: break-all;
+                } /* 只在超窄時啟用 */
+            }
         </style>
     </head>
     <body data-theme="light">
