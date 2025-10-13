@@ -699,6 +699,58 @@
                 if (y) y.textContent = new Date().getFullYear();
             })();
 
+            // ===== 強制重置：卸載舊 widget、清 DOM、清快取與狀態 =====
+            async function hardResetWidget() {
+                try {
+                    // 若你的 loader 暴露 API，優先呼叫（未暴露則不會拋錯）
+                    if (
+                        window.AIHelper &&
+                        typeof window.AIHelper.destroy === "function"
+                    ) {
+                        await window.AIHelper.destroy();
+                    }
+                } catch (e) {
+                    // 靜默忽略
+                }
+
+                // 1) 移除所有舊的 loader 腳本
+                document
+                    .querySelectorAll('script[src*="ai-helper-loader.js"]')
+                    .forEach((s) => s.remove());
+
+                // 2) 移除可能存在的舊容器 / 啟動器 / 面板 / iframe
+                const selectors = [
+                    "#ai-helper-root",
+                    ".ai-helper-root",
+                    "[data-ai-helper-root]",
+                    ".aiw-launcher",
+                    ".aiw-panel",
+                    'iframe[src*="chatbot.aitarf.us"]',
+                ];
+                document.querySelectorAll(selectors.join(",")).forEach((n) => {
+                    try {
+                        n.remove();
+                    } catch {}
+                });
+
+                // 3) 清理對話/開關狀態（依你的命名習慣可擴充）
+                const shouldClear = (k) =>
+                    /^(aiw_|aihelper_|ai-helper|aitarf_)/i.test(k);
+                try {
+                    Object.keys(localStorage).forEach((k) => {
+                        if (shouldClear(k)) localStorage.removeItem(k);
+                    });
+                } catch {}
+                try {
+                    Object.keys(sessionStorage).forEach((k) => {
+                        if (shouldClear(k)) sessionStorage.removeItem(k);
+                    });
+                } catch {}
+
+                // 4) 小延遲，確保瀏覽器把 DOM/快取變更 flush 完
+                await new Promise((r) => setTimeout(r, 0));
+            }
+
             // ==============================
             // i18n 多國語系字串（保留你原本結構）
             // ==============================
@@ -1202,19 +1254,27 @@
   defer
 >${c}`;
             }
-            function mountDemoWidget(siteId, accent, more = WIDGET_DEFAULTS) {
-                document
-                    .querySelectorAll('script[src*="ai-helper-loader.js"]')
-                    .forEach((s) => s.remove());
+            async function mountDemoWidget(
+                siteId,
+                accent,
+                more = WIDGET_DEFAULTS,
+            ) {
+                // 先把舊的實例與狀態完全清掉
+                await hardResetWidget();
+
+                // 再掛上新的 loader
                 const s = document.createElement("script");
                 s.src = WIDGET_SRC;
                 s.defer = true;
+
+                // 套用新的屬性（位置、品牌色、尺寸、z-index 等）
                 if (more.position) s.dataset.position = more.position;
                 s.dataset.site = siteId;
                 if (accent) s.dataset.accent = accent;
                 if (more.width) s.dataset.width = more.width;
                 if (more.height) s.dataset.height = more.height;
                 if (more.z) s.dataset.z = more.z;
+
                 document.body.appendChild(s);
             }
 
