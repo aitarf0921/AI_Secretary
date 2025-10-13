@@ -628,6 +628,17 @@
                 -webkit-text-size-adjust: 100%;
                 text-size-adjust: 100%;
             }
+            /* === 修正：卡片三長行文字自動換行，避免手機放大與撐版 === */
+            #card-snippet .code,
+            #card-snippet pre,
+            #card-snippet code {
+                white-space: pre-wrap !important; /* ✅ 長行自動換行 */
+                word-break: break-all !important; /* ✅ 英文／連續字串都能折行 */
+                overflow-wrap: anywhere !important; /* ✅ 中文也能自然換行 */
+                max-width: 100%; /* ✅ 不撐出容器 */
+                overflow-x: hidden; /* ✅ 不出橫向捲軸 */
+                -webkit-text-size-adjust: 100%;
+            }
         </style>
     </head>
     <body data-theme="light">
