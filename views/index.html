@@ -615,6 +615,43 @@
                 overflow-x: hidden; /* 不出橫向捲軸 */
                 -webkit-text-size-adjust: 100%;
             }
+            /* === 桌機版：以最長一行為基準，整體置中且圖示對齊 === */
+            @media (min-width: 768px) {
+                .hero .benefits {
+                    display: inline-grid; /* 讓容器依最長列自動收縮 */
+                    width: auto; /* 寬度根據內容決定 */
+                    max-width: 100%; /* 防止超出卡片邊界 */
+                    margin: 0 auto; /* 置中 */
+                    justify-items: start; /* 每列從左開始排（由圖示靠右控制對齊） */
+                    row-gap: clamp(12px, 3vw, 16px);
+                }
+
+                .hero .benefit-item {
+                    grid-template-columns: 32px minmax(0, 1fr);
+                    align-items: center;
+                    min-width: 0;
+                }
+
+                .hero .benefit-icon {
+                    justify-self: end; /* 每列圖示靠右 ⇒ 對齊 */
+                }
+
+                .hero .benefit-item span {
+                    text-align: left; /* 右欄文字靠左 */
+                    word-break: break-word;
+                    overflow-wrap: anywhere;
+                    min-width: 0;
+                }
+            }
+
+            /* === 手機版維持現有寬度與置中 === */
+            @media (max-width: 767px) {
+                .hero .benefits {
+                    width: 100%;
+                    display: grid;
+                    justify-items: center;
+                }
+            }
         </style>
     </head>
     <body data-theme="light">
