@@ -614,6 +614,30 @@
                 display: inline-flex;
                 margin: 10px auto; /* FIX */
             }
+            /* === FIX: 卡片一（Hero）長字安全換行，避免超出邊框 === */
+            .hero {
+                overflow-wrap: anywhere; /* 允許在任何字元處換行 */
+                word-break: break-word; /* 舊版引擎也能斷字 */
+                hyphens: auto; /* 對有支援的語言斷詞（中日文通常不生效，但無害） */
+            }
+
+            .hero h1 {
+                white-space: normal; /* 確保標題不被視為單行 */
+                line-height: 1.25;
+            }
+
+            /* 覆蓋 max-content，避免內容把區塊撐寬 */
+            .hero .benefits {
+                width: 100%;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* 保險：讓 grid 內文能縮，不被內部元素撐爆 */
+            .hero .benefit-item {
+                min-width: 0;
+            }
         </style>
     </head>
     <body data-theme="light">
