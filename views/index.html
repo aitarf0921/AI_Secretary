@@ -1084,6 +1084,8 @@
                 );
                 const inner = document.getElementById("modal-inner");
                 const T = STR[CUR_LANG] || STR["en"];
+                let countdown = 60;
+
                 inner.innerHTML = `
           <p>${T.common.email}</p>
           <input type="email" id="email-input" placeholder="${T.common.email}">
@@ -1188,23 +1190,58 @@
             function showCodeInput(email) {
                 const inner = document.getElementById("modal-inner");
                 const T = STR[CUR_LANG] || STR["en"];
+                const modal = document.getElementById(
+                    "email-verification-modal",
+                );
+
+                // 倒數秒數
                 let countdown = 60;
+
+                // 使用多國語系字串產出 UI（checkbox 與文字在同一行）
                 inner.innerHTML = `
-          <p>${T.common.code}</p>
-          <input type="text" id="code-input" placeholder="${T.common.code}" inputmode="numeric" maxlength="6">
-          <button class="btn primary" id="verify-code">${T.common.ok}</button>
-          <p id="code-error" class="error"></p>
-          <p class="countdown" id="countdown"></p>
-          <p class="inline-note" id="otp-validity-note"></p>
-        `;
+                <label for="code-input" class="sr-only">${T.common.codeLabel || "Enter code"}</label>
+                <input type="text" id="code-input" placeholder="${T.common.codePlaceholder || "Enter code…"}" />
+                <label style="display:flex;align-items:center;gap:8px;line-height:1.4;">
+                  <input type="checkbox" id="agree-check" />
+                  <span>${T.common.agreeLine || "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails."}</span>
+                </label>
+                <button class="btn primary" id="verify-code">${T.common.btnVerify || "Verify"}</button>
+                <p id="code-error" class="error" style="display:none;"></p>
+                <p class="countdown" id="countdown"></p>
+                <p class="inline-note" id="otp-validity-note"></p>
+              `;
+
+                modal.classList.remove("hidden");
+
+                // 綁定節點
+                const codeInput = document.getElementById("code-input");
+                const agreeCheck = document.getElementById("agree-check");
+                const verifyBtn = document.getElementById("verify-code");
+                const errorEl = document.getElementById("code-error");
                 const countdownEl = document.getElementById("countdown");
+                const validityEl = document.getElementById("otp-validity-note");
+
+                // 初始化文字（倒數／有效時間）
+                countdownEl.innerHTML = (T.common.countdown || "{n}s").replace(
+                    "{n}",
+                    String(countdown),
+                );
+                validityEl.innerHTML = (
+                    T.common.otpValidity ||
+                    "OTP validity: <strong>{n}</strong> s"
+                ).replace("{n}", "60");
+
+                // 倒數定時器
                 if (codeCountdown) {
                     clearInterval(codeCountdown);
                     codeCountdown = null;
                 }
                 codeCountdown = setInterval(() => {
                     countdown--;
-                    countdownEl.textContent = `${countdown} 秒後可重新發送`;
+                    countdownEl.innerHTML = (
+                        T.common.countdown || "{n}s"
+                    ).replace("{n}", String(Math.max(0, countdown)));
+
                     const modalHidden = document
                         .getElementById("email-verification-modal")
                         ?.classList.contains("hidden");
@@ -1216,15 +1253,111 @@
                     if (countdown <= 0) {
                         clearInterval(codeCountdown);
                         codeCountdown = null;
-                        toast(T.common.codeTimeout);
-                        showEmailModal();
+                        toast(
+                            T.common.codeTimeout ||
+                                "Time’s up. Please request a new code.",
+                        );
+                        showEmailModal(); // 回到輸入 email 的階段
                     }
                 }, 1000);
-                document
-                    .getElementById("verify-code")
-                    .addEventListener("click", () => verifyCode(email), {
-                        once: true,
-                    });
+
+                // 行為：按下「確認」
+                verifyBtn.addEventListener(
+                    "click",
+                    async () => {
+                        // 1) 必須勾選同意
+                        if (!agreeCheck.checked) {
+                            errorEl.textContent =
+                                T.common.agreeRequired ||
+                                "Please check the box to proceed";
+                            errorEl.style.display = "block";
+                            return;
+                        }
+
+                        const code = (codeInput.value || "").trim();
+                        if (!code) {
+                            errorEl.textContent =
+                                T.common.error_1 ||
+                                "Please enter a valid verification code";
+                            errorEl.style.display = "block";
+                            return;
+                        }
+
+                        // 呼叫後端驗證
+                        try {
+                            verifyBtn.setAttribute("disabled", "disabled");
+                            verifyBtn.setAttribute("aria-busy", "true");
+
+                            const response = await fetch("/verify-code", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ email, code }),
+                            });
+                            const data = await response.json();
+
+                            if (data.code === "1") {
+                                // 成功：清除倒數、關閉 modal、後續流程
+                                if (codeCountdown) {
+                                    clearInterval(codeCountdown);
+                                    codeCountdown = null;
+                                }
+                                setCookie("verifiedEmail", email, 30);
+
+                                modal.classList.add("hidden");
+
+                                const cardGenerate =
+                                    document.getElementById("card-generate");
+                                cardGenerate.classList.remove("hidden");
+
+                                // 若有回填知識庫
+                                const kb = document.getElementById("kb");
+                                if (
+                                    data.knowledgeContext &&
+                                    typeof data.knowledgeContext === "string" &&
+                                    data.knowledgeContext.trim() !== ""
+                                ) {
+                                    const kc = data.knowledgeContext
+                                        .trim()
+                                        .slice(0, 500);
+                                    setCookie("knowledgeContext", kc, 30);
+                                    kb.value = kc;
+                                    kb.dispatchEvent(new Event("input"));
+                                }
+
+                                cardGenerate.scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                                kb?.focus?.();
+                                updateCTAByProgress();
+                            } else if (data.code === "2") {
+                                // 後端回報冷卻
+                                toast(
+                                    T.common.cooldown ||
+                                        "Please try again later (cooling down)",
+                                );
+                                errorEl.textContent =
+                                    T.common.cooldown ||
+                                    "Please try again later (cooling down)";
+                                errorEl.style.display = "block";
+                            } else {
+                                // 其他錯誤（例如：驗證碼錯誤）
+                                errorEl.textContent =
+                                    T.common.error_1 ||
+                                    "Please enter a valid verification code";
+                                errorEl.style.display = "block";
+                            }
+                        } catch (e) {
+                            errorEl.textContent =
+                                T.common.networkError ||
+                                "Network timeout or error, please try again";
+                            errorEl.style.display = "block";
+                        } finally {
+                            verifyBtn.removeAttribute("aria-busy");
+                            verifyBtn.removeAttribute("disabled");
+                        }
+                    },
+                    { once: true },
+                );
             }
 
             async function verifyCode(email) {
