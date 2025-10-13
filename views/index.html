@@ -508,6 +508,40 @@
                     min-width: 0;
                 }
             }
+            /* === 只針對卡片二（#card-generate）修正輸入區排版 === */
+            #card-generate .field {
+                display: grid; /* 單欄、逐行排列 */
+                grid-template-columns: 1fr;
+                row-gap: 8px; /* 元素間距 */
+                width: 100%;
+            }
+
+            #card-generate .field label {
+                margin: 0; /* 與下方元素間距已由 row-gap 控制 */
+                display: flex; /* 若未來放副標或提示，也能左右分布 */
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            #card-generate .field textarea {
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                min-height: 140px; /* 沿用你的高度設定 */
+                resize: vertical;
+            }
+
+            #card-generate .field .counter {
+                justify-self: end; /* 計數器置於輸入框下方、靠右 */
+                font-size: 0.85rem;
+                color: var(--muted);
+                line-height: 1;
+            }
+
+            #card-generate .field .btn {
+                justify-self: center; /* 維持你的按鈕置中風格 */
+            }
         </style>
     </head>
     <body data-theme="light">
