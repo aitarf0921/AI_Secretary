@@ -216,7 +216,7 @@
             body {
                 display: flex;
                 flex-direction: column;
-                /* ↓↓↓ 修正：防止任何元素造成水平溢出，避免 footer 右側留白視覺錯覺 ↓↓↓ */
+                /* 防止任何元素造成水平溢出，避免 footer 右側留白視覺錯覺 */
                 overflow-x: hidden;
             }
 
@@ -329,7 +329,7 @@
                 word-break: break-word;
             }
 
-            /* 整塊置中（保持你的原設計精神，但移除造成撐爆的 max-content） */
+            /* 整塊置中（移除造成撐爆的 max-content） */
             .benefits {
                 margin: clamp(12px, 3vw, 16px) auto;
                 display: grid;
@@ -359,7 +359,7 @@
                 justify-content: center;
                 font-size: 0.9rem;
                 flex-shrink: 0;
-                justify-self: end; /* ← 左欄圖示靠右 */
+                justify-self: end; /* 左欄圖示靠右 */
             }
             .benefit-item span {
                 font-size: 0.875rem;
@@ -406,7 +406,7 @@
                 color: var(--muted);
             }
 
-            /* 程式碼區塊 */
+            /* 程式碼區塊（一般行為：可水平卷動） */
             .code {
                 position: relative;
                 background: #0b1220;
@@ -418,8 +418,7 @@
                 font-size: 0.8rem;
                 margin: clamp(12px, 3vw, 16px) 0;
             }
-
-            /* 新增：右上角複製圖示按鈕（取代文字提示） */
+            /* 右上角複製圖示按鈕（取代文字提示） */
             .code .copy-btn {
                 position: absolute;
                 top: 8px;
@@ -437,6 +436,21 @@
             }
             .code .copy-btn:hover {
                 filter: brightness(1.1);
+            }
+
+            /* <pre><code> 內文靠左顯示（不改你的卡片整體置中） */
+            .code pre {
+                text-align: left;
+                margin: 0;
+            }
+            .code pre,
+            .code code {
+                display: block;
+                max-width: 100%;
+                white-space: pre; /* 一般情況保留原始縮排 */
+                word-break: normal;
+                overflow-x: auto; /* 超長行只在這層捲動 */
+                -webkit-overflow-scrolling: touch;
             }
 
             .table-wrap {
@@ -555,88 +569,50 @@
                 resize: vertical;
             }
 
-            /* 保留原本：卡片一與卡片三文字置中（但不影響程式碼區塊的對齊） */
+            /* 保留原本：卡片一與卡片三文字置中（不影響程式碼區塊的對齊） */
             #card-generate,
             #card-snippet {
                 text-align: center;
             }
 
-            /* 讓 <pre><code> 內文靠左顯示（不改你的卡片整體置中） */
-            .code pre {
-                text-align: left;
-                margin: 0;
-            }
-
-            /* 極窄時保險：更激進斷字避免撐版 */
+            /* ==== Mobile 保險：更激進斷字避免撐版（Hero 文字區） ==== */
             @media (max-width: 420px) {
                 .hero,
                 .benefit-item span {
                     word-break: break-all;
                 }
             }
+
             /* ==== Mobile 安全防護：卡片三不被放大、程式碼不撐版 ==== */
 
-            /* 1) 阻止 Safari 在手機上自動放大字體造成整卡看起來變大 */
+            /* 阻止 Safari 在手機上自動放大字體造成整卡看起來變大 */
             html {
                 -webkit-text-size-adjust: 100%;
                 text-size-adjust: 100%;
             }
 
-            /* 2) 卡片三本身別超出版心（避免觸發瀏覽器縮放補償） */
+            /* 卡片三本身別超出版心（避免觸發瀏覽器縮放補償） */
             #card-snippet {
                 max-width: 100%;
-                overflow: hidden; /* 以防內部陰影/邊框造成溢出 */
+                overflow: hidden;
             }
 
-            /* 3) 程式碼框：容器不撐版，內文只橫向捲動 */
-            .code {
-                max-width: 100%;
-                overflow: hidden; /* 容器自己不出橫向卷軸 */
-            }
-
-            /* 4) 真正可捲動的層：讓超長的行只在這裡橫向捲動，不改變整頁寬度 */
-            .code pre,
-            .code code {
-                display: block;
-                max-width: 100%;
-                white-space: pre; /* 保留原始縮排/不強制斷行 */
-                word-break: normal; /* 不把單字硬切開 */
-                overflow-x: auto; /* 超長行只出水平卷軸 */
-                -webkit-overflow-scrolling: touch; /* 手機滑動更順 */
-                text-align: left; /* 依你需求：靠左閱讀 */
-            }
-
-            /* 5) 保險：在超小螢幕時，卡片內的文字不要撐出卡片 */
+            /* 保險：在超小螢幕時，卡片內的文字不要撐出卡片 */
             @media (max-width: 420px) {
                 #card-snippet * {
                     min-width: 0;
                 }
             }
-            /* 限制卡片三內容不要撐爆畫面 */
-            #card-snippet,
-            #card-snippet pre,
-            #card-snippet code {
-                max-width: 100%;
-                overflow-x: auto;
-                white-space: pre;
-                word-break: normal;
-                -webkit-overflow-scrolling: touch;
-            }
 
-            /* 防止 Safari 為小字自動放大字體 */
-            html {
-                -webkit-text-size-adjust: 100%;
-                text-size-adjust: 100%;
-            }
-            /* === 修正：卡片三長行文字自動換行，避免手機放大與撐版 === */
+            /* === 統一卡片三：所有文字（含 code）自動換行，不撐版 === */
             #card-snippet .code,
             #card-snippet pre,
             #card-snippet code {
-                white-space: pre-wrap !important; /* ✅ 長行自動換行 */
-                word-break: break-all !important; /* ✅ 英文／連續字串都能折行 */
-                overflow-wrap: anywhere !important; /* ✅ 中文也能自然換行 */
-                max-width: 100%; /* ✅ 不撐出容器 */
-                overflow-x: hidden; /* ✅ 不出橫向捲軸 */
+                white-space: pre-wrap !important; /* 長行自動換行 */
+                word-break: break-all !important; /* 英文/連續字串也可折行 */
+                overflow-wrap: anywhere !important; /* CJK 亦能自然換行 */
+                max-width: 100%;
+                overflow-x: hidden; /* 不出橫向捲軸 */
                 -webkit-text-size-adjust: 100%;
             }
         </style>
