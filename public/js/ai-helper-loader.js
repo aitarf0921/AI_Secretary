@@ -76,8 +76,8 @@
 
       // raw attributes (your current defaults)
       const raw = {
-        widget:      'https://d1apwn2mo5o5aj.cloudfront.net/widget',
-        endpoint:    'https://d1apwn2mo5o5aj.cloudfront.net/query',
+        widget:      'https://chatbot.aitarf.us/widget',
+        endpoint:    'https://chatbot.aitarf.us/query',
         placeholder: 'send msg to AI support...',
         position:    'bottom-right',
         accent:      S.getAttribute('data-accent') || '#0055ff',
