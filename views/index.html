@@ -282,6 +282,17 @@
             * {
                 box-sizing: border-box;
             }
+
+            /* FIX: 讓頁面成貼底版型（main 撐開，footer 貼底） */
+            html,
+            body {
+                height: 100%;
+            } /* FIX */
+            body {
+                display: flex;
+                flex-direction: column;
+            } /* FIX */
+
             html,
             body {
                 margin: 0;
@@ -302,6 +313,7 @@
             .hidden {
                 display: none !important;
             }
+
             header {
                 padding: clamp(8px, 2vw, 12px) clamp(8px, 4vw, 16px);
                 border-bottom: 1px solid var(--border);
@@ -356,6 +368,7 @@
                 color: var(--text);
                 font-size: 1.1rem;
             }
+
             main {
                 max-width: 1120px;
                 margin: 0 auto;
@@ -363,7 +376,9 @@
                 display: flex;
                 flex-direction: column;
                 gap: clamp(24px, 4vw, 32px);
+                flex: 1 0 auto; /* FIX: 主內容吃掉空間，為貼底做準備 */
             }
+
             .card {
                 background: var(--card);
                 border: 1px solid var(--border);
@@ -473,28 +488,17 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
-            /* 讓頁面成為貼底排版：主內容撐開，footer 自動貼底 */
-            html,
-            body {
-                height: 100%;
-            }
-            body {
-                display: flex;
-                flex-direction: column;
-            }
 
-            /* 主內容吃掉剩餘空間 */
-            main {
-                flex: 1 0 auto;
-            }
-
-            /* 全幅 footer：外層鋪滿，內層限制寬度 */
+            /* -------- 原 footer 樣式移除，改為通用兼容選擇器 -------- */
+            /* FIX: 兼容舊 <footer> 與 .site-footer，確保滿版與貼底 */
+            footer,
             .site-footer {
-                margin-top: auto; /* 黏在頁面最底 */
+                margin-top: auto; /* 黏底 */
                 width: 100%;
                 background: var(--card);
                 border-top: 1px solid var(--border);
             }
+            footer .inner,
             .site-footer .inner {
                 max-width: 1120px;
                 margin: 0 auto;
@@ -540,7 +544,7 @@
                 font-size: 0.85rem;
                 margin-top: 6px;
             }
-            /* 原有：單行 flex 版，保留不動 */
+
             .consent-line {
                 display: flex;
                 align-items: center;
@@ -549,15 +553,13 @@
                 color: #6b7a90;
                 margin: 6px 0 10px;
             }
-
-            /* ★ 修正：手機友善的二欄一行表格排版（文字左、勾選右） */
             .consent-wrap {
                 margin: 6px 0 10px;
             }
             .consent-table {
                 width: 100%;
                 border-collapse: collapse;
-                table-layout: fixed; /* 防止內容把版面撐爆 */
+                table-layout: fixed;
             }
             .consent-text {
                 font-size: 0.85rem;
@@ -568,13 +570,49 @@
                 word-break: break-word;
             }
             .consent-check {
-                width: 40px; /* 固定右欄寬度確保靠右 */
+                width: 40px;
                 text-align: right;
                 vertical-align: middle;
             }
             .consent-check input[type="checkbox"] {
                 width: 20px;
-                height: 20px; /* 提升手機點擊性 */
+                height: 20px;
+            }
+
+            /* =========================
+                       FIX: 卡片二 textarea 與按鈕置中
+                       ========================= */
+            .field {
+                width: 100%;
+            } /* 確保欄位容器全寬 */ /* FIX */
+
+            .field textarea,
+            .field input[type="text"],
+            .field input[type="email"] {
+                width: 100%; /* 讓 textarea/input 吃滿寬度 */ /* FIX */
+                display: block;
+                padding: 10px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: var(--card);
+                color: var(--text);
+                font-size: 0.95rem;
+            }
+
+            #kb {
+                min-height: 140px;
+                resize: vertical;
+            } /* 合理高度，可上下調整 */ /* FIX */
+
+            #card-generate,
+            #card-snippet {
+                text-align: center;
+            } /* 讓卡片內容（含按鈕）置中 */ /* FIX */
+
+            #card-generate .field .btn {
+                /* 產生程式碼按鈕置中 */
+                display: inline-flex;
+                margin: 10px auto; /* FIX */
             }
         </style>
     </head>
