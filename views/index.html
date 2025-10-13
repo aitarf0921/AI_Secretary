@@ -614,62 +614,6 @@
                 display: inline-flex;
                 margin: 10px auto; /* FIX */
             }
-            /* === HERO 兩欄表格：左圖靠右、右文靠左；所有寬度都維持同一行 === */
-            .hero-table {
-                width: 100%;
-                border-collapse: collapse;
-                table-layout: fixed; /* 防止內容把欄位撐爆 */
-            }
-            .hero-table td {
-                vertical-align: middle;
-                padding: clamp(12px, 2vw, 16px);
-            }
-            .col-img {
-                width: 40%;
-                text-align: right;
-            } /* 圖片靠右 */
-            .col-txt {
-                width: 60%;
-                text-align: left;
-            } /* 文字靠左 */
-
-            /* 圖片自適應，不超欄 */
-            .col-img img {
-                max-width: 100%;
-                height: auto;
-                display: inline-block;
-                border-radius: 10px;
-            }
-
-            /* 標題與文字長字會換行，不會溢出 */
-            .col-txt,
-            .col-txt h1 {
-                overflow-wrap: anywhere;
-                word-break: break-word;
-                hyphens: auto;
-            }
-            .col-txt h1 {
-                margin: 0 0 8px;
-                line-height: 1.25;
-                font-size: clamp(1.2rem, 5.5vw, 2.3rem);
-            }
-
-            /* 原本 .hero 置中會影響兩欄，這裡只把內部對齊拉回左側 */
-            .hero {
-                text-align: left;
-            }
-            .hero .benefits {
-                width: 100%;
-                max-width: 100%;
-                margin: clamp(12px, 3vw, 16px) 0;
-                justify-items: start;
-            }
-
-            /* CTA 在窄螢幕允許斷行，避免撐寬 */
-            #start-trial-btn {
-                white-space: normal;
-                line-height: 1.2;
-            }
         </style>
     </head>
     <body data-theme="light">
@@ -699,63 +643,32 @@
 
         <main>
             <section class="hero card">
-                <table class="hero-table" role="presentation">
-                    <tr>
-                        <!-- 左欄：圖片（靠右） -->
-                        <td class="col-img">
-                            <img
-                                src="https://chatbot.aitarf.us/og-image.jpg"
-                                alt="AI Chatbot illustration"
-                                loading="lazy"
-                            />
-                        </td>
+                <h1 data-i18n="hero.title">
+                    Best AI Chatbot: Easily Embed 24/7 Customer Support
+                </h1>
 
-                        <!-- 右欄：文字（靠左，會自動換行） -->
-                        <td class="col-txt">
-                            <h1 data-i18n="hero.title">
-                                Best AI Chatbot: Easily Embed 24/7 Customer
-                                Support
-                            </h1>
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span data-i18n="hero.benefit1"
+                            >一鍵嵌入：快速上線</span
+                        >
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🌐</div>
+                        <span data-i18n="hero.benefit4"
+                            >多語雙向：自動偵測並以 50+ 語言回覆</span
+                        >
+                    </div>
+                </div>
 
-                            <div class="benefits">
-                                <div class="benefit-item">
-                                    <div class="benefit-icon">
-                                        <i class="fas fa-rocket"></i>
-                                    </div>
-                                    <span data-i18n="hero.benefit1"
-                                        >一鍵嵌入：快速上線</span
-                                    >
-                                </div>
-                                <div class="benefit-item">
-                                    <div class="benefit-icon">
-                                        <i class="fas fa-shield-halved"></i>
-                                    </div>
-                                    <span data-i18n="hero.benefit_safety"
-                                        >濫發防護：單一有效 OTP、60 秒冷卻</span
-                                    >
-                                </div>
-                                <div class="benefit-item">
-                                    <div class="benefit-icon">
-                                        <i class="fas fa-globe"></i>
-                                    </div>
-                                    <span data-i18n="hero.benefit4"
-                                        >多語雙向：自動偵測並以 50+
-                                        語言回覆</span
-                                    >
-                                </div>
-                            </div>
-
-                            <a
-                                href="javascript:void(0)"
-                                class="btn primary"
-                                id="start-trial-btn"
-                                data-i18n="hero.cta"
-                            >
-                                立即開始免費試用
-                            </a>
-                        </td>
-                    </tr>
-                </table>
+                <a
+                    href="javascript:void(0)"
+                    class="btn primary"
+                    id="start-trial-btn"
+                    data-i18n="hero.cta"
+                    >立即開始免費試用</a
+                >
             </section>
 
             <section class="card hidden" id="card-generate">
@@ -895,7 +808,6 @@
                         benefit2: "自訂知識庫：專業、量身訂製回應",
                         benefit3: "24/7 可用性：大幅降低支援成本",
                         benefit4: "多語系雙向：自動偵測並自然回覆",
-                        benefit_safety: "濫發防護：單一有效 OTP、60 秒冷卻",
                         cta: "立即開始免費試用",
                     },
                     quickStart: {
@@ -968,7 +880,6 @@
                         benefit2: "自定义知识库：专业回复",
                         benefit3: "24/7 可用：降低成本、易扩展",
                         benefit4: "多语系双向：自动识别并自然应答",
-                        benefit_safety: "防滥发：单一有效 OTP、60 秒冷却",
                         cta: "立即开始免费试用",
                     },
                     quickStart: {
@@ -1045,8 +956,6 @@
                         benefit2: "カスタム知識ベース：プロ品質の応答",
                         benefit3: "24/7 稼働：コスト削減＆スケール",
                         benefit4: "多言語対応：自動判別し自然に応答",
-                        benefit_safety:
-                            "乱発対策：単一有効 OTP・60 秒クールダウン",
                         cta: "今すぐ無料で開始",
                     },
                     quickStart: {
@@ -1125,8 +1034,6 @@
                         benefit3: "24/7 Availability: Cut Costs & Scale",
                         benefit4:
                             "Multilingual In/Out: Auto-detect & natural replies",
-                        benefit_safety:
-                            "Abuse Guard: Single active OTP, 60s cooldown",
                         cta: "Start Free AI Chatbot Trial Now",
                     },
                     quickStart: {
