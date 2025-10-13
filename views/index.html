@@ -541,7 +541,10 @@
                             "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
                         consentRequired: "請勾選同意後再送出。", // ★ 新增
                         cooldownWait: "請稍候再試（冷卻中）", // ★ 新增
-                        networkError: "連線逾時或網路異常，請重試。", // ★ 新增
+                        networkError: "連線逾時或網路異常，請重試。",
+                        countdown: "{n} 秒後可重新發送", // ← 新增：倒數文字（帶 {n} 佔位）
+                        otpValidity:
+                            "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
                     },
                     hero: {
                         title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
@@ -617,6 +620,9 @@
                         consentRequired: "请勾选同意后再提交。", // ★ 新增
                         cooldownWait: "请稍候再试（冷却中）", // ★ 新增
                         networkError: "网络超时或异常，请重试。", // ★ 新增
+                        countdown: "{n} 秒后可重新发送",
+                        otpValidity:
+                            "OTP 验证码有效时间：<strong>{n}</strong> 秒。",
                     },
                     hero: {
                         title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
@@ -696,6 +702,10 @@
                             "しばらくしてからお試しください（クールダウン中）", // ★ 新增
                         networkError:
                             "ネットワークのタイムアウトまたはエラーです。再試行してください。", // ★ 新增
+                        countdown: "{n} 秒後に再送できます",
+
+                        otpValidity:
+                            "OTP の有効時間：<strong>{n}</strong> 秒。",
                     },
                     hero: {
                         title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
@@ -776,6 +786,10 @@
                             "Please try again later (cooldown in effect).", // ★ 新增
                         networkError:
                             "Network timeout or error. Please try again.", // ★ 新增
+                        countdown: "{n}s before you can resend",
+
+                        otpValidity:
+                            "OTP code validity: <strong>{n}</strong> seconds.",
                     },
                     hero: {
                         title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
@@ -1081,6 +1095,46 @@
           <button class="btn primary" id="submit-email">${T.common.ok}</button>
           <p id="email-error" class="error"></p>
         `;
+
+                const countdownEl = document.getElementById("countdown");
+                const validityEl = document.getElementById("otp-validity-note");
+
+                // 初始填入
+                countdownEl.innerHTML = (T.common.countdown || "{n}s").replace(
+                    "{n}",
+                    String(countdown),
+                );
+                validityEl.innerHTML = (
+                    T.common.otpValidity ||
+                    "OTP validity: <strong>{n}</strong> s"
+                ).replace("{n}", "60");
+
+                // 每秒更新倒數
+                if (codeCountdown) {
+                    clearInterval(codeCountdown);
+                    codeCountdown = null;
+                }
+                codeCountdown = setInterval(() => {
+                    countdown--;
+                    countdownEl.innerHTML = (
+                        T.common.countdown || "{n}s"
+                    ).replace("{n}", String(countdown));
+
+                    const modalHidden = document
+                        .getElementById("email-verification-modal")
+                        ?.classList.contains("hidden");
+                    if (modalHidden) {
+                        clearInterval(codeCountdown);
+                        codeCountdown = null;
+                        return;
+                    }
+                    if (countdown <= 0) {
+                        clearInterval(codeCountdown);
+                        codeCountdown = null;
+                        toast(T.common.codeTimeout);
+                        showEmailModal();
+                    }
+                }, 1000);
                 modal.classList.remove("hidden");
                 document.getElementById("email-input").focus();
                 document
@@ -1140,8 +1194,8 @@
           <input type="text" id="code-input" placeholder="${T.common.code}" inputmode="numeric" maxlength="6">
           <button class="btn primary" id="verify-code">${T.common.ok}</button>
           <p id="code-error" class="error"></p>
-          <p class="countdown" id="countdown">${countdown} 秒後可重新發送</p>
-          <p class="inline-note">OTP 驗證碼有效時間：<strong>60 秒</strong>。</p>
+          <p class="countdown" id="countdown"></p>
+          <p class="inline-note" id="otp-validity-note"></p>
         `;
                 const countdownEl = document.getElementById("countdown");
                 if (codeCountdown) {
