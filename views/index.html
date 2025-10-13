@@ -322,7 +322,7 @@
                 font-size: 0.85rem;
                 margin-top: 6px;
             }
-            /* ★ 修改：讓「勾選框＋文案」同行排列 */
+            /* ★ 修改：讓「勾選框＋文案」同行排列（保留你的寫法） */
             .consent-line {
                 display: flex;
                 align-items: center;
@@ -517,49 +517,14 @@
         </div>
 
         <script>
-            /***********************
-             * ✅ 全域常數 / 狀態
-             ***********************/
-            const OTP_TTL_SEC = 60; // ← OTP 有效秒數（同時用於倒數與說明文字）
-            let codeCountdown = null; // ← 計時器 handle（避免重複啟動）
-            let CUR_LANG =
-                localStorage.getItem("aiw_lang") ||
-                (navigator.language || "zh-TW")
-                    .toLowerCase()
-                    .startsWith("zh-cn")
-                    ? "zh-CN"
-                    : (navigator.language || "zh-TW")
-                            .toLowerCase()
-                            .startsWith("zh")
-                      ? "zh-TW"
-                      : (navigator.language || "zh-TW")
-                              .toLowerCase()
-                              .startsWith("ja")
-                        ? "ja"
-                        : "en";
-
-            /**************************************************
-             * ✅ 確保多國語系鍵存在：將缺的鍵補齊（不覆蓋既有）
-             **************************************************/
-            (function ensureI18nKeys() {
-                if (typeof STR !== "object") return;
-                const addIfMissing = (obj, key, val) => {
-                    if (obj[key] == null) obj[key] = val;
-                };
-                const fill = (lang, dict) => {
-                    STR[lang] = STR[lang] || {};
-                    STR[lang].common = STR[lang].common || {};
-                    Object.keys(dict.common).forEach((k) =>
-                        addIfMissing(STR[lang].common, k, dict.common[k]),
-                    );
-                    STR[lang].hero = STR[lang].hero || {};
-                    if (dict.hero)
-                        Object.keys(dict.hero).forEach((k) =>
-                            addIfMissing(STR[lang].hero, k, dict.hero[k]),
-                        );
-                };
-
-                fill("zh-TW", {
+            // ==============================
+            // i18n 多國語系字串（已包含 consentRequired / cooldownWait / networkError / countdown / otpValidity）
+            // ==============================
+            const STR = {
+                "zh-TW": {
+                    title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
+                    brand: "AI Chatbot — 輕鬆嵌入智慧助理",
+                    theme: { toggle: "切換主題" },
                     common: {
                         copied: "已複製！",
                         copyHint: "按一下複製",
@@ -568,26 +533,76 @@
                         error: "請輸入有效的電子郵件",
                         error_1: "請輸入有效的驗證碼",
                         email: "輸入電子郵件…",
-                        code: "輸入驗證碼…",
+                        code: "輸入 6 位數驗證碼…",
                         emailSent: "驗證碼已寄出，請在 60 秒內輸入。",
                         codeTimeout:
                             "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
-                        // ⬇ 新增 / 補齊
-                        codeLabel: "輸入驗證碼…",
-                        codePlaceholder: "輸入驗證碼…",
-                        btnVerify: "確認",
-                        agreeLine:
-                            "我同意本網站僅寄送登入/註冊一次性驗證碼與安全通知，不會寄送行銷郵件。",
-                        agreeRequired: "請勾選同意後再送出",
-                        cooldown: "請稍候再試（冷卻中）",
-                        networkError: "連線逾時或網路異常，請重試",
+                        consent:
+                            "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
+                        consentRequired: "請勾選同意後再送出。",
+                        cooldownWait: "請稍候再試（冷卻中）",
+                        networkError: "連線逾時或網路異常，請重試。",
                         countdown: "{n} 秒後可重新發送",
                         otpValidity:
                             "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
                     },
-                });
-
-                fill("zh-CN", {
+                    hero: {
+                        title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
+                        desc: "輕鬆嵌入免費的 AI Chatbot。僅寄送使用者主動請求的 OTP 驗證碼（有效 60 秒、每信箱 60 秒冷卻），不寄送任何行銷郵件。",
+                        benefit1: "一鍵嵌入：立刻上線",
+                        benefit2: "自訂知識庫：專業、量身訂製回應",
+                        benefit3: "24/7 可用性：大幅降低支援成本",
+                        benefit4: "多語系雙向：自動偵測並自然回覆",
+                        benefit_safety: "濫發防護：單一有效 OTP、60 秒冷卻",
+                        cta: "立即開始免費試用",
+                        notice_txn:
+                            "※ 我們只會寄出登入/註冊所需的 OTP 驗證碼與安全通知，絕不會寄送行銷或廣告郵件。",
+                    },
+                    quickStart: {
+                        title: "一鍵嵌入：複製下方 widget 程式碼",
+                        notice: "🔵 右下角的藍色 AI 助理已即時套用您的 widget，您可以立即測試互動效果。",
+                        desc: "將以下程式碼貼到您的網站（全站 Layout 或頁尾），即可快速啟用專屬 AI Chatbot。",
+                    },
+                    params: {
+                        title: "自訂您的 AI Chatbot 參數，實現無縫整合",
+                        th1: "屬性",
+                        th2: "必填",
+                        th4: "說明",
+                        src: "載入 AI chatbot 嵌入核心腳本。",
+                        position: "浮動按鈕位置（預設：右下）。",
+                        site: "您的網站 ID。",
+                        accent: "品牌主色（HEX/RGB）。",
+                        width: "聊天面板寬度。",
+                        height: "聊天面板高度。",
+                        z: "Z-index 以確保置頂。",
+                    },
+                    required: "必填",
+                    optional: "可選",
+                    create: {
+                        title: "生成專屬 AI Chatbot 程式碼：免費入門",
+                        note: "輸入產品／服務知識（最多 500 字），系統會產生包含你的 data-site 的完整 widget 程式碼，並自動更新與複製。",
+                        label: "知識庫內容（最多 500 字）",
+                        ph: "描述你的產品、服務或 FAQ…",
+                        btn: "產生程式碼",
+                        loading: "正在產生…",
+                        done: "已完成",
+                        toastSuccess: "Widget 程式碼已生成並已複製。",
+                        toastFailGeneric: "產生失敗，請稍後再試。",
+                        toastFailNetwork: "連線逾時或網路異常，請重試。",
+                        toastEmpty: "請先輸入知識庫內容。",
+                        toastTooShort: "內容過短，至少需 20 個字。",
+                        rateLimited: "操作太頻繁，請稍後再試。",
+                        txn_note:
+                            "我們僅在你主動要求寄送時發信；不發送任何行銷郵件。OTP 有效 60 秒、每信箱 60 秒冷卻。",
+                    },
+                    footer: "© AI Chatbot — 立即免費開始",
+                    "footer.txn_only":
+                        "只發送交易型郵件：OTP 驗證碼與帳號安全通知",
+                },
+                "zh-CN": {
+                    title: "AI Chatbot：轻松在你的网站嵌入 24/7 智能助手",
+                    brand: "AI Chatbot — 轻松嵌入智能助手",
+                    theme: { toggle: "切换主题" },
                     common: {
                         copied: "已复制！",
                         copyHint: "点击复制",
@@ -596,26 +611,76 @@
                         error: "请输入有效的电子邮件",
                         error_1: "请输入有效的验证码",
                         email: "输入电子邮件…",
-                        code: "输入验证码…",
+                        code: "输入 6 位数验证码…",
                         emailSent: "验证码已发送，请在 60 秒内输入。",
                         codeTimeout:
                             "已超过 60 秒，请重新输入 Email 获取新的验证码。",
-                        // ⬇ 新增 / 補齊
-                        codeLabel: "输入验证码…",
-                        codePlaceholder: "输入验证码…",
-                        btnVerify: "确认",
-                        agreeLine:
-                            "我同意本站仅发送登录/注册一次性验证码与安全通知，不发送营销邮件。",
-                        agreeRequired: "请勾选同意后再提交",
-                        cooldown: "请稍候再试（冷却中）",
-                        networkError: "网络超时或异常，请重试",
+                        consent:
+                            "我同意本站仅发送登录/注册所需的 OTP 验证码与安全通知，不发送任何营销邮件。",
+                        consentRequired: "请勾选同意后再提交。",
+                        cooldownWait: "请稍候再试（冷却中）",
+                        networkError: "网络超时或异常，请重试。",
                         countdown: "{n} 秒后可重新发送",
                         otpValidity:
                             "OTP 验证码有效时间：<strong>{n}</strong> 秒。",
                     },
-                });
-
-                fill("ja", {
+                    hero: {
+                        title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
+                        desc: "仅发送用户主动请求的 OTP 验证码（有效 60 秒、每邮箱 60 秒冷却），不发送任何营销邮件。",
+                        benefit1: "一键嵌入：立刻上线",
+                        benefit2: "自定义知识库：专业回复",
+                        benefit3: "24/7 可用：降低成本、易扩展",
+                        benefit4: "多语系双向：自动识别并自然应答",
+                        benefit_safety: "防滥发：单一有效 OTP、60 秒冷却",
+                        cta: "立即开始免费试用",
+                        notice_txn:
+                            "※ 我们只会发送登录/注册所需的 OTP 验证码与安全通知，不会发送营销或广告邮件。",
+                    },
+                    quickStart: {
+                        title: "一键嵌入：复制下方代码",
+                        notice: "🔵 右下角的蓝色 AI 助理已即时套用你的 widget，可立即测试互动效果。",
+                        desc: "将以下代码粘贴到你的网站（全站 Layout 或页脚），即可启用专属 AI Chatbot。",
+                    },
+                    params: {
+                        title: "自定义 AI Chatbot 参数以实现无缝集成",
+                        th1: "属性",
+                        th2: "必填",
+                        th4: "说明",
+                        src: "加载核心脚本。",
+                        position: "浮动按钮位置（默认：右下）。",
+                        site: "你的网站 ID。",
+                        accent: "品牌主色。",
+                        width: "面板宽度。",
+                        height: "面板高度。",
+                        z: "置顶层级。",
+                    },
+                    required: "必填",
+                    optional: "可选",
+                    create: {
+                        title: "生成专属 AI Chatbot 代码：免费入门",
+                        note: "输入产品/服务知识（最多 500 字），系统会生成包含你的 data-site 的完整 widget 代码，并自动更新与复制。",
+                        label: "知识库内容（最多 500 字）",
+                        ph: "描述你的产品、服务或 FAQ…",
+                        btn: "生成嵌入代码",
+                        loading: "正在生成…",
+                        done: "已完成",
+                        toastSuccess: "Widget 代码已生成并复制。",
+                        toastFailGeneric: "生成失败，请稍后重试。",
+                        toastFailNetwork: "网络异常或超时，请重试。",
+                        toastEmpty: "请先输入一些内容。",
+                        toastTooShort: "内容过短，至少 20 字。",
+                        rateLimited: "操作过于频繁，请稍后重试。",
+                        txn_note:
+                            "仅在你主动请求时发送邮件；不发送任何营销邮件。OTP 有效 60 秒、每邮箱 60 秒冷却。",
+                    },
+                    footer: "© AI Chatbot — 立即免费开始",
+                    "footer.txn_only":
+                        "只发送交易型邮件：OTP 验证码与账号安全通知",
+                },
+                ja: {
+                    title: "AI Chatbot：サイトに 24/7 スマートアシスタントを簡単埋め込み",
+                    brand: "AI Chatbot — スマートアシスタントを手軽に導入",
+                    theme: { toggle: "テーマを切り替え" },
                     common: {
                         copied: "コピーしました！",
                         copyHint: "クリックでコピー",
@@ -624,30 +689,81 @@
                         error: "有効なメールアドレスを入力してください",
                         error_1: "有効な認証コードを入力してください",
                         email: "メールアドレスを入力…",
-                        code: "認証コードを入力…",
+                        code: "6 桁のコードを入力…",
                         emailSent:
                             "認証コードを送信しました。60 秒以内に入力してください。",
                         codeTimeout:
-                            "60 秒を超えました。新しい認証コードを取得するため、メールアドレスを再入力してください。",
-                        // ⬇ 新增 / 補齊
-                        codeLabel: "認証コードを入力…",
-                        codePlaceholder: "認証コードを入力…",
-                        btnVerify: "確認",
-                        agreeLine:
-                            "本サイトはログイン/登録用の一次性コードとセキュリティ通知のみ送信し、マーケティングメールは送りません。",
-                        agreeRequired:
-                            "同意にチェックを入れてから送信してください",
-                        cooldown:
-                            "しばらくしてから再試行してください（クールダウン中）",
+                            "60 秒を超えました。メールを再入力して新しいコードを取得してください。",
+                        consent:
+                            "当サイトはログイン/登録に必要な OTP とセキュリティ通知のみを送信し、マーケティングメールは送りません。",
+                        consentRequired:
+                            "同意にチェックを入れてから送信してください。",
+                        cooldownWait:
+                            "しばらくしてからお試しください（クールダウン中）",
                         networkError:
-                            "ネットワークエラー/タイムアウト。再試行してください",
+                            "ネットワークのタイムアウトまたはエラーです。再試行してください。",
                         countdown: "{n} 秒後に再送できます",
                         otpValidity:
                             "OTP の有効時間：<strong>{n}</strong> 秒。",
                     },
-                });
-
-                fill("en", {
+                    hero: {
+                        title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
+                        desc: "ユーザー発行の OTP のみ送信（有効 60 秒・同一アドレス 60 秒クールダウン）。マーケティング目的のメールは一切送信しません。",
+                        benefit1: "ワンクリック導入：すぐに公開",
+                        benefit2: "カスタム知識ベース：プロ品質の応答",
+                        benefit3: "24/7 稼働：コスト削減＆スケール",
+                        benefit4: "多言語対応：自動判別し自然に応答",
+                        benefit_safety:
+                            "乱発対策：単一有効 OTP・60 秒クールダウン",
+                        cta: "今すぐ無料で開始",
+                        notice_txn:
+                            "※ 送信するのはログイン/登録用の OTP とセキュリティ通知のみで、広告メールは送りません。",
+                    },
+                    quickStart: {
+                        title: "ワンクリック埋め込み：コードをコピー",
+                        notice: "🔵 右下の青い AI アシスタントがあなたの widget を即時反映。今すぐ動作をお試しください。",
+                        desc: "以下のコードをサイトのレイアウト/フッターに貼り付けるだけで有効化できます。",
+                    },
+                    params: {
+                        title: "AI Chatbot パラメータ",
+                        th1: "属性",
+                        th2: "必須",
+                        th4: "説明",
+                        src: "コアスクリプト",
+                        position: "ボタン位置",
+                        site: "サイト ID",
+                        accent: "ブランド色",
+                        width: "幅",
+                        height: "高さ",
+                        z: "最前面",
+                    },
+                    required: "必須",
+                    optional: "任意",
+                    create: {
+                        title: "専用 AI Chatbot コードを生成：無料",
+                        note: "製品/サービスの知識（最大 500 文字）を入力すると、data-site を含むコードを生成（自動更新＆コピー）。",
+                        label: "ナレッジ（最大 500 文字）",
+                        ph: "製品・サービス・FAQ を記述…",
+                        btn: "コードを生成",
+                        loading: "生成中…",
+                        done: "完了",
+                        toastSuccess: "コードを生成し、コピーしました。",
+                        toastFailGeneric: "生成に失敗しました。",
+                        toastFailNetwork: "ネットワークエラー/タイムアウト。",
+                        toastEmpty: "ナレッジを入力してください。",
+                        toastTooShort: "20 文字以上で入力してください。",
+                        rateLimited: "操作が頻繁です。少し待ってください。",
+                        txn_note:
+                            "ユーザー主導時のみ送信。マーケティングメールは送りません。OTP は 60 秒有効・60 秒クールダウン。",
+                    },
+                    footer: "© AI Chatbot — 今すぐ無料で開始",
+                    "footer.txn_only":
+                        "トランザクションのみ：OTP とアカウント通知を送信",
+                },
+                en: {
+                    title: "AI Chatbot: Embed a 24/7 Smart Assistant on Your Website",
+                    brand: "AI Chatbot — Embed a Smart Assistant Easily",
+                    theme: { toggle: "Toggle Theme" },
                     common: {
                         copied: "Copied!",
                         copyHint: "Click to copy",
@@ -656,31 +772,184 @@
                         error: "Please enter a valid email",
                         error_1: "Please enter a valid verification code",
                         email: "Enter email…",
-                        code: "Enter verification code…",
+                        code: "Enter 6-digit code…",
                         emailSent:
                             "Verification code sent. Please enter it within 60 seconds.",
                         codeTimeout:
                             "Time’s up. Please re-enter your email to get a new code.",
-                        // ⬇ 新增 / 補齊
-                        codeLabel: "Enter verification code…",
-                        codePlaceholder: "Enter verification code…",
-                        btnVerify: "Verify",
-                        agreeLine:
+                        consent:
                             "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails.",
-                        agreeRequired: "Please check the box to proceed",
-                        cooldown: "Please try again later (cooling down)",
+                        consentRequired:
+                            "Please check the consent box before submitting.",
+                        cooldownWait:
+                            "Please try again later (cooldown in effect).",
                         networkError:
-                            "Network timeout or error, please try again",
+                            "Network timeout or error. Please try again.",
                         countdown: "{n}s before you can resend",
                         otpValidity:
                             "OTP code validity: <strong>{n}</strong> seconds.",
                     },
-                });
-            })();
+                    hero: {
+                        title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
+                        desc: "We only send user-initiated OTP codes (valid for 60 seconds; 60-second per-recipient cooldown). No marketing emails.",
+                        benefit1: "One-Click Embed: Instant Live",
+                        benefit2:
+                            "Custom Knowledge Base: Professional, Tailored",
+                        benefit3: "24/7 Availability: Cut Costs & Scale",
+                        benefit4:
+                            "Multilingual In/Out: Auto-detect & natural replies",
+                        benefit_safety:
+                            "Abuse Guard: Single active OTP, 60s cooldown",
+                        cta: "Start Free AI Chatbot Trial Now",
+                        notice_txn:
+                            "※ We only send OTP codes and security notices required for login/registration—no marketing or promotional emails.",
+                    },
+                    quickStart: {
+                        title: "One-Click Embed: Copy the widget code",
+                        notice: "🔵 The blue AI assistant at bottom-right already uses your widget—try it now.",
+                        desc: "Paste the code into your site layout/footer to enable your AI Chatbot.",
+                    },
+                    params: {
+                        title: "Customize your AI Chatbot parameters",
+                        th1: "Attribute",
+                        th2: "Required",
+                        th4: "Description",
+                        src: "Load the core script.",
+                        position: "Floating button position.",
+                        site: "Your site ID.",
+                        accent: "Brand color.",
+                        width: "Panel width.",
+                        height: "Panel height.",
+                        z: "Topmost layer.",
+                    },
+                    required: "Required",
+                    optional: "Optional",
+                    create: {
+                        title: "Generate your AI Chatbot code: free",
+                        note: "Enter up to 500 chars of knowledge. We'll generate the widget code with your data-site and auto-update + copy it.",
+                        label: "Knowledge Base (max 500)",
+                        ph: "Describe your products/services/FAQ…",
+                        btn: "Generate code",
+                        loading: "Generating…",
+                        done: "Done",
+                        toastSuccess: "Widget code generated & copied.",
+                        toastFailGeneric: "Generation failed. Try again.",
+                        toastFailNetwork: "Network error or timeout.",
+                        toastEmpty: "Please enter some knowledge first.",
+                        toastTooShort: "Content too short (min 20 chars).",
+                        rateLimited: "Too many attempts. Please wait.",
+                        txn_note:
+                            "Emails are only sent when you explicitly ask; no marketing. OTP valid 60s; 60s per-recipient cooldown.",
+                    },
+                    footer: "© AI Chatbot — Start free today",
+                    "footer.txn_only":
+                        "Transactional-only: OTP codes & account security notices",
+                },
+            };
 
-            /***********************
-             * ✅ 工具函式
-             ***********************/
+            // ==============================
+            // 初始化語系/主題
+            // ==============================
+            const savedLang = localStorage.getItem("aiw_lang");
+            const savedTheme = localStorage.getItem("aiw_theme") || "light";
+            const navLang = (navigator.language || "zh-TW").toLowerCase();
+            const guessLang =
+                navLang.startsWith("zh-cn") || navLang === "zh"
+                    ? "zh-CN"
+                    : navLang.startsWith("zh")
+                      ? "zh-TW"
+                      : navLang.startsWith("ja")
+                        ? "ja"
+                        : "en";
+            let CUR_LANG = savedLang || guessLang;
+            document.body.setAttribute("data-theme", savedTheme);
+            const themeToggle = document.getElementById("theme-toggle");
+            const langSelect = document.getElementById("lang-select");
+
+            function setCodeHints() {
+                const T = STR[CUR_LANG] || STR["en"];
+                document
+                    .querySelectorAll('.code[data-copyable="true"]')
+                    .forEach((el) => {
+                        el.setAttribute("data-hint", T.common.copyHint);
+                        el.setAttribute("title", T.common.copyHint);
+                    });
+            }
+            function updateThemeIcon() {
+                const cur = document.body.getAttribute("data-theme");
+                if (themeToggle) {
+                    themeToggle.innerHTML =
+                        cur === "light"
+                            ? '<i class="fas fa-moon"></i>'
+                            : '<i class="fas fa-sun"></i>';
+                }
+            }
+            function applyLang() {
+                const T = STR[CUR_LANG] || STR["en"];
+                if (langSelect) langSelect.value = CUR_LANG;
+                document.querySelectorAll("[data-i18n]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n");
+                    const parts = key.split(".");
+                    let v = T;
+                    for (const p of parts) v = v?.[p];
+                    if (typeof v === "string") {
+                        if (el.tagName.toLowerCase() === "title")
+                            document.title = v;
+                        else {
+                            if (el.matches("a,button")) el.textContent = v;
+                            else el.innerHTML = v;
+                        }
+                    }
+                });
+                document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n-ph");
+                    const parts = key.split(".");
+                    let v = T;
+                    for (const p of parts) v = v?.[p];
+                    if (typeof v === "string")
+                        el.setAttribute("placeholder", v);
+                });
+                document.documentElement.setAttribute("lang", CUR_LANG);
+                setCodeHints();
+                updateThemeIcon();
+                updateCTAByProgress();
+            }
+
+            function updateCTAByProgress() {
+                const btn = document.getElementById("start-trial-btn");
+                if (!btn) return;
+                const T = STR[CUR_LANG] || STR["en"];
+                const label = T.hero?.cta || btn.textContent;
+                btn.textContent = label;
+                btn.setAttribute("aria-label", label);
+                btn.setAttribute("title", label);
+            }
+
+            if (langSelect) {
+                langSelect.addEventListener("change", (e) => {
+                    CUR_LANG = e.target.value;
+                    localStorage.setItem("aiw_lang", CUR_LANG);
+                    applyLang();
+                });
+            }
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    const current = document.body.getAttribute("data-theme");
+                    const next = current === "light" ? "dark" : "light";
+                    document.body.setAttribute("data-theme", next);
+                    localStorage.setItem("aiw_theme", next);
+                    updateThemeIcon();
+                });
+            }
+
+            const kb = document.getElementById("kb");
+            const kbCount = document.getElementById("kb-count");
+            if (kb && kbCount) {
+                kb.addEventListener("input", () => {
+                    kbCount.textContent = kb.value.length;
+                });
+            }
+
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
@@ -692,6 +961,94 @@
                     setTimeout(() => t.remove(), 250);
                 }, 1600);
             }
+            async function copyText(text) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                } catch {
+                    const ta = document.createElement("textarea");
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand("copy");
+                    ta.remove();
+                }
+            }
+            function bindClickCopy(container, getter) {
+                const T = STR[CUR_LANG] || STR["en"];
+                container.addEventListener("click", async () => {
+                    await copyText(getter());
+                    toast(T.common.copied);
+                });
+            }
+            (function bindCopies() {
+                const box1 = document.getElementById("codebox");
+                const box2 = document.getElementById("mini-code");
+                if (box1)
+                    bindClickCopy(
+                        box1,
+                        () => document.getElementById("embed-code").innerText,
+                    );
+                if (box2)
+                    bindClickCopy(
+                        box2,
+                        () => document.getElementById("embed-mini").innerText,
+                    );
+            })();
+
+            const WIDGET_SRC =
+                "https://chatbot.aitarf.us/js/ai-helper-loader.js";
+            const ACCENT_BLUE = "#2563eb";
+            const WIDGET_DEFAULTS = {
+                position: "bottom-right",
+                width: "360",
+                height: "520",
+                z: "2147483000",
+            };
+
+            function buildSnippet(siteId, opts = {}) {
+                const o = "<scr" + "ipt",
+                    c = "</scr" + "ipt>";
+                const pos = opts.position
+                    ? `\n  data-position="${opts.position}"`
+                    : "";
+                const accent = opts.accent
+                    ? `\n  data-accent="${opts.accent}"`
+                    : "";
+                const w = opts.width ? `\n  data-width="${opts.width}"` : "";
+                const h = opts.height ? `\n  data-height="${opts.height}"` : "";
+                const z = opts.z ? `\n  data-z="${opts.z}"` : "";
+                return `${o}
+  src="${WIDGET_SRC}"${pos}
+  data-site="${siteId}"${accent}${w}${h}${z}
+  defer
+>${c}`;
+            }
+            function buildMiniSnippet(siteId, accent) {
+                const o = "<scr" + "ipt",
+                    c = "</scr" + "ipt>";
+                return `${o}
+  src="${WIDGET_SRC}"
+  data-site="${siteId}"
+  data-accent="${accent}"
+  defer
+>${c}`;
+            }
+            function mountDemoWidget(siteId, accent, more = WIDGET_DEFAULTS) {
+                document
+                    .querySelectorAll('script[src*="ai-helper-loader.js"]')
+                    .forEach((s) => s.remove());
+                const s = document.createElement("script");
+                s.src = WIDGET_SRC;
+                s.defer = true;
+                if (more.position) s.dataset.position = more.position;
+                s.dataset.site = siteId;
+                if (accent) s.dataset.accent = accent;
+                if (more.width) s.dataset.width = more.width;
+                if (more.height) s.dataset.height = more.height;
+                if (more.z) s.dataset.z = more.z;
+                document.body.appendChild(s);
+            }
+
             function setCookie(name, value, days = 30) {
                 const d = new Date();
                 d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
@@ -710,318 +1067,357 @@
                 }
             }
 
-            /****************************************
-             * ✅ 語系套用（僅用於需要時呼叫）
-             ****************************************/
-            function applyLang() {
-                const T = STR[CUR_LANG] || STR["en"];
-                // 這裡僅示意；你的頁面上若有 data-i18n 節點，仍可保留原本的 applyLang 實作
-                document.querySelectorAll("[data-i18n]").forEach((el) => {
-                    const key = el.getAttribute("data-i18n");
-                    const parts = key.split(".");
-                    let v = T;
-                    for (const p of parts) v = v?.[p];
-                    if (typeof v === "string") {
-                        if (el.tagName.toLowerCase() === "title")
-                            document.title = v;
-                        else if (el.matches("a,button")) el.textContent = v;
-                        else el.innerHTML = v;
-                    }
-                });
-                document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
-                    const key = el.getAttribute("data-i18n-ph");
-                    const parts = key.split(".");
-                    let v = T;
-                    for (const p of parts) v = v?.[p];
-                    if (typeof v === "string")
-                        el.setAttribute("placeholder", v);
-                });
+            // ==============================
+            // Email 驗證流程（60秒有效/冷卻）
+            // ==============================
+            let codeCountdown = null;
+
+            // ★ 修正：簡單的模板取代（僅做 {n} 參數替換，不改動任何流程）
+            function tFormat(tpl, map) {
+                if (typeof tpl !== "string") return "";
+                return tpl.replace(/\{(\w+)\}/g, (_, k) =>
+                    map.hasOwnProperty(k) ? String(map[k]) : "",
+                );
             }
 
-            /****************************************
-             * ✅ CTA 文字更新（依登入/驗證流程）
-             ****************************************/
-            function updateCTAByProgress() {
-                const btn = document.getElementById("start-trial-btn");
-                if (!btn) return;
-                const T = STR[CUR_LANG] || STR["en"];
-                let label = T.hero?.ctaStart || T.hero?.cta || btn.textContent;
-                const email = getCookie("verifiedEmail");
-                btn.textContent = email
-                    ? T.hero?.ctaKB || label
-                    : T.hero?.ctaStart || label;
-                btn.setAttribute("aria-label", btn.textContent);
-                btn.setAttribute("title", btn.textContent);
-            }
-
-            /**************************************************
-             * ✅ 顯示輸入 Email 的視窗（多國語系＋防呆）
-             **************************************************/
             function showEmailModal() {
                 if (codeCountdown) {
                     clearInterval(codeCountdown);
                     codeCountdown = null;
                 }
-
                 const modal = document.getElementById(
                     "email-verification-modal",
                 );
                 const inner = document.getElementById("modal-inner");
                 const T = STR[CUR_LANG] || STR["en"];
-
                 inner.innerHTML = `
-            <p>${T.common.email}</p>
-            <input type="email" id="email-input" placeholder="${T.common.email}">
-            <button class="btn primary" id="submit-email">${T.common.ok}</button>
-            <p id="email-error" class="error" style="display:none;"></p>
-          `;
+          <p>${T.common.email}</p>
+          <input type="email" id="email-input" placeholder="${T.common.email}">
+          <!-- 勾選框與文案同一行，使用 i18n 的 consent（保留你的寫法） -->
+          <label class="consent-line">
+            <input type="checkbox" id="consent-checkbox" checked>
+            <span>${T.common.consent}</span>
+          </label>
+          <button class="btn primary" id="submit-email">${T.common.ok}</button>
+          <p id="email-error" class="error"></p>
+        `;
                 modal.classList.remove("hidden");
-
-                const emailInput = inner.querySelector("#email-input");
-                const submitBtn = inner.querySelector("#submit-email");
-                const errorEl = inner.querySelector("#email-error");
-                emailInput?.focus?.();
-
-                submitBtn?.addEventListener("click", async () => {
-                    const email = (emailInput.value || "").trim();
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!email || !emailRegex.test(email)) {
-                        errorEl.textContent = T.common.error;
-                        errorEl.style.display = "block";
-                        return;
-                    }
-
-                    try {
-                        submitBtn.setAttribute("disabled", "disabled");
-                        submitBtn.setAttribute("aria-busy", "true");
-
-                        const response = await fetch("/email", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ email }),
-                        });
-                        const data = await response.json();
-
-                        if (data.code === "1") {
-                            toast(T.common.emailSent);
-                            showCodeInput(email);
-                        } else if (data.code === "2") {
-                            // 後端節流：冷卻
-                            errorEl.textContent = T.common.cooldown;
-                            errorEl.style.display = "block";
-                        } else {
-                            errorEl.textContent = T.common.error;
-                            errorEl.style.display = "block";
-                        }
-                    } catch (e) {
-                        errorEl.textContent = T.common.networkError;
-                        errorEl.style.display = "block";
-                    } finally {
-                        submitBtn.removeAttribute("aria-busy");
-                        submitBtn.removeAttribute("disabled");
-                    }
-                });
+                document.getElementById("email-input").focus();
+                document
+                    .getElementById("submit-email")
+                    .addEventListener("click", submitEmail);
             }
 
-            /*********************************************************
-             * ✅ 顯示輸入 OTP 的視窗（多國語系＋checkbox 同一行＋倒數）
-             *********************************************************/
-            function showCodeInput(email) {
-                const modal = document.getElementById(
-                    "email-verification-modal",
-                );
-                const inner = document.getElementById("modal-inner");
+            async function submitEmail() {
+                const email = document
+                    .getElementById("email-input")
+                    .value.trim();
+                const consent =
+                    document.getElementById("consent-checkbox").checked;
+                const error = document.getElementById("email-error");
+                const btn = document.getElementById("submit-email"); // ★ 修正：避免連點
                 const T = STR[CUR_LANG] || STR["en"];
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                // 倒數秒數
-                let countdown = OTP_TTL_SEC;
+                // ★ 修正：送出前先清空錯誤訊息（UI 一致）
+                error.textContent = "";
+                error.style.display = "none";
 
-                // 建立 UI（checkbox 與文字同一行）
-                inner.innerHTML = `
-            <label for="code-input" class="sr-only">${T.common.codeLabel || ""}</label>
-            <input type="text" id="code-input" placeholder="${T.common.codePlaceholder || ""}" />
-            <label style="display:flex;align-items:center;gap:8px;line-height:1.4;">
-              <input type="checkbox" id="agree-check" />
-              <span>${T.common.agreeLine}</span>
-            </label>
-            <button class="btn primary" id="verify-code">${T.common.btnVerify}</button>
-            <p id="code-error" class="error" style="display:none;"></p>
-            <p class="countdown" id="countdown"></p>
-            <p class="inline-note" id="otp-validity-note"></p>
-          `;
-                modal.classList.remove("hidden");
-
-                // 只在 modal 容器內查找，避免抓到舊節點
-                const codeInput = inner.querySelector("#code-input");
-                const agreeCheck = inner.querySelector("#agree-check");
-                const verifyBtn = inner.querySelector("#verify-code");
-                const errorEl = inner.querySelector("#code-error");
-                const countdownEl = inner.querySelector("#countdown");
-                const validityEl = inner.querySelector("#otp-validity-note");
-
-                // 防呆：缺少必要節點就返回
-                if (!countdownEl || !validityEl) {
-                    console.error(
-                        "[OTP] modal missing #countdown or #otp-validity-note",
-                    );
+                if (!emailRegex.test(email)) {
+                    error.textContent = T.common.error;
+                    error.style.display = "block";
+                    return;
+                }
+                if (!consent) {
+                    error.textContent = T.common.consentRequired;
+                    error.style.display = "block";
                     return;
                 }
 
-                // 初始文字（倒數與有效時間）
-                const setCountdownText = (n) => {
-                    countdownEl.innerHTML = (
-                        T.common.countdown || "{n}s"
-                    ).replace("{n}", String(n));
-                };
-                validityEl.innerHTML = (
-                    T.common.otpValidity ||
-                    "OTP validity: <strong>{n}</strong> s"
-                ).replace("{n}", String(OTP_TTL_SEC));
-                setCountdownText(countdown);
+                try {
+                    // ★ 修正：避免連點重複送出，但不改動你的 API 流程
+                    btn.setAttribute("disabled", "disabled");
 
-                // 清掉舊的 interval 再啟動
+                    const response = await fetch("/email", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email }),
+                    });
+                    const data = await response.json();
+                    if (data.code === "1") {
+                        toast(T.common.emailSent);
+                        showCodeInput(email);
+                    } else if (data.code === "2") {
+                        error.textContent = T.common.cooldownWait;
+                        error.style.display = "block";
+                    } else {
+                        error.textContent = T.common.error;
+                        error.style.display = "block";
+                    }
+                } catch {
+                    error.textContent = T.common.networkError;
+                    error.style.display = "block";
+                } finally {
+                    // ★ 修正：無論結果如何都解除 disabled，以維持原本互動流程
+                    btn.removeAttribute("disabled");
+                }
+            }
+
+            function showCodeInput(email) {
+                const inner = document.getElementById("modal-inner");
+                const T = STR[CUR_LANG] || STR["en"];
+                let countdown = 60;
+
+                // ★ 修正：用 i18n 模板顯示倒數與 OTP 有效時間
+                const countdownText = tFormat(T.common.countdown, {
+                    n: countdown,
+                });
+                const otpValidityHtml = tFormat(T.common.otpValidity, {
+                    n: 60,
+                });
+
+                inner.innerHTML = `
+          <p>${T.common.code}</p>
+          <input type="text" id="code-input" placeholder="${T.common.code}" inputmode="numeric" maxlength="6">
+          <button class="btn primary" id="verify-code">${T.common.ok}</button>
+          <p id="code-error" class="error"></p>
+          <p class="countdown" id="countdown">${countdownText}</p>
+          <p class="inline-note">${otpValidityHtml}</p>
+        `;
+
+                const countdownEl = document.getElementById("countdown");
                 if (codeCountdown) {
                     clearInterval(codeCountdown);
                     codeCountdown = null;
                 }
                 codeCountdown = setInterval(() => {
-                    countdown = Math.max(0, countdown - 1);
-                    setCountdownText(countdown);
-
+                    // ★ 修正：防止 countdownEl 為 null（例如 modal 被關閉/切換）
                     const modalHidden = document
                         .getElementById("email-verification-modal")
                         ?.classList.contains("hidden");
-                    if (modalHidden) {
+                    if (!countdownEl || modalHidden) {
                         clearInterval(codeCountdown);
                         codeCountdown = null;
                         return;
                     }
+
+                    countdown--;
+                    countdownEl.textContent = tFormat(T.common.countdown, {
+                        n: countdown,
+                    });
+
                     if (countdown <= 0) {
                         clearInterval(codeCountdown);
                         codeCountdown = null;
                         toast(T.common.codeTimeout);
-                        showEmailModal(); // 回到輸入 Email
+                        showEmailModal();
                     }
                 }, 1000);
 
-                // 確認（驗證 OTP）
-                verifyBtn?.addEventListener(
-                    "click",
-                    async () => {
-                        if (!agreeCheck.checked) {
-                            errorEl.textContent = T.common.agreeRequired;
-                            errorEl.style.display = "block";
-                            return;
-                        }
-                        const code = (codeInput.value || "").trim();
-                        if (!code) {
-                            errorEl.textContent = T.common.error_1;
-                            errorEl.style.display = "block";
-                            return;
-                        }
-
-                        try {
-                            verifyBtn.setAttribute("disabled", "disabled");
-                            verifyBtn.setAttribute("aria-busy", "true");
-
-                            const response = await fetch("/verify-code", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ email, code }),
-                            });
-                            const data = await response.json();
-
-                            if (data.code === "1") {
-                                // 成功：清除計時，關閉 modal，帶使用者到下一步
-                                if (codeCountdown) {
-                                    clearInterval(codeCountdown);
-                                    codeCountdown = null;
-                                }
-                                setCookie("verifiedEmail", email, 30);
-                                modal.classList.add("hidden");
-
-                                const cardGenerate =
-                                    document.getElementById("card-generate");
-                                cardGenerate?.classList?.remove("hidden");
-
-                                // 回填知識庫（若後端提供）
-                                const kb = document.getElementById("kb");
-                                if (
-                                    data.knowledgeContext &&
-                                    typeof data.knowledgeContext === "string" &&
-                                    data.knowledgeContext.trim() !== ""
-                                ) {
-                                    const kc = data.knowledgeContext
-                                        .trim()
-                                        .slice(0, 500);
-                                    setCookie("knowledgeContext", kc, 30);
-                                    if (kb) {
-                                        kb.value = kc;
-                                        kb.dispatchEvent(new Event("input"));
-                                    }
-                                }
-
-                                cardGenerate?.scrollIntoView({
-                                    behavior: "smooth",
-                                });
-                                kb?.focus?.();
-                                updateCTAByProgress();
-                            } else if (data.code === "2") {
-                                // 後端冷卻/節流
-                                toast(T.common.cooldown);
-                                errorEl.textContent = T.common.cooldown;
-                                errorEl.style.display = "block";
-                            } else {
-                                // 其他錯誤（如：OTP 不正確 / 逾期）
-                                errorEl.textContent = T.common.error_1;
-                                errorEl.style.display = "block";
-                            }
-                        } catch (e) {
-                            errorEl.textContent = T.common.networkError;
-                            errorEl.style.display = "block";
-                        } finally {
-                            verifyBtn.removeAttribute("aria-busy");
-                            verifyBtn.removeAttribute("disabled");
-                        }
-                    },
-                    { once: true },
-                );
+                document
+                    .getElementById("verify-code")
+                    .addEventListener("click", () => verifyCode(email), {
+                        once: true,
+                    });
             }
 
-            /****************************************
-             * ✅ 綁定「開始試用」按鈕（示意）
-             ****************************************/
-            (function bindStartTrial() {
-                const btnStartTrial =
-                    document.getElementById("start-trial-btn");
-                if (!btnStartTrial) return;
+            async function verifyCode(email) {
+                const code = document.getElementById("code-input").value.trim();
+                const error = document.getElementById("code-error");
+                const modal = document.getElementById(
+                    "email-verification-modal",
+                );
+                const T = STR[CUR_LANG] || STR["en"];
+                if (!/^[0-9]{6}$/.test(code)) {
+                    error.textContent = T.common.error_1;
+                    error.style.display = "block";
+                    return;
+                }
+                try {
+                    const response = await fetch("/verify-code", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email, code }),
+                    });
+                    const data = await response.json();
+                    if (data.code === "1") {
+                        if (codeCountdown) {
+                            clearInterval(codeCountdown);
+                            codeCountdown = null;
+                        }
+                        setCookie("verifiedEmail", email, 30);
+                        const cardGenerate =
+                            document.getElementById("card-generate");
+                        modal.classList.add("hidden");
+                        cardGenerate.classList.remove("hidden");
+                        const kb = document.getElementById("kb");
+                        if (
+                            data.knowledgeContext &&
+                            typeof data.knowledgeContext === "string" &&
+                            data.knowledgeContext.trim() !== ""
+                        ) {
+                            const kc = data.knowledgeContext
+                                .trim()
+                                .slice(0, 500);
+                            setCookie("knowledgeContext", kc, 30);
+                            kb.value = kc;
+                            kb.dispatchEvent(new Event("input"));
+                        }
+                        cardGenerate.scrollIntoView({ behavior: "smooth" });
+                        kb.focus();
+                        updateCTAByProgress();
+                    } else if (data.code === "2") {
+                        error.textContent = T.common.cooldownWait;
+                        error.style.display = "block";
+                    } else {
+                        error.textContent = T.common.error_1;
+                        error.style.display = "block";
+                    }
+                } catch {
+                    error.textContent = T.common.networkError;
+                    error.style.display = "block";
+                }
+            }
+
+            const btnStartTrial = document.getElementById("start-trial-btn");
+            if (btnStartTrial) {
                 btnStartTrial.addEventListener("click", (e) => {
                     e.preventDefault();
                     const email = getCookie("verifiedEmail");
                     if (email) {
                         const cardGenerate =
                             document.getElementById("card-generate");
-                        cardGenerate?.classList?.remove("hidden");
-                        cardGenerate?.scrollIntoView({ behavior: "smooth" });
-
+                        cardGenerate.classList.remove("hidden");
+                        cardGenerate.scrollIntoView({ behavior: "smooth" });
                         const kbEl = document.getElementById("kb");
                         const kcRaw = getCookie("knowledgeContext");
                         if (kcRaw && kbEl && !kbEl.value.trim()) {
                             kbEl.value = kcRaw.slice(0, 500);
                             kbEl.dispatchEvent(new Event("input"));
                         }
-                        kbEl?.focus?.();
+                        document.getElementById("kb").focus();
                     } else {
                         showEmailModal();
                     }
                 });
+            }
+
+            (function bindCreateFlow() {
+                const btnCreate = document.getElementById("btn-create");
+                if (!btnCreate) return;
+                const COOLDOWN_MS = 1500;
+                let isBusy = false;
+                let lastClickAt = 0;
+                function setCreateBtnState(state) {
+                    const Tt = (STR[CUR_LANG] || STR["en"]).create;
+                    if (state === "loading") {
+                        btnCreate.setAttribute("aria-busy", "true");
+                        btnCreate.setAttribute("disabled", "disabled");
+                        btnCreate.textContent = Tt.loading || "Generating…";
+                    } else if (state === "done") {
+                        btnCreate.removeAttribute("aria-busy");
+                        btnCreate.removeAttribute("disabled");
+                        btnCreate.textContent = Tt.done || "Done";
+                    } else {
+                        btnCreate.removeAttribute("aria-busy");
+                        btnCreate.removeAttribute("disabled");
+                        btnCreate.textContent =
+                            Tt.btn || "Generate AI Chatbot Widget Code";
+                    }
+                }
+                btnCreate.addEventListener("click", async () => {
+                    const Tt = (STR[CUR_LANG] || STR["en"]).create;
+                    const now = Date.now();
+                    if (now - lastClickAt < COOLDOWN_MS) {
+                        toast(Tt.rateLimited);
+                        return;
+                    }
+                    lastClickAt = now;
+                    if (isBusy) return;
+                    const email = getCookie("verifiedEmail");
+                    if (!email) {
+                        showEmailModal();
+                        return;
+                    }
+                    const v = (
+                        document.getElementById("kb").value || ""
+                    ).trim();
+                    if (!v) {
+                        toast(Tt.toastEmpty);
+                        return;
+                    }
+                    if (v.length < 20) {
+                        toast(Tt.toastTooShort);
+                        return;
+                    }
+                    isBusy = true;
+                    setCreateBtnState("loading");
+                    try {
+                        const response = await fetch("/site-id", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email, knowledge: v }),
+                        });
+                        const data = await response.json();
+                        if (data.siteId) {
+                            const full = buildSnippet(data.siteId, {
+                                position: WIDGET_DEFAULTS.position,
+                                accent: ACCENT_BLUE,
+                                width: WIDGET_DEFAULTS.width,
+                                height: WIDGET_DEFAULTS.height,
+                                z: WIDGET_DEFAULTS.z,
+                            });
+                            const mini = buildMiniSnippet(
+                                data.siteId,
+                                ACCENT_BLUE,
+                            );
+                            const codeFull =
+                                document.getElementById("embed-code");
+                            const codeMini =
+                                document.getElementById("embed-mini");
+                            if (codeFull) codeFull.innerText = full;
+                            if (codeMini) codeMini.innerText = mini;
+                            const cardSnippet =
+                                document.getElementById("card-snippet");
+                            if (cardSnippet) {
+                                cardSnippet.classList.remove("hidden");
+                                cardSnippet.scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                            }
+                            mountDemoWidget(
+                                data.siteId,
+                                ACCENT_BLUE,
+                                WIDGET_DEFAULTS,
+                            );
+                            setCookie("knowledgeContext", v, 30);
+                            updateCTAByProgress();
+                            await copyText(full);
+                            toast(Tt.toastSuccess);
+                            setCreateBtnState("done");
+                            setTimeout(() => setCreateBtnState("idle"), 800);
+                        } else {
+                            throw new Error(
+                                data.message || "Generation failed",
+                            );
+                        }
+                    } catch (e) {
+                        toast(
+                            e.message === "Network"
+                                ? Tt.toastFailNetwork
+                                : Tt.toastFailGeneric,
+                        );
+                        setCreateBtnState("idle");
+                    } finally {
+                        isBusy = false;
+                        setTimeout(() => {
+                            lastClickAt = 0;
+                        }, COOLDOWN_MS);
+                    }
+                });
             })();
 
-            /****************************************
-             * ✅ 初始化語系與 CTA
-             ****************************************/
             applyLang();
-            updateCTAByProgress();
         </script>
 
         <!-- Demo loader -->
