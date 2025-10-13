@@ -614,6 +614,62 @@
                 display: inline-flex;
                 margin: 10px auto; /* FIX */
             }
+            /* === HERO 兩欄表格：左圖靠右、右文靠左；所有寬度都維持同一行 === */
+            .hero-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed; /* 防止內容把欄位撐爆 */
+            }
+            .hero-table td {
+                vertical-align: middle;
+                padding: clamp(12px, 2vw, 16px);
+            }
+            .col-img {
+                width: 40%;
+                text-align: right;
+            } /* 圖片靠右 */
+            .col-txt {
+                width: 60%;
+                text-align: left;
+            } /* 文字靠左 */
+
+            /* 圖片自適應，不超欄 */
+            .col-img img {
+                max-width: 100%;
+                height: auto;
+                display: inline-block;
+                border-radius: 10px;
+            }
+
+            /* 標題與文字長字會換行，不會溢出 */
+            .col-txt,
+            .col-txt h1 {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+                hyphens: auto;
+            }
+            .col-txt h1 {
+                margin: 0 0 8px;
+                line-height: 1.25;
+                font-size: clamp(1.2rem, 5.5vw, 2.3rem);
+            }
+
+            /* 原本 .hero 置中會影響兩欄，這裡只把內部對齊拉回左側 */
+            .hero {
+                text-align: left;
+            }
+            .hero .benefits {
+                width: 100%;
+                max-width: 100%;
+                margin: clamp(12px, 3vw, 16px) 0;
+                justify-items: start;
+            }
+
+            /* CTA 在窄螢幕允許斷行，避免撐寬 */
+            #start-trial-btn {
+                white-space: normal;
+                line-height: 1.2;
+            }
         </style>
     </head>
     <body data-theme="light">
@@ -643,42 +699,63 @@
 
         <main>
             <section class="hero card">
-                <h1 data-i18n="hero.title">
-                    Best AI Chatbot: Easily Embed 24/7 Customer Support
-                </h1>
-                <div class="benefits">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <span data-i18n="hero.benefit1"
-                            >一鍵嵌入：快速上線</span
-                        >
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-shield-halved"></i>
-                        </div>
-                        <span data-i18n="hero.benefit_safety"
-                            >濫發防護：單一有效 OTP、60 秒冷卻</span
-                        >
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <span data-i18n="hero.benefit4"
-                            >多語雙向：自動偵測並以 50+ 語言回覆</span
-                        >
-                    </div>
-                </div>
-                <a
-                    href="javascript:void(0)"
-                    class="btn primary"
-                    id="start-trial-btn"
-                    data-i18n="hero.cta"
-                    >立即開始免費試用</a
-                >
+                <table class="hero-table" role="presentation">
+                    <tr>
+                        <!-- 左欄：圖片（靠右） -->
+                        <td class="col-img">
+                            <img
+                                src="https://chatbot.aitarf.us/og-image.jpg"
+                                alt="AI Chatbot illustration"
+                                loading="lazy"
+                            />
+                        </td>
+
+                        <!-- 右欄：文字（靠左，會自動換行） -->
+                        <td class="col-txt">
+                            <h1 data-i18n="hero.title">
+                                Best AI Chatbot: Easily Embed 24/7 Customer
+                                Support
+                            </h1>
+
+                            <div class="benefits">
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    <span data-i18n="hero.benefit1"
+                                        >一鍵嵌入：快速上線</span
+                                    >
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-shield-halved"></i>
+                                    </div>
+                                    <span data-i18n="hero.benefit_safety"
+                                        >濫發防護：單一有效 OTP、60 秒冷卻</span
+                                    >
+                                </div>
+                                <div class="benefit-item">
+                                    <div class="benefit-icon">
+                                        <i class="fas fa-globe"></i>
+                                    </div>
+                                    <span data-i18n="hero.benefit4"
+                                        >多語雙向：自動偵測並以 50+
+                                        語言回覆</span
+                                    >
+                                </div>
+                            </div>
+
+                            <a
+                                href="javascript:void(0)"
+                                class="btn primary"
+                                id="start-trial-btn"
+                                data-i18n="hero.cta"
+                            >
+                                立即開始免費試用
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </section>
 
             <section class="card hidden" id="card-generate">
