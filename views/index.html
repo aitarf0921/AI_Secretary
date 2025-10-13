@@ -1,12 +1,261 @@
 <!doctype html>
 <html lang="zh-TW" data-theme="light">
-    <!-- FIX: 預設主題掛在 html -->
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+
         <title data-i18n="title">
             AI Chatbot: Embed a 24/7 Smart Assistant on Your Website
         </title>
+        <meta
+            name="description"
+            content="Embed an AI chatbot effortlessly for 24/7 support."
+        />
+        <link rel="canonical" href="https://chatbot.aitarf.us/" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+        <link rel="preconnect" href="https://chatbot.aitarf.us" crossorigin />
+
+        <!-- ====== 基本 SEO Metadata ====== -->
+        <meta name="application-name" content="AI Chatbot" />
+        <meta name="author" content="AiTarf Ltd. (鈊塔科技)" />
+        <meta
+            name="robots"
+            content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+        />
+        <link rel="canonical" href="https://chatbot.aitarf.us/" />
+
+        <!-- ====== Open Graph (社群 / Facebook / LINE / LinkedIn) ====== -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="AI Chatbot" />
+        <meta
+            property="og:title"
+            content="AI Chatbot — AI 聊天、秘書、AI 助理、AI 小幫手、AI 代理"
+        />
+        <meta
+            property="og:description"
+            content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語支援與 AI 助理服務。AI 聊天、秘書、AI 助理、AI 小幫手、AI 代理，皆可免費試用。"
+        />
+        <meta property="og:url" content="https://chatbot.aitarf.us" />
+        <meta
+            property="og:image"
+            content="https://chatbot.aitarf.us/og-image.jpg"
+        />
+
+        <!-- ====== Twitter Card (X.com / Twitter) ====== -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="AI Chatbot — AI 聊天、秘書、AI 助理、AI 小幫手、AI 代理"
+        />
+        <meta
+            name="twitter:description"
+            content="24/7 智慧助理與 AI 聊天工具。免費嵌入網站，支援多語對話與知識庫整合。"
+        />
+        <meta
+            name="twitter:image"
+            content="https://chatbot.aitarf.us/og-image.jpg"
+        />
+        <meta name="twitter:creator" content="@_aitarf" />
+
+        <!-- ====== 多語 SEO (繁中 / 簡中 / 英 / 日) ====== -->
+        <link
+            rel="alternate"
+            href="https://chatbot.aitarf.us/"
+            hreflang="zh-TW"
+        />
+        <link
+            rel="alternate"
+            href="https://chatbot.aitarf.us/zh-cn"
+            hreflang="zh-CN"
+        />
+        <link
+            rel="alternate"
+            href="https://chatbot.aitarf.us/en"
+            hreflang="en"
+        />
+        <link
+            rel="alternate"
+            href="https://chatbot.aitarf.us/ja"
+            hreflang="ja"
+        />
+        <link
+            rel="alternate"
+            href="https://chatbot.aitarf.us/"
+            hreflang="x-default"
+        />
+
+        <!-- ====== 關鍵字（繁中為主，其他語言對應翻譯） ====== -->
+        <meta
+            name="keywords"
+            content="AI 聊天, 秘書, AI 助理, AI 小幫手, AI 代理"
+        />
+        <meta
+            name="keywords"
+            lang="zh-CN"
+            content="AI 聊天, 秘书, AI 助理, AI 小帮手, AI 代理"
+        />
+        <meta
+            name="keywords"
+            lang="en"
+            content="AI chat, secretary, AI assistant, AI helper, AI agent"
+        />
+        <meta
+            name="keywords"
+            lang="ja"
+            content="AIチャット, 秘書, AIアシスタント, AIヘルパー, AIエージェント"
+        />
+
+        <!-- ====== 多語描述（description 多語系對應） ====== -->
+        <meta
+            name="description"
+            content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語智慧客服與 AI 秘書服務。AI 聊天、AI 助理、AI 小幫手、AI 代理 — 免費體驗。"
+        />
+        <meta
+            name="description"
+            lang="zh-CN"
+            content="轻松嵌入 AI Chatbot 小工具，实现 24/7 多语智能客服与 AI 助理。AI 聊天、AI 小帮手、AI 代理 — 免费体验。"
+        />
+        <meta
+            name="description"
+            lang="en"
+            content="Easily embed an AI Chatbot widget for 24/7 multilingual support. AI chat, secretary, AI assistant, AI helper, and AI agent — free to try."
+        />
+        <meta
+            name="description"
+            lang="ja"
+            content="AI Chatbot ウィジェットを簡単に埋め込み、24/7 多言語サポートを実現。AIチャット、秘書、AIアシスタント、AIヘルパー、AIエージェント — 無料体験可能。"
+        />
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@id": "https://chatbot.aitarf.us/#app",
+                "@type": "SoftwareApplication",
+                "name": "AI Chatbot",
+                "url": "https://chatbot.aitarf.us",
+                "mainEntityOfPage": "https://chatbot.aitarf.us",
+                "applicationCategory": [
+                    "BusinessApplication",
+                    "WebApplication"
+                ],
+                "additionalType": "https://schema.org/WebApplication",
+                "operatingSystem": ["Web", "Browser"],
+                "availableLanguage": ["en", "zh-TW", "zh-CN", "ja"],
+                "softwareVersion": "1.0",
+                "isAccessibleForFree": true,
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD",
+                    "url": "https://chatbot.aitarf.us"
+                },
+                "installUrl": "https://chatbot.aitarf.us",
+                "featureList": [
+                    "One-click embed in 5 minutes",
+                    "Custom knowledge base integration",
+                    "50+ languages with auto-detection",
+                    "24/7 availability for cost reduction",
+                    "No-code customization",
+                    "Lead capture and analytics"
+                ],
+                "author": {
+                    "@type": "Organization",
+                    "name": "AiTarf Ltd. (鈊塔科技)"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "AiTarf Ltd. (鈊塔科技)"
+                },
+                "provider": {
+                    "@type": "Organization",
+                    "name": "AiTarf Ltd. (鈊塔科技)"
+                }
+            }
+        </script>
+
+        <!-- 繁體中文 -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@id": "https://chatbot.aitarf.us/#app",
+                "@type": "SoftwareApplication",
+                "inLanguage": "zh-TW",
+                "name": "AI Chatbot",
+                "alternateName": [
+                    "AI 聊天",
+                    "秘書",
+                    "AI 助理",
+                    "AI 小幫手",
+                    "AI 代理"
+                ],
+                "description": "輕鬆嵌入 AI Chatbot 小工具，提供 24/7 客戶支援。多語言回應、知識庫整合，以及簡單的複製貼上安裝。",
+                "keywords": "AI 聊天, 秘書, AI 助理, AI 小幫手, AI 代理"
+            }
+        </script>
+
+        <!-- 英文 -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@id": "https://chatbot.aitarf.us/#app",
+                "@type": "SoftwareApplication",
+                "inLanguage": "en",
+                "name": "AI Chatbot",
+                "alternateName": [
+                    "AI chat",
+                    "secretary",
+                    "AI assistant",
+                    "AI helper",
+                    "AI agent"
+                ],
+                "description": "Embed an AI Chatbot widget for 24/7 customer support. Multilingual responses, knowledge base integration, and easy copy-paste installation.",
+                "keywords": "AI chat, secretary, AI assistant, AI helper, AI agent"
+            }
+        </script>
+
+        <!-- 簡體中文 -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@id": "https://chatbot.aitarf.us/#app",
+                "@type": "SoftwareApplication",
+                "inLanguage": "zh-CN",
+                "name": "AI Chatbot",
+                "alternateName": [
+                    "AI 聊天",
+                    "秘书",
+                    "AI 助理",
+                    "AI 小帮手",
+                    "AI 代理"
+                ],
+                "description": "轻松嵌入 AI Chatbot 小工具，实现 24/7 客服。多语响应、知识库集成，以及简单的复制粘贴安装。",
+                "keywords": "AI 聊天, 秘书, AI 助理, AI 小帮手, AI 代理"
+            }
+        </script>
+
+        <!-- 日文 -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@id": "https://chatbot.aitarf.us/#app",
+                "@type": "SoftwareApplication",
+                "inLanguage": "ja",
+                "name": "AI Chatbot",
+                "alternateName": [
+                    "AIチャット",
+                    "秘書",
+                    "AIアシスタント",
+                    "AIヘルパー",
+                    "AIエージェント"
+                ],
+                "description": "AI Chatbot ウィジェットを簡単に埋め込み、24/7 のカスタマーサポートを実現。多言語応答、ナレッジベース統合、コピー＆ペーストで導入。",
+                "keywords": "AIチャット, 秘書, AIアシスタント, AIヘルパー, AIエージェント"
+            }
+        </script>
 
         <style>
             :root {
@@ -21,10 +270,10 @@
                     ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
                 --font-size-base: 16px;
             }
-            /* FIX: 擴充深色主題 selector，支援掛在 html/body/root */
+            /* ▼ 夜間模式改以掛在 <html>，但為了相容性保留 attribute 選擇器 */
             :root[data-theme="dark"],
             html[data-theme="dark"],
-            body[data-theme="dark"] {
+            [data-theme="dark"] {
                 --bg: #0f172a;
                 --card: #1e293b;
                 --text: #f1f5f9;
@@ -33,9 +282,14 @@
                 --ok: #34d399;
                 --border: #334155;
             }
-
             * {
                 box-sizing: border-box;
+            }
+
+            /* 讓頁面成貼底版型（main 撐開，footer 貼底） */
+            html,
+            body {
+                height: 100%;
             }
             html,
             body {
@@ -53,7 +307,6 @@
                 transition:
                     background-color 0.3s,
                     color 0.3s;
-                height: 100%; /* 讓頁面成為貼底排版 */
             }
             body {
                 display: flex;
@@ -125,7 +378,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: clamp(24px, 4vw, 32px);
-                flex: 1 0 auto; /* 主內容吃掉剩餘空間（貼底） */
+                flex: 1 0 auto; /* 主內容吃掉空間，為貼底做準備 */
             }
 
             .card {
@@ -141,18 +394,10 @@
                 color: #fff;
                 padding: clamp(24px, 8vw, 40px);
                 border-radius: 14px;
-                overflow: hidden;
-                padding-inline: clamp(16px, 4vw, 32px);
-            }
-            .hero h1 {
-                margin: 0 0 12px;
-                line-height: 1.25;
-                font-size: clamp(1.2rem, 5vw, 2.4rem);
+                /* === 防溢出：長字換行 === */
                 overflow-wrap: anywhere;
                 word-break: break-word;
-                hyphens: auto;
             }
-
             .benefits {
                 width: max-content;
                 max-width: 100%;
@@ -170,6 +415,7 @@
                 max-width: 100%;
                 text-align: left;
                 font-size: 0.875rem;
+                min-width: 0; /* 防止被內容撐爆 */
             }
             .benefit-icon {
                 background: var(--ok);
@@ -206,11 +452,6 @@
                 transform: translateY(-2px);
                 box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
             }
-            #start-trial-btn {
-                white-space: normal;
-                line-height: 1.3;
-            } /* 允許斷行 */
-
             .notice-info {
                 background: rgba(37, 99, 235, 0.1);
                 border: 2px solid var(--primary);
@@ -234,6 +475,7 @@
                 overflow-x: auto;
                 font-size: 0.8rem;
                 margin: clamp(12px, 3vw, 16px) 0;
+                text-align: left; /* ▼ 重要：避免被父層 text-align 影響 */
             }
             .code[data-copyable="true"] {
                 cursor: pointer;
@@ -254,13 +496,15 @@
                 -webkit-overflow-scrolling: touch;
             }
 
-            /* 全幅 footer：外層滿版，內層限制寬度；貼底 */
+            /* Footer 貼底 + 滿版 */
+            footer,
             .site-footer {
                 margin-top: auto;
                 width: 100%;
                 background: var(--card);
                 border-top: 1px solid var(--border);
             }
+            footer .inner,
             .site-footer .inner {
                 max-width: 1120px;
                 margin: 0 auto;
@@ -341,21 +585,72 @@
                 height: 20px;
             }
 
-            /* ---------- 你的需求：卡片三程式碼靠左 ---------- */ /* FIX */
-            #card-snippet .code {
+            /* =========================
+               卡片二 textarea 與按鈕置中（保留）
+               ========================= */
+            .field {
+                width: 100%;
+            }
+            .field textarea,
+            .field input[type="text"],
+            .field input[type="email"] {
+                width: 100%;
+                display: block;
+                padding: 10px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                background: var(--card);
+                color: var(--text);
+                font-size: 0.95rem;
+            }
+            #kb {
+                min-height: 140px;
+                resize: vertical;
+            }
+
+            /* 原設定：讓卡片內容置中 */
+            #card-generate {
+                text-align: center;
+            }
+            /* ▼ 需求：卡片三程式碼靠左 — 僅覆蓋卡片三，不影響卡片二 */
+            #card-snippet {
                 text-align: left;
             }
-            #card-snippet .code pre,
-            #card-snippet .code code {
-                text-align: left;
-                direction: ltr;
-                white-space: pre;
+
+            /* Hero 防溢出補強（保留你之前的安全網） */
+            .hero,
+            .hero * {
+                min-width: 0;
+            }
+            .hero .benefits {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero .benefit-item {
+                grid-template-columns: 28px 1fr !important;
+            }
+            .hero,
+            .hero h1,
+            .hero .benefit-item span {
+                overflow-wrap: anywhere !important;
+                word-break: break-word !important;
+                hyphens: auto;
+            }
+            #start-trial-btn {
+                white-space: normal !important;
+                line-height: 1.3;
+                max-width: 100%;
+            }
+            @media (max-width: 420px) {
+                .hero {
+                    word-break: break-all;
+                }
             }
         </style>
     </head>
-
     <body>
-        <!-- FIX: 不再在 body 上放 data-theme -->
         <header>
             <div class="wrap">
                 <div class="brand" data-i18n="brand">
@@ -385,32 +680,22 @@
                 <h1 data-i18n="hero.title">
                     Best AI Chatbot: Easily Embed 24/7 Customer Support
                 </h1>
+
                 <div class="benefits">
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
+                        <div class="benefit-icon">✓</div>
                         <span data-i18n="hero.benefit1"
                             >一鍵嵌入：快速上線</span
                         >
                     </div>
                     <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-shield-halved"></i>
-                        </div>
-                        <span data-i18n="hero.benefit_safety"
-                            >濫發防護：單一有效 OTP、60 秒冷卻</span
-                        >
-                    </div>
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
+                        <div class="benefit-icon">🌐</div>
                         <span data-i18n="hero.benefit4"
                             >多語雙向：自動偵測並以 50+ 語言回覆</span
                         >
                     </div>
                 </div>
+
                 <a
                     href="javascript:void(0)"
                     class="btn primary"
@@ -522,7 +807,9 @@
                 var y = document.getElementById("year");
                 if (y) y.textContent = new Date().getFullYear();
             })();
-
+            // ==============================
+            // i18n 多國語系字串（★ 修改：新增 consentRequired / cooldownWait / networkError）
+            // ==============================
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -542,10 +829,10 @@
                             "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
                         consent:
                             "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
-                        consentRequired: "請勾選同意後再送出。",
-                        cooldownWait: "請稍候再試（冷卻中）",
+                        consentRequired: "請勾選同意後再送出。", // ★ 新增
+                        cooldownWait: "請稍候再試（冷卻中）", // ★ 新增
                         networkError: "連線逾時或網路異常，請重試。",
-                        countdown: "{n} 秒後可重新發送",
+                        countdown: "{n} 秒後可重新發送", // ← 新增：倒數文字（帶 {n} 佔位）
                         otpValidity:
                             "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
                     },
@@ -555,7 +842,6 @@
                         benefit2: "自訂知識庫：專業、量身訂製回應",
                         benefit3: "24/7 可用性：大幅降低支援成本",
                         benefit4: "多語系雙向：自動偵測並自然回覆",
-                        benefit_safety: "濫發防護：單一有效 OTP、60 秒冷卻",
                         cta: "立即開始免費試用",
                     },
                     quickStart: {
@@ -568,6 +854,13 @@
                         th1: "屬性",
                         th2: "必填",
                         th4: "說明",
+                        src: "載入 AI chatbot 嵌入核心腳本。",
+                        position: "浮動按鈕位置（預設：右下）。",
+                        site: "您的網站 ID。",
+                        accent: "品牌主色（HEX/RGB）。",
+                        width: "聊天面板寬度。",
+                        height: "聊天面板高度。",
+                        z: "Z-index 以確保置頂。",
                     },
                     required: "必填",
                     optional: "可選",
@@ -585,8 +878,6 @@
                         toastEmpty: "請先輸入知識庫內容。",
                         toastTooShort: "內容過短，至少需 20 個字。",
                         rateLimited: "操作太頻繁，請稍後再試。",
-                        txn_note:
-                            "我們僅在你主動要求寄送時發信；不發送任何行銷郵件。OTP 有效 60 秒、每信箱 60 秒冷卻。",
                     },
                     footer: "AI Chatbot — 立即免費開始",
                 },
@@ -608,9 +899,9 @@
                             "已超过 60 秒，请重新输入 Email 获取新的验证码。",
                         consent:
                             "我同意本站仅发送登录/注册所需的 OTP 验证码与安全通知，不发送任何营销邮件。",
-                        consentRequired: "请勾选同意后再提交。",
-                        cooldownWait: "请稍候再试（冷却中）",
-                        networkError: "网络超时或异常，请重试。",
+                        consentRequired: "请勾选同意后再提交。", // ★ 新增
+                        cooldownWait: "请稍候再试（冷却中）", // ★ 新增
+                        networkError: "网络超时或异常，请重试。", // ★ 新增
                         countdown: "{n} 秒后可重新发送",
                         otpValidity:
                             "OTP 验证码有效时间：<strong>{n}</strong> 秒。",
@@ -621,13 +912,25 @@
                         benefit2: "自定义知识库：专业回复",
                         benefit3: "24/7 可用：降低成本、易扩展",
                         benefit4: "多语系双向：自动识别并自然应答",
-                        benefit_safety: "防滥发：单一有效 OTP、60 秒冷却",
                         cta: "立即开始免费试用",
                     },
                     quickStart: {
                         title: "一键嵌入：复制下方代码",
                         notice: "🔵 右下角的蓝色 AI 助理已即时套用你的 widget，可立即测试互动效果。",
                         desc: "将以下代码粘贴到你的网站（全站 Layout 或页脚），即可启用专属 AI Chatbot。",
+                    },
+                    params: {
+                        title: "自定义 AI Chatbot 参数以实现无缝集成",
+                        th1: "属性",
+                        th2: "必填",
+                        th4: "说明",
+                        src: "加载核心脚本。",
+                        position: "浮动按钮位置（默认：右下）。",
+                        site: "你的网站 ID。",
+                        accent: "品牌主色。",
+                        width: "面板宽度。",
+                        height: "面板高度。",
+                        z: "置顶层级。",
                     },
                     required: "必填",
                     optional: "可选",
@@ -645,8 +948,6 @@
                         toastEmpty: "请先输入一些内容。",
                         toastTooShort: "内容过短，至少 20 字。",
                         rateLimited: "操作过于频繁，请稍后重试。",
-                        txn_note:
-                            "仅在你主动请求时发送邮件；不发送任何营销邮件。OTP 有效 60 秒、每邮箱 60 秒冷却。",
                     },
                     footer: "AI Chatbot — 立即免费开始",
                 },
@@ -670,11 +971,11 @@
                         consent:
                             "当サイトはログイン/登録に必要な OTP とセキュリティ通知のみを送信し、マーケティングメールは送りません。",
                         consentRequired:
-                            "同意にチェックを入れてから送信してください。",
+                            "同意にチェックを入れてから送信してください。", // ★ 新增
                         cooldownWait:
-                            "しばらくしてからお試しください（クールダウン中）",
+                            "しばらくしてからお試しください（クールダウン中）", // ★ 新增
                         networkError:
-                            "ネットワークのタイムアウトまたはエラーです。再試行してください。",
+                            "ネットワークのタイムアウトまたはエラーです。再試行してください。", // ★ 新增
                         countdown: "{n} 秒後に再送できます",
                         otpValidity:
                             "OTP の有効時間：<strong>{n}</strong> 秒。",
@@ -685,14 +986,25 @@
                         benefit2: "カスタム知識ベース：プロ品質の応答",
                         benefit3: "24/7 稼働：コスト削減＆スケール",
                         benefit4: "多言語対応：自動判別し自然に応答",
-                        benefit_safety:
-                            "乱発対策：単一有効 OTP・60 秒クールダウン",
                         cta: "今すぐ無料で開始",
                     },
                     quickStart: {
                         title: "ワンクリック埋め込み：コードをコピー",
                         notice: "🔵 右下の青い AI アシスタントがあなたの widget を即時反映。今すぐ動作をお試しください。",
                         desc: "以下のコードをサイトのレイアウト/フッターに貼り付けるだけで有効化できます。",
+                    },
+                    params: {
+                        title: "AI Chatbot パラメータ",
+                        th1: "属性",
+                        th2: "必須",
+                        th4: "説明",
+                        src: "コアスクリプト",
+                        position: "ボタン位置",
+                        site: "サイト ID",
+                        accent: "ブランド色",
+                        width: "幅",
+                        height: "高さ",
+                        z: "最前面",
                     },
                     required: "必須",
                     optional: "任意",
@@ -710,8 +1022,6 @@
                         toastEmpty: "ナレッジを入力してください。",
                         toastTooShort: "20 文字以上で入力してください。",
                         rateLimited: "操作が頻繁です。少し待ってください。",
-                        txn_note:
-                            "ユーザー主導時のみ送信。マーケティングメールは送りません。OTP は 60 秒有効・60 秒クールダウン。",
                     },
                     footer: "AI Chatbot — 今すぐ無料で開始",
                 },
@@ -735,11 +1045,11 @@
                         consent:
                             "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails.",
                         consentRequired:
-                            "Please check the consent box before submitting.",
+                            "Please check the consent box before submitting.", // ★ 新增
                         cooldownWait:
-                            "Please try again later (cooldown in effect).",
+                            "Please try again later (cooldown in effect).", // ★ 新增
                         networkError:
-                            "Network timeout or error. Please try again.",
+                            "Network timeout or error. Please try again.", // ★ 新增
                         countdown: "{n}s before you can resend",
                         otpValidity:
                             "OTP code validity: <strong>{n}</strong> seconds.",
@@ -752,8 +1062,6 @@
                         benefit3: "24/7 Availability: Cut Costs & Scale",
                         benefit4:
                             "Multilingual In/Out: Auto-detect & natural replies",
-                        benefit_safety:
-                            "Abuse Guard: Single active OTP, 60s cooldown",
                         cta: "Start Free AI Chatbot Trial Now",
                     },
                     quickStart: {
@@ -766,6 +1074,13 @@
                         th1: "Attribute",
                         th2: "Required",
                         th4: "Description",
+                        src: "Load the core script.",
+                        position: "Floating button position.",
+                        site: "Your site ID.",
+                        accent: "Brand color.",
+                        width: "Panel width.",
+                        height: "Panel height.",
+                        z: "Topmost layer.",
                     },
                     required: "Required",
                     optional: "Optional",
@@ -783,8 +1098,6 @@
                         toastEmpty: "Please enter some knowledge first.",
                         toastTooShort: "Content too short (min 20 chars).",
                         rateLimited: "Too many attempts. Please wait.",
-                        txn_note:
-                            "Emails are only sent when you explicitly ask; no marketing. OTP valid 60s; 60s per-recipient cooldown.",
                     },
                     footer: "AI Chatbot — Start free today",
                 },
@@ -804,14 +1117,10 @@
                       : navLang.startsWith("ja")
                         ? "ja"
                         : "en";
-
             let CUR_LANG = savedLang || guessLang;
 
-            // FIX: 主題屬性掛在 html
-            document.documentElement.setAttribute(
-                "data-theme",
-                savedTheme,
-            ); /* FIX */
+            /* ▼ 改成掛在 <html>，避免夜間模式只影響局部 */
+            document.documentElement.setAttribute("data-theme", savedTheme);
 
             const themeToggle = document.getElementById("theme-toggle");
             const langSelect = document.getElementById("lang-select");
@@ -826,11 +1135,7 @@
                     });
             }
             function updateThemeIcon() {
-                // FIX: 從 html 讀主題
-                const cur =
-                    document.documentElement.getAttribute(
-                        "data-theme",
-                    ); /* FIX */
+                const cur = document.documentElement.getAttribute("data-theme");
                 if (themeToggle) {
                     themeToggle.innerHTML =
                         cur === "light"
@@ -864,7 +1169,7 @@
                         el.setAttribute("placeholder", v);
                 });
                 document.documentElement.setAttribute("lang", CUR_LANG);
-                setCodeHints();
+                setCodeHints(); // 確保「按一下複製」提示字樣存在
                 updateThemeIcon();
                 updateCTAByProgress();
             }
@@ -888,15 +1193,10 @@
             }
             if (themeToggle) {
                 themeToggle.addEventListener("click", () => {
-                    // FIX: 改掛在 html
                     const current =
-                        document.documentElement.getAttribute("data-theme") ||
-                        "light"; /* FIX */
+                        document.documentElement.getAttribute("data-theme");
                     const next = current === "light" ? "dark" : "light";
-                    document.documentElement.setAttribute(
-                        "data-theme",
-                        next,
-                    ); /* FIX */
+                    document.documentElement.setAttribute("data-theme", next);
                     localStorage.setItem("aiw_theme", next);
                     updateThemeIcon();
                 });
@@ -915,24 +1215,10 @@
                 t.className = "toast";
                 t.textContent = msg;
                 document.body.appendChild(t);
-                Object.assign(t.style, {
-                    position: "fixed",
-                    left: "50%",
-                    bottom: "20px",
-                    transform: "translateX(-50%)",
-                    background: "rgba(0,0,0,.8)",
-                    color: "#fff",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    fontSize: "14px",
-                    zIndex: "9999",
-                    opacity: "0",
-                    transition: "opacity .2s ease",
-                });
-                requestAnimationFrame(() => (t.style.opacity = "1"));
+                requestAnimationFrame(() => t.classList.add("show"));
                 setTimeout(() => {
-                    t.style.opacity = "0";
-                    setTimeout(() => t.remove(), 200);
+                    t.classList.remove("show");
+                    setTimeout(() => t.remove(), 250);
                 }, 1600);
             }
             async function copyText(text) {
@@ -941,8 +1227,6 @@
                 } catch {
                     const ta = document.createElement("textarea");
                     ta.value = text;
-                    ta.style.position = "fixed";
-                    ta.style.left = "-9999px";
                     document.body.appendChild(ta);
                     ta.select();
                     document.execCommand("copy");
@@ -953,7 +1237,7 @@
                 const T = STR[CUR_LANG] || STR["en"];
                 container.addEventListener("click", async () => {
                     await copyText(getter());
-                    toast(T.common.copied || "已複製！");
+                    toast(T.common.copied);
                 });
             }
             (function bindCopies() {
@@ -1043,7 +1327,9 @@
                 }
             }
 
+            // ==============================
             // Email 驗證流程（60秒有效/冷卻）
+            // ==============================
             let codeCountdown = null;
 
             function showEmailModal() {
@@ -1059,6 +1345,7 @@
                 inner.innerHTML = `
           <p>${T.common.email}</p>
           <input type="email" id="email-input" placeholder="${T.common.email}">
+          <!-- ★ 修正：把同意聲明改為二欄一行表格，文字左、打勾右 -->
           <div class="consent-wrap">
             <table class="consent-table" role="presentation" aria-hidden="false">
               <tr>
@@ -1078,6 +1365,7 @@
                     .getElementById("submit-email")
                     .addEventListener("click", submitEmail);
 
+                // 可點文字切換勾選；不影響既有流程
                 const consentTextEl = document.getElementById("consent-text");
                 if (consentTextEl) {
                     consentTextEl.addEventListener("click", () => {
