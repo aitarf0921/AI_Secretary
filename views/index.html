@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-TW" data-theme="light">
+<html lang="zh-TW">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -28,7 +28,7 @@
         />
         <link rel="canonical" href="https://chatbot.aitarf.us/" />
 
-        <!-- ====== Open Graph (社群 / Facebook / LINE / LinkedIn) ====== -->
+        <!-- ====== Open Graph ====== -->
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="AI Chatbot" />
         <meta
@@ -45,7 +45,7 @@
             content="https://chatbot.aitarf.us/og-image.jpg"
         />
 
-        <!-- ====== Twitter Card (X.com / Twitter) ====== -->
+        <!-- ====== Twitter Card ====== -->
         <meta name="twitter:card" content="summary_large_image" />
         <meta
             name="twitter:title"
@@ -61,7 +61,7 @@
         />
         <meta name="twitter:creator" content="@_aitarf" />
 
-        <!-- ====== 多語 SEO (繁中 / 簡中 / 英 / 日) ====== -->
+        <!-- ====== 多語 SEO ====== -->
         <link
             rel="alternate"
             href="https://chatbot.aitarf.us/"
@@ -88,7 +88,7 @@
             hreflang="x-default"
         />
 
-        <!-- ====== 關鍵字（繁中為主，其他語言對應翻譯） ====== -->
+        <!-- ====== 關鍵字 ====== -->
         <meta
             name="keywords"
             content="AI 聊天, 秘書, AI 助理, AI 小幫手, AI 代理"
@@ -109,7 +109,7 @@
             content="AIチャット, 秘書, AIアシスタント, AIヘルパー, AIエージェント"
         />
 
-        <!-- ====== 多語描述（description 多語系對應） ====== -->
+        <!-- ====== 多語描述 ====== -->
         <meta
             name="description"
             content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語智慧客服與 AI 秘書服務。AI 聊天、AI 助理、AI 小幫手、AI 代理 — 免費體驗。"
@@ -130,6 +130,7 @@
             content="AI Chatbot ウィジェットを簡単に埋め込み、24/7 多言語サポートを実現。AIチャット、秘書、AIアシスタント、AIヘルパー、AIエージェント — 無料体験可能。"
         />
 
+        <!-- JSON-LD（保持不變） -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -176,8 +177,6 @@
                 }
             }
         </script>
-
-        <!-- 繁體中文 -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -196,8 +195,6 @@
                 "keywords": "AI 聊天, 秘書, AI 助理, AI 小幫手, AI 代理"
             }
         </script>
-
-        <!-- 英文 -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -216,8 +213,6 @@
                 "keywords": "AI chat, secretary, AI assistant, AI helper, AI agent"
             }
         </script>
-
-        <!-- 簡體中文 -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -236,8 +231,6 @@
                 "keywords": "AI 聊天, 秘书, AI 助理, AI 小帮手, AI 代理"
             }
         </script>
-
-        <!-- 日文 -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -270,9 +263,6 @@
                     ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
                 --font-size-base: 16px;
             }
-            /* ▼ 夜間模式改以掛在 <html>，但為了相容性保留 attribute 選擇器 */
-            :root[data-theme="dark"],
-            html[data-theme="dark"],
             [data-theme="dark"] {
                 --bg: #0f172a;
                 --card: #1e293b;
@@ -286,11 +276,16 @@
                 box-sizing: border-box;
             }
 
-            /* 讓頁面成貼底版型（main 撐開，footer 貼底） */
+            /* 布局：貼底 */
             html,
             body {
                 height: 100%;
-            }
+            } /* FIX */
+            body {
+                display: flex;
+                flex-direction: column;
+            } /* FIX */
+
             html,
             body {
                 margin: 0;
@@ -307,10 +302,6 @@
                 transition:
                     background-color 0.3s,
                     color 0.3s;
-            }
-            body {
-                display: flex;
-                flex-direction: column;
             }
             .hidden {
                 display: none !important;
@@ -378,7 +369,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: clamp(24px, 4vw, 32px);
-                flex: 1 0 auto; /* 主內容吃掉空間，為貼底做準備 */
+                flex: 1 0 auto; /* 主內容撐開 */
             }
 
             .card {
@@ -394,28 +385,24 @@
                 color: #fff;
                 padding: clamp(24px, 8vw, 40px);
                 border-radius: 14px;
-                /* === 防溢出：長字換行 === */
-                overflow-wrap: anywhere;
-                word-break: break-word;
             }
+
+            /* Hero benefits：整塊置中、兩欄；左欄圖示靠右、右欄文字靠左且可換行 */
             .benefits {
                 width: max-content;
                 max-width: 100%;
-                margin: clamp(12px, 3vw, 16px) auto;
-                text-align: left;
+                margin: clamp(12px, 3vw, 16px) auto; /* 置中 */
                 display: grid;
                 gap: clamp(12px, 3vw, 16px);
-                justify-items: start;
+                justify-items: center; /* 列本身置中 */
             }
             .benefit-item {
                 display: grid;
                 grid-template-columns: 28px minmax(0, 1fr);
                 column-gap: 12px;
                 align-items: center;
+                min-width: 0;
                 max-width: 100%;
-                text-align: left;
-                font-size: 0.875rem;
-                min-width: 0; /* 防止被內容撐爆 */
             }
             .benefit-icon {
                 background: var(--ok);
@@ -428,7 +415,16 @@
                 justify-content: center;
                 font-size: 0.9rem;
                 flex-shrink: 0;
+                justify-self: end; /* 左欄圖示向右貼齊 —— FIX */
             }
+            .benefit-item span {
+                text-align: left; /* 右欄文字向左貼齊 —— FIX */
+                overflow-wrap: anywhere;
+                word-break: break-word;
+                min-width: 0;
+                font-size: 0.875rem;
+            }
+
             .btn {
                 display: inline-flex;
                 align-items: center;
@@ -452,6 +448,7 @@
                 transform: translateY(-2px);
                 box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
             }
+
             .notice-info {
                 background: rgba(37, 99, 235, 0.1);
                 border: 2px solid var(--primary);
@@ -465,6 +462,8 @@
                 font-size: 0.85rem;
                 color: var(--muted);
             }
+
+            /* 程式碼區：左對齊 + Copy icon */
             .code {
                 position: relative;
                 background: #0b1220;
@@ -475,34 +474,63 @@
                 overflow-x: auto;
                 font-size: 0.8rem;
                 margin: clamp(12px, 3vw, 16px) 0;
-                text-align: left; /* ▼ 重要：避免被父層 text-align 影響 */
+                text-align: left; /* FIX：左對齊閱讀 */
             }
+            /* 移除原本整塊點擊提示 pseudo element，改為 icon 按鈕 */
             .code[data-copyable="true"] {
-                cursor: pointer;
+                cursor: default;
             }
             .code[data-copyable="true"]::after {
-                content: attr(data-hint);
-                position: absolute;
-                right: 12px;
-                bottom: 10px;
-                font-size: 0.75em;
-                color: #9fb4d0;
-                opacity: 0.85;
-                pointer-events: none;
+                content: none;
             }
+
+            .copy-btn {
+                /* FIX：右上角 Copy icon */
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                border: 1px solid #21304a;
+                background: #132034;
+                color: #c9d7ee;
+                width: 36px;
+                height: 32px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                font-size: 0.9rem;
+            }
+            .copy-btn:hover {
+                filter: brightness(1.1);
+            }
+
+            pre {
+                margin: 0;
+            }
+            code {
+                font-family: var(--mono);
+            }
+
             .table-wrap {
                 width: 100%;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
 
-            /* Footer 貼底 + 滿版 */
+            /* Footer 滿版背景（手機不靠左）—— 保留你內層 .inner 限寬不變 */
             footer,
             .site-footer {
                 margin-top: auto;
                 width: 100%;
                 background: var(--card);
                 border-top: 1px solid var(--border);
+                position: relative;
+                left: 50%;
+                right: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+                width: 100vw; /* FIX */
             }
             footer .inner,
             .site-footer .inner {
@@ -585,9 +613,7 @@
                 height: 20px;
             }
 
-            /* =========================
-               卡片二 textarea 與按鈕置中（保留）
-               ========================= */
+            /* 卡片二欄位寬度維持 */
             .field {
                 width: 100%;
             }
@@ -608,49 +634,44 @@
                 resize: vertical;
             }
 
-            /* 原設定：讓卡片內容置中 */
-            #card-generate {
+            /* 讓卡片內容文字仍置中，但程式碼盒在卡片三內左對齊閱讀 */
+            #card-generate,
+            #card-snippet {
                 text-align: center;
             }
-            /* ▼ 需求：卡片三程式碼靠左 — 僅覆蓋卡片三，不影響卡片二 */
-            #card-snippet {
+            #card-snippet .code,
+            #card-snippet pre,
+            #card-snippet code {
                 text-align: left;
-            }
+            } /* FIX */
 
-            /* Hero 防溢出補強（保留你之前的安全網） */
-            .hero,
-            .hero * {
-                min-width: 0;
-            }
-            .hero .benefits {
-                width: 100% !important;
-                max-width: 100% !important;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .hero .benefit-item {
-                grid-template-columns: 28px 1fr !important;
-            }
-            .hero,
-            .hero h1,
-            .hero .benefit-item span {
-                overflow-wrap: anywhere !important;
-                word-break: break-word !important;
+            /* Hero 長字不溢出（保留你原設定） */
+            .hero {
+                overflow-wrap: anywhere;
+                word-break: break-word;
                 hyphens: auto;
             }
+            .hero h1 {
+                white-space: normal;
+                line-height: 1.25;
+            }
+            .hero .benefit-item {
+                min-width: 0;
+            }
             #start-trial-btn {
-                white-space: normal !important;
+                white-space: normal;
                 line-height: 1.3;
                 max-width: 100%;
             }
+
             @media (max-width: 420px) {
                 .hero {
                     word-break: break-all;
-                }
+                } /* 超窄保險 */
             }
         </style>
     </head>
-    <body>
+    <body data-theme="light">
         <header>
             <div class="wrap">
                 <div class="brand" data-i18n="brand">
@@ -734,10 +755,7 @@
                         生成 AI Chatbot Widget 程式碼
                     </button>
                 </div>
-                <p class="inline-note" data-i18n="create.txn_note">
-                    我們僅在你主動要求寄送時發信；不發送任何行銷郵件。OTP 有效
-                    60 秒、每信箱 60 秒冷卻。
-                </p>
+                <!-- 已依需求：移除原本的 txn 提示段落 —— FIX -->
             </section>
 
             <section class="card hidden" id="card-snippet">
@@ -752,13 +770,21 @@
                     將以下程式碼貼到您的網站（全站 Layout
                     或頁尾），即可快速啟用專屬 AI Chatbot。
                 </p>
+
                 <div
                     class="code"
                     id="codebox"
                     data-copyable="true"
-                    data-hint="Click to copy"
-                    title="Click to copy"
+                    title="Copy"
                 >
+                    <button
+                        class="copy-btn"
+                        data-target="embed-code"
+                        aria-label="Copy"
+                    >
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <!-- FIX -->
                     <pre><code id="embed-code">&lt;script
   src="https://chatbot.aitarf.us/js/ai-helper-loader.js"
   data-position="bottom-right"
@@ -770,13 +796,21 @@
   defer
 &gt;&lt;/script&gt;</code></pre>
                 </div>
+
                 <div
                     class="code"
                     id="mini-code"
                     data-copyable="true"
-                    data-hint="Click to copy"
-                    title="Click to copy"
+                    title="Copy"
                 >
+                    <button
+                        class="copy-btn"
+                        data-target="embed-mini"
+                        aria-label="Copy"
+                    >
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <!-- FIX -->
                     <pre><code id="embed-mini">&lt;script
   src="https://chatbot.aitarf.us/js/ai-helper-loader.js"
   data-site="aitarf_15oJOoBsQFa3"
@@ -807,9 +841,7 @@
                 var y = document.getElementById("year");
                 if (y) y.textContent = new Date().getFullYear();
             })();
-            // ==============================
-            // i18n 多國語系字串（★ 修改：新增 consentRequired / cooldownWait / networkError）
-            // ==============================
+
             const STR = {
                 "zh-TW": {
                     title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
@@ -829,10 +861,10 @@
                             "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
                         consent:
                             "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
-                        consentRequired: "請勾選同意後再送出。", // ★ 新增
-                        cooldownWait: "請稍候再試（冷卻中）", // ★ 新增
+                        consentRequired: "請勾選同意後再送出。",
+                        cooldownWait: "請稍候再試（冷卻中）",
                         networkError: "連線逾時或網路異常，請重試。",
-                        countdown: "{n} 秒後可重新發送", // ← 新增：倒數文字（帶 {n} 佔位）
+                        countdown: "{n} 秒後可重新發送",
                         otpValidity:
                             "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
                     },
@@ -899,9 +931,9 @@
                             "已超过 60 秒，请重新输入 Email 获取新的验证码。",
                         consent:
                             "我同意本站仅发送登录/注册所需的 OTP 验证码与安全通知，不发送任何营销邮件。",
-                        consentRequired: "请勾选同意后再提交。", // ★ 新增
-                        cooldownWait: "请稍候再试（冷却中）", // ★ 新增
-                        networkError: "网络超时或异常，请重试。", // ★ 新增
+                        consentRequired: "请勾选同意后再提交。",
+                        cooldownWait: "请稍候再试（冷却中）",
+                        networkError: "网络超时或异常，请重试。",
                         countdown: "{n} 秒后可重新发送",
                         otpValidity:
                             "OTP 验证码有效时间：<strong>{n}</strong> 秒。",
@@ -971,11 +1003,11 @@
                         consent:
                             "当サイトはログイン/登録に必要な OTP とセキュリティ通知のみを送信し、マーケティングメールは送りません。",
                         consentRequired:
-                            "同意にチェックを入れてから送信してください。", // ★ 新增
+                            "同意にチェックを入れてから送信してください。",
                         cooldownWait:
-                            "しばらくしてからお試しください（クールダウン中）", // ★ 新增
+                            "しばらくしてからお試しください（クールダウン中）",
                         networkError:
-                            "ネットワークのタイムアウトまたはエラーです。再試行してください。", // ★ 新增
+                            "ネットワークのタイムアウトまたはエラーです。再試行してください。",
                         countdown: "{n} 秒後に再送できます",
                         otpValidity:
                             "OTP の有効時間：<strong>{n}</strong> 秒。",
@@ -1045,11 +1077,11 @@
                         consent:
                             "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails.",
                         consentRequired:
-                            "Please check the consent box before submitting.", // ★ 新增
+                            "Please check the consent box before submitting.",
                         cooldownWait:
-                            "Please try again later (cooldown in effect).", // ★ 新增
+                            "Please try again later (cooldown in effect).",
                         networkError:
-                            "Network timeout or error. Please try again.", // ★ 新增
+                            "Network timeout or error. Please try again.",
                         countdown: "{n}s before you can resend",
                         otpValidity:
                             "OTP code validity: <strong>{n}</strong> seconds.",
@@ -1103,9 +1135,7 @@
                 },
             };
 
-            // ==============================
-            // 初始化語系/主題
-            // ==============================
+            /* 初始化語系/主題（保留） */
             const savedLang = localStorage.getItem("aiw_lang");
             const savedTheme = localStorage.getItem("aiw_theme") || "light";
             const navLang = (navigator.language || "zh-TW").toLowerCase();
@@ -1118,10 +1148,7 @@
                         ? "ja"
                         : "en";
             let CUR_LANG = savedLang || guessLang;
-
-            /* ▼ 改成掛在 <html>，避免夜間模式只影響局部 */
-            document.documentElement.setAttribute("data-theme", savedTheme);
-
+            document.body.setAttribute("data-theme", savedTheme);
             const themeToggle = document.getElementById("theme-toggle");
             const langSelect = document.getElementById("lang-select");
 
@@ -1130,12 +1157,11 @@
                 document
                     .querySelectorAll('.code[data-copyable="true"]')
                     .forEach((el) => {
-                        el.setAttribute("data-hint", T.common.copyHint);
                         el.setAttribute("title", T.common.copyHint);
                     });
             }
             function updateThemeIcon() {
-                const cur = document.documentElement.getAttribute("data-theme");
+                const cur = document.body.getAttribute("data-theme");
                 if (themeToggle) {
                     themeToggle.innerHTML =
                         cur === "light"
@@ -1169,11 +1195,10 @@
                         el.setAttribute("placeholder", v);
                 });
                 document.documentElement.setAttribute("lang", CUR_LANG);
-                setCodeHints(); // 確保「按一下複製」提示字樣存在
+                setCodeHints();
                 updateThemeIcon();
                 updateCTAByProgress();
             }
-
             function updateCTAByProgress() {
                 const btn = document.getElementById("start-trial-btn");
                 if (!btn) return;
@@ -1193,10 +1218,9 @@
             }
             if (themeToggle) {
                 themeToggle.addEventListener("click", () => {
-                    const current =
-                        document.documentElement.getAttribute("data-theme");
+                    const current = document.body.getAttribute("data-theme");
                     const next = current === "light" ? "dark" : "light";
-                    document.documentElement.setAttribute("data-theme", next);
+                    document.body.setAttribute("data-theme", next);
                     localStorage.setItem("aiw_theme", next);
                     updateThemeIcon();
                 });
@@ -1213,12 +1237,27 @@
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
+                /* 簡單內聯樣式避免依賴額外 CSS，保留你風格 */
+                t.style.position = "fixed";
+                t.style.bottom = "16px";
+                t.style.left = "50%";
+                t.style.transform = "translateX(-50%)";
+                t.style.background = "rgba(0,0,0,.8)";
+                t.style.color = "#fff";
+                t.style.padding = "8px 12px";
+                t.style.borderRadius = "8px";
+                t.style.fontSize = "14px";
+                t.style.zIndex = "3000";
+                t.style.opacity = "0";
+                t.style.transition = "opacity .2s ease";
                 t.textContent = msg;
                 document.body.appendChild(t);
-                requestAnimationFrame(() => t.classList.add("show"));
+                requestAnimationFrame(() => {
+                    t.style.opacity = "1";
+                });
                 setTimeout(() => {
-                    t.classList.remove("show");
-                    setTimeout(() => t.remove(), 250);
+                    t.style.opacity = "0";
+                    setTimeout(() => t.remove(), 200);
                 }, 1600);
             }
             async function copyText(text) {
@@ -1233,26 +1272,25 @@
                     ta.remove();
                 }
             }
-            function bindClickCopy(container, getter) {
+
+            /* 只用 Copy icon 觸發複製 —— FIX */
+            function bindCopyButtons() {
                 const T = STR[CUR_LANG] || STR["en"];
-                container.addEventListener("click", async () => {
-                    await copyText(getter());
-                    toast(T.common.copied);
+                document.querySelectorAll(".copy-btn").forEach((btn) => {
+                    btn.addEventListener("click", async (e) => {
+                        e.stopPropagation();
+                        const id = btn.getAttribute("data-target");
+                        const el = document.getElementById(id);
+                        if (el) {
+                            await copyText(el.innerText);
+                            toast(T.common.copied);
+                        }
+                    });
                 });
             }
+
             (function bindCopies() {
-                const box1 = document.getElementById("codebox");
-                const box2 = document.getElementById("mini-code");
-                if (box1)
-                    bindClickCopy(
-                        box1,
-                        () => document.getElementById("embed-code").innerText,
-                    );
-                if (box2)
-                    bindClickCopy(
-                        box2,
-                        () => document.getElementById("embed-mini").innerText,
-                    );
+                bindCopyButtons();
             })();
 
             const WIDGET_SRC =
@@ -1327,11 +1365,8 @@
                 }
             }
 
-            // ==============================
-            // Email 驗證流程（60秒有效/冷卻）
-            // ==============================
+            /* Email 驗證流程（保持原樣） */
             let codeCountdown = null;
-
             function showEmailModal() {
                 if (codeCountdown) {
                     clearInterval(codeCountdown);
@@ -1345,7 +1380,6 @@
                 inner.innerHTML = `
           <p>${T.common.email}</p>
           <input type="email" id="email-input" placeholder="${T.common.email}">
-          <!-- ★ 修正：把同意聲明改為二欄一行表格，文字左、打勾右 -->
           <div class="consent-wrap">
             <table class="consent-table" role="presentation" aria-hidden="false">
               <tr>
@@ -1364,8 +1398,6 @@
                 document
                     .getElementById("submit-email")
                     .addEventListener("click", submitEmail);
-
-                // 可點文字切換勾選；不影響既有流程
                 const consentTextEl = document.getElementById("consent-text");
                 if (consentTextEl) {
                     consentTextEl.addEventListener("click", () => {
@@ -1374,7 +1406,6 @@
                     });
                 }
             }
-
             async function submitEmail() {
                 const email = document
                     .getElementById("email-input")
@@ -1394,7 +1425,6 @@
                     error.style.display = "block";
                     return;
                 }
-
                 try {
                     const response = await fetch("/email", {
                         method: "POST",
@@ -1417,7 +1447,6 @@
                     error.style.display = "block";
                 }
             }
-
             function showCodeInput(email) {
                 const inner = document.getElementById("modal-inner");
                 const T = STR[CUR_LANG] || STR["en"];
@@ -1459,7 +1488,6 @@
                         once: true,
                     });
             }
-
             async function verifyCode(email) {
                 const code = document.getElementById("code-input").value.trim();
                 const error = document.getElementById("code-error");
@@ -1582,11 +1610,11 @@
                         document.getElementById("kb").value || ""
                     ).trim();
                     if (!v) {
-                        toast(Tt.toastEmpty);
+                        toast(Tt.toastEmpty || "");
                         return;
                     }
                     if (v.length < 20) {
-                        toast(Tt.toastTooShort);
+                        toast(Tt.toastTooShort || "");
                         return;
                     }
                     isBusy = true;
@@ -1632,9 +1660,10 @@
                             setCookie("knowledgeContext", v, 30);
                             updateCTAByProgress();
                             await copyText(full);
-                            toast(Tt.toastSuccess);
+                            toast(Tt.toastSuccess || "");
                             setCreateBtnState("done");
                             setTimeout(() => setCreateBtnState("idle"), 800);
+                            bindCopyButtons(); /* 確保動態內容的 Copy icon 也綁定 —— FIX */
                         } else {
                             throw new Error(
                                 data.message || "Generation failed",
@@ -1643,8 +1672,8 @@
                     } catch (e) {
                         toast(
                             e.message === "Network"
-                                ? Tt.toastFailNetwork
-                                : Tt.toastFailGeneric,
+                                ? Tt.toastFailNetwork || ""
+                                : Tt.toastFailGeneric || "",
                         );
                         setCreateBtnState("idle");
                     } finally {
