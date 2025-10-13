@@ -473,17 +473,37 @@
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
-            footer {
+            /* 讓頁面成為貼底排版：主內容撐開，footer 自動貼底 */
+            html,
+            body {
+                height: 100%;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* 主內容吃掉剩餘空間 */
+            main {
+                flex: 1 0 auto;
+            }
+
+            /* 全幅 footer：外層鋪滿，內層限制寬度 */
+            .site-footer {
+                margin-top: auto; /* 黏在頁面最底 */
+                width: 100%;
+                background: var(--card);
+                border-top: 1px solid var(--border);
+            }
+            .site-footer .inner {
                 max-width: 1120px;
-                margin: clamp(24px, 6vw, 40px) auto 0;
-                padding: 0 clamp(8px, 2vw, 16px);
+                margin: 0 auto;
+                padding: clamp(16px, 4vw, 20px) clamp(8px, 2vw, 16px);
                 color: var(--muted);
                 font-size: 0.875rem;
                 text-align: center;
-                border-top: 1px solid var(--border);
-                padding-top: clamp(16px, 4vw, 20px);
-                background: var(--card);
             }
+
             /* Modal */
             #email-verification-modal {
                 position: fixed;
@@ -800,7 +820,7 @@
                         txn_note:
                             "我們僅在你主動要求寄送時發信；不發送任何行銷郵件。OTP 有效 60 秒、每信箱 60 秒冷卻。",
                     },
-                    footer: "© AI Chatbot — 立即免費開始",
+                    footer: "AI Chatbot — 立即免費開始",
                 },
                 "zh-CN": {
                     title: "AI Chatbot：轻松在你的网站嵌入 24/7 智能助手",
@@ -873,7 +893,7 @@
                         txn_note:
                             "仅在你主动请求时发送邮件；不发送任何营销邮件。OTP 有效 60 秒、每邮箱 60 秒冷却。",
                     },
-                    footer: "© AI Chatbot — 立即免费开始",
+                    footer: "AI Chatbot — 立即免费开始",
                 },
                 ja: {
                     title: "AI Chatbot：サイトに 24/7 スマートアシスタントを簡単埋め込み",
@@ -951,7 +971,7 @@
                         txn_note:
                             "ユーザー主導時のみ送信。マーケティングメールは送りません。OTP は 60 秒有効・60 秒クールダウン。",
                     },
-                    footer: "© AI Chatbot — 今すぐ無料で開始",
+                    footer: "AI Chatbot — 今すぐ無料で開始",
                 },
                 en: {
                     title: "AI Chatbot: Embed a 24/7 Smart Assistant on Your Website",
@@ -1031,7 +1051,7 @@
                         txn_note:
                             "Emails are only sent when you explicitly ask; no marketing. OTP valid 60s; 60s per-recipient cooldown.",
                     },
-                    footer: "© AI Chatbot — Start free today",
+                    footer: "AI Chatbot — Start free today",
                 },
             };
 
