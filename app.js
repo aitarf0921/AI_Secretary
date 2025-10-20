@@ -307,22 +307,22 @@ require("./start")().then(() => {
         }
 
         // 提取付款資料
-        const {
-            payment_id,
-            payment_status,
-            price_amount,
-            pay_currency,
-            order_id,
-            payee_email,
-            ip_address
-        } = body;
+        // const {
+        //     payment_id,
+        //     payment_status,
+        //     price_amount,
+        //     pay_currency,
+        //     order_id,
+        //     payee_email,
+        //     ip_address
+        // } = body;
 
-        if (!payee_email || !payment_id || !payment_status) {
-            console.log('Missing required fields');
-            ctx.status = 400;
-            ctx.body = { error: 'Missing required fields' };
-            return;
-        }
+        // if (!payee_email || !payment_id || !payment_status) {
+        //     console.log('Missing required fields');
+        //     ctx.status = 400;
+        //     ctx.body = { error: 'Missing required fields' };
+        //     return;
+        // }
 
       console.log('nowpayments-ipn',JSON.stringify(body));
       ctx.body = 'OK';
