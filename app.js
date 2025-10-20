@@ -282,8 +282,20 @@ require("./start")().then(() => {
 
       console.log('nowpayments-ipn');
 
-        // 驗證 IPN 簽名
-        const sortedBody = JSON.stringify(body, Object.keys(body).sort());
+      function sortObject(obj) {
+        if (typeof obj !== 'object' || obj === null) return obj;
+        if (Array.isArray(obj)) return obj.map(sortObject);
+        const sorted = {};
+        Object.keys(obj).sort().forEach(key => {
+          sorted[key] = sortObject(obj[key]);
+        });
+        return sorted;
+      }
+
+
+        const sortedBody = JSON.stringify(sortObject(body));
+
+
         const pen_key = 'nGL2B9c9JxKzjGh7iqc9d6KO474y1VFj';
         const computedSig = CryptoJS.HmacSHA512(sortedBody, pen_key).toString(CryptoJS.enc.Hex);
 
