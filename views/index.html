@@ -755,13 +755,10 @@
             <section class="card hidden" id="card-donation">
                 <h2 data-i18n="donation.title">支持我們：使用加密貨幣捐款</h2>
                 <p data-i18n="donation.note">
-                    感謝您的支持！請輸入 email
-                    並點擊按鈕，您的捐款將幫助我們持續改進 AI Chatbot。
+                    感謝您的支持！請輸入 email 並點擊按鈕，您的捐款將幫助我們持續改進 AI Chatbot。
                 </p>
                 <div class="field">
-                    <label for="donation-email" data-i18n="donation.emailLabel"
-                        >您的 Email</label
-                    >
+                    <label for="donation-email" data-i18n="donation.emailLabel">您的 Email</label>
                     <input
                         type="email"
                         id="donation-email"
@@ -769,11 +766,10 @@
                         data-i18n-ph="donation.emailPh"
                     />
                     <div class="notice-info" data-i18n="donation.emailNote">
-                        請輸入您註冊時使用的 email，NOWPayments
-                        會在新分頁要求再次確認。這是測試模式，不會進行真實捐款。
+                        請輸入您註冊時使用的 email，NOWPayments 會在新分頁要求再次確認。這是測試模式，不會進行真實捐款。
                     </div>
                     <a
-                        href="https://sandbox.nowpayments.io/donation?api_key=EEYQJ8N-Z5K4YXW-GSDXE0C-B86TVX8&source=lk_donation&medium=referral"
+                        href="javascript:void(0)" <!-- 暫時禁用默認 href，改由 JS 控制 -->
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn primary"
@@ -789,11 +785,9 @@
                                 margin-right: 8px;
                             "
                         />
-                        支持我們
                     </a>
                 </div>
-                <div id="donation-widget" class="hidden"></div>
-                <!-- 可保留或移除，現已無用 -->
+                <div id="donation-widget" class="hidden"></div> <!-- 可移除 -->
             </section>
         </main>
 
@@ -1251,11 +1245,20 @@
                     let v = T;
                     for (const p of parts) v = v?.[p];
                     if (typeof v === "string") {
-                        if (el.tagName.toLowerCase() === "title")
+                        if (el.tagName.toLowerCase() === "title") {
                             document.title = v;
-                        else {
-                            if (el.matches("a,button")) el.textContent = v;
-                            else el.innerHTML = v;
+                        } else {
+                            if (el.matches("a,button")) {
+                                el.textContent = v; // 確保 <a> 和 <button> 使用 textContent
+                                if (el.querySelector("img")) {
+                                    // 保留 <img> 元素，僅更新文字
+                                    const img = el.querySelector("img");
+                                    el.textContent = v;
+                                    el.insertBefore(img, el.firstChild);
+                                }
+                            } else {
+                                el.innerHTML = v;
+                            }
                         }
                     }
                 });
@@ -1264,8 +1267,7 @@
                     const parts = key.split(".");
                     let v = T;
                     for (const p of parts) v = v?.[p];
-                    if (typeof v === "string")
-                        el.setAttribute("placeholder", v);
+                    if (typeof v === "string") el.setAttribute("placeholder", v);
                 });
                 document.documentElement.setAttribute("lang", CUR_LANG);
                 setCodeHints();
@@ -1793,31 +1795,32 @@
             })();
 
             (function bindDonationFlow() {
-                const btnDonation = document.getElementById("btn-donation");
-                if (!btnDonation) return;
+              const btnDonation = document.getElementById("btn-donation");
+                  if (!btnDonation) return;
 
-                btnDonation.addEventListener("click", (e) => {
-                    e.preventDefault(); // 阻止默認點擊行為（因為是 <a> 標籤）
-                    const T = STR[CUR_LANG] || STR["en"];
-                    const email = getCookie("verifiedEmail");
-                    const donationEmail = document
-                        .getElementById("donation-email")
-                        .value.trim();
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                  btnDonation.addEventListener("click", (e) => {
+                      e.preventDefault(); // 阻止默認行為
+                      const T = STR[CUR_LANG] || STR["en"];
+                      const email = getCookie("verifiedEmail");
+                      const donationEmail = document.getElementById("donation-email").value.trim();
+                      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    if (
-                        !email ||
-                        !donationEmail ||
-                        donationEmail !== email ||
-                        !emailRegex.test(donationEmail)
-                    ) {
-                        toast(T.common.error);
-                        return;
-                    }
+                      if (!email || !donationEmail || donationEmail !== email || !emailRegex.test(donationEmail)) {
+                          toast(T.common.error);
+                          return;
+                      }
 
-                    // 驗證通過後，允許點擊導向新分頁
-                    btnDonation.click(); // 模擬原生 <a> 點擊
-                });
+                      // 動態生成 URL 並在新分頁開啟
+                      const baseUrl = "https://sandbox.nowpayments.io/donation";
+                      const params = new URLSearchParams({
+                          api_key: "EEYQJ8N-Z5K4YXW-GSDXE0C-B86TVX8",
+                          source: "lk_donation",
+                          medium: "referral",
+                          email: encodeURIComponent(donationEmail)
+                      }).toString();
+                      const donationUrl = `${baseUrl}?${params}`;
+                      window.open(donationUrl, "_blank", "noopener,noreferrer");
+                  });
             })();
 
             applyLang();
