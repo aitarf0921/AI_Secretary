@@ -755,8 +755,7 @@
             <section class="card hidden" id="card-donation">
                 <h2 data-i18n="donation.title">支持我們：使用加密貨幣捐款</h2>
                 <p data-i18n="donation.note">
-                    感謝您的支持！請輸入 email
-                    並透過加密貨幣捐款，您的捐款將幫助我們持續改進 AI Chatbot。
+                    感謝您的支持！請輸入 email AI Chatbot。
                 </p>
                 <div class="field">
                     <label for="donation-email" data-i18n="donation.emailLabel"
@@ -886,6 +885,7 @@
                         benefit3: "24/7 可用性：大幅降低支援成本",
                         benefit4: "多語系雙向：自動偵測並自然回覆",
                         cta: "立即開始免費試用",
+                        ctaWithEmail: "開始使用",
                     },
                     quickStart: {
                         title: "一鍵嵌入：複製下方 widget 程式碼",
@@ -932,7 +932,7 @@
                         btn: "顯示測試捐款 Widget",
                         widgetError: "無法載入測試捐款 Widget，請稍後再試。",
                     },
-                    footer: "AI Chatbot — 立即免費開始",
+                    footer: "AI Chatbot — 智慧隨行",
                 },
                 "zh-CN": {
                     title: "AI Chatbot：轻松在你的网站嵌入 24/7 智能助手",
@@ -966,6 +966,7 @@
                         benefit3: "24/7 可用：降低成本、易扩展",
                         benefit4: "多语系双向：自动识别并自然应答",
                         cta: "立即开始免费试用",
+                        ctaWithEmail: "开始使用",
                     },
                     quickStart: {
                         title: "一键嵌入：复制下方代码",
@@ -1012,7 +1013,7 @@
                         btn: "显示测试捐款 Widget",
                         widgetError: "无法加载测试捐款 Widget，请稍后再试。",
                     },
-                    footer: "AI Chatbot — 立即免费开始",
+                    footer: "AI Chatbot — 智慧随行",
                 },
                 ja: {
                     title: "AI Chatbot：サイトに 24/7 スマートアシスタントを簡単埋め込み",
@@ -1050,6 +1051,7 @@
                         benefit3: "24/7 稼働：コスト削減＆スケール",
                         benefit4: "多言語対応：自動判別し自然に応答",
                         cta: "今すぐ無料で開始",
+                        ctaWithEmail: "使用を開始",
                     },
                     quickStart: {
                         title: "ワンクリック埋め込み：コードをコピー",
@@ -1097,7 +1099,7 @@
                         widgetError:
                             "テスト寄付ウィジェットの読み込みに失敗しました。後でもう一度お試しください。",
                     },
-                    footer: "AI Chatbot — 今すぐ無料で開始",
+                    footer: "AI Chatbot — 賢さ同行",
                 },
                 en: {
                     title: "AI Chatbot: Embed a 24/7 Smart Assistant on Your Website",
@@ -1137,6 +1139,7 @@
                         benefit4:
                             "Multilingual In/Out: Auto-detect & natural replies",
                         cta: "Start Free AI Chatbot Trial Now",
+                        ctaWithEmail: "Start Using",
                     },
                     quickStart: {
                         title: "One-Click Embed: Copy the widget code",
@@ -1184,7 +1187,7 @@
                         widgetError:
                             "Failed to load test donation widget. Please try again later.",
                     },
-                    footer: "AI Chatbot — Start free today",
+                    footer: "AI Chatbot — Smart Companion",
                 },
             };
 
@@ -1259,7 +1262,10 @@
                 const btn = document.getElementById("start-trial-btn");
                 if (!btn) return;
                 const T = STR[CUR_LANG] || STR["en"];
-                const label = T.hero?.cta || btn.textContent;
+                const email = getCookie("verifiedEmail");
+                const label = email
+                    ? T.hero?.ctaWithEmail || "Start Using"
+                    : T.hero?.cta || btn.textContent;
                 btn.textContent = label;
                 btn.setAttribute("aria-label", label);
                 btn.setAttribute("title", label);
