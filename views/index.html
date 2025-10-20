@@ -666,6 +666,34 @@
             [data-theme="dark"] #card-donation .btn.primary img {
                 filter: none; /* 暗模式下恢復原圖 */
             }
+            /* 嵌入程式碼參數表 */
+            .param-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9rem;
+                margin-top: 8px;
+            }
+            .param-table th,
+            .param-table td {
+                border: 1px solid var(--border);
+                padding: 8px 10px;
+                text-align: left;
+                vertical-align: top;
+            }
+            .param-table thead th {
+                background: rgba(37, 99, 235, 0.06);
+            }
+            .param-table code {
+                font-family: var(--mono);
+                font-size: 0.85rem;
+            }
+            @media (max-width: 640px) {
+                .param-table th:nth-child(2),
+                .param-table td:nth-child(2) {
+                    white-space: nowrap;
+                    width: 80px;
+                }
+            }
         </style>
     </head>
     <body data-theme="light">
@@ -799,6 +827,66 @@
   defer
 &gt;&lt;/script&gt;</code></pre>
                 </div>
+
+                <!-- 參數說明（只放卡片三最下方） -->
+                <h3 data-i18n="params.title">
+                    自訂您的 AI Chatbot 參數，實現無縫整合
+                </h3>
+                <table class="param-table" aria-describedby="param-desc">
+                    <thead>
+                        <tr>
+                            <th data-i18n="params.th1">屬性</th>
+                            <th data-i18n="params.th2">必填</th>
+                            <th data-i18n="params.th4">說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>src</code></td>
+                            <td><span data-i18n="required">必填</span></td>
+                            <td data-i18n="params.src">
+                                載入 AI chatbot 嵌入核心腳本。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-site</code></td>
+                            <td><span data-i18n="required">必填</span></td>
+                            <td data-i18n="params.site">您的網站 ID。</td>
+                        </tr>
+                        <tr>
+                            <td><code>data-position</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.position">
+                                浮動按鈕位置（預設：右下）。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-accent</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.accent">
+                                品牌主色（HEX/RGB）。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-width</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.width">聊天面板寬度。</td>
+                        </tr>
+                        <tr>
+                            <td><code>data-height</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.height">聊天面板高度。</td>
+                        </tr>
+                        <tr>
+                            <td><code>data-z</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.z">Z-index 以確保置頂。</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="param-desc" class="inline-note">
+                    ＊如未設定，將使用預設值（位置：<code>bottom-right</code>、寬：<code>360</code>、高：<code>520</code>、z-index：<code>2147483000</code>）
+                </p>
             </section>
 
             <!-- 卡片四：捐款 -->
