@@ -383,6 +383,11 @@
                 border-radius: 14px;
                 padding: clamp(16px, 4vw, 24px);
                 box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
+                color: var(--text);
+                transition:
+                    background-color 0.3s,
+                    color 0.3s,
+                    border-color 0.3s;
             }
 
             /* === Hero === */
@@ -582,6 +587,7 @@
                     min-width: 0;
                 }
             }
+
             /* === 只針對卡片二（#card-generate）修正輸入區排版 === */
             #card-generate .field {
                 display: grid;
@@ -615,6 +621,50 @@
 
             #card-generate .field .btn {
                 justify-self: center;
+            }
+
+            /* === 卡片四（#card-donation）風格統一 === */
+            #card-donation .field {
+                display: grid;
+                grid-template-columns: 1fr;
+                row-gap: 8px;
+                width: 100%;
+            }
+
+            #card-donation .notice-info {
+                background: rgba(37, 99, 235, 0.1);
+                border: 2px solid var(--primary);
+                border-radius: 10px;
+                padding: 12px 16px;
+                margin: 12px 0;
+                font-weight: 700;
+                color: var(--primary);
+            }
+
+            #card-donation input[type="email"] {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: var(--card);
+                color: var(--text);
+                transition:
+                    border-color 0.3s,
+                    background-color 0.3s;
+            }
+
+            #card-donation input[type="email"]:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+            }
+
+            /* 確保按鈕圖示適配主題 */
+            #card-donation .btn.primary img {
+                filter: brightness(0) invert(1); /* 暗模式下圖示反轉 */
+            }
+            [data-theme="dark"] #card-donation .btn.primary img {
+                filter: none; /* 暗模式下恢復原圖 */
             }
         </style>
     </head>
@@ -752,24 +802,37 @@
             </section>
 
             <!-- 卡片四：捐款 -->
-            <section class="card hidden" id="card-donation">
+            <section class="card" id="card-donation" style="display: none">
+                <!-- 初始隱藏，與其他卡片一致 -->
                 <h2 data-i18n="donation.title">支持我們：使用加密貨幣捐款</h2>
                 <p data-i18n="donation.note">
-                    感謝您的支持！請輸入 email 並點擊按鈕，您的捐款將幫助我們持續改進 AI Chatbot。
+                    感謝您的支持！請輸入 email
+                    並點擊按鈕，您的捐款將幫助我們持續改進 AI Chatbot。
                 </p>
                 <div class="field">
-                    <label for="donation-email" data-i18n="donation.emailLabel">您的 Email</label>
+                    <label for="donation-email" data-i18n="donation.emailLabel"
+                        >您的 Email</label
+                    >
                     <input
                         type="email"
                         id="donation-email"
                         placeholder="輸入您的電子郵件..."
                         data-i18n-ph="donation.emailPh"
+                        style="
+                            width: 100%;
+                            padding: 8px;
+                            border: 1px solid var(--border);
+                            border-radius: 8px;
+                            background: var(--card);
+                            color: var(--text);
+                        "
                     />
                     <div class="notice-info" data-i18n="donation.emailNote">
-                        請輸入您註冊時使用的 email，NOWPayments 會在新分頁要求再次確認。這是測試模式，不會進行真實捐款。
+                        請輸入您註冊時使用的 email，NOWPayments
+                        會在新分頁要求再次確認。這是測試模式，不會進行真實捐款。
                     </div>
                     <a
-                        href="javascript:void(0)" <!-- 暫時禁用默認 href，改由 JS 控制 -->
+                        href="javascript:void(0)"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="btn primary"
@@ -787,7 +850,6 @@
                         />
                     </a>
                 </div>
-                <div id="donation-widget" class="hidden"></div> <!-- 可移除 -->
             </section>
         </main>
 
@@ -1267,7 +1329,8 @@
                     const parts = key.split(".");
                     let v = T;
                     for (const p of parts) v = v?.[p];
-                    if (typeof v === "string") el.setAttribute("placeholder", v);
+                    if (typeof v === "string")
+                        el.setAttribute("placeholder", v);
                 });
                 document.documentElement.setAttribute("lang", CUR_LANG);
                 setCodeHints();
@@ -1795,32 +1858,50 @@
             })();
 
             (function bindDonationFlow() {
-              const btnDonation = document.getElementById("btn-donation");
-                  if (!btnDonation) return;
+                const btnDonation = document.getElementById("btn-donation");
+                if (!btnDonation) return;
 
-                  btnDonation.addEventListener("click", (e) => {
-                      e.preventDefault(); // 阻止默認行為
-                      const T = STR[CUR_LANG] || STR["en"];
-                      const email = getCookie("verifiedEmail");
-                      const donationEmail = document.getElementById("donation-email").value.trim();
-                      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                btnDonation.addEventListener("click", (e) => {
+                    e.preventDefault(); // 阻止默認行為
+                    const T = STR[CUR_LANG] || STR["en"];
+                    const donationEmail = document
+                        .getElementById("donation-email")
+                        .value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                      if (!email || !donationEmail || donationEmail !== email || !emailRegex.test(donationEmail)) {
-                          toast(T.common.error);
-                          return;
-                      }
+                    if (!donationEmail || !emailRegex.test(donationEmail)) {
+                        toast(T.common.error);
+                        return;
+                    }
 
-                      // 動態生成 URL 並在新分頁開啟
-                      const baseUrl = "https://sandbox.nowpayments.io/donation";
-                      const params = new URLSearchParams({
-                          api_key: "EEYQJ8N-Z5K4YXW-GSDXE0C-B86TVX8",
-                          source: "lk_donation",
-                          medium: "referral",
-                          email: encodeURIComponent(donationEmail)
-                      }).toString();
-                      const donationUrl = `${baseUrl}?${params}`;
-                      window.open(donationUrl, "_blank", "noopener,noreferrer");
-                  });
+                    const baseUrl = "https://sandbox.nowpayments.io/donation";
+                    const params = new URLSearchParams({
+                        api_key: "EEYQJ8N-Z5K4YXW-GSDXE0C-B86TVX8",
+                        source: "lk_donation",
+                        medium: "referral",
+                        email: encodeURIComponent(donationEmail),
+                    }).toString();
+                    const donationUrl = `${baseUrl}?${params}`;
+
+                    try {
+                        const newWindow = window.open(
+                            donationUrl,
+                            "_blank",
+                            "noopener,noreferrer",
+                        );
+                        if (
+                            !newWindow ||
+                            newWindow.closed ||
+                            typeof newWindow.closed === "undefined"
+                        ) {
+                            console.warn("Popup blocked or failed to open");
+                            toast(T.donation.widgetError);
+                        }
+                    } catch (error) {
+                        console.error("Window open error:", error);
+                        toast(T.donation.widgetError);
+                    }
+                });
             })();
 
             applyLang();
