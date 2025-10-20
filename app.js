@@ -12,6 +12,7 @@ const sanitizeHtml = require('sanitize-html');
 const cache = require('memory-cache');
 const path = require('path');
 const AWS = require('aws-sdk');
+const CryptoJS = require('crypto-js');
 
 const ses = new AWS.SES({ region: 'ap-southeast-1' });
 
@@ -31,6 +32,22 @@ require("./start")().then(() => {
   app.proxy = true;
 
   app.use(async (ctx, next) => {
+
+    // 如果是 /api/nowpayments-ipn，檢查 NOWPayments 來源並跳過 X-Origin-Verify
+    if (ctx.path === '/nowpayments-ipn') {
+        const origin = ctx.get('Origin') || ctx.get('Referer') || '';
+        const hasSignature = ctx.get('x-nowpayments-sig');
+
+        // 驗證請求是否來自 NOWPayments
+        if (origin.includes('nowpayments.io') && hasSignature) {
+            return await next(); // 允許通過
+        } else {
+            console.log('Invalid NOWPayments IPN request:', { origin, hasSignature });
+            ctx.status = 403;
+            ctx.body = { error: 'Forbidden: Invalid NOWPayments source' };
+            return;
+        }
+    }
 
     const token = ctx.get('X-Origin-Verify');
     // 注意：這裡做簡單相等比較即可；如需更嚴謹可實作 constant-time compare
@@ -256,9 +273,81 @@ require("./start")().then(() => {
           },
         );
 
-      ctx.body = { siteId:check.siteId };
+      ctx.body = { siteId:check.siteId,code: '3' };
+
     });
 
+    router.post('/nowpayments-ipn', async (ctx) => {
+        ctx.status = 200;
+        const receivedSig = ctx.get('x-nowpayments-sig');
+        const body = ctx.request.body;
+
+        // 驗證 IPN 簽名
+        const sortedBody = JSON.stringify(body, Object.keys(body).sort());
+        const pen_key = 'q1hRYv1fjSjwfel8g4sMmWFTffojA1IP';
+        const computedSig = CryptoJS.HmacSHA512(sortedBody, pen_key).toString(CryptoJS.enc.Hex);
+
+        if (receivedSig !== computedSig) {
+            console.log('Invalid IPN signature');
+            ctx.status = 401;
+            ctx.body = { error: 'Invalid signature' };
+            return;
+        }
+
+        // 提取付款資料
+        const {
+            payment_id,
+            payment_status,
+            price_amount,
+            pay_currency,
+            order_id,
+            payee_email,
+            ip_address
+        } = body;
+
+        if (!payee_email || !payment_id || !payment_status) {
+            console.log('Missing required fields');
+            ctx.status = 400;
+            ctx.body = { error: 'Missing required fields' };
+            return;
+        }
+
+      console.log('nowpayments-ipn',JSON.stringify(body));
+      ctx.body = 'OK';
+
+        // try {
+        //     // 查找對應的 siteId
+        //     const user = await Lib.mongoDB.Client.collection('ai_secretary')
+        //         .findOne({ email: payee_email });
+
+        //     if (!user) {
+        //         console.log('User not found for email:', payee_email);
+        //         ctx.status = 400;
+        //         ctx.body = { error: 'User not found' };
+        //         return;
+        //     }
+
+        //     // 儲存捐款記錄
+        //     await Lib.mongoDB.Client.collection('donations').insertOne({
+        //         email: payee_email,
+        //         siteId: user.siteId,
+        //         paymentId: payment_id,
+        //         amount: price_amount,
+        //         currency: pay_currency,
+        //         status: payment_status,
+        //         ipAddress: ip_address,
+        //         createdAt: new Date()
+        //     });
+
+        //     console.log(`Donation recorded: ${payee_email}, ${payment_id}, ${payment_status}`);
+        //     ctx.status = 200;
+        //     ctx.body = 'OK';
+        // } catch (err) {
+        //     console.error('IPN processing error:', err);
+        //     ctx.status = 500;
+        //     ctx.body = { error: 'Internal Server Error' };
+        // }
+    });
 
   router.post('/query', queryLimiter,async (ctx) => {
 

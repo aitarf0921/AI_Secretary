@@ -16,7 +16,6 @@
             content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語智慧客服與 AI 秘書服務。支援 AI 聊天、AI 助理、AI 小幫手、AI 代理，免費體驗。"
         />
         <meta name="application-name" content="AI Chatbot" />
-        <!--<meta name="author" content="AiTarf Ltd. (鈊塔科技)" />-->
         <meta
             name="robots"
             content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -44,11 +43,9 @@
             content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語支援與 AI 助理服務。AI 聊天、秘書、AI 助理、AI 小幫手、AI 代理，皆可免費試用。"
         />
         <meta property="og:url" content="https://chatbot.aitarf.us/" />
-        <!--<meta property="og:image" content="https://chatbot.aitarf.us/og-image.jpg" />-->
-        <!--<meta property="og:image:alt" content="AI Chatbot widget 示例圖片" />-->
         <meta property="og:locale" content="zh_TW" />
 
-        <!-- JSON-LD（單一 @graph；只含你的五個關鍵詞，並四語化） -->
+        <!-- JSON-LD -->
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -214,22 +211,18 @@
                             { "@value": "AI 聊天", "@language": "zh-CN" },
                             { "@value": "AIチャット", "@language": "ja" },
                             { "@value": "AI chat", "@language": "en" },
-
                             { "@value": "秘書", "@language": "zh-TW" },
                             { "@value": "秘书", "@language": "zh-CN" },
                             { "@value": "秘書", "@language": "ja" },
                             { "@value": "secretary", "@language": "en" },
-
                             { "@value": "AI 助理", "@language": "zh-TW" },
                             { "@value": "AI 助理", "@language": "zh-CN" },
                             { "@value": "AIアシスタント", "@language": "ja" },
                             { "@value": "AI assistant", "@language": "en" },
-
                             { "@value": "AI 小幫手", "@language": "zh-TW" },
                             { "@value": "AI 小帮手", "@language": "zh-CN" },
                             { "@value": "AIヘルパー", "@language": "ja" },
                             { "@value": "AI helper", "@language": "en" },
-
                             { "@value": "AI 代理", "@language": "zh-TW" },
                             { "@value": "AI 代理", "@language": "zh-CN" },
                             { "@value": "AIエージェント", "@language": "ja" },
@@ -559,8 +552,8 @@
             /* === 卡片一好處表以最長行為基準置中（不影響按鈕） === */
             @media (min-width: 768px) {
                 .hero .benefits {
-                    display: grid; /* 改回 block-level grid，不影響按鈕排版 */
-                    width: fit-content; /* 以最長行為基準置中 */
+                    display: grid;
+                    width: fit-content;
                     max-width: 100%;
                     margin: clamp(12px, 3vw, 16px) auto;
                     justify-items: start;
@@ -591,15 +584,15 @@
             }
             /* === 只針對卡片二（#card-generate）修正輸入區排版 === */
             #card-generate .field {
-                display: grid; /* 單欄、逐行排列 */
+                display: grid;
                 grid-template-columns: 1fr;
-                row-gap: 8px; /* 元素間距 */
+                row-gap: 8px;
                 width: 100%;
             }
 
             #card-generate .field label {
-                margin: 0; /* 與下方元素間距已由 row-gap 控制 */
-                display: flex; /* 若未來放副標或提示，也能左右分布 */
+                margin: 0;
+                display: flex;
                 justify-content: space-between;
                 align-items: center;
                 width: 100%;
@@ -609,19 +602,19 @@
                 width: 100%;
                 box-sizing: border-box;
                 display: block;
-                min-height: 140px; /* 沿用你的高度設定 */
+                min-height: 140px;
                 resize: vertical;
             }
 
             #card-generate .field .counter {
-                justify-self: end; /* 計數器置於輸入框下方、靠右 */
+                justify-self: end;
                 font-size: 0.85rem;
                 color: var(--muted);
                 line-height: 1;
             }
 
             #card-generate .field .btn {
-                justify-self: center; /* 維持你的按鈕置中風格 */
+                justify-self: center;
             }
         </style>
     </head>
@@ -757,6 +750,38 @@
 &gt;&lt;/script&gt;</code></pre>
                 </div>
             </section>
+
+            <!-- 卡片四：捐款 -->
+            <section class="card hidden" id="card-donation">
+                <h2 data-i18n="donation.title">支持我們：使用加密貨幣捐款</h2>
+                <p data-i18n="donation.note">
+                    感謝您的支持！請輸入 email
+                    並透過加密貨幣捐款，您的捐款將幫助我們持續改進 AI Chatbot。
+                </p>
+                <div class="field">
+                    <label for="donation-email" data-i18n="donation.emailLabel"
+                        >您的 Email</label
+                    >
+                    <input
+                        type="email"
+                        id="donation-email"
+                        placeholder="輸入您的電子郵件..."
+                        data-i18n-ph="donation.emailPh"
+                    />
+                    <div class="notice-info" data-i18n="donation.emailNote">
+                        請輸入您註冊時使用的 email，NOWPayments
+                        會要求再次確認。這是測試模式，不會進行真實捐款。
+                    </div>
+                    <button
+                        class="btn primary"
+                        id="btn-donation"
+                        data-i18n="donation.btn"
+                    >
+                        顯示測試捐款 Widget
+                    </button>
+                </div>
+                <div id="donation-widget" class="hidden"></div>
+            </section>
         </main>
 
         <footer class="site-footer" role="contentinfo">
@@ -783,23 +808,18 @@
             // ===== 強制重置：卸載舊 widget、清 DOM、清快取與狀態 =====
             async function hardResetWidget() {
                 try {
-                    // 若你的 loader 暴露 API，優先呼叫（未暴露則不會拋錯）
                     if (
                         window.AIHelper &&
                         typeof window.AIHelper.destroy === "function"
                     ) {
                         await window.AIHelper.destroy();
                     }
-                } catch (e) {
-                    // 靜默忽略
-                }
+                } catch (e) {}
 
-                // 1) 移除所有舊的 loader 腳本
                 document
                     .querySelectorAll('script[src*="ai-helper-loader.js"]')
                     .forEach((s) => s.remove());
 
-                // 2) 移除可能存在的舊容器 / 啟動器 / 面板 / iframe
                 const selectors = [
                     "#ai-helper-root",
                     ".ai-helper-root",
@@ -814,7 +834,6 @@
                     } catch {}
                 });
 
-                // 3) 清理對話/開關狀態（依你的命名習慣可擴充）
                 const shouldClear = (k) =>
                     /^(aiw_|aihelper_|ai-helper|aitarf_)/i.test(k);
                 try {
@@ -828,12 +847,11 @@
                     });
                 } catch {}
 
-                // 4) 小延遲，確保瀏覽器把 DOM/快取變更 flush 完
                 await new Promise((r) => setTimeout(r, 0));
             }
 
             // ==============================
-            // i18n 多國語系字串（保留你原本結構）
+            // i18n 多國語系字串
             // ==============================
             const STR = {
                 "zh-TW": {
@@ -904,6 +922,16 @@
                         toastTooShort: "內容過短，至少需 20 個字。",
                         rateLimited: "操作太頻繁，請稍後再試。",
                     },
+                    donation: {
+                        title: "支持我們：使用加密貨幣捐款",
+                        note: "感謝您的支持！請輸入 email 並透過加密貨幣捐款，您的捐款將幫助我們持續改進 AI Chatbot。",
+                        emailLabel: "您的 Email",
+                        emailPh: "輸入您的電子郵件...",
+                        emailNote:
+                            "請輸入您註冊時使用的 email，NOWPayments 會要求再次確認。這是測試模式，不會進行真實捐款。",
+                        btn: "顯示測試捐款 Widget",
+                        widgetError: "無法載入測試捐款 Widget，請稍後再試。",
+                    },
                     footer: "AI Chatbot — 立即免費開始",
                 },
                 "zh-CN": {
@@ -973,6 +1001,16 @@
                         toastEmpty: "请先输入一些内容。",
                         toastTooShort: "内容过短，至少 20 字。",
                         rateLimited: "操作过于频繁，请稍后重试。",
+                    },
+                    donation: {
+                        title: "支持我们：使用加密货币捐款",
+                        note: "感谢您的支持！请输入 email 并通过加密货币捐款，您的捐款将帮助我们持续改进 AI Chatbot。",
+                        emailLabel: "您的 Email",
+                        emailPh: "输入您的电子邮件...",
+                        emailNote:
+                            "请输入您注册时使用的 email，NOWPayments 会要求再次确认。这是测试模式，不会进行真实捐款。",
+                        btn: "显示测试捐款 Widget",
+                        widgetError: "无法加载测试捐款 Widget，请稍后再试。",
                     },
                     footer: "AI Chatbot — 立即免费开始",
                 },
@@ -1047,6 +1085,17 @@
                         toastEmpty: "ナレッジを入力してください。",
                         toastTooShort: "20 文字以上で入力してください。",
                         rateLimited: "操作が頻繁です。少し待ってください。",
+                    },
+                    donation: {
+                        title: "サポート：暗号通貨で寄付",
+                        note: "ご支援ありがとうございます！メールアドレスを入力し、暗号通貨で寄付してください。寄付は AI Chatbot の改善に役立ちます。",
+                        emailLabel: "あなたのメールアドレス",
+                        emailPh: "メールアドレスを入力...",
+                        emailNote:
+                            "登録時に使用したメールアドレスを入力してください。NOWPayments で再確認が必要です。これはテストモードで、実際の寄付は行われません。",
+                        btn: "テスト寄付ウィジェットを表示",
+                        widgetError:
+                            "テスト寄付ウィジェットの読み込みに失敗しました。後でもう一度お試しください。",
                     },
                     footer: "AI Chatbot — 今すぐ無料で開始",
                 },
@@ -1123,6 +1172,17 @@
                         toastEmpty: "Please enter some knowledge first.",
                         toastTooShort: "Content too short (min 20 chars).",
                         rateLimited: "Too many attempts. Please wait.",
+                    },
+                    donation: {
+                        title: "Support Us: Donate with Cryptocurrency",
+                        note: "Thank you for your support! Enter your email and donate via cryptocurrency to help us improve AI Chatbot.",
+                        emailLabel: "Your Email",
+                        emailPh: "Enter your email...",
+                        emailNote:
+                            "Please use the same email as registered. NOWPayments will require confirmation. This is test mode, no real donation will occur.",
+                        btn: "Show Test Donation Widget",
+                        widgetError:
+                            "Failed to load test donation widget. Please try again later.",
                     },
                     footer: "AI Chatbot — Start free today",
                 },
@@ -1233,7 +1293,6 @@
             function toast(msg) {
                 const t = document.createElement("div");
                 t.className = "toast";
-                // 簡易樣式，避免引入新風格
                 t.style.cssText =
                     "position:fixed;left:50%;top:16px;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;z-index:3000;opacity:0;transition:opacity .2s";
                 t.textContent = msg;
@@ -1284,9 +1343,8 @@
                             toast(T.common.copied);
                         });
                     }
-                    // 也支援點整塊（維持你原本 UX）
                     box.addEventListener("click", async (e) => {
-                        if (e.target.closest(".copy-btn")) return; // 已在上方處理
+                        if (e.target.closest(".copy-btn")) return;
                         await copyText(getter());
                         toast(T.common.copied);
                     });
@@ -1340,22 +1398,16 @@
                 accent,
                 more = WIDGET_DEFAULTS,
             ) {
-                // 先把舊的實例與狀態完全清掉
                 await hardResetWidget();
-
-                // 再掛上新的 loader
                 const s = document.createElement("script");
                 s.src = WIDGET_SRC;
                 s.defer = true;
-
-                // 套用新的屬性（位置、品牌色、尺寸、z-index 等）
                 if (more.position) s.dataset.position = more.position;
                 s.dataset.site = siteId;
                 if (accent) s.dataset.accent = accent;
                 if (more.width) s.dataset.width = more.width;
                 if (more.height) s.dataset.height = more.height;
                 if (more.z) s.dataset.z = more.z;
-
                 document.body.appendChild(s);
             }
 
@@ -1377,7 +1429,6 @@
                 }
             }
 
-            // Email 驗證流程
             let codeCountdown = null;
 
             function showEmailModal() {
@@ -1592,6 +1643,7 @@
                 const COOLDOWN_MS = 1500;
                 let isBusy = false;
                 let lastClickAt = 0;
+
                 function setCreateBtnState(state) {
                     const Tt = (STR[CUR_LANG] || STR["en"]).create;
                     if (state === "loading") {
@@ -1609,6 +1661,7 @@
                             Tt.btn || "Generate AI Chatbot Widget Code";
                     }
                 }
+
                 btnCreate.addEventListener("click", async () => {
                     const Tt = (STR[CUR_LANG] || STR["en"]).create;
                     const now = Date.now();
@@ -1676,6 +1729,26 @@
                             );
                             setCookie("knowledgeContext", v, 30);
                             updateCTAByProgress();
+
+                            // 檢查 data.code == "3"，顯示 #card-donation
+                            if (data.code === "3") {
+                                const cardDonation =
+                                    document.getElementById("card-donation");
+                                if (cardDonation) {
+                                    cardDonation.classList.remove("hidden");
+                                    const donationEmail =
+                                        document.getElementById(
+                                            "donation-email",
+                                        );
+                                    if (donationEmail) {
+                                        donationEmail.value = email || "";
+                                    }
+                                    cardDonation.scrollIntoView({
+                                        behavior: "smooth",
+                                    });
+                                }
+                            }
+
                             await copyText(full);
                             const T = STR[CUR_LANG] || STR["en"];
                             toast(T.common.copied);
@@ -1696,6 +1769,52 @@
                             lastClickAt = 0;
                         }, COOLDOWN_MS);
                     }
+                });
+            })();
+
+            (function bindDonationFlow() {
+                const btnDonation = document.getElementById("btn-donation");
+                if (!btnDonation) return;
+
+                btnDonation.addEventListener("click", () => {
+                    const T = STR[CUR_LANG] || STR["en"];
+                    const email = getCookie("verifiedEmail");
+                    const donationEmail = document
+                        .getElementById("donation-email")
+                        .value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    if (
+                        !email ||
+                        !donationEmail ||
+                        donationEmail !== email ||
+                        !emailRegex.test(donationEmail)
+                    ) {
+                        toast(T.common.error);
+                        return;
+                    }
+
+                    const donationWidget =
+                        document.getElementById("donation-widget");
+                    if (!donationWidget) return;
+
+                    // 使用新的嵌入式 Widget 端點
+                    const sandboxApiKey = "EEYQJ8N-Z5K4YXW-GSDXE0C-B86TVX8"; // 替換為你的 Sandbox API Key
+                    donationWidget.innerHTML = `
+                        <iframe
+                            src="https://sandbox.nowpayments.io/embeds/donation-widget?api_key=${encodeURIComponent(sandboxApiKey)}&source=lk_donation&medium=referral"
+                            frameborder="0"
+                            scrolling="no"
+                            style="overflow-y: hidden;"
+                            width="354"
+                            height="680"
+                        ></iframe>
+                    `;
+                    donationWidget.classList.remove("hidden");
+
+                    const cardDonation =
+                        document.getElementById("card-donation");
+                    cardDonation.scrollIntoView({ behavior: "smooth" });
                 });
             })();
 
