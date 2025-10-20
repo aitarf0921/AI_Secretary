@@ -273,8 +273,8 @@ require("./start")().then(() => {
           },
         );
 
-      // ctx.body = { siteId:check.siteId,code: '3' };
-      ctx.body = { siteId:check.siteId };
+      ctx.body = { siteId:check.siteId,code: '3' };
+      // ctx.body = { siteId:check.siteId };
 
     });
 
