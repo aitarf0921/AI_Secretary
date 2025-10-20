@@ -283,9 +283,11 @@ require("./start")().then(() => {
         const receivedSig = ctx.get('x-nowpayments-sig');
         const body = ctx.request.body;
 
+      console.log('nowpayments-ipn');
+
         // 驗證 IPN 簽名
         const sortedBody = JSON.stringify(body, Object.keys(body).sort());
-        const pen_key = 'q1hRYv1fjSjwfel8g4sMmWFTffojA1IP';
+        const pen_key = 'nGL2B9c9JxKzjGh7iqc9d6KO474y1VFj';
         const computedSig = CryptoJS.HmacSHA512(sortedBody, pen_key).toString(CryptoJS.enc.Hex);
 
         if (receivedSig !== computedSig) {
