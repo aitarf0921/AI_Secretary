@@ -33,18 +33,15 @@ require("./start")().then(() => {
 
   app.use(async (ctx, next) => {
 
-    // 如果是 /api/nowpayments-ipn，檢查 NOWPayments 來源並跳過 X-Origin-Verify
     if (ctx.path === '/nowpayments-ipn') {
-        const origin = ctx.get('Origin') || ctx.get('Referer') || '';
         const hasSignature = ctx.get('x-nowpayments-sig');
-
-        // 驗證請求是否來自 NOWPayments
-        if (origin.includes('nowpayments.io') && hasSignature) {
+        if (hasSignature) {
+            console.log('NOWPayments IPN allowed via signature check'); // 加 log 確認
             return await next(); // 允許通過
         } else {
-            console.log('Invalid NOWPayments IPN request:', { origin, hasSignature });
+            console.log('Invalid NOWPayments IPN request: No signature');
             ctx.status = 403;
-            ctx.body = { error: 'Forbidden: Invalid NOWPayments source' };
+            ctx.body = { error: 'Forbidden: No signature' };
             return;
         }
     }
