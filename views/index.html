@@ -754,6 +754,45 @@
                 color: var(--text);
                 border: 1px solid var(--border);
             }
+            /* 1) 關閉原生外觀，避免瀏覽器套白底 */
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            input[type="password"],
+            textarea,
+            select {
+                -webkit-appearance: none;
+                appearance: none;
+                background-clip: padding-box; /* 避免 iOS 內層泛白 */
+            }
+
+            /* 1-1) Autofill 會把底色刷成白或淡黃，這裡強制回主題色 */
+            input:-webkit-autofill,
+            textarea:-webkit-autofill,
+            select:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 1000px var(--card) inset !important;
+                -webkit-text-fill-color: var(--text) !important;
+                caret-color: var(--text);
+                transition: background-color 9999s ease-in-out 0s; /* 覆蓋動畫閃爍 */
+            }
+
+            /* 1-2) 讓 #card-generate 的 textarea 在任何情況都以主題色呈現（提高權重, 防 UA 覆蓋） */
+            #card-generate .field textarea {
+                background: var(--card) !important;
+                color: var(--text) !important;
+                border: 1px solid var(--border) !important;
+            }
+
+            /* 2) 將半透明亮底改為與背景混色，避免深色主題發白 */
+            .notice-info {
+                /* 原：background: rgba(37, 99, 235, 0.1); */
+                background: color-mix(in srgb, var(--primary) 12%, var(--bg));
+            }
+
+            .param-table thead th {
+                /* 原：background: rgba(37, 99, 235, 0.06); */
+                background: color-mix(in srgb, var(--primary) 8%, var(--bg));
+            }
         </style>
     </head>
     <body data-theme="light">
