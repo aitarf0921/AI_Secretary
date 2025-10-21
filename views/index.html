@@ -307,15 +307,12 @@
                 transition:
                     background-color 0.3s,
                     color 0.3s;
-            }
-            /* 小優化：讓原生元件跟著深/淺主題與品牌色 */
-            body {
-                color-scheme: light dark; /* 原生控制元件、捲動條等自動切深色 */
+                /* 🎨 額外小優化（不改行為） */
+                color-scheme: light dark; /* 讓瀏覽器控制元件跟著主題變色 */
                 accent-color: var(
                     --primary
-                ); /* 核取方塊、單選鈕、range/progress 的重點色 */
+                ); /* 核取方塊、radio、range、progress 跟品牌主色一致 */
             }
-
             .hidden {
                 display: none !important;
             }
