@@ -314,6 +314,8 @@
                 accent-color: var(
                     --primary
                 ); /* 核取方塊、radio、range、progress 跟品牌主色一致 */
+                width: 100%; /* 修復：確保 body 填滿全螢幕寬度 */
+                overflow-x: hidden; /* 修復：防止水平滾動露出白色 */
             }
             .hidden {
                 display: none !important;
