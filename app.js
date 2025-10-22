@@ -132,6 +132,11 @@ require("./start")().then(() => {
     await ctx.render('index');
   });
 
+  router.get('/google2b49214e91195162.html', async (ctx) => {
+    ctx.status = 200;
+    await ctx.render('google2b49214e91195162');
+  });
+
   router.get('/widget', async (ctx) => {
     ctx.status = 200;
     await ctx.render('widget');
