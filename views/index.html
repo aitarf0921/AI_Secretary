@@ -26,6 +26,11 @@
 
         <!-- Canonical -->
         <link rel="canonical" href="https://chatbot.aitarf.us/" />
+        <link
+            rel="alternate"
+            href="https://chatbot.aitarf.us/"
+            hreflang="x-default"
+        />
 
         <!-- 資源 -->
         <link rel="preconnect" href="https://chatbot.aitarf.us" crossorigin />
@@ -57,20 +62,24 @@
                         "@type": "Organization",
                         "@id": "https://chatbot.aitarf.us/#org",
                         "name": [
-                            { "@value": "AI Chatbot", "@language": "en" },
-                            { "@value": "AI Chatbot", "@language": "zh-TW" },
-                            { "@value": "AI Chatbot", "@language": "zh-CN" },
-                            { "@value": "AI Chatbot", "@language": "ja" }
+                            {
+                                "@value": "AiTarf Ltd. (鈊塔科技)",
+                                "@language": "zh-TW"
+                            },
+                            { "@value": "AiTarf Ltd.", "@language": "en" },
+                            {
+                                "@value": "AiTarf 科技有限公司",
+                                "@language": "zh-CN"
+                            },
+                            { "@value": "AiTarf株式会社", "@language": "ja" }
                         ],
-                        "alternateName": [
-                            { "@value": "AI chatbot", "@language": "en" },
-                            { "@value": "AI 聊天機器人", "@language": "zh-TW" },
-                            { "@value": "AI 聊天机器人", "@language": "zh-CN" },
-                            { "@value": "AIチャットボット", "@language": "ja" }
-                        ],
-                        "legalName": "AiTarf Ltd. (鈊塔科技)",
                         "url": "https://chatbot.aitarf.us/",
-                        "brand": "AI Chatbot"
+                        "logo": "https://chatbot.aitarf.us/img/logo.png",
+                        "brand": "AI Chatbot",
+                        "sameAs": [
+                            "https://x.com/_aitarf",
+                            "https://www.linkedin.com/company/aitarf"
+                        ]
                     },
                     {
                         "@type": "WebSite",
@@ -78,182 +87,135 @@
                         "url": "https://chatbot.aitarf.us/",
                         "name": [
                             { "@value": "AI Chatbot", "@language": "en" },
-                            { "@value": "AI Chatbot", "@language": "zh-TW" },
-                            { "@value": "AI Chatbot", "@language": "zh-CN" },
-                            { "@value": "AI Chatbot", "@language": "ja" }
-                        ],
-                        "alternateName": [
-                            { "@value": "AI chatbot", "@language": "en" },
                             { "@value": "AI 聊天機器人", "@language": "zh-TW" },
                             { "@value": "AI 聊天机器人", "@language": "zh-CN" },
                             { "@value": "AIチャットボット", "@language": "ja" }
                         ],
-                        "publisher": { "@id": "https://chatbot.aitarf.us/#org" }
+                        "inLanguage": ["zh-TW", "zh-CN", "en", "ja"],
+                        "publisher": {
+                            "@id": "https://chatbot.aitarf.us/#org"
+                        },
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "https://chatbot.aitarf.us/search?q={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
                     },
                     {
                         "@type": "SoftwareApplication",
                         "@id": "https://chatbot.aitarf.us/#app",
                         "name": [
                             { "@value": "AI Chatbot", "@language": "en" },
-                            { "@value": "AI Chatbot", "@language": "zh-TW" },
-                            { "@value": "AI Chatbot", "@language": "zh-CN" },
-                            { "@value": "AI Chatbot", "@language": "ja" }
-                        ],
-                        "alternateName": [
-                            { "@value": "AI chatbot", "@language": "en" },
                             { "@value": "AI 聊天機器人", "@language": "zh-TW" },
-                            { "@value": "AI 聊天机器人", "@language": "zh-CN" },
+                            { "@value": "AI 智能客服", "@language": "zh-CN" },
                             { "@value": "AIチャットボット", "@language": "ja" }
                         ],
+                        "applicationCategory": "BusinessApplication",
+                        "applicationSubCategory": "CustomerSupportApplication",
+                        "operatingSystem": ["Web", "Browser"],
+                        "softwareVersion": "1.0",
+                        "isAccessibleForFree": true,
+                        "url": "https://chatbot.aitarf.us/",
+                        "mainEntityOfPage": "https://chatbot.aitarf.us/",
+                        "author": { "@id": "https://chatbot.aitarf.us/#org" },
+                        "publisher": {
+                            "@id": "https://chatbot.aitarf.us/#org"
+                        },
+                        "provider": { "@id": "https://chatbot.aitarf.us/#org" },
                         "description": [
                             {
-                                "@value": "Easily embed an AI Chatbot widget for 24/7 multilingual support.",
+                                "@value": "AI Chatbot is a multilingual no-code chatbot builder that helps websites create 24/7 customer support bots, lead capture assistants, and marketing automation widgets. Free to try, embed in 5 minutes.",
                                 "@language": "en"
                             },
                             {
-                                "@value": "輕鬆嵌入 AI Chatbot 小工具，提供 24/7 智慧客服與 AI 助理服務。",
+                                "@value": "AI Chatbot 是一款免費的 AI 客服與網站助理工具，支援 AI 聊天、知識庫問答與多語自動回覆。五分鐘快速嵌入，讓官網與電商立即擁有 24/7 智慧客服。",
                                 "@language": "zh-TW"
                             },
                             {
-                                "@value": "轻松嵌入 AI Chatbot 小工具，实现 24/7 智能客服与 AI 助理。",
+                                "@value": "AI Chatbot 是智能客服系统，可在网站快速搭建 AI 对话助手，实现自动回复、客户咨询与多语言支持。适合企业官网、电商及服务平台。",
                                 "@language": "zh-CN"
                             },
                             {
-                                "@value": "AI Chatbot ウィジェットを簡単に埋め込み、24/7 サポートを実現。",
+                                "@value": "AIチャットボットは、コード不要で導入できるAIカスタマーサポートツールです。ウェブサイトに5分で設置でき、24時間自動応答に対応します。",
                                 "@language": "ja"
                             }
                         ],
-                        "about": [
-                            {
-                                "@type": "Thing",
-                                "name": [
-                                    {
-                                        "@value": "AI 聊天",
-                                        "@language": "zh-TW"
-                                    },
-                                    {
-                                        "@value": "AI 聊天",
-                                        "@language": "zh-CN"
-                                    },
-                                    {
-                                        "@value": "AIチャット",
-                                        "@language": "ja"
-                                    },
-                                    { "@value": "AI chat", "@language": "en" }
-                                ]
-                            },
-                            {
-                                "@type": "Thing",
-                                "name": [
-                                    { "@value": "秘書", "@language": "zh-TW" },
-                                    { "@value": "秘书", "@language": "zh-CN" },
-                                    { "@value": "秘書", "@language": "ja" },
-                                    { "@value": "secretary", "@language": "en" }
-                                ]
-                            },
-                            {
-                                "@type": "Thing",
-                                "name": [
-                                    {
-                                        "@value": "AI 助理",
-                                        "@language": "zh-TW"
-                                    },
-                                    {
-                                        "@value": "AI 助理",
-                                        "@language": "zh-CN"
-                                    },
-                                    {
-                                        "@value": "AIアシスタント",
-                                        "@language": "ja"
-                                    },
-                                    {
-                                        "@value": "AI assistant",
-                                        "@language": "en"
-                                    }
-                                ]
-                            },
-                            {
-                                "@type": "Thing",
-                                "name": [
-                                    {
-                                        "@value": "AI 小幫手",
-                                        "@language": "zh-TW"
-                                    },
-                                    {
-                                        "@value": "AI 小帮手",
-                                        "@language": "zh-CN"
-                                    },
-                                    {
-                                        "@value": "AIヘルパー",
-                                        "@language": "ja"
-                                    },
-                                    { "@value": "AI helper", "@language": "en" }
-                                ]
-                            },
-                            {
-                                "@type": "Thing",
-                                "name": [
-                                    {
-                                        "@value": "AI 代理",
-                                        "@language": "zh-TW"
-                                    },
-                                    {
-                                        "@value": "AI 代理",
-                                        "@language": "zh-CN"
-                                    },
-                                    {
-                                        "@value": "AIエージェント",
-                                        "@language": "ja"
-                                    },
-                                    { "@value": "AI agent", "@language": "en" }
-                                ]
-                            }
+                        "keywords": [
+                            "AI Chatbot",
+                            "chatbot builder",
+                            "AI assistant for website",
+                            "AI chatbot plugin",
+                            "free chatbot for business",
+                            "multilingual chatbot",
+                            "customer support automation",
+                            "AI 聊天機器人",
+                            "AI 客服系統",
+                            "智慧客服",
+                            "網站助理",
+                            "AI 小幫手",
+                            "客服系統推薦",
+                            "AI 自動回覆",
+                            "AI 外掛",
+                            "網站客服",
+                            "智能客服系统",
+                            "AI助手",
+                            "AI语音客服",
+                            "网站聊天机器人",
+                            "免费客服系统",
+                            "AI聊天插件",
+                            "网站自动回复",
+                            "AIチャットボット",
+                            "AIカスタマーサポート",
+                            "チャット自動応答",
+                            "無料チャットボット",
+                            "ウェブサイトAI",
+                            "問い合わせ自動化",
+                            "ECサイト カスタマーサポート"
                         ],
-                        "knowsAbout": [
-                            { "@value": "AI 聊天", "@language": "zh-TW" },
-                            { "@value": "AI 聊天", "@language": "zh-CN" },
-                            { "@value": "AIチャット", "@language": "ja" },
-                            { "@value": "AI chat", "@language": "en" },
-                            { "@value": "秘書", "@language": "zh-TW" },
-                            { "@value": "秘书", "@language": "zh-CN" },
-                            { "@value": "秘書", "@language": "ja" },
-                            { "@value": "secretary", "@language": "en" },
-                            { "@value": "AI 助理", "@language": "zh-TW" },
-                            { "@value": "AI 助理", "@language": "zh-CN" },
-                            { "@value": "AIアシスタント", "@language": "ja" },
-                            { "@value": "AI assistant", "@language": "en" },
-                            { "@value": "AI 小幫手", "@language": "zh-TW" },
-                            { "@value": "AI 小帮手", "@language": "zh-CN" },
-                            { "@value": "AIヘルパー", "@language": "ja" },
-                            { "@value": "AI helper", "@language": "en" },
-                            { "@value": "AI 代理", "@language": "zh-TW" },
-                            { "@value": "AI 代理", "@language": "zh-CN" },
-                            { "@value": "AIエージェント", "@language": "ja" },
-                            { "@value": "AI agent", "@language": "en" }
-                        ],
-                        "url": "https://chatbot.aitarf.us/",
-                        "mainEntityOfPage": "https://chatbot.aitarf.us/",
-                        "applicationCategory": [
-                            "BusinessApplication",
-                            "WebApplication"
-                        ],
-                        "additionalType": "https://schema.org/WebApplication",
-                        "operatingSystem": ["Web", "Browser"],
-                        "availableLanguage": ["en", "zh-TW", "zh-CN", "ja"],
-                        "softwareVersion": "1.0",
-                        "isAccessibleForFree": true,
                         "offers": {
                             "@type": "Offer",
                             "price": "0",
                             "priceCurrency": "USD",
                             "url": "https://chatbot.aitarf.us/"
-                        },
-                        "installUrl": "https://chatbot.aitarf.us/",
-                        "author": { "@id": "https://chatbot.aitarf.us/#org" },
-                        "publisher": {
-                            "@id": "https://chatbot.aitarf.us/#org"
-                        },
-                        "provider": { "@id": "https://chatbot.aitarf.us/#org" }
+                        }
+                    },
+                    {
+                        "@type": "FAQPage",
+                        "@id": "https://chatbot.aitarf.us/#faq",
+                        "mainEntity": [
+                            {
+                                "@type": "Question",
+                                "name": "How to create a free AI Chatbot for my website?",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "Generate your widget code and paste it into your site footer — no coding required. AI Chatbot works with any website builder or CMS."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "如何快速建立免費 AI 客服？",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "在本頁輸入您的網站資料即可自動產生嵌入程式碼，五分鐘內完成 AI 客服安裝。"
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "如何在中国网站使用 AI Chatbot？",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "支持中文部署，适用于企业官网、电商及服务网站，具备自动应答与多语言客服功能。"
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "AIチャットボットを自社サイトに導入するには？",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "無料でAIチャットボットを作成し、発行されたスクリプトをサイトに貼り付けるだけで導入できます。"
+                                }
+                            }
+                        ]
                     }
                 ]
             }
