@@ -1,820 +1,2038 @@
 <!doctype html>
 <html lang="zh-TW">
     <head>
+        <link rel="icon" type="image/png" href="/img/logo.png" />
+        <link rel="apple-touch-icon" href="/img/logo.png" />
+
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title data-i18n="title">中嘉寬頻 bb寬頻 | 光纖上網首選</title>
+        <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+        />
+
+        <!-- 基本 -->
+        <title data-i18n="title">
+            AI Chatbot: Embed a 24/7 Smart Assistant on Your Website
+        </title>
         <meta
             name="description"
-            content="中嘉寬頻提供高速光纖上網與數位有線電視，300M 起跳，穩定快速，立即線上申辦！"
+            content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語智慧客服與 AI 秘書服務。支援 AI 聊天、AI 助理、AI 小幫手、AI 代理，免費體驗。"
+        />
+        <meta name="application-name" content="AI Chatbot" />
+        <meta
+            name="robots"
+            content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
         />
 
-        <!-- ==================== Home+ 官方 Favicon ==================== -->
+        <!-- Canonical -->
+        <link rel="canonical" href="https://chatbot.aitarf.us/" />
         <link
-            rel="icon"
-            type="image/png"
-            href="/img/favicon-32x32.png"
-            sizes="32x32"
+            rel="alternate"
+            href="https://chatbot.aitarf.us/"
+            hreflang="x-default"
         />
-        <link
-            rel="icon"
-            type="image/png"
-            href="/img/favicon-16x16.png"
-            sizes="16x16"
-        />
-        <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
 
-        <!-- Font Awesome 6 Free -->
+        <!-- 資源 -->
+        <link rel="preconnect" href="https://chatbot.aitarf.us" crossorigin />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
 
-        <!-- Google Fonts：Noto Sans TC -->
-        <link
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
-            rel="stylesheet"
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="AI Chatbot" />
+        <meta
+            property="og:title"
+            content="AI Chatbot — AI 聊天、秘書、AI 助理、AI 小幫手、AI 代理"
         />
+        <meta
+            property="og:description"
+            content="輕鬆嵌入 AI Chatbot 小工具，提供 24/7 多語支援與 AI 助理服務。AI 聊天、秘書、AI 助理、AI 小幫手、AI 代理，皆可免費試用。"
+        />
+        <meta property="og:url" content="https://chatbot.aitarf.us/" />
+        <meta property="og:locale" content="zh_TW" />
+
+        <!-- JSON-LD -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@graph": [
+                    {
+                        "@type": "Organization",
+                        "@id": "https://chatbot.aitarf.us/#org",
+                        "name": [
+                            {
+                                "@value": "AiTarf Ltd. (鈊塔科技)",
+                                "@language": "zh-TW"
+                            },
+                            { "@value": "AiTarf Ltd.", "@language": "en" },
+                            {
+                                "@value": "AiTarf 科技有限公司",
+                                "@language": "zh-CN"
+                            },
+                            { "@value": "AiTarf株式会社", "@language": "ja" }
+                        ],
+                        "url": "https://chatbot.aitarf.us/",
+                        "logo": "https://chatbot.aitarf.us/img/logo.png",
+                        "brand": "AI Chatbot",
+                        "sameAs": [
+                            "https://x.com/_aitarf",
+                            "https://www.linkedin.com/company/aitarf"
+                        ]
+                    },
+                    {
+                        "@type": "WebSite",
+                        "@id": "https://chatbot.aitarf.us/#website",
+                        "url": "https://chatbot.aitarf.us/",
+                        "name": [
+                            { "@value": "AI Chatbot", "@language": "en" },
+                            { "@value": "AI 聊天機器人", "@language": "zh-TW" },
+                            { "@value": "AI 聊天机器人", "@language": "zh-CN" },
+                            { "@value": "AIチャットボット", "@language": "ja" }
+                        ],
+                        "inLanguage": ["zh-TW", "zh-CN", "en", "ja"],
+                        "publisher": {
+                            "@id": "https://chatbot.aitarf.us/#org"
+                        },
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "https://chatbot.aitarf.us/search?q={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
+                    },
+                    {
+                        "@type": "SoftwareApplication",
+                        "@id": "https://chatbot.aitarf.us/#app",
+                        "name": [
+                            { "@value": "AI Chatbot", "@language": "en" },
+                            { "@value": "AI 聊天機器人", "@language": "zh-TW" },
+                            { "@value": "AI 智能客服", "@language": "zh-CN" },
+                            { "@value": "AIチャットボット", "@language": "ja" }
+                        ],
+                        "applicationCategory": "BusinessApplication",
+                        "applicationSubCategory": "CustomerSupportApplication",
+                        "operatingSystem": ["Web", "Browser"],
+                        "softwareVersion": "1.0",
+                        "isAccessibleForFree": true,
+                        "url": "https://chatbot.aitarf.us/",
+                        "mainEntityOfPage": "https://chatbot.aitarf.us/",
+                        "author": { "@id": "https://chatbot.aitarf.us/#org" },
+                        "publisher": {
+                            "@id": "https://chatbot.aitarf.us/#org"
+                        },
+                        "provider": { "@id": "https://chatbot.aitarf.us/#org" },
+                        "description": [
+                            {
+                                "@value": "AI Chatbot is a multilingual no-code chatbot builder that helps websites create 24/7 customer support bots, lead capture assistants, and marketing automation widgets. Free to try, embed in 5 minutes.",
+                                "@language": "en"
+                            },
+                            {
+                                "@value": "AI Chatbot 是一款免費的 AI 客服與網站助理工具，支援 AI 聊天、知識庫問答與多語自動回覆。五分鐘快速嵌入，讓官網與電商立即擁有 24/7 智慧客服。",
+                                "@language": "zh-TW"
+                            },
+                            {
+                                "@value": "AI Chatbot 是智能客服系统，可在网站快速搭建 AI 对话助手，实现自动回复、客户咨询与多语言支持。适合企业官网、电商及服务平台。",
+                                "@language": "zh-CN"
+                            },
+                            {
+                                "@value": "AIチャットボットは、コード不要で導入できるAIカスタマーサポートツールです。ウェブサイトに5分で設置でき、24時間自動応答に対応します。",
+                                "@language": "ja"
+                            }
+                        ],
+                        "keywords": [
+                            "AI Chatbot",
+                            "chatbot builder",
+                            "AI assistant for website",
+                            "AI chatbot plugin",
+                            "free chatbot for business",
+                            "multilingual chatbot",
+                            "customer support automation",
+                            "AI 聊天機器人",
+                            "AI 客服系統",
+                            "智慧客服",
+                            "網站助理",
+                            "AI 小幫手",
+                            "客服系統推薦",
+                            "AI 自動回覆",
+                            "AI 外掛",
+                            "網站客服",
+                            "智能客服系统",
+                            "AI助手",
+                            "AI语音客服",
+                            "网站聊天机器人",
+                            "免费客服系统",
+                            "AI聊天插件",
+                            "网站自动回复",
+                            "AIチャットボット",
+                            "AIカスタマーサポート",
+                            "チャット自動応答",
+                            "無料チャットボット",
+                            "ウェブサイトAI",
+                            "問い合わせ自動化",
+                            "ECサイト カスタマーサポート"
+                        ],
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "0",
+                            "priceCurrency": "USD",
+                            "url": "https://chatbot.aitarf.us/"
+                        }
+                    },
+                    {
+                        "@type": "FAQPage",
+                        "@id": "https://chatbot.aitarf.us/#faq",
+                        "mainEntity": [
+                            {
+                                "@type": "Question",
+                                "name": "How to create a free AI Chatbot for my website?",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "Generate your widget code and paste it into your site footer — no coding required. AI Chatbot works with any website builder or CMS."
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "如何快速建立免費 AI 客服？",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "在本頁輸入您的網站資料即可自動產生嵌入程式碼，五分鐘內完成 AI 客服安裝。"
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "如何在中国网站使用 AI Chatbot？",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "支持中文部署，适用于企业官网、电商及服务网站，具备自动应答与多语言客服功能。"
+                                }
+                            },
+                            {
+                                "@type": "Question",
+                                "name": "AIチャットボットを自社サイトに導入するには？",
+                                "acceptedAnswer": {
+                                    "@type": "Answer",
+                                    "text": "無料でAIチャットボットを作成し、発行されたスクリプトをサイトに貼り付けるだけで導入できます。"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        </script>
 
         <style>
-            /* ==================== 官方色系（無紅色） ==================== */
             :root {
-                --primary: #4a90e2;
-                --title: #002b5c;
-                --bg: #f5f5f5;
-                --card: #ffffff;
-                --text: #333333;
-                --text-secondary: #666666;
-                --border: #e0e0e0;
-                --radius: 12px;
-                --transition: all 0.3s ease;
-                --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.1);
-                --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.15);
-                --logo-color: #002b5c;
+                --bg: #ffffff;
+                --card: #fff;
+                --text: #1b2838;
+                --muted: #6b7a90;
+                --primary: #2563eb;
+                --ok: #10b981;
+                --border: #e6ecf2;
+                --mono:
+                    ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+                --font-size-base: 16px;
             }
             [data-theme="dark"] {
-                --primary: #5fa7f0;
-                --title: #5fa7f0;
-                --bg: #1e1e1e;
-                --card: #2d2d2d;
-                --text: #e0e0e0;
-                --text-secondary: #aaaaaa;
-                --border: #444444;
-                --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.3);
-                --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.4);
-                --logo-color: #5fa7f0;
+                --bg: #0f172a;
+                --card: #1e293b;
+                --text: #f1f5f9;
+                --muted: #94a3b8;
+                --primary: #3b82f6;
+                --ok: #34d399;
+                --border: #334155;
             }
-
-            *,
-            *::before,
-            *::after {
+            * {
                 box-sizing: border-box;
             }
-            html {
-                scroll-behavior: smooth;
-                font-family: "Noto Sans TC", sans-serif;
+
+            html,
+            body {
+                height: 100%;
             }
             body {
-                margin: 0;
-                padding: 0;
-                background: var(--bg) !important;
-                color: var(--text);
-                line-height: 1.7;
-                min-height: 100vh;
                 display: flex;
                 flex-direction: column;
-                transition: var(--transition);
+                overflow-x: hidden;
+            }
+            html,
+            body {
+                margin: 0;
+                min-height: 100vh;
+                background: var(
+                    --bg
+                ) !important; /* 修復：強制使用 --bg 防止白色背景 */
+                color: var(--text);
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    "Noto Sans TC", "PingFang TC", "Microsoft JhengHei",
+                    "Noto Sans SC", "PingFang SC", "Hiragino Sans",
+                    "Noto Sans JP", Arial, sans-serif;
+                font-size: var(--font-size-base);
+                line-height: 1.6;
+                transition:
+                    background-color 0.3s,
+                    color 0.3s;
+                /* 🎨 額外小優化（不改行為） */
+                color-scheme: light dark; /* 讓瀏覽器控制元件跟著主題變色 */
+                accent-color: var(
+                    --primary
+                ); /* 核取方塊、radio、range、progress 跟品牌主色一致 */
+                width: 100%; /* 修復：確保 body 填滿全螢幕寬度 */
+                overflow-x: hidden; /* 修復：防止水平滾動露出白色 */
+            }
+            .hidden {
+                display: none !important;
             }
 
-            .container {
-                width: 100%;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0 clamp(1rem, 5vw, 2rem);
-            }
-
-            .header {
+            header {
+                padding: clamp(8px, 2vw, 12px) clamp(8px, 4vw, 16px);
+                border-bottom: 1px solid var(--border);
+                background: var(--card);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
                 position: sticky;
                 top: 0;
-                background: var(--bg);
-                z-index: 1000;
-                border-bottom: 1px solid var(--border);
-                backdrop-filter: blur(8px);
+                z-index: 100;
             }
-            .nav {
+            .wrap {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                padding: clamp(0.75rem, 2vw, 1rem) 0;
+                gap: 12px;
+                flex: 1;
+                min-width: 0;
             }
-            .logo img {
-                height: clamp(32px, 5vw, 40px);
+            .brand {
+                font-weight: 800;
+                font-size: clamp(1rem, 4vw, 1.375rem);
+                line-height: 1.2;
+                text-align: center;
             }
-            .menu-toggle {
-                display: none;
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                cursor: pointer;
-                color: var(--text);
-                padding: 0.5rem;
-            }
-            .nav-list {
-                display: flex;
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                gap: clamp(1rem, 3vw, 2rem);
-            }
-            .nav-list a {
-                color: var(--title);
-                text-decoration: none;
-                font-weight: 500;
-                font-size: clamp(0.9rem, 2vw, 1rem);
-            }
-            .nav-list a:hover {
-                color: var(--primary);
-            }
-
-            /* 控制按鈕 */
             .controls {
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
-                margin-right: clamp(0.5rem, 2vw, 1rem); /* 手機右內距 */
+                gap: 8px;
+                margin-left: auto;
             }
-            .controls button,
-            .controls select {
-                color: var(--text) !important;
-                background: var(--card);
+            .lang-select {
+                padding: 6px 12px;
                 border: 1px solid var(--border);
-                padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2vw, 0.8rem);
                 border-radius: 8px;
+                background: var(--card);
+                color: var(--text);
+                font-size: 0.875rem;
                 cursor: pointer;
-                font-size: clamp(0.8rem, 2vw, 0.9rem);
-                transition: var(--transition);
-            }
-            .controls button:hover,
-            .controls select:hover {
-                background: var(--primary);
-                color: white !important;
-                border-color: var(--primary);
+                min-width: 80px;
             }
             .theme-toggle {
+                background: none;
+                border: 1px solid var(--border);
+                border-radius: 50%;
                 width: 40px;
                 height: 40px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text);
+                font-size: 1.1rem;
+            }
+
+            main {
+                max-width: 1120px;
+                margin: 0 auto;
+                padding: clamp(8px, 2vw, 16px);
+                display: flex;
+                flex-direction: column;
+                gap: clamp(24px, 4vw, 32px);
+                flex: 1 0 auto;
+                background: var(
+                    --bg
+                ) !important; /* 修復：強制使用 --bg 確保卡片後面背景正確 */
+                min-height: calc(
+                    100vh - var(--header-height, 60px) -
+                        var(--footer-height, 60px)
+                ); /* 修復：確保填滿視窗 */
+            }
+
+            .card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: clamp(16px, 4vw, 24px);
+                box-shadow: 0 4px 12px rgba(16, 24, 40, 0.08);
+                color: var(--text);
+                transition:
+                    background-color 0.3s,
+                    color 0.3s,
+                    border-color 0.3s;
+            }
+
+            /* === Hero === */
+            .hero {
+                text-align: center;
+                background: linear-gradient(135deg, var(--primary), #3b82f6);
+                color: #fff;
+                padding: clamp(24px, 8vw, 40px);
+                border-radius: 14px;
+            }
+            .hero h1 {
+                white-space: normal;
+                line-height: 1.25;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+
+            .benefits {
+                margin: clamp(12px, 3vw, 16px) auto;
+                display: grid;
+                gap: clamp(12px, 3vw, 16px);
+                justify-items: center;
+                width: 100%;
+                max-width: 720px;
+            }
+            .benefit-item {
+                display: grid;
+                grid-template-columns: 32px minmax(0, 1fr);
+                align-items: center;
+                column-gap: 12px;
+                width: 100%;
+                min-width: 0;
+                text-align: left;
+            }
+            .benefit-icon {
+                background: var(--ok);
+                color: #fff;
+                width: 28px;
+                height: 28px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 1.1rem;
+                font-size: 0.9rem;
+                flex-shrink: 0;
+                justify-self: end;
             }
-
-            @media (max-width: 768px) {
-                .menu-toggle {
-                    display: block;
-                }
-                .nav-list {
-                    position: fixed;
-                    top: 0;
-                    right: -100%;
-                    width: 80%;
-                    max-width: 300px;
-                    height: 100vh;
-                    background: var(--bg);
-                    flex-direction: column;
-                    padding: 5rem 2rem 2rem;
-                    border-left: 1px solid var(--border);
-                    transition: right 0.3s ease;
-                    z-index: 999;
-                    box-shadow: var(--shadow-md);
-                }
-                .nav-list.active {
-                    right: 0;
-                }
-                .nav-overlay {
-                    display: none;
-                    position: fixed;
-                    inset: 0;
-                    background: rgba(0, 0, 0, 0.5);
-                    z-index: 998;
-                    transition: opacity 0.3s;
-                }
-                .nav-overlay.active {
-                    display: block;
-                    opacity: 1;
-                }
-            }
-
-            .section {
-                padding: clamp(2rem, 8vw, 4rem) 0;
-                text-align: center;
-            }
-            .section h2 {
-                font-size: clamp(1.8rem, 5vw, 2.2rem);
-                margin-bottom: clamp(1.5rem, 4vw, 2rem);
-                color: var(--title);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 0.5rem;
-            }
-            .section h2 i {
-                color: var(--primary);
-                font-size: 0.9em;
-            }
-
-            .hero {
-                background:
-                    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                    url("https://images.unsplash.com/photo-1518770660439-24edd4c878c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80")
-                        center/cover;
-                color: white;
-                min-height: 80vh;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .hero h1 {
-                font-size: clamp(2.2rem, 7vw, 3.5rem);
-                margin: 0 0 1rem;
-            }
-            .hero p {
-                font-size: clamp(1rem, 3vw, 1.3rem);
-                margin: 0 0 1.5rem;
+            .benefit-item span {
+                font-size: 0.875rem;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+                min-width: 0;
             }
 
             .btn {
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
+                gap: 8px;
+                padding: 10px 16px;
+                border-radius: 10px;
+                border: 2px solid var(--primary);
                 background: var(--primary);
-                color: white;
-                padding: clamp(0.8rem, 3vw, 1rem) clamp(1.5rem, 5vw, 2rem);
-                border-radius: 50px;
+                color: #fff;
+                cursor: pointer;
                 text-decoration: none;
+                transition: all 0.3s;
+                white-space: nowrap;
+                font-size: 0.95rem;
                 font-weight: 600;
-                font-size: clamp(1rem, 3vw, 1.1rem);
-                transition: var(--transition);
-                min-height: 44px;
-                gap: 0.5rem;
+                justify-content: center;
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+                margin: 10px 0;
             }
             .btn:hover {
-                background: #3a7bc8;
                 transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
             }
 
-            .grid {
-                display: grid;
-                gap: clamp(1rem, 3vw, 1.5rem);
-                justify-content: center;
-                grid-template-columns: repeat(
-                    auto-fit,
-                    minmax(min(150px, 100%), 1fr)
-                );
+            .notice-info {
+                background: rgba(37, 99, 235, 0.1);
+                border: 2px solid var(--primary);
+                border-radius: 10px;
+                padding: 12px 16px;
+                margin: 12px 0;
+                font-weight: 700;
+                color: var(--primary);
             }
-            .plans-grid {
-                grid-template-columns: repeat(
-                    auto-fit,
-                    minmax(min(120px, 100%), 1fr)
-                );
+            .inline-note {
+                font-size: 0.85rem;
+                color: var(--muted);
             }
 
-            .plan-card,
-            .feature-card,
-            details {
-                background: var(--card) !important;
+            /* 程式碼區塊 */
+            .code {
+                position: relative;
+                background: #0b1220;
+                color: #e6edf3;
+                border-radius: 10px;
+                padding: clamp(12px, 3vw, 16px);
+                border: 1px solid #0f1b33;
+                overflow-x: auto;
+                font-size: 0.8rem;
+                margin: clamp(12px, 3vw, 16px) 0;
+            }
+            .code .copy-btn {
+                position: absolute;
+                top: 8px;
+                right: 8px;
                 border: 1px solid var(--border);
-                border-radius: var(--radius);
-                padding: clamp(1rem, 3vw, 1.5rem);
-                transition: var(--transition);
+                background: rgba(255, 255, 255, 0.08);
+                color: #e6edf3;
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+            .code .copy-btn:hover {
+                filter: brightness(1.1);
+            }
+            .code pre {
+                text-align: left;
+                margin: 0;
+            }
+            .code pre,
+            .code code {
+                display: block;
+                max-width: 100%;
+                white-space: pre;
+                word-break: normal;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            footer,
+            .site-footer {
+                margin-top: auto;
+                width: 100%;
+                background: var(--card);
+                border-top: 1px solid var(--border);
+            }
+            footer .inner,
+            .site-footer .inner {
+                max-width: 1120px;
+                margin: 0 auto;
+                padding: clamp(16px, 4vw, 20px) clamp(8px, 2vw, 16px);
+                color: var(--muted);
+                font-size: 0.875rem;
                 text-align: center;
             }
-            .plan-card:hover,
-            .feature-card:hover {
-                transform: translateY(-6px);
-                box-shadow: var(--shadow-sm);
+
+            /* === 卡片三防撐版 & 自動換行 === */
+            #card-snippet .code,
+            #card-snippet pre,
+            #card-snippet code {
+                white-space: pre-wrap !important;
+                word-break: break-all !important;
+                overflow-wrap: anywhere !important;
+                max-width: 100%;
+                overflow-x: hidden;
+                -webkit-text-size-adjust: 100%;
             }
+
+            /* === 卡片一好處表以最長行為基準置中（不影響按鈕） === */
             @media (min-width: 768px) {
-                .plan-card:hover,
-                .feature-card:hover {
-                    box-shadow: var(--shadow-md);
+                .hero .benefits {
+                    display: grid;
+                    width: fit-content;
+                    max-width: 100%;
+                    margin: clamp(12px, 3vw, 16px) auto;
+                    justify-items: start;
+                    row-gap: clamp(12px, 3vw, 16px);
+                }
+                .hero .benefit-item {
+                    grid-template-columns: 32px minmax(0, 1fr);
+                    align-items: center;
+                    column-gap: 12px;
+                    min-width: 0;
+                    width: 100%;
+                }
+                .hero .benefit-icon {
+                    justify-self: end;
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                }
+                .hero .benefit-item span {
+                    text-align: left;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                    min-width: 0;
                 }
             }
-            .plan-card strong {
-                font-size: clamp(1.5rem, 4vw, 1.8rem);
-                color: var(--primary);
-                display: block;
-                margin: 0.5rem 0;
-            }
-            .feature-card h3 {
-                margin: 0.5rem 0;
-                color: var(--title);
-                font-size: clamp(1.1rem, 3vw, 1.2rem);
-            }
 
-            details {
-                text-align: left;
-                margin-bottom: 1rem;
-            }
-            summary {
-                cursor: pointer;
-                font-weight: 600;
-                color: var(--title);
-                list-style: none;
-                position: relative;
-                padding: 0.75rem 0;
-                font-size: clamp(0.95rem, 2.5vw, 1rem);
-            }
-            summary::after {
-                content: "+";
-                position: absolute;
-                right: 0;
-                font-weight: bold;
-            }
-            details[open] summary::after {
-                content: "−";
-            }
-            details p {
-                margin: 0.5rem 0 1rem;
-                color: var(--text-secondary);
-            }
-
-            .form-grid {
+            /* === 只針對卡片二（#card-generate）修正輸入區排版 === */
+            #card-generate .field {
                 display: grid;
-                gap: clamp(0.8rem, 2vw, 1rem);
-                max-width: 600px;
-                margin: 2rem auto 0;
-            }
-            @media (min-width: 640px) {
-                .form-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-                .form-grid textarea {
-                    grid-column: span 2;
-                }
-                .form-grid button {
-                    grid-column: span 2;
-                }
-            }
-            .form-grid input,
-            .form-grid textarea {
+                grid-template-columns: 1fr;
+                row-gap: 8px;
                 width: 100%;
-                padding: clamp(0.7rem, 2vw, 0.9rem);
+            }
+            #card-generate .field label {
+                margin: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+            #card-generate .field textarea {
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                min-height: 140px;
+                resize: vertical;
+            }
+            #card-generate .field .counter {
+                justify-self: end;
+                font-size: 0.85rem;
+                color: var(--muted);
+                line-height: 1;
+            }
+            #card-generate .field .btn {
+                justify-self: center;
+            }
+
+            /* === 卡片四（#card-donation）風格統一 === */
+            #card-donation .field {
+                display: grid;
+                grid-template-columns: 1fr;
+                row-gap: 8px;
+                width: 100%;
+            }
+            #card-donation .notice-info {
+                background: rgba(37, 99, 235, 0.1);
+                border: 2px solid var(--primary);
+                border-radius: 10px;
+                padding: 12px 16px;
+                margin: 12px 0;
+                font-weight: 700;
+                color: var(--primary);
+            }
+            #card-donation input[type="email"] {
+                width: 100%;
+                padding: 8px;
                 border: 1px solid var(--border);
                 border-radius: 8px;
                 background: var(--card);
                 color: var(--text);
-                font-size: clamp(0.95rem, 2.5vw, 1rem);
+                transition:
+                    border-color 0.3s,
+                    background-color 0.3s;
+            }
+            #card-donation input[type="email"]:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+            }
+            /* 確保按鈕圖示適配主題 */
+            #card-donation .btn.primary img {
+                filter: brightness(0) invert(1);
+            }
+            [data-theme="dark"] #card-donation .btn.primary img {
+                filter: none;
             }
 
-            .footer {
+            /* 嵌入程式碼參數表 */
+            .param-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9rem;
+                margin-top: 8px;
+            }
+            .param-table th,
+            .param-table td {
+                border: 1px solid var(--border);
+                padding: 8px 10px;
+                text-align: left;
+                vertical-align: top;
+            }
+            .param-table thead th {
+                background: rgba(37, 99, 235, 0.06);
+            }
+            .param-table code {
+                font-family: var(--mono);
+                font-size: 0.85rem;
+            }
+            @media (max-width: 640px) {
+                .param-table th:nth-child(2),
+                .param-table td:nth-child(2) {
+                    white-space: nowrap;
+                    width: 80px;
+                }
+            }
+
+            /* ===========================
+             新增：通用表單樣式（避免深色主題白底）
+             =========================== */
+            input[type="text"],
+            input[type="email"],
+            input[type="number"],
+            input[type="password"],
+            textarea,
+            select {
                 background: var(--card);
-                border-top: 1px solid var(--border);
-                padding: clamp(1rem, 3vw, 1.5rem) 0;
-                text-align: center;
-                font-size: clamp(0.8rem, 2vw, 0.9rem);
-                color: #6c757d;
-                margin-top: auto;
+                color: var(--text);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 8px 10px;
+                transition:
+                    border-color 0.2s,
+                    background-color 0.2s,
+                    color 0.2s;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            input::placeholder,
+            textarea::placeholder {
+                color: var(--muted);
+            }
+            input:focus,
+            textarea:focus,
+            select:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 2px
+                    color-mix(in srgb, var(--primary) 25%, transparent);
             }
 
-            /* Logo 深色同步 */
-            .logo svg text {
-                fill: var(--logo-color);
+            /* ===========================
+             新增：Email 驗證 Modal 樣式（深色遮罩＋自適應）
+             =========================== */
+            #email-verification-modal {
+                position: fixed;
+                inset: 0;
+                display: grid;
+                place-items: center;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 2147483647;
+            }
+            #email-verification-modal.hidden {
+                display: none;
+            }
+            #email-verification-modal .modal-content {
+                max-width: 520px;
+                width: min(92vw, 520px);
+                background: var(--card);
+                color: var(--text);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+            }
+            #email-verification-modal input[type="text"],
+            #email-verification-modal input[type="email"] {
+                background: var(--card);
+                color: var(--text);
+                border: 1px solid var(--border);
             }
         </style>
     </head>
     <body data-theme="light">
-        <div class="nav-overlay"></div>
-
-        <header class="header" id="top">
-            <nav class="nav container">
-                <a href="#top" class="logo">
-                    <svg
-                        width="140"
-                        height="40"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <text
-                            x="10"
-                            y="30"
-                            font-family="Arial"
-                            font-size="28"
-                            font-weight="bold"
-                            fill="var(--logo-color)"
-                        >
-                            中嘉寬頻
-                        </text>
-                    </svg>
-                </a>
-                <button
-                    class="menu-toggle"
-                    aria-label="展開選單"
-                    aria-expanded="false"
-                >
-                    選單
-                </button>
-                <ul class="nav-list">
-                    <li><a href="#plans" data-i18n="nav.plans">方案比較</a></li>
-                    <li>
-                        <a href="#features" data-i18n="nav.features"
-                            >為什麼選擇我們</a
-                        >
-                    </li>
-                    <li><a href="#faq" data-i18n="nav.faq">常見問題</a></li>
-                    <li>
-                        <a href="#contact" data-i18n="nav.contact">立即申辦</a>
-                    </li>
-                </ul>
-                <div class="controls">
-                    <select id="lang-select" class="lang-select">
-                        <option value="zh-TW">繁中</option>
-                        <option value="en">English</option>
-                    </select>
-                    <button
-                        id="theme-toggle"
-                        class="theme-toggle"
-                        title="切換主題"
-                    >
-                        <i class="fas fa-moon"></i>
-                    </button>
+        <header>
+            <div class="wrap">
+                <div class="brand" data-i18n="brand">
+                    AI Chatbot — 輕鬆嵌入智慧助理
                 </div>
-            </nav>
+            </div>
+            <div class="controls">
+                <select class="lang-select" id="lang-select" title="Language">
+                    <option value="zh-TW">繁中</option>
+                    <option value="zh-CN">简中</option>
+                    <option value="ja">日本語</option>
+                    <option value="en">English</option>
+                </select>
+                <button
+                    class="theme-toggle"
+                    id="theme-toggle"
+                    data-i18n="theme.toggle"
+                    title="Toggle Theme"
+                >
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </header>
 
-        <main class="main">
-            <section id="hero" class="hero section">
-                <div class="container">
-                    <h1 data-i18n="hero.title">光纖上網 300M 起跳</h1>
-                    <p data-i18n="hero.desc">
-                        中嘉寬頻 bb寬頻．穩定快速．不卡頓
-                    </p>
-                    <a href="#contact" class="btn" data-i18n="hero.cta"
-                        >立即線上申辦</a
-                    >
-                </div>
-            </section>
+        <main>
+            <!-- 卡片一：Hero -->
+            <section class="hero card">
+                <h1 data-i18n="hero.title">
+                    Best AI Chatbot: Easily Embed 24/7 Customer Support
+                </h1>
 
-            <section id="plans" class="plans section">
-                <div class="container">
-                    <h2>
-                        <i class="fas fa-chart-line"></i>
-                        <span data-i18n="plans.title">選擇您的專屬方案</span>
-                    </h2>
-                    <div class="grid plans-grid">
-                        <div class="plan-card">
-                            <div>月繳</div>
-                            <strong>$515</strong>
-                        </div>
-                        <div class="plan-card">
-                            <div>雙月繳</div>
-                            <strong>$1,030</strong>
-                        </div>
-                        <div class="plan-card">
-                            <div>季繳</div>
-                            <strong>$1,530</strong>
-                        </div>
-                        <div class="plan-card">
-                            <div>半年繳</div>
-                            <strong>$3,060</strong>
-                        </div>
-                        <div class="plan-card">
-                            <div>年繳</div>
-                            <strong>$6,120</strong>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="features" class="features section">
-                <div class="container">
-                    <h2>
-                        <i class="fas fa-circle-check"></i>
-                        <span data-i18n="features.title"
-                            >為什麼選擇中嘉寬頻？</span
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span data-i18n="hero.benefit1"
+                            >一鍵嵌入：快速上線</span
                         >
-                    </h2>
-                    <div class="grid">
-                        <div class="feature-card">
-                            <h3 data-i18n="features.item1">極速上網</h3>
-                            <p>1Gbps 光纖到府</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 data-i18n="features.item2">穩定不掉線</h3>
-                            <p>99.9% 在線率</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 data-i18n="features.item3">專業客服</h3>
-                            <p>7×24 專人服務</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 data-i18n="features.item4">透明價格</h3>
-                            <p>無隱藏費用</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 data-i18n="features.item5">快速安裝</h3>
-                            <p>最快 3 天</p>
-                        </div>
-                        <div class="feature-card">
-                            <h3 data-i18n="features.item6">售後無憂</h3>
-                            <p>一年保固</p>
-                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🌐</div>
+                        <span data-i18n="hero.benefit4"
+                            >多語雙向：自動偵測並以 50+ 語言回覆</span
+                        >
                     </div>
                 </div>
-            </section>
 
-            <section id="faq" class="faq section">
-                <div
-                    class="container"
-                    style="max-width: 800px; margin: 0 auto; text-align: left"
+                <a
+                    href="javascript:void(0)"
+                    class="btn primary"
+                    id="start-trial-btn"
+                    data-i18n="hero.cta"
+                    >立即開始免費試用</a
                 >
-                    <h2>
-                        <i class="fas fa-circle-question"></i>
-                        <span data-i18n="faq.title">常見問題</span>
-                    </h2>
-                    <details>
-                        <summary data-i18n="faq.q1">安裝需要多久？</summary>
-                        <p data-i18n="faq.a1">
-                            最快 3 天內完成，工程師會提前電話聯繫。
-                        </p>
-                    </details>
-                    <details>
-                        <summary data-i18n="faq.q2">可以攜帶舊設備嗎？</summary>
-                        <p data-i18n="faq.a2">
-                            可以！我們支援自帶分享器，工程師會協助設定。
-                        </p>
-                    </details>
-                    <details>
-                        <summary data-i18n="faq.q3">
-                            合約期間可以升速嗎？
-                        </summary>
-                        <p data-i18n="faq.a3">
-                            可以，隨時升速，差額按比例補繳即可。
-                        </p>
-                    </details>
-                    <details>
-                        <summary data-i18n="faq.q4">
-                            有線電視可以一起申辦嗎？
-                        </summary>
-                        <p data-i18n="faq.a4">
-                            可以！提供寬頻+有線電視優惠組合。
-                        </p>
-                    </details>
-                    <details>
-                        <summary data-i18n="faq.q5">如何繳費？</summary>
-                        <p data-i18n="faq.a5">
-                            支援超商、ATM、信用卡、銀行轉帳，多元方便。
-                        </p>
-                    </details>
-                    <details>
-                        <summary data-i18n="faq.q6">退訂流程是什麼？</summary>
-                        <p data-i18n="faq.a6">
-                            來電客服即可辦理，無違約金（合約期滿後）。
-                        </p>
-                    </details>
+            </section>
+
+            <!-- 卡片二：輸入知識庫 -->
+            <section class="card hidden" id="card-generate">
+                <h2 data-i18n="create.title">
+                    生成專屬 AI Chatbot 程式碼：免費入門
+                </h2>
+                <p class="note" data-i18n="create.note">
+                    輸入知識庫內容（最多 500 字元），即可生成含有您專屬
+                    <code>data-site</code> 的 widget 程式碼。
+                </p>
+                <div class="field">
+                    <label for="kb" data-i18n="create.label"
+                        >知識庫內容 (最多 500 字元)</label
+                    >
+                    <textarea
+                        id="kb"
+                        maxlength="500"
+                        placeholder="描述您的產品、服務或 FAQ..."
+                        data-i18n-ph="create.ph"
+                    ></textarea>
+                    <div class="counter">
+                        <span id="kb-count">0</span> / 500
+                    </div>
+                    <button
+                        class="btn primary"
+                        id="btn-create"
+                        data-i18n="create.btn"
+                    >
+                        生成 AI Chatbot Widget 程式碼
+                    </button>
                 </div>
             </section>
 
-            <section id="contact" class="contact section">
-                <div class="container">
-                    <h2>
-                        <i class="fas fa-paper-plane"></i>
-                        <span data-i18n="contact.title">立即申辦或諮詢</span>
-                    </h2>
-                    <form id="contact-form" class="form-grid">
-                        <input
-                            type="text"
-                            placeholder="姓名"
-                            required
-                            data-i18n-ph="contact.name"
+            <!-- 卡片三：嵌入程式碼 -->
+            <section class="card hidden" id="card-snippet">
+                <h2 data-i18n="quickStart.title">
+                    一鍵嵌入：複製下方 widget 程式碼
+                </h2>
+                <div class="notice-info" data-i18n="quickStart.notice">
+                    🔵 右下角的藍色 AI 助理已即時套用您的
+                    widget，您可以立即測試互動效果。
+                </div>
+                <p data-i18n="quickStart.desc">
+                    將以下程式碼貼到您的網站（全站 Layout
+                    或頁尾），即可快速啟用專屬 AI Chatbot。
+                </p>
+
+                <!-- 完整版 -->
+                <div class="code" id="codebox" data-copyable="true">
+                    <button class="copy-btn" aria-label="Copy">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <pre><code id="embed-code">&lt;script
+  src="https://chatbot.aitarf.us/js/ai-helper-loader.js"
+  data-position="bottom-right"
+  data-site="aitarf_15oJOoBsQFa3"
+  data-accent="#2563eb"
+  data-width="360"
+  data-height="520"
+  data-z="2147483000"
+  defer
+&gt;&lt;/script&gt;</code></pre>
+                </div>
+
+                <!-- 簡易版 -->
+                <div class="code" id="mini-code" data-copyable="true">
+                    <button class="copy-btn" aria-label="Copy">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <pre><code id="embed-mini">&lt;script
+  src="https://chatbot.aitarf.us/js/ai-helper-loader.js"
+  data-site="aitarf_15oJOoBsQFa3"
+  data-accent="#2563eb"
+  defer
+&gt;&lt;/script&gt;</code></pre>
+                </div>
+
+                <!-- 參數說明（只放卡片三最下方） -->
+                <h3 data-i18n="params.title">
+                    自訂您的 AI Chatbot 參數，實現無縫整合
+                </h3>
+                <table class="param-table" aria-describedby="param-desc">
+                    <thead>
+                        <tr>
+                            <th data-i18n="params.th1">屬性</th>
+                            <th data-i18n="params.th2">必填</th>
+                            <th data-i18n="params.th4">說明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>src</code></td>
+                            <td><span data-i18n="required">必填</span></td>
+                            <td data-i18n="params.src">
+                                載入 AI chatbot 嵌入核心腳本。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-site</code></td>
+                            <td><span data-i18n="required">必填</span></td>
+                            <td data-i18n="params.site">您的網站 ID。</td>
+                        </tr>
+                        <tr>
+                            <td><code>data-position</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.position">
+                                浮動按鈕位置（預設：右下）。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-accent</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.accent">
+                                品牌主色（HEX/RGB）。
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>data-width</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.width">聊天面板寬度。</td>
+                        </tr>
+                        <tr>
+                            <td><code>data-height</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.height">聊天面板高度。</td>
+                        </tr>
+                        <tr>
+                            <td><code>data-z</code></td>
+                            <td><span data-i18n="optional">可選</span></td>
+                            <td data-i18n="params.z">Z-index 以確保置頂。</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="param-desc" class="inline-note">
+                    ＊如未設定，將使用預設值（位置：<code>bottom-right</code>、寬：<code>360</code>、高：<code>520</code>、z-index：<code>2147483000</code>）
+                </p>
+            </section>
+
+            <!-- 卡片四：捐款 -->
+            <section class="card hidden" id="card-donation">
+                <!-- 初始隱藏，與其他卡片一致 -->
+                <h2 data-i18n="donation.title">支持我們：使用加密貨幣捐款</h2>
+                <p data-i18n="donation.note">
+                    感謝您的支持！請輸入 email
+                    並點擊按鈕，您的捐款將幫助我們持續改進 AI Chatbot。
+                </p>
+                <div class="field">
+                    <label for="donation-email" data-i18n="donation.emailLabel"
+                        >您的 Email</label
+                    >
+                    <input
+                        type="email"
+                        id="donation-email"
+                        placeholder="輸入您的電子郵件..."
+                        data-i18n-ph="donation.emailPh"
+                    />
+                    <div class="notice-info" data-i18n="donation.emailNote">
+                        請輸入您註冊時使用的 email，NOWPayments
+                        會在新分頁要求再次確認。這是測試模式，不會進行真實捐款。
+                    </div>
+                    <a
+                        href="javascript:void(0)"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn primary"
+                        id="btn-donation"
+                        data-i18n="donation.btn"
+                    >
+                        <img
+                            src="https://sandbox.nowpayments.io/images/embeds/donation-button-black.svg"
+                            alt="Crypto donation button by NOWPayments"
+                            style="
+                                vertical-align: middle;
+                                height: 20px;
+                                margin-right: 8px;
+                            "
                         />
-                        <input
-                            type="tel"
-                            placeholder="電話"
-                            required
-                            data-i18n-ph="contact.phone"
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            required
-                            data-i18n-ph="contact.email"
-                        />
-                        <textarea
-                            placeholder="備註（可選）"
-                            rows="4"
-                            data-i18n-ph="contact.message"
-                        ></textarea>
-                        <button
-                            type="submit"
-                            class="btn"
-                            data-i18n="contact.submit"
-                        >
-                            送出申請
-                        </button>
-                    </form>
+                    </a>
                 </div>
             </section>
         </main>
 
-        <footer class="footer">
-            <div class="container">
-                <p>
-                    &copy; <span id="year"></span> 中嘉寬頻股份有限公司 |
-                    <span data-i18n="footer">全台光纖網路領導品牌</span>
-                </p>
+        <footer class="site-footer" role="contentinfo">
+            <div class="inner">
+                <span>© <span id="year"></span></span>
+                <span> · </span>
+                <span data-i18n="footer"></span>
             </div>
         </footer>
 
+        <!-- Email 驗證 Modal -->
+        <div id="email-verification-modal" class="hidden">
+            <div class="card modal-content">
+                <div id="modal-inner"></div>
+            </div>
+        </div>
+
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const html = document.documentElement;
-                const langSelect = document.getElementById("lang-select");
-                const themeBtn = document.getElementById("theme-toggle");
-                const menuBtn = document.querySelector(".menu-toggle");
-                const navList = document.querySelector(".nav-list");
-                const overlay = document.querySelector(".nav-overlay");
-                const year = document.getElementById("year");
-                const form = document.getElementById("contact-form");
+            (function () {
+                var y = document.getElementById("year");
+                if (y) y.textContent = new Date().getFullYear();
+            })();
 
-                // 初始化
-                let currentLang = localStorage.getItem("lang") || "zh-TW";
-                const savedTheme = localStorage.getItem("theme") || "light";
-                html.dataset.theme = savedTheme;
-                year.textContent = new Date().getFullYear();
-                langSelect.value = currentLang;
+            // ===== 強制重置：卸載舊 widget、清 DOM、清快取與狀態 =====
+            async function hardResetWidget() {
+                try {
+                    if (
+                        window.AIHelper &&
+                        typeof window.AIHelper.destroy === "function"
+                    ) {
+                        await window.AIHelper.destroy();
+                    }
+                } catch (e) {}
 
-                // ==================== 翻譯資料 ====================
-                const translations = {
-                    "zh-TW": {
-                        title: "中嘉寬頻 bb寬頻 | 光纖上網首選",
-                        nav: {
-                            plans: "方案比較",
-                            features: "為什麼選擇我們",
-                            faq: "常見問題",
-                            contact: "立即申辦",
-                        },
-                        hero: {
-                            title: "光纖上網 300M 起跳",
-                            desc: "中嘉寬頻 bb寬頻．穩定快速．不卡頓",
-                            cta: "立即線上申辦",
-                        },
-                        plans: { title: "選擇您的專屬方案" },
-                        features: {
-                            title: "為什麼選擇中嘉寬頻？",
-                            item1: "極速上網",
-                            item2: "穩定不掉線",
-                            item3: "專業客服",
-                            item4: "透明價格",
-                            item5: "快速安裝",
-                            item6: "售後無憂",
-                        },
-                        faq: {
-                            title: "常見問題",
-                            q1: "安裝需要多久？",
-                            a1: "最快 3 天內完成，工程師會提前電話聯繫。",
-                            q2: "可以攜帶舊設備嗎？",
-                            a2: "可以！我們支援自帶分享器，工程師會協助設定。",
-                            q3: "合約期間可以升速嗎？",
-                            a3: "可以，隨時升速，差額按比例補繳即可。",
-                            q4: "有線電視可以一起申辦嗎？",
-                            a4: "可以！提供寬頻+有線電視優惠組合。",
-                            q5: "如何繳費？",
-                            a5: "支援超商、ATM、信用卡、銀行轉帳，多元方便。",
-                            q6: "退訂流程是什麼？",
-                            a6: "來電客服即可辦理，無違約金（合約期滿後）。",
-                        },
-                        contact: {
-                            title: "立即申辦或諮詢",
-                            name: "姓名",
-                            phone: "電話",
-                            email: "Email",
-                            message: "備註（可選）",
-                            submit: "送出申請",
-                        },
-                        footer: "全台光纖網路領導品牌",
-                    },
-                    en: {
-                        title: "Chunghwa Broadband | Fiber Internet Leader",
-                        nav: {
-                            plans: "Plans",
-                            features: "Why Choose Us",
-                            faq: "FAQ",
-                            contact: "Apply Now",
-                        },
-                        hero: {
-                            title: "Fiber Internet 300M Up",
-                            desc: "Stable, Fast, No Lag",
-                            cta: "Apply Online Now",
-                        },
-                        plans: { title: "Choose Your Plan" },
-                        features: {
-                            title: "Why Choose Us?",
-                            item1: "Blazing Fast",
-                            item2: "Always Online",
-                            item3: "24/7 Support",
-                            item4: "Transparent Pricing",
-                            item5: "Fast Installation",
-                            item6: "Worry-Free Service",
-                        },
-                        faq: {
-                            title: "FAQ",
-                            q1: "How long to install?",
-                            a1: "As fast as 3 days with prior confirmation.",
-                            q2: "Can I bring my own router?",
-                            a2: "Yes! Our technician will help set it up.",
-                            q3: "Can I upgrade during contract?",
-                            a3: "Yes, upgrade anytime with prorated fees.",
-                            q4: "Can I bundle with cable TV?",
-                            a4: "Yes! Special bundle deals available.",
-                            q5: "How to pay?",
-                            a5: "Convenience store, ATM, credit card, bank transfer.",
-                            q6: "How to cancel?",
-                            a6: "Call support. No penalty after contract ends.",
-                        },
-                        contact: {
-                            title: "Apply or Inquire",
-                            name: "Name",
-                            phone: "Phone",
-                            email: "Email",
-                            message: "Message (optional)",
-                            submit: "Submit",
-                        },
-                        footer: "Taiwan Fiber Internet Leader",
-                    },
-                };
+                document
+                    .querySelectorAll('script[src*="ai-helper-loader.js"]')
+                    .forEach((s) => s.remove());
 
-                // 套用語言
-                function applyLang(lang) {
-                    const t = translations[lang] || translations["zh-TW"];
-                    document.querySelectorAll("[data-i18n]").forEach((el) => {
-                        const keys = el.dataset.i18n.split(".");
-                        let value = t;
-                        keys.forEach((k) => (value = value?.[k]));
-                        if (value) el.textContent = value;
+                const selectors = [
+                    "#ai-helper-root",
+                    ".ai-helper-root",
+                    "[data-ai-helper-root]",
+                    ".aiw-launcher",
+                    ".aiw-panel",
+                    'iframe[src*="chatbot.aitarf.us"]',
+                ];
+                document.querySelectorAll(selectors.join(",")).forEach((n) => {
+                    try {
+                        n.remove();
+                    } catch {}
+                });
+
+                const shouldClear = (k) =>
+                    /^(aiw_|aihelper_|ai-helper|aitarf_)/i.test(k);
+                try {
+                    Object.keys(localStorage).forEach((k) => {
+                        if (shouldClear(k)) localStorage.removeItem(k);
                     });
-                    document
-                        .querySelectorAll("[data-i18n-ph]")
-                        .forEach((el) => {
-                            const keys = el.dataset.i18nPh.split(".");
-                            let value = t;
-                            keys.forEach((k) => (value = value?.[k]));
-                            if (value) el.placeholder = value;
+                } catch {}
+                try {
+                    Object.keys(sessionStorage).forEach((k) => {
+                        if (shouldClear(k)) sessionStorage.removeItem(k);
+                    });
+                } catch {}
+
+                await new Promise((r) => setTimeout(r, 0));
+            }
+
+            // ==============================
+            // i18n 多國語系字串
+            // ==============================
+            const STR = {
+                "zh-TW": {
+                    title: "AI Chatbot：在您的網站輕鬆嵌入 24/7 智慧助理",
+                    brand: "AI Chatbot — 輕鬆嵌入智慧助理",
+                    theme: { toggle: "切換主題" },
+                    common: {
+                        copied: "已複製！",
+                        copyHint: "按一下複製",
+                        languageTitle: "選擇語言",
+                        ok: "完成",
+                        error: "請輸入有效的電子郵件",
+                        error_1: "請輸入有效的驗證碼",
+                        email: "輸入電子郵件…",
+                        code: "輸入 6 位數驗證碼…",
+                        emailSent: "驗證碼已寄出，請在 60 秒內輸入。",
+                        codeTimeout:
+                            "已超過 60 秒，請重新輸入 Email 以取得新的驗證碼。",
+                        consent:
+                            "我同意本網站僅寄送登入/註冊所需的 OTP 驗證碼與安全通知，且不會寄送任何行銷郵件。",
+                        consentRequired: "請勾選同意後再送出。",
+                        cooldownWait: "請稍候再試（冷卻中）",
+                        networkError: "連線逾時或網路異常，請重試。",
+                        countdown: "{n} 秒後可重新發送",
+                        otpValidity:
+                            "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
+                    },
+                    hero: {
+                        title: "最佳 AI Chatbot：輕鬆嵌入 24/7 客戶支援於您的網站",
+                        benefit1: "一鍵嵌入：立刻上線",
+                        benefit2: "自訂知識庫：專業、量身訂製回應",
+                        benefit3: "24/7 可用性：大幅降低支援成本",
+                        benefit4: "多語系雙向：自動偵測並自然回覆",
+                        cta: "立即開始免費試用",
+                        ctaWithEmail: "開始使用",
+                    },
+                    quickStart: {
+                        title: "一鍵嵌入：複製下方 widget 程式碼",
+                        notice: "🔵 右下角的藍色 AI 助理已即時套用您的 widget，您可以立即測試互動效果。",
+                        desc: "將以下程式碼貼到您的網站（全站 Layout 或頁尾），即可快速啟用專屬 AI Chatbot。",
+                    },
+                    params: {
+                        title: "自訂您的 AI Chatbot 參數，實現無縫整合",
+                        th1: "屬性",
+                        th2: "必填",
+                        th4: "說明",
+                        src: "載入 AI chatbot 嵌入核心腳本。",
+                        position: "浮動按鈕位置（預設：右下）。",
+                        site: "您的網站 ID。",
+                        accent: "品牌主色（HEX/RGB）。",
+                        width: "聊天面板寬度。",
+                        height: "聊天面板高度。",
+                        z: "Z-index 以確保置頂。",
+                    },
+                    required: "必填",
+                    optional: "可選",
+                    create: {
+                        title: "生成專屬 AI Chatbot 程式碼：免費入門",
+                        note: "輸入產品／服務知識（最多 500 字），系統會產生包含你的 data-site 的完整 widget 程式碼，並自動更新與複製。",
+                        label: "知識庫內容（最多 500 字）",
+                        ph: "描述你的產品、服務或 FAQ…",
+                        btn: "產生程式碼",
+                        loading: "正在產生…",
+                        done: "已完成",
+                        toastSuccess: "Widget 程式碼已生成並已複製。",
+                        toastFailGeneric: "產生失敗，請稍後再試。",
+                        toastFailNetwork: "連線逾時或網路異常，請重試。",
+                        toastEmpty: "請先輸入知識庫內容。",
+                        toastTooShort: "內容過短，至少需 20 個字。",
+                        rateLimited: "操作太頻繁，請稍後再試。",
+                    },
+                    donation: {
+                        title: "支持我們：使用加密貨幣捐款",
+                        note: "感謝您的支持！請輸入 email 並透過加密貨幣捐款，您的捐款將幫助我們持續改進 AI Chatbot。",
+                        emailLabel: "您的 Email",
+                        emailPh: "輸入您的電子郵件...",
+                        emailNote:
+                            "請輸入您註冊時使用的 email，NOWPayments 會要求再次確認。這是測試模式，不會進行真實捐款。",
+                        btn: "顯示測試捐款 Widget",
+                        widgetError: "無法載入測試捐款 Widget，請稍後再試。",
+                    },
+                    footer: "AI Chatbot — 智慧隨行",
+                },
+                "zh-CN": {
+                    title: "AI Chatbot：轻松在你的网站嵌入 24/7 智能助手",
+                    brand: "AI Chatbot — 轻松嵌入智能助手",
+                    theme: { toggle: "切换主题" },
+                    common: {
+                        copied: "已复制！",
+                        copyHint: "点击复制",
+                        languageTitle: "选择语言",
+                        ok: "完成",
+                        error: "请输入有效的电子邮件",
+                        error_1: "请输入有效的验证码",
+                        email: "输入电子邮件…",
+                        code: "输入 6 位数验证码…",
+                        emailSent: "验证码已发送，请在 60 秒内输入。",
+                        codeTimeout:
+                            "已超过 60 秒，请重新输入 Email 获取新的验证码。",
+                        consent:
+                            "我同意本站仅发送登录/注册所需的 OTP 验证码与安全通知，不发送任何营销邮件。",
+                        consentRequired: "请勾选同意后再提交。",
+                        cooldownWait: "请稍候再试（冷却中）",
+                        networkError: "网络超时或异常，请重试。",
+                        countdown: "{n} 秒后可重新发送",
+                        otpValidity:
+                            "OTP 验证码有效时间：<strong>{n}</strong> 秒。",
+                    },
+                    hero: {
+                        title: "最佳 AI Chatbot：轻松嵌入 24/7 客服于你的网站",
+                        benefit1: "一键嵌入：立刻上线",
+                        benefit2: "自定义知识库：专业回复",
+                        benefit3: "24/7 可用：降低成本、易扩展",
+                        benefit4: "多语系双向：自动识别并自然应答",
+                        cta: "立即开始免费试用",
+                        ctaWithEmail: "开始使用",
+                    },
+                    quickStart: {
+                        title: "一键嵌入：复制下方代码",
+                        notice: "🔵 右下角的蓝色 AI 助理已即时套用你的 widget，可立即测试互动效果。",
+                        desc: "将以下代码粘贴到你的网站（全站 Layout 或页脚），即可启用专属 AI Chatbot。",
+                    },
+                    params: {
+                        title: "自定义 AI Chatbot 参数以实现无缝集成",
+                        th1: "属性",
+                        th2: "必填",
+                        th4: "说明",
+                        src: "加载核心脚本。",
+                        position: "浮动按钮位置（默认：右下）。",
+                        site: "你的网站 ID。",
+                        accent: "品牌主色。",
+                        width: "面板宽度。",
+                        height: "面板高度。",
+                        z: "置顶层级。",
+                    },
+                    required: "必填",
+                    optional: "可选",
+                    create: {
+                        title: "生成专属 AI Chatbot 代码：免费入门",
+                        note: "输入产品/服务知识（最多 500 字），系统会生成包含你的 data-site 的完整 widget 代码，并自动更新与复制。",
+                        label: "知识库内容（最多 500 字）",
+                        ph: "描述你的产品、服务或 FAQ…",
+                        btn: "生成嵌入代码",
+                        loading: "正在生成…",
+                        done: "已完成",
+                        toastSuccess: "Widget 代码已生成并复制。",
+                        toastFailGeneric: "生成失败，请稍后重试。",
+                        toastFailNetwork: "网络异常或超时，请重试。",
+                        toastEmpty: "请先输入一些内容。",
+                        toastTooShort: "内容过短，至少 20 字。",
+                        rateLimited: "操作过于频繁，请稍后重试。",
+                    },
+                    donation: {
+                        title: "支持我们：使用加密货币捐款",
+                        note: "感谢您的支持！请输入 email 并通过加密货币捐款，您的捐款将帮助我们持续改进 AI Chatbot。",
+                        emailLabel: "您的 Email",
+                        emailPh: "输入您的电子邮件...",
+                        emailNote:
+                            "请输入您注册时使用的 email，NOWPayments 会要求再次确认。这是测试模式，不会进行真实捐款。",
+                        btn: "显示测试捐款 Widget",
+                        widgetError: "无法加载测试捐款 Widget，请稍后再试。",
+                    },
+                    footer: "AI Chatbot — 智慧随行",
+                },
+                ja: {
+                    title: "AI Chatbot：サイトに 24/7 スマートアシスタントを簡単埋め込み",
+                    brand: "AI Chatbot — スマートアシスタントを手軽に導入",
+                    theme: { toggle: "テーマを切り替え" },
+                    common: {
+                        copied: "コピーしました！",
+                        copyHint: "クリックでコピー",
+                        languageTitle: "言語を選択",
+                        ok: "完了",
+                        error: "有効なメールアドレスを入力してください",
+                        error_1: "有効な認証コードを入力してください",
+                        email: "メールアドレスを入力…",
+                        code: "6 桁のコードを入力…",
+                        emailSent:
+                            "認証コードを送信しました。60 秒以内に入力してください。",
+                        codeTimeout:
+                            "60 秒を超えました。メールを再入力して新しいコードを取得してください。",
+                        consent:
+                            "当サイトはログイン/登録に必要な OTP とセキュリティ通知のみを送信し、マーケティングメールは送りません。",
+                        consentRequired:
+                            "同意にチェックを入れてから送信してください。",
+                        cooldownWait:
+                            "しばらくしてからお試しください（クールダウン中）",
+                        networkError:
+                            "ネットワークのタイムアウトまたはエラーです。再試行してください。",
+                        countdown: "{n} 秒後に再送できます",
+                        otpValidity:
+                            "OTP の有効時間：<strong>{n}</strong> 秒。",
+                    },
+                    hero: {
+                        title: "最高の AI Chatbot：24/7 のサポートを簡単に埋め込み",
+                        benefit1: "ワンクリック導入：すぐに公開",
+                        benefit2: "カスタム知識ベース：プロ品質の応答",
+                        benefit3: "24/7 稼働：コスト削減＆スケール",
+                        benefit4: "多言語対応：自動判別し自然に応答",
+                        cta: "今すぐ無料で開始",
+                        ctaWithEmail: "使用を開始",
+                    },
+                    quickStart: {
+                        title: "ワンクリック埋め込み：コードをコピー",
+                        notice: "🔵 右下の青い AI アシスタントがあなたの widget を即時反映。今すぐ動作をお試しください。",
+                        desc: "以下のコードをサイトのレイアウト/フッターに貼り付けるだけで有効化できます。",
+                    },
+                    params: {
+                        title: "AI Chatbot パラメータ",
+                        th1: "属性",
+                        th2: "必須",
+                        th4: "説明",
+                        src: "コアスクリプト",
+                        position: "ボタン位置",
+                        site: "サイト ID",
+                        accent: "ブランド色",
+                        width: "幅",
+                        height: "高さ",
+                        z: "最前面",
+                    },
+                    required: "必須",
+                    optional: "任意",
+                    create: {
+                        title: "専用 AI Chatbot コードを生成：無料",
+                        note: "製品/サービスの知識（最大 500 文字）を入力すると、data-site を含むコードを生成（自動更新＆コピー）。",
+                        label: "ナレッジ（最大 500 文字）",
+                        ph: "製品・サービス・FAQ を記述…",
+                        btn: "コードを生成",
+                        loading: "生成中…",
+                        done: "完了",
+                        toastSuccess: "コードを生成し、コピーしました。",
+                        toastFailGeneric: "生成に失敗しました。",
+                        toastFailNetwork: "ネットワークエラー/タイムアウト。",
+                        toastEmpty: "ナレッジを入力してください。",
+                        toastTooShort: "20 文字以上で入力してください。",
+                        rateLimited: "操作が頻繁です。少し待ってください。",
+                    },
+                    donation: {
+                        title: "サポート：暗号通貨で寄付",
+                        note: "ご支援ありがとうございます！メールアドレスを入力し、暗号通貨で寄付してください。寄付は AI Chatbot の改善に役立ちます。",
+                        emailLabel: "あなたのメールアドレス",
+                        emailPh: "メールアドレスを入力...",
+                        emailNote:
+                            "登録時に使用したメールアドレスを入力してください。NOWPayments で再確認が必要です。これはテストモードで、実際の寄付は行われません。",
+                        btn: "テスト寄付ウィジェットを表示",
+                        widgetError:
+                            "テスト寄付ウィジェットの読み込みに失敗しました。後でもう一度お試しください。",
+                    },
+                    footer: "AI Chatbot — 賢さ同行",
+                },
+                en: {
+                    title: "AI Chatbot: Embed a 24/7 Smart Assistant on Your Website",
+                    brand: "AI Chatbot — Embed a Smart Assistant Easily",
+                    theme: { toggle: "Toggle Theme" },
+                    common: {
+                        copied: "Copied!",
+                        copyHint: "Click to copy",
+                        languageTitle: "Select language",
+                        ok: "Done",
+                        error: "Please enter a valid email",
+                        error_1: "Please enter a valid verification code",
+                        email: "Enter email…",
+                        code: "Enter 6-digit code…",
+                        emailSent:
+                            "Verification code sent. Please enter it within 60 seconds.",
+                        codeTimeout:
+                            "Time’s up. Please re-enter your email to get a new code.",
+                        consent:
+                            "I agree this site only sends OTP codes for login/registration and security notices. No marketing emails.",
+                        consentRequired:
+                            "Please check the consent box before submitting.",
+                        cooldownWait:
+                            "Please try again later (cooldown in effect).",
+                        networkError:
+                            "Network timeout or error. Please try again.",
+                        countdown: "{n}s before you can resend",
+                        otpValidity:
+                            "OTP code validity: <strong>{n}</strong> seconds.",
+                    },
+                    hero: {
+                        title: "Best AI Chatbot: Easily Embed 24/7 Customer Support on Your Site",
+                        benefit1: "One-Click Embed: Instant Live",
+                        benefit2:
+                            "Custom Knowledge Base: Professional, Tailored",
+                        benefit3: "24/7 Availability: Cut Costs & Scale",
+                        benefit4:
+                            "Multilingual In/Out: Auto-detect & natural replies",
+                        cta: "Start Free AI Chatbot Trial Now",
+                        ctaWithEmail: "Start Using",
+                    },
+                    quickStart: {
+                        title: "One-Click Embed: Copy the widget code",
+                        notice: "🔵 The blue AI assistant at bottom-right already uses your widget—try it now.",
+                        desc: "Paste the code into your site layout/footer to enable your AI Chatbot.",
+                    },
+                    params: {
+                        title: "Customize your AI Chatbot parameters",
+                        th1: "Attribute",
+                        th2: "Required",
+                        th4: "Description",
+                        src: "Load the core script.",
+                        position: "Floating button position.",
+                        site: "Your site ID.",
+                        accent: "Brand color.",
+                        width: "Panel width.",
+                        height: "Panel height.",
+                        z: "Topmost layer.",
+                    },
+                    required: "Required",
+                    optional: "Optional",
+                    create: {
+                        title: "Generate your AI Chatbot code: free",
+                        note: "Enter up to 500 chars of knowledge. We'll generate the widget code with your data-site and auto-update + copy it.",
+                        label: "Knowledge Base (max 500)",
+                        ph: "Describe your products/services/FAQ…",
+                        btn: "Generate code",
+                        loading: "Generating…",
+                        done: "Done",
+                        toastSuccess: "Widget code generated & copied.",
+                        toastFailGeneric: "Generation failed. Try again.",
+                        toastFailNetwork: "Network error or timeout.",
+                        toastEmpty: "Please enter some knowledge first.",
+                        toastTooShort: "Content too short (min 20 chars).",
+                        rateLimited: "Too many attempts. Please wait.",
+                    },
+                    donation: {
+                        title: "Support Us: Donate with Cryptocurrency",
+                        note: "Thank you for your support! Enter your email and donate via cryptocurrency to help us improve AI Chatbot.",
+                        emailLabel: "Your Email",
+                        emailPh: "Enter your email...",
+                        emailNote:
+                            "Please use the same email as registered. NOWPayments will require confirmation. This is test mode, no real donation will occur.",
+                        btn: "Show Test Donation Widget",
+                        widgetError:
+                            "Failed to load test donation widget. Please try again later.",
+                    },
+                    footer: "AI Chatbot — Smart Companion",
+                },
+            };
+
+            // ==============================
+            // 初始化語系/主題
+            // ==============================
+            const savedLang = localStorage.getItem("aiw_lang");
+            const savedTheme = localStorage.getItem("aiw_theme") || "light";
+            const navLang = (navigator.language || "zh-TW").toLowerCase();
+            const guessLang =
+                navLang.startsWith("zh-cn") || navLang === "zh"
+                    ? "zh-CN"
+                    : navLang.startsWith("zh")
+                      ? "zh-TW"
+                      : navLang.startsWith("ja")
+                        ? "ja"
+                        : "en";
+            let CUR_LANG = savedLang || guessLang;
+
+            document.body.setAttribute("data-theme", savedTheme);
+            const themeToggle = document.getElementById("theme-toggle");
+            const langSelect = document.getElementById("lang-select");
+
+            function setCodeHints() {
+                const T = STR[CUR_LANG] || STR["en"];
+                document
+                    .querySelectorAll('.code[data-copyable="true"]')
+                    .forEach((el) => {
+                        el.setAttribute("title", T.common.copyHint);
+                    });
+            }
+            function updateThemeIcon() {
+                const cur = document.body.getAttribute("data-theme");
+                if (themeToggle) {
+                    themeToggle.innerHTML =
+                        cur === "light"
+                            ? '<i class="fas fa-moon"></i>'
+                            : '<i class="fas fa-sun"></i>';
+                }
+            }
+            function applyLang() {
+                const T = STR[CUR_LANG] || STR["en"];
+                if (langSelect) langSelect.value = CUR_LANG;
+                document.querySelectorAll("[data-i18n]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n");
+                    const parts = key.split(".");
+                    let v = T;
+                    for (const p of parts) v = v?.[p];
+                    if (typeof v === "string") {
+                        if (el.tagName.toLowerCase() === "title") {
+                            document.title = v;
+                        } else {
+                            if (el.matches("a,button")) {
+                                el.textContent = v; // 確保 <a> 和 <button> 使用 textContent
+                                if (el.querySelector("img")) {
+                                    // 保留 <img> 元素，僅更新文字
+                                    const img = el.querySelector("img");
+                                    el.textContent = v;
+                                    el.insertBefore(img, el.firstChild);
+                                }
+                            } else {
+                                el.innerHTML = v;
+                            }
+                        }
+                    }
+                });
+                document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
+                    const key = el.getAttribute("data-i18n-ph");
+                    const parts = key.split(".");
+                    let v = T;
+                    for (const p of parts) v = v?.[p];
+                    if (typeof v === "string")
+                        el.setAttribute("placeholder", v);
+                });
+                document.documentElement.setAttribute("lang", CUR_LANG);
+                setCodeHints();
+                updateThemeIcon();
+                updateCTAByProgress();
+            }
+            function updateCTAByProgress() {
+                const btn = document.getElementById("start-trial-btn");
+                if (!btn) return;
+                const T = STR[CUR_LANG] || STR["en"];
+                const email = getCookie("verifiedEmail");
+                const label = email
+                    ? T.hero?.ctaWithEmail || "Start Using"
+                    : T.hero?.cta || btn.textContent;
+                btn.textContent = label;
+                btn.setAttribute("aria-label", label);
+                btn.setAttribute("title", label);
+            }
+
+            if (langSelect) {
+                langSelect.addEventListener("change", (e) => {
+                    CUR_LANG = e.target.value;
+                    localStorage.setItem("aiw_lang", CUR_LANG);
+                    applyLang();
+                });
+            }
+            if (themeToggle) {
+                themeToggle.addEventListener("click", () => {
+                    const current = document.body.getAttribute("data-theme");
+                    const next = current === "light" ? "dark" : "light";
+                    document.body.setAttribute("data-theme", next);
+                    localStorage.setItem("aiw_theme", next);
+                    updateThemeIcon();
+                });
+            }
+
+            const kb = document.getElementById("kb");
+            const kbCount = document.getElementById("kb-count");
+            if (kb && kbCount) {
+                kb.addEventListener("input", () => {
+                    kbCount.textContent = kb.value.length;
+                });
+            }
+
+            function toast(msg) {
+                const t = document.createElement("div");
+                t.className = "toast";
+                t.style.cssText =
+                    "position:fixed;left:50%;top:16px;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;z-index:3000;opacity:0;transition:opacity .2s";
+                t.textContent = msg;
+                document.body.appendChild(t);
+                requestAnimationFrame(() => {
+                    t.style.opacity = "1";
+                });
+                setTimeout(() => {
+                    t.style.opacity = "0";
+                    setTimeout(() => t.remove(), 200);
+                }, 1600);
+            }
+
+            async function copyText(text) {
+                try {
+                    await navigator.clipboard.writeText(text);
+                } catch {
+                    const ta = document.createElement("textarea");
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand("copy");
+                    ta.remove();
+                }
+            }
+
+            function bindCopyButtons() {
+                const T = STR[CUR_LANG] || STR["en"];
+                const blocks = [
+                    {
+                        box: document.getElementById("codebox"),
+                        getter: () =>
+                            document.getElementById("embed-code").innerText,
+                    },
+                    {
+                        box: document.getElementById("mini-code"),
+                        getter: () =>
+                            document.getElementById("embed-mini").innerText,
+                    },
+                ];
+                blocks.forEach(({ box, getter }) => {
+                    if (!box) return;
+                    const btn = box.querySelector(".copy-btn");
+                    if (btn) {
+                        btn.addEventListener("click", async (e) => {
+                            e.stopPropagation();
+                            await copyText(getter());
+                            toast(T.common.copied);
                         });
-                    document.title = t.title;
-                    html.lang = lang === "zh-TW" ? "zh-TW" : "en";
-                    langSelect.value = lang;
+                    }
+                    box.addEventListener("click", async (e) => {
+                        if (e.target.closest(".copy-btn")) return;
+                        await copyText(getter());
+                        toast(T.common.copied);
+                    });
+                });
+            }
+
+            (function bindCopies() {
+                bindCopyButtons();
+            })();
+
+            const WIDGET_SRC =
+                "https://chatbot.aitarf.us/js/ai-helper-loader.js";
+            const ACCENT_BLUE = "#2563eb";
+            const WIDGET_DEFAULTS = {
+                position: "bottom-right",
+                width: "360",
+                height: "520",
+                z: "2147483000",
+            };
+
+            function buildSnippet(siteId, opts = {}) {
+                const o = "<scr" + "ipt",
+                    c = "</scr" + "ipt>";
+                const pos = opts.position
+                    ? `\n  data-position="${opts.position}"`
+                    : "";
+                const accent = opts.accent
+                    ? `\n  data-accent="${opts.accent}"`
+                    : "";
+                const w = opts.width ? `\n  data-width="${opts.width}"` : "";
+                const h = opts.height ? `\n  data-height="${opts.height}"` : "";
+                const z = opts.z ? `\n  data-z="${opts.z}"` : "";
+                return `${o}
+  src="${WIDGET_SRC}"${pos}
+  data-site="${siteId}"${accent}${w}${h}${z}
+  defer
+>${c}`;
+            }
+            function buildMiniSnippet(siteId, accent) {
+                const o = "<scr" + "ipt",
+                    c = "</scr" + "ipt>";
+                return `${o}
+  src="${WIDGET_SRC}"
+  data-site="${siteId}"
+  data-accent="${accent}"
+  defer
+>${c}`;
+            }
+            async function mountDemoWidget(
+                siteId,
+                accent,
+                more = WIDGET_DEFAULTS,
+            ) {
+                await hardResetWidget();
+                const s = document.createElement("script");
+                s.src = WIDGET_SRC;
+                s.defer = true;
+                if (more.position) s.dataset.position = more.position;
+                s.dataset.site = siteId;
+                if (accent) s.dataset.accent = accent;
+                if (more.width) s.dataset.width = more.width;
+                if (more.height) s.dataset.height = more.height;
+                if (more.z) s.dataset.z = more.z;
+                document.body.appendChild(s);
+            }
+
+            function setCookie(name, value, days = 30) {
+                const d = new Date();
+                d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+                const isHttps = location.protocol === "https:";
+                document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/;SameSite=Lax${isHttps ? ";Secure" : ""}`;
+            }
+            function getCookie(name) {
+                const m = document.cookie.match(
+                    new RegExp(`(^|;)\\s*${name}=\\s*([^;]+)`),
+                );
+                if (!m) return null;
+                try {
+                    return decodeURIComponent(m[2]);
+                } catch {
+                    return m[2];
+                }
+            }
+
+            let codeCountdown = null;
+
+            function showEmailModal() {
+                if (codeCountdown) {
+                    clearInterval(codeCountdown);
+                    codeCountdown = null;
+                }
+                const modal = document.getElementById(
+                    "email-verification-modal",
+                );
+                const inner = document.getElementById("modal-inner");
+                const T = STR[CUR_LANG] || STR["en"];
+                inner.innerHTML = `
+          <p>${T.common.email}</p>
+          <input type="email" id="email-input" placeholder="${T.common.email}">
+          <div class="consent-wrap">
+            <table class="consent-table" role="presentation" aria-hidden="false">
+              <tr>
+                <td class="consent-text" id="consent-text">${T.common.consent}</td>
+                <td class="consent-check">
+                  <input type="checkbox" id="consent-checkbox" checked aria-labelledby="consent-text">
+                </td>
+              </tr>
+            </table>
+          </div>
+          <button class="btn primary" id="submit-email">${T.common.ok}</button>
+          <p id="email-error" class="error"></p>
+        `;
+                modal.classList.remove("hidden");
+                document.getElementById("email-input").focus();
+                document
+                    .getElementById("submit-email")
+                    .addEventListener("click", submitEmail);
+                const consentTextEl = document.getElementById("consent-text");
+                if (consentTextEl) {
+                    consentTextEl.addEventListener("click", () => {
+                        const cb = document.getElementById("consent-checkbox");
+                        cb.checked = !cb.checked;
+                    });
+                }
+            }
+
+            async function submitEmail() {
+                const email = document
+                    .getElementById("email-input")
+                    .value.trim();
+                const consent =
+                    document.getElementById("consent-checkbox").checked;
+                const error = document.getElementById("email-error");
+                const T = STR[CUR_LANG] || STR["en"];
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    error.textContent = T.common.error;
+                    error.style.display = "block";
+                    return;
+                }
+                if (!consent) {
+                    error.textContent = T.common.consentRequired;
+                    error.style.display = "block";
+                    return;
                 }
 
-                // 語言切換
-                langSelect.addEventListener("change", (e) => {
-                    currentLang = e.target.value;
-                    localStorage.setItem("lang", currentLang);
-                    applyLang(currentLang);
-                });
+                try {
+                    const response = await fetch("/email", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email }),
+                    });
+                    const data = await response.json();
+                    if (data.code === "1") {
+                        toast(T.common.emailSent);
+                        showCodeInput(email);
+                    } else if (data.code === "2") {
+                        error.textContent = T.common.cooldownWait;
+                        error.style.display = "block";
+                    } else {
+                        error.textContent = T.common.error;
+                        error.style.display = "block";
+                    }
+                } catch {
+                    error.textContent = T.common.networkError;
+                    error.style.display = "block";
+                }
+            }
 
-                // 主題切換
-                themeBtn.addEventListener("click", () => {
-                    const newTheme =
-                        html.dataset.theme === "dark" ? "light" : "dark";
-                    html.dataset.theme = newTheme;
-                    themeBtn.innerHTML =
-                        newTheme === "dark"
-                            ? '<i class="fas fa-sun"></i>'
-                            : '<i class="fas fa-moon"></i>';
-                    localStorage.setItem("theme", newTheme);
-                });
+            function showCodeInput(email) {
+                const inner = document.getElementById("modal-inner");
+                const T = STR[CUR_LANG] || STR["en"];
+                let countdown = 60;
+                inner.innerHTML = `
+          <p>${T.common.code}</p>
+          <input type="text" id="code-input" placeholder="${T.common.code}" inputmode="numeric" maxlength="6">
+          <button class="btn primary" id="verify-code">${T.common.ok}</button>
+          <p id="code-error" class="error"></p>
+          <p class="countdown" id="countdown">${countdown} 秒後可重新發送</p>
+          <p class="inline-note">OTP 驗證碼有效時間：<strong>60 秒</strong>。</p>
+        `;
+                const countdownEl = document.getElementById("countdown");
+                if (codeCountdown) {
+                    clearInterval(codeCountdown);
+                    codeCountdown = null;
+                }
+                codeCountdown = setInterval(() => {
+                    countdown--;
+                    countdownEl.textContent = `${countdown} 秒後可重新發送`;
+                    const modalHidden = document
+                        .getElementById("email-verification-modal")
+                        ?.classList.contains("hidden");
+                    if (modalHidden) {
+                        clearInterval(codeCountdown);
+                        codeCountdown = null;
+                        return;
+                    }
+                    if (countdown <= 0) {
+                        clearInterval(codeCountdown);
+                        codeCountdown = null;
+                        toast(T.common.codeTimeout);
+                        showEmailModal();
+                    }
+                }, 1000);
+                document
+                    .getElementById("verify-code")
+                    .addEventListener("click", () => verifyCode(email), {
+                        once: true,
+                    });
+            }
 
-                // 初始化圖示
-                themeBtn.innerHTML =
-                    savedTheme === "dark"
-                        ? '<i class="fas fa-sun"></i>'
-                        : '<i class="fas fa-moon"></i>';
+            async function verifyCode(email) {
+                const code = document.getElementById("code-input").value.trim();
+                const error = document.getElementById("code-error");
+                const modal = document.getElementById(
+                    "email-verification-modal",
+                );
+                const T = STR[CUR_LANG] || STR["en"];
+                if (!/^[0-9]{6}$/.test(code)) {
+                    error.textContent = T.common.error_1;
+                    error.style.display = "block";
+                    return;
+                }
+                try {
+                    const response = await fetch("/verify-code", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email, code }),
+                    });
+                    const data = await response.json();
+                    if (data.code === "1") {
+                        if (codeCountdown) {
+                            clearInterval(codeCountdown);
+                            codeCountdown = null;
+                        }
+                        setCookie("verifiedEmail", email, 30);
+                        const cardGenerate =
+                            document.getElementById("card-generate");
+                        modal.classList.add("hidden");
+                        cardGenerate.classList.remove("hidden");
+                        const kb = document.getElementById("kb");
+                        if (
+                            data.knowledgeContext &&
+                            typeof data.knowledgeContext === "string" &&
+                            data.knowledgeContext.trim() !== ""
+                        ) {
+                            const kc = data.knowledgeContext
+                                .trim()
+                                .slice(0, 500);
+                            setCookie("knowledgeContext", kc, 30);
+                            kb.value = kc;
+                            kb.dispatchEvent(new Event("input"));
+                        }
+                        cardGenerate.scrollIntoView({ behavior: "smooth" });
+                        kb.focus();
+                        updateCTAByProgress();
+                    } else if (data.code === "2") {
+                        error.textContent = T.common.cooldownWait;
+                        error.style.display = "block";
+                    } else {
+                        error.textContent = T.common.error_1;
+                        error.style.display = "block";
+                    }
+                } catch {
+                    error.textContent = T.common.networkError;
+                    error.style.display = "block";
+                }
+            }
 
-                // 手機選單
-                menuBtn.addEventListener("click", () => {
-                    const expanded =
-                        menuBtn.getAttribute("aria-expanded") === "true";
-                    menuBtn.setAttribute("aria-expanded", !expanded);
-                    navList.classList.toggle("active");
-                    overlay.classList.toggle("active");
-                });
-
-                overlay.addEventListener("click", () => {
-                    navList.classList.remove("active");
-                    overlay.classList.remove("active");
-                    menuBtn.setAttribute("aria-expanded", "false");
-                });
-
-                // 表單
-                form?.addEventListener("submit", (e) => {
+            const btnStartTrial = document.getElementById("start-trial-btn");
+            if (btnStartTrial) {
+                btnStartTrial.addEventListener("click", (e) => {
                     e.preventDefault();
-                    alert("申請已送出！我們將盡快與您聯繫。");
-                    form.reset();
+                    const email = getCookie("verifiedEmail");
+                    if (email) {
+                        const cardGenerate =
+                            document.getElementById("card-generate");
+                        cardGenerate.classList.remove("hidden");
+                        cardGenerate.scrollIntoView({ behavior: "smooth" });
+                        const kbEl = document.getElementById("kb");
+                        const kcRaw = getCookie("knowledgeContext");
+                        if (kcRaw && kbEl && !kbEl.value.trim()) {
+                            kbEl.value = kcRaw.slice(0, 500);
+                            kbEl.dispatchEvent(new Event("input"));
+                        }
+                        document.getElementById("kb").focus();
+                    } else {
+                        showEmailModal();
+                    }
                 });
+            }
 
-                applyLang(currentLang);
-            });
+            (function bindCreateFlow() {
+                const btnCreate = document.getElementById("btn-create");
+                if (!btnCreate) return;
+                const COOLDOWN_MS = 1500;
+                let isBusy = false;
+                let lastClickAt = 0;
+
+                function setCreateBtnState(state) {
+                    const Tt = (STR[CUR_LANG] || STR["en"]).create;
+                    if (state === "loading") {
+                        btnCreate.setAttribute("aria-busy", "true");
+                        btnCreate.setAttribute("disabled", "disabled");
+                        btnCreate.textContent = Tt.loading || "Generating…";
+                    } else if (state === "done") {
+                        btnCreate.removeAttribute("aria-busy");
+                        btnCreate.removeAttribute("disabled");
+                        btnCreate.textContent = Tt.done || "Done";
+                    } else {
+                        btnCreate.removeAttribute("aria-busy");
+                        btnCreate.removeAttribute("disabled");
+                        btnCreate.textContent =
+                            Tt.btn || "Generate AI Chatbot Widget Code";
+                    }
+                }
+
+                btnCreate.addEventListener("click", async () => {
+                    const Tt = (STR[CUR_LANG] || STR["en"]).create;
+                    const now = Date.now();
+                    if (now - lastClickAt < COOLDOWN_MS) {
+                        toast(Tt.rateLimited);
+                        return;
+                    }
+                    lastClickAt = now;
+                    if (isBusy) return;
+                    const email = getCookie("verifiedEmail");
+                    if (!email) {
+                        showEmailModal();
+                        return;
+                    }
+                    const v = (
+                        document.getElementById("kb").value || ""
+                    ).trim();
+                    if (!v) {
+                        toast(Tt.toastEmpty);
+                        return;
+                    }
+                    if (v.length < 20) {
+                        toast(Tt.toastTooShort);
+                        return;
+                    }
+                    isBusy = true;
+                    setCreateBtnState("loading");
+                    try {
+                        const response = await fetch("/site-id", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ email, knowledge: v }),
+                        });
+                        const data = await response.json();
+                        if (data.siteId) {
+                            const full = buildSnippet(data.siteId, {
+                                position: WIDGET_DEFAULTS.position,
+                                accent: ACCENT_BLUE,
+                                width: WIDGET_DEFAULTS.width,
+                                height: WIDGET_DEFAULTS.height,
+                                z: WIDGET_DEFAULTS.z,
+                            });
+                            const mini = buildMiniSnippet(
+                                data.siteId,
+                                ACCENT_BLUE,
+                            );
+                            const codeFull =
+                                document.getElementById("embed-code");
+                            const codeMini =
+                                document.getElementById("embed-mini");
+                            if (codeFull) codeFull.innerText = full;
+                            if (codeMini) codeMini.innerText = mini;
+                            const cardSnippet =
+                                document.getElementById("card-snippet");
+                            if (cardSnippet) {
+                                cardSnippet.classList.remove("hidden");
+                                cardSnippet.scrollIntoView({
+                                    behavior: "smooth",
+                                });
+                            }
+                            mountDemoWidget(
+                                data.siteId,
+                                ACCENT_BLUE,
+                                WIDGET_DEFAULTS,
+                            );
+                            setCookie("knowledgeContext", v, 30);
+                            updateCTAByProgress();
+
+                            // 檢查 data.code == "3"，顯示 #card-donation
+                            if (data.code === "3") {
+                                const cardDonation =
+                                    document.getElementById("card-donation");
+                                if (cardDonation) {
+                                    cardDonation.classList.remove("hidden");
+                                    const donationEmail =
+                                        document.getElementById(
+                                            "donation-email",
+                                        );
+                                    if (donationEmail) {
+                                        donationEmail.value = email || "";
+                                    }
+                                    cardDonation.scrollIntoView({
+                                        behavior: "smooth",
+                                    });
+                                }
+                            }
+
+                            await copyText(full);
+                            const T = STR[CUR_LANG] || STR["en"];
+                            toast(T.common.copied);
+                            setCreateBtnState("done");
+                            setTimeout(() => setCreateBtnState("idle"), 800);
+                        } else {
+                            throw new Error(
+                                data.message || "Generation failed",
+                            );
+                        }
+                    } catch (e) {
+                        const Tt2 = (STR[CUR_LANG] || STR["en"]).create;
+                        toast(Tt2.toastFailGeneric);
+                        setCreateBtnState("idle");
+                    } finally {
+                        isBusy = false;
+                        setTimeout(() => {
+                            lastClickAt = 0;
+                        }, COOLDOWN_MS);
+                    }
+                });
+            })();
+
+            (function bindDonationFlow() {
+                const btnDonation = document.getElementById("btn-donation");
+                if (!btnDonation) return;
+
+                btnDonation.addEventListener("click", (e) => {
+                    e.preventDefault(); // 阻止默認行為
+                    const T = STR[CUR_LANG] || STR["en"];
+                    const donationEmail = document
+                        .getElementById("donation-email")
+                        .value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    if (!donationEmail || !emailRegex.test(donationEmail)) {
+                        toast(T.common.error);
+                        return;
+                    }
+
+                    const baseUrl = "https://sandbox.nowpayments.io/donation";
+                    const params = new URLSearchParams({
+                        api_key: "EEYQJ8N-Z5K4YXW-GSDXE0C-B86TVX8",
+                        source: "lk_donation",
+                        medium: "referral",
+                        email: encodeURIComponent(donationEmail),
+                    }).toString();
+                    const donationUrl = `${baseUrl}?${params}`;
+
+                    try {
+                        const newWindow = window.open(
+                            donationUrl,
+                            "_blank",
+                            "noopener,noreferrer",
+                        );
+                        if (
+                            !newWindow ||
+                            newWindow.closed ||
+                            typeof newWindow.closed === "undefined"
+                        ) {
+                            console.warn("Popup blocked or failed to open");
+                            toast(T.donation.widgetError);
+                        }
+                    } catch (error) {
+                        console.error("Window open error:", error);
+                        toast(T.donation.widgetError);
+                    }
+                });
+            })();
+
+            applyLang();
         </script>
+
+        <!-- Demo loader -->
+        <script
+            src="https://chatbot.aitarf.us/js/ai-helper-loader.js"
+            data-position="bottom-right"
+            data-site="aitarf_15oJOoBsQFa3"
+            data-accent="#25d366"
+            data-width="360"
+            data-height="520"
+            data-z="2147483000"
+            defer
+        ></script>
     </body>
 </html>
