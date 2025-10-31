@@ -132,7 +132,7 @@
       host.style.zIndex = cfg.z;
       host.style.width = '100vw';
       host.style.height = '100vh';
-      // 移除 pointer-events: none！讓其他按鈕可點
+      host.style.pointerEvents = 'none';
 
       (document.body || document.documentElement).appendChild(host);
       const shadow = host.attachShadow({ mode: 'open' });
