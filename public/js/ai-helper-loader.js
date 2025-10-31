@@ -28,7 +28,6 @@
     }
   }
 
-  // color validators
   const HEX3_6 = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
   const RGBA = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(\s*,\s*((0|1|0?\.\d+)))?\s*\)$/;
   function isValidColor(v) {
@@ -96,7 +95,6 @@
         return;
       }
 
-      // raw attributes
       const raw = {
         widget: 'https://chatbot.aitarf.us/widget',
         endpoint: 'https://chatbot.aitarf.us/query',
@@ -109,7 +107,6 @@
         z: String(S.getAttribute('data-z') || '2147483000'),
       };
 
-      // validate + normalize
       const cfg = {
         widget: toAbsURL(raw.widget),
         endpoint: toAbsURL(raw.endpoint),
@@ -122,7 +119,6 @@
         z: isValidZ(raw.z) ? String(raw.z).trim() : '2147483000',
       };
 
-      // warnings
       if (!isLikelyURL(cfg.widget)) console.warn('[ai-helper] Invalid widget URL.');
       if (!isLikelyURL(cfg.endpoint)) console.warn('[ai-helper] Invalid endpoint URL.');
       if (!isValidColor(cfg.accent)) console.warn('[ai-helper] Accent color invalid; using fallback.');
@@ -137,7 +133,6 @@
       }
       const widgetOrigin = new URL(cfg.widget).origin;
 
-      // host container
       const host = document.createElement('div');
       host.style.all = 'initial';
       host.style.position = 'fixed';
@@ -149,21 +144,17 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // FAB 按鈕定位（桌面）
+      // FAB 按鈕定位（依 data-position）
       host.style.left = isLeft ? '20px' : 'auto';
       host.style.right = isRight ? '20px' : 'auto';
       host.style.top = isTop ? '20px' : (isMiddle ? '50%' : 'auto');
       host.style.bottom = isBottom ? '20px' : 'auto';
-      if (isMiddle) {
-        host.style.transform = 'translateY(-50%)';
-      } else {
-        host.style.transform = '';
-      }
+      if (isMiddle) host.style.transform = 'translateY(-50%)';
 
       (document.body || document.documentElement).appendChild(host);
       const shadow = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
 
-      // styles
+      // 樣式：FAB 依位置，面板永遠置中
       const style = document.createElement('style');
       style.textContent = `
         *,*::before,*::after{ box-sizing:border-box; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,"PingFang TC","Microsoft JhengHei",sans-serif; }
@@ -176,20 +167,20 @@
         }
         .fab:active{ transform: translateY(1px); }
 
-        /* 聊天面板 */
+        /* 聊天面板：永遠在螢幕中央 */
         .panel{
           position:fixed;
+          left:50%; top:50%;
+          transform:translate(-50%,-50%);
           width:${cfg.width}px; height:${cfg.height}px;
-          background:#fff; border-radius:14px;
-          box-shadow:0 10px 40px rgba(0,0,0,.18); overflow:hidden; display:none;
-          ${isLeft ? 'left:20px;' : 'right:20px;'}
-          ${isTop ? 'top:90px;' : ''}
-          ${isBottom ? 'bottom:90px;' : ''}
-          ${isMiddle ? 'top:50%; transform:translateY(-50%);' : ''}
+          max-width:92vw; max-height:80vh;
+          background:#fff; border-radius:16px;
+          box-shadow:0 10px 40px rgba(0,0,0,.2); overflow:hidden; display:none;
+          z-index:2147483647;
         }
         iframe{ width:100%; height:100%; border:0; display:block; }
 
-        /* 手機 RWD 優化（關鍵修正） */
+        /* 手機 RWD */
         @media (max-width: 480px){
           .fab{
             width:50px; height:50px; font-size:1.3rem;
@@ -201,25 +192,17 @@
           .panel{
             width:92vw !important;
             height:70vh !important;
-            left:4vw !important;
-            right:4vw !important;
-            margin:0 auto;
             border-radius:16px;
-            ${isTop ? 'top:80px !important;' : ''}
-            ${isBottom ? 'bottom:82px !important;' : ''}
-            ${isMiddle ? 'top:50% !important; transform:translateY(-50%) !important;' : ''}
           }
         }
       `;
       shadow.appendChild(style);
 
-      // FAB
       const fab = document.createElement('button');
       fab.className = 'fab';
       fab.setAttribute('aria-label', 'Open AI Support');
       fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
 
-      // panel + iframe
       const panel = document.createElement('div');
       panel.className = 'panel';
 
@@ -250,12 +233,10 @@
         panel.style.display === 'block' ? close() : open();
       });
 
-      // ESC to close
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && panel.style.display === 'block') close();
       });
 
-      // resize messages
       window.addEventListener('message', (ev) => {
         try {
           if (!ev || !ev.data) return;
@@ -265,7 +246,7 @@
             const h = Math.max(320, Math.min(900, msg.height));
             panel.style.height = h + 'px';
           }
-        } catch (_) { /* ignore */ }
+        } catch (_) {}
       });
 
     } catch (err) {
