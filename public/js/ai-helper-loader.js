@@ -79,7 +79,7 @@
         widget:      'https://chatbot.aitarf.us/widget',
         endpoint:    'https://chatbot.aitarf.us/query',
         placeholder: 'send msg to AI support...',
-        position:    'bottom-right',
+        position:    S.getAttribute('data-position')  || 'bottom-right',
         accent:      S.getAttribute('data-accent') || '#0055ff',
         site:        S.getAttribute('data-site')  || '',
         width:       parseInt(S.getAttribute('data-width')  || '360', 10),
