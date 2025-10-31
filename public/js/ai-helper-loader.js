@@ -125,11 +125,10 @@
       }
       const widgetOrigin = new URL(cfg.widget).origin;
 
-      // host 填滿全螢幕
+      // host 設定
       const host = document.createElement('div');
       host.style.position = 'fixed';
       host.style.inset = '0';
-      host.style.pointerEvents = 'none';
       host.style.zIndex = cfg.z;
       host.style.width = '100vw';
       host.style.height = '100vh';
@@ -143,7 +142,7 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // 樣式
+      // 樣式（用 class 切換 + transition + pointer-events 優化）
       const style = document.createElement('style');
       style.textContent = `
         *, *::before, *::after {
@@ -165,21 +164,22 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          pointer-events: auto;
-          z-index: 2147483647;
+          z-index: 2147483646; /* 比 panel 低 */
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
           ${isLeft ? 'left: 20px;' : 'right: 20px;'}
           ${isTop ? 'top: 20px;' : ''}
           ${isBottom ? 'bottom: 20px;' : ''}
           ${isMiddle ? 'top: 50%; transform: translateY(-50%);' : ''}
         }
-        .fab:active { transform: translateY(1px); }
+        .fab:hover { box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+        .fab:active { transform: translateY(2px); }
 
-        /* 聊天面板：永遠中央 */
+        /* 聊天面板 */
         .panel {
           position: fixed;
           left: 50%;
           top: 50%;
-          transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%) scale(0.95);
           width: ${cfg.width}px;
           height: ${cfg.height}px;
           max-width: 92vw;
@@ -188,8 +188,16 @@
           border-radius: 16px;
           box-shadow: 0 10px 40px rgba(0,0,0,.2);
           overflow: hidden;
-          display: none;
           z-index: 2147483647;
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 0.25s ease, transform 0.25s ease;
+          pointer-events: none;
+        }
+        .panel.open {
+          opacity: 1;
+          visibility: visible;
+          transform: translate(-50%, -50%) scale(1);
           pointer-events: auto;
         }
         iframe {
@@ -243,22 +251,24 @@
       shadow.appendChild(panel);
       shadow.appendChild(fab);
 
-      // 開關
-      function open() {
-        panel.style.display = 'block';
-      }
-      function close() {
-        panel.style.display = 'none';
+      // 開關邏輯 + debounce
+      let isBusy = false;
+      function toggle() {
+        if (isBusy) return;
+        isBusy = true;
+        panel.classList.toggle('open');
+        setTimeout(() => isBusy = false, 300); // debounce 300ms
       }
 
-      fab.addEventListener('click', () => {
-        panel.style.display === 'block' ? close() : open();
-      });
+      fab.addEventListener('click', toggle);
+      fab.addEventListener('touchstart', toggle); // 手機優化
 
+      // ESC 關閉
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && panel.style.display === 'block') close();
+        if (e.key === 'Escape' && panel.classList.contains('open')) toggle();
       });
 
+      // 高度調整
       window.addEventListener('message', (ev) => {
         if (ev.origin !== widgetOrigin) return;
         const msg = ev.data;
