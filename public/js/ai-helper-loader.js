@@ -151,7 +151,6 @@
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
         }
 
-        /* FAB 按鈕 */
         .fab {
           position: fixed;
           width: 56px;
@@ -176,7 +175,6 @@
         .fab:hover { box-shadow: 0 8px 24px rgba(0,0,0,.2); }
         .fab:active { transform: translateY(2px); }
 
-        /* 聊天面板 */
         .panel {
           position: fixed;
           left: 50%;
@@ -195,7 +193,6 @@
           visibility: hidden;
           transition: opacity 0.25s ease, transform 0.25s ease;
           pointer-events: none;
-          padding: 0;
         }
         .panel.open {
           opacity: 1;
@@ -204,7 +201,6 @@
           pointer-events: auto;
         }
 
-        /* 右上角 X 關閉按鈕 */
         .close-btn {
           position: absolute;
           top: 12px;
@@ -237,6 +233,7 @@
           height: 100%;
           border: 0;
           display: block;
+          pointer-events: auto;
         }
 
         @media (max-width: 480px) {
@@ -274,13 +271,11 @@
       const panel = document.createElement('div');
       panel.className = 'panel';
 
-      // X 按鈕
       const closeBtn = document.createElement('button');
       closeBtn.className = 'close-btn';
       closeBtn.innerHTML = '×';
       closeBtn.setAttribute('aria-label', 'Close AI Support');
 
-      // iframe
       const url = new URL(cfg.widget);
       url.searchParams.set('placeholder', cfg.placeholder);
       url.searchParams.set('accent', cfg.accent);
@@ -297,7 +292,7 @@
       shadow.appendChild(panel);
       shadow.appendChild(fab);
 
-      // 開關邏輯 + debounce
+      // 開關邏輯
       let isBusy = false;
       function toggle() {
         if (isBusy) return;
