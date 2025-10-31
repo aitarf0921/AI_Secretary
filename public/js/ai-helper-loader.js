@@ -149,7 +149,7 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // FAB 按鈕定位
+      // FAB 按鈕定位（桌面）
       host.style.left = isLeft ? '20px' : 'auto';
       host.style.right = isRight ? '20px' : 'auto';
       host.style.top = isTop ? '20px' : (isMiddle ? '50%' : 'auto');
@@ -167,8 +167,16 @@
       const style = document.createElement('style');
       style.textContent = `
         *,*::before,*::after{ box-sizing:border-box; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,"PingFang TC","Microsoft JhengHei",sans-serif; }
-        .fab{ width:56px; height:56px; border:0; border-radius:50%; background:${cfg.accent}; color:#fff; cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.15); display:inline-flex; align-items:center; justify-content:center; }
+
+        /* FAB 按鈕 */
+        .fab{
+          width:56px; height:56px; border:0; border-radius:50%; background:${cfg.accent}; color:#fff;
+          cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.15); display:inline-flex;
+          align-items:center; justify-content:center; font-size:1.4rem;
+        }
         .fab:active{ transform: translateY(1px); }
+
+        /* 聊天面板 */
         .panel{
           position:fixed;
           width:${cfg.width}px; height:${cfg.height}px;
@@ -180,13 +188,26 @@
           ${isMiddle ? 'top:50%; transform:translateY(-50%);' : ''}
         }
         iframe{ width:100%; height:100%; border:0; display:block; }
+
+        /* 手機 RWD 優化（關鍵修正） */
         @media (max-width: 480px){
-          .panel{
-            width:92vw; height:70vh;
+          .fab{
+            width:50px; height:50px; font-size:1.3rem;
             ${isLeft ? 'left:4vw;' : 'right:4vw;'}
-            ${isTop ? 'top:80px;' : ''}
-            ${isBottom ? 'bottom:82px;' : ''}
+            ${isTop ? 'top:8px;' : ''}
+            ${isBottom ? 'bottom:8px;' : ''}
             ${isMiddle ? 'top:50%; transform:translateY(-50%);' : ''}
+          }
+          .panel{
+            width:92vw !important;
+            height:70vh !important;
+            left:4vw !important;
+            right:4vw !important;
+            margin:0 auto;
+            border-radius:16px;
+            ${isTop ? 'top:80px !important;' : ''}
+            ${isBottom ? 'bottom:82px !important;' : ''}
+            ${isMiddle ? 'top:50% !important; transform:translateY(-50%) !important;' : ''}
           }
         }
       `;
