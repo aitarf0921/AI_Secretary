@@ -125,16 +125,17 @@
       }
       const widgetOrigin = new URL(cfg.widget).origin;
 
-      // host 設定
+      // host 填滿螢幕，但不阻擋點擊
       const host = document.createElement('div');
       host.style.position = 'fixed';
       host.style.inset = '0';
       host.style.zIndex = cfg.z;
       host.style.width = '100vw';
       host.style.height = '100vh';
+      // 移除 pointer-events: none！讓其他按鈕可點
 
       (document.body || document.documentElement).appendChild(host);
-      const shadow = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
+      const shadow = host.attachShadow({ mode: 'open' });
 
       const isLeft = cfg.position.includes('left');
       const isRight = cfg.position.includes('right');
@@ -142,7 +143,7 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // 樣式（含右上角 X）
+      // 樣式
       const style = document.createElement('style');
       style.textContent = `
         *, *::before, *::after {
@@ -166,6 +167,7 @@
           justify-content: center;
           z-index: 2147483646;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
+          pointer-events: auto;
           ${isLeft ? 'left: 20px;' : 'right: 20px;'}
           ${isTop ? 'top: 20px;' : ''}
           ${isBottom ? 'bottom: 20px;' : ''}
@@ -222,6 +224,7 @@
           z-index: 2147483648;
           transition: all 0.2s ease;
           backdrop-filter: blur(4px);
+          pointer-events: auto;
         }
         .close-btn:hover,
         .close-btn:active {
@@ -271,7 +274,7 @@
       const panel = document.createElement('div');
       panel.className = 'panel';
 
-      // 右上角 X 按鈕
+      // X 按鈕
       const closeBtn = document.createElement('button');
       closeBtn.className = 'close-btn';
       closeBtn.innerHTML = '×';
@@ -288,9 +291,9 @@
       iframe.src = url.toString();
       iframe.setAttribute('title', 'AI Support');
       iframe.setAttribute('allow', 'clipboard-write');
-
       panel.appendChild(iframe);
-      panel.appendChild(closeBtn); // 加入 X 按鈕
+      panel.appendChild(closeBtn);
+
       shadow.appendChild(panel);
       shadow.appendChild(fab);
 
@@ -303,7 +306,6 @@
         setTimeout(() => isBusy = false, 300);
       }
 
-      // FAB 與 X 都可觸發
       fab.addEventListener('click', toggle);
       fab.addEventListener('touchstart', toggle, { passive: true });
       closeBtn.addEventListener('click', () => {
@@ -314,12 +316,10 @@
         if (panel.classList.contains('open')) toggle();
       }, { passive: true });
 
-      // ESC 關閉
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && panel.classList.contains('open')) toggle();
       });
 
-      // 高度調整
       window.addEventListener('message', (ev) => {
         if (ev.origin !== widgetOrigin) return;
         const msg = ev.data;
