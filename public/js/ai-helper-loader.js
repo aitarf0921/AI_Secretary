@@ -42,7 +42,19 @@
     return isValidColor(input) ? input.trim() : def;
   }
 
-  function normalizePos(p){ return p === 'bottom-left' ? 'bottom-left' : 'bottom-right'; }
+  function normalizePos(p) {
+    const validPositions = [
+      'bottom-right',
+      'bottom-left',
+      'top-right',
+      'top-left',
+      'middle-right',
+      'middle-left'
+    ];
+
+    // 如果 p 是合法值，回傳 p；否則回傳預設值
+    return validPositions.includes(p) ? p : 'bottom-right';
+  }
   function isPositiveInt(n){ return Number.isInteger(n) && n > 0; }
   function clamp(n, min, max){ return Math.min(max, Math.max(min, n)); }
   function isValidZ(z){
