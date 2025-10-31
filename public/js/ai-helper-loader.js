@@ -119,27 +119,20 @@
         z: isValidZ(raw.z) ? String(raw.z).trim() : '2147483000',
       };
 
-      if (!isLikelyURL(cfg.widget)) console.warn('[ai-helper] Invalid widget URL.');
-      if (!isLikelyURL(cfg.endpoint)) console.warn('[ai-helper] Invalid endpoint URL.');
-      if (!isValidColor(cfg.accent)) console.warn('[ai-helper] Accent color invalid; using fallback.');
-      if (!isValidSite(raw.site)) console.warn('[ai-helper] "data-site" contains invalid characters; ignoring.');
-      if (!isValidPlaceholder(raw.placeholder)) console.warn('[ai-helper] Placeholder invalid; using default.');
-      if (!isPositiveInt(raw.width) || !isPositiveInt(raw.height)) console.warn('[ai-helper] Width/Height invalid; using defaults.');
-      if (!isValidZ(cfg.z)) console.warn('[ai-helper] z-index invalid; using default.');
-
       if (!cfg.widget) {
         console.error('[ai-helper] Widget URL is missing or malformed.');
         return;
       }
       const widgetOrigin = new URL(cfg.widget).origin;
 
-      // 關鍵修正：host 填滿全螢幕，透明穿透
+      // host 填滿全螢幕
       const host = document.createElement('div');
-      host.style.all = 'initial';
       host.style.position = 'fixed';
-      host.style.inset = '0';                    // 填滿整個視窗
-      host.style.pointerEvents = 'none';         // 點擊穿透
+      host.style.inset = '0';
+      host.style.pointerEvents = 'none';
       host.style.zIndex = cfg.z;
+      host.style.width = '100vw';
+      host.style.height = '100vh';
 
       (document.body || document.documentElement).appendChild(host);
       const shadow = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
@@ -150,52 +143,76 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // 樣式：FAB 依位置，面板永遠置中
+      // 樣式
       const style = document.createElement('style');
       style.textContent = `
-        *,*::before,*::after{ box-sizing:border-box; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,"PingFang TC","Microsoft JhengHei",sans-serif; }
+        *, *::before, *::after {
+          box-sizing: border-box;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+        }
 
-        /* FAB 按鈕：依 data-position 定位 */
-        .fab{
+        /* FAB 按鈕 */
+        .fab {
           position: fixed;
-          width:56px; height:56px; border:0; border-radius:50%; background:${cfg.accent}; color:#fff;
-          cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.15); display:inline-flex;
-          align-items:center; justify-content:center; font-size:1.4rem;
+          width: 56px;
+          height: 56px;
+          border: 0;
+          border-radius: 50%;
+          background: ${cfg.accent};
+          color: #fff;
+          cursor: pointer;
+          box-shadow: 0 6px 20px rgba(0,0,0,.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           pointer-events: auto;
-          ${isLeft ? 'left:20px;' : 'right:20px;'}
-          ${isTop ? 'top:20px;' : ''}
-          ${isBottom ? 'bottom:20px;' : ''}
-          ${isMiddle ? 'top:50%; transform:translateY(-50%);' : ''}
+          z-index: 2147483647;
+          ${isLeft ? 'left: 20px;' : 'right: 20px;'}
+          ${isTop ? 'top: 20px;' : ''}
+          ${isBottom ? 'bottom: 20px;' : ''}
+          ${isMiddle ? 'top: 50%; transform: translateY(-50%);' : ''}
         }
-        .fab:active{ transform: translateY(1px); }
+        .fab:active { transform: translateY(1px); }
 
-        /* 聊天面板：永遠在螢幕中央 */
-        .panel{
-          position:fixed;
-          left:50%; top:50%;
-          transform:translate(-50%,-50%);
-          width:${cfg.width}px; height:${cfg.height}px;
-          max-width:92vw; max-height:80vh;
-          background:#fff; border-radius:16px;
-          box-shadow:0 10px 40px rgba(0,0,0,.2); overflow:hidden; display:none;
-          z-index:2147483647;
+        /* 聊天面板：永遠中央 */
+        .panel {
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: ${cfg.width}px;
+          height: ${cfg.height}px;
+          max-width: 92vw;
+          max-height: 80vh;
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 10px 40px rgba(0,0,0,.2);
+          overflow: hidden;
+          display: none;
+          z-index: 2147483647;
           pointer-events: auto;
         }
-        iframe{ width:100%; height:100%; border:0; display:block; }
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
+        }
 
         /* 手機 RWD */
-        @media (max-width: 480px){
-          .fab{
-            width:50px; height:50px; font-size:1.3rem;
-            ${isLeft ? 'left:4vw;' : 'right:4vw;'}
-            ${isTop ? 'top:8px;' : ''}
-            ${isBottom ? 'bottom:8px;' : ''}
-            ${isMiddle ? 'top:50%; transform:translateY(-50%);' : ''}
+        @media (max-width: 480px) {
+          .fab {
+            width: 50px;
+            height: 50px;
+            ${isLeft ? 'left: 4vw;' : 'right: 4vw;'}
+            ${isTop ? 'top: 8px;' : ''}
+            ${isBottom ? 'bottom: 8px;' : ''}
+            ${isMiddle ? 'top: 50%; transform: translateY(-50%);' : ''}
           }
-          .panel{
-            width:92vw !important;
-            height:70vh !important;
-            border-radius:16px;
+          .panel {
+            width: 92vw !important;
+            height: 70vh !important;
+            border-radius: 16px;
           }
         }
       `;
@@ -205,9 +222,9 @@
       const fab = document.createElement('button');
       fab.className = 'fab';
       fab.setAttribute('aria-label', 'Open AI Support');
-      fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
+      fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
 
-      // panel + iframe
+      // Panel
       const panel = document.createElement('div');
       panel.className = 'panel';
 
@@ -217,18 +234,18 @@
       url.searchParams.set('endpoint', cfg.endpoint);
       if (cfg.site) url.searchParams.set('site', cfg.site);
 
-      const frame = document.createElement('iframe');
-      frame.src = url.toString();
-      frame.setAttribute('title', 'AI Support');
-      frame.setAttribute('allow', 'clipboard-write');
+      const iframe = document.createElement('iframe');
+      iframe.src = url.toString();
+      iframe.setAttribute('title', 'AI Support');
+      iframe.setAttribute('allow', 'clipboard-write');
+      panel.appendChild(iframe);
 
-      panel.appendChild(frame);
       shadow.appendChild(panel);
       shadow.appendChild(fab);
 
+      // 開關
       function open() {
         panel.style.display = 'block';
-        try { frame.contentWindow && frame.focus(); } catch (_) {}
       }
       function close() {
         panel.style.display = 'none';
@@ -238,26 +255,20 @@
         panel.style.display === 'block' ? close() : open();
       });
 
-      // ESC 關閉
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && panel.style.display === 'block') close();
       });
 
-      // 支援動態調整高度
       window.addEventListener('message', (ev) => {
-        try {
-          if (!ev || !ev.data) return;
-          if (ev.origin !== widgetOrigin) return;
-          const msg = ev.data;
-          if (msg.type === 'ai-helper:resize' && typeof msg.height === 'number') {
-            const h = Math.max(320, Math.min(900, msg.height));
-            panel.style.height = h + 'px';
-          }
-        } catch (_) {}
+        if (ev.origin !== widgetOrigin) return;
+        const msg = ev.data;
+        if (msg.type === 'ai-helper:resize' && typeof msg.height === 'number') {
+          panel.style.height = Math.max(320, Math.min(900, msg.height)) + 'px';
+        }
       });
 
     } catch (err) {
-      console.error('[ai-helper] Initialization failed:', err);
+      console.error('[ai-helper] Init failed:', err);
     }
   });
 })();
