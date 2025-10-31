@@ -142,7 +142,7 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // 樣式（用 class 切換 + transition + pointer-events 優化）
+      // 樣式（含右上角 X）
       const style = document.createElement('style');
       style.textContent = `
         *, *::before, *::after {
@@ -164,7 +164,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 2147483646; /* 比 panel 低 */
+          z-index: 2147483646;
           transition: transform 0.2s ease, box-shadow 0.2s ease;
           ${isLeft ? 'left: 20px;' : 'right: 20px;'}
           ${isTop ? 'top: 20px;' : ''}
@@ -193,6 +193,7 @@
           visibility: hidden;
           transition: opacity 0.25s ease, transform 0.25s ease;
           pointer-events: none;
+          padding: 0;
         }
         .panel.open {
           opacity: 1;
@@ -200,6 +201,34 @@
           transform: translate(-50%, -50%) scale(1);
           pointer-events: auto;
         }
+
+        /* 右上角 X 關閉按鈕 */
+        .close-btn {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: rgba(0,0,0,0.15);
+          border: none;
+          color: #fff;
+          font-size: 18px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 2147483648;
+          transition: all 0.2s ease;
+          backdrop-filter: blur(4px);
+        }
+        .close-btn:hover,
+        .close-btn:active {
+          background: rgba(0,0,0,0.3);
+          transform: scale(1.1);
+        }
+
         iframe {
           width: 100%;
           height: 100%;
@@ -207,7 +236,6 @@
           display: block;
         }
 
-        /* 手機 RWD */
         @media (max-width: 480px) {
           .fab {
             width: 50px;
@@ -221,6 +249,13 @@
             width: 92vw !important;
             height: 70vh !important;
             border-radius: 16px;
+          }
+          .close-btn {
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
           }
         }
       `;
@@ -236,6 +271,13 @@
       const panel = document.createElement('div');
       panel.className = 'panel';
 
+      // 右上角 X 按鈕
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'close-btn';
+      closeBtn.innerHTML = '×';
+      closeBtn.setAttribute('aria-label', 'Close AI Support');
+
+      // iframe
       const url = new URL(cfg.widget);
       url.searchParams.set('placeholder', cfg.placeholder);
       url.searchParams.set('accent', cfg.accent);
@@ -246,8 +288,9 @@
       iframe.src = url.toString();
       iframe.setAttribute('title', 'AI Support');
       iframe.setAttribute('allow', 'clipboard-write');
-      panel.appendChild(iframe);
 
+      panel.appendChild(iframe);
+      panel.appendChild(closeBtn); // 加入 X 按鈕
       shadow.appendChild(panel);
       shadow.appendChild(fab);
 
@@ -257,11 +300,19 @@
         if (isBusy) return;
         isBusy = true;
         panel.classList.toggle('open');
-        setTimeout(() => isBusy = false, 300); // debounce 300ms
+        setTimeout(() => isBusy = false, 300);
       }
 
+      // FAB 與 X 都可觸發
       fab.addEventListener('click', toggle);
-      fab.addEventListener('touchstart', toggle); // 手機優化
+      fab.addEventListener('touchstart', toggle, { passive: true });
+      closeBtn.addEventListener('click', () => {
+        if (panel.classList.contains('open')) toggle();
+      });
+      closeBtn.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        if (panel.classList.contains('open')) toggle();
+      }, { passive: true });
 
       // ESC 關閉
       window.addEventListener('keydown', (e) => {
