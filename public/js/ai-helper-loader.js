@@ -133,10 +133,16 @@
       }
       const widgetOrigin = new URL(cfg.widget).origin;
 
+      // 關鍵修正：host 填滿全螢幕，透明穿透
       const host = document.createElement('div');
       host.style.all = 'initial';
       host.style.position = 'fixed';
+      host.style.inset = '0';                    // 填滿整個視窗
+      host.style.pointerEvents = 'none';         // 點擊穿透
       host.style.zIndex = cfg.z;
+
+      (document.body || document.documentElement).appendChild(host);
+      const shadow = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
 
       const isLeft = cfg.position.includes('left');
       const isRight = cfg.position.includes('right');
@@ -144,26 +150,22 @@
       const isBottom = cfg.position.startsWith('bottom-');
       const isMiddle = cfg.position.startsWith('middle-');
 
-      // FAB 按鈕定位（依 data-position）
-      host.style.left = isLeft ? '20px' : 'auto';
-      host.style.right = isRight ? '20px' : 'auto';
-      host.style.top = isTop ? '20px' : (isMiddle ? '50%' : 'auto');
-      host.style.bottom = isBottom ? '20px' : 'auto';
-      if (isMiddle) host.style.transform = 'translateY(-50%)';
-
-      (document.body || document.documentElement).appendChild(host);
-      const shadow = host.attachShadow ? host.attachShadow({ mode: 'open' }) : host;
-
       // 樣式：FAB 依位置，面板永遠置中
       const style = document.createElement('style');
       style.textContent = `
         *,*::before,*::after{ box-sizing:border-box; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,"PingFang TC","Microsoft JhengHei",sans-serif; }
 
-        /* FAB 按鈕 */
+        /* FAB 按鈕：依 data-position 定位 */
         .fab{
+          position: fixed;
           width:56px; height:56px; border:0; border-radius:50%; background:${cfg.accent}; color:#fff;
           cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,.15); display:inline-flex;
           align-items:center; justify-content:center; font-size:1.4rem;
+          pointer-events: auto;
+          ${isLeft ? 'left:20px;' : 'right:20px;'}
+          ${isTop ? 'top:20px;' : ''}
+          ${isBottom ? 'bottom:20px;' : ''}
+          ${isMiddle ? 'top:50%; transform:translateY(-50%);' : ''}
         }
         .fab:active{ transform: translateY(1px); }
 
@@ -177,6 +179,7 @@
           background:#fff; border-radius:16px;
           box-shadow:0 10px 40px rgba(0,0,0,.2); overflow:hidden; display:none;
           z-index:2147483647;
+          pointer-events: auto;
         }
         iframe{ width:100%; height:100%; border:0; display:block; }
 
@@ -198,11 +201,13 @@
       `;
       shadow.appendChild(style);
 
+      // FAB
       const fab = document.createElement('button');
       fab.className = 'fab';
       fab.setAttribute('aria-label', 'Open AI Support');
       fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>';
 
+      // panel + iframe
       const panel = document.createElement('div');
       panel.className = 'panel';
 
@@ -233,10 +238,12 @@
         panel.style.display === 'block' ? close() : open();
       });
 
+      // ESC 關閉
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && panel.style.display === 'block') close();
       });
 
+      // 支援動態調整高度
       window.addEventListener('message', (ev) => {
         try {
           if (!ev || !ev.data) return;
