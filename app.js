@@ -13,6 +13,8 @@ const cache = require('memory-cache');
 const path = require('path');
 const AWS = require('aws-sdk');
 const CryptoJS = require('crypto-js');
+const moment = require('moment');
+global.IP_QUOTA = new Map();
 
 const ses = new AWS.SES({ region: 'ap-southeast-1' });
 
@@ -369,7 +371,7 @@ require("./start")().then(() => {
   router.post('/query', queryLimiter,async (ctx) => {
 
     console.log('query');
-    ctx.status = 200;
+
 
     try {
       const { query, site } = ctx.request.body || {};
@@ -398,11 +400,41 @@ require("./start")().then(() => {
         return;
       }
 
+      ctx.status = 200;
+
+      const now = moment();
+      let bucket = global.IP_QUOTA.get(`${ctx.ip}`);
+
+      // 若無記錄或視窗已過期 → 重置新視窗
+        if (!bucket || now.isAfter(bucket.resetAt)) {
+          bucket = {
+            count: 0,
+            resetAt: now.clone().add(24, 'hours').valueOf(), // 下一次重置的時間（毫秒）
+          };
+        }
+
+        // 檢查是否超過 20 次
+          if (bucket.count >= 20) {
+            ctx.body = { answer: `Hi there! You’ve reached the 20-question limit. Don’t worry — it will reset automatically after 24 hours.` };
+            return;
+          }
+        // 尚未達到上限 → 計數 +1 並寫回
+          bucket.count += 1;
+          global.IP_QUOTA.set(`${ctx.ip}`, bucket);
+
+          // 機率性清理：避免 Map 無限增長（低成本）
+          if (Math.random() < 0.01) {
+            for (const [k, v] of global.IP_QUOTA.entries()) {
+              if (moment().isAfter(v.resetAt) && v.count <= 0) {
+                global.IP_QUOTA.delete(k);
+              }
+            }
+          }
+
 
       const cacheKey = `${site}:${cleanQuery}`;
       const cached = cache.get(cacheKey);
       if (cached) {
-        ctx.status = 200;
         ctx.body = { answer: cached };
         return;
       }
