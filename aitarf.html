@@ -1,0 +1,1032 @@
+```html
+<!doctype html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+
+        <title data-i18n="meta.title">
+            AiTarf 鈊塔科技有限公司｜區塊鏈・大型系統・AI 自動化
+        </title>
+        <meta
+            name="description"
+            content="AiTarf 鈊塔科技有限公司專注於區塊鏈技術、大型系統開發、IT 系統整合、AI 人工智慧應用、資料萃取與企業 AI 自動化轉型，依據專案規模彈性調配工程師人力，是企業數位轉型的技術夥伴。"
+            data-i18n="meta.description"
+        />
+
+        <!-- Canonical -->
+        <link rel="canonical" href="https://www.aitarf.com/" />
+
+        <!-- Language alternates -->
+        <link rel="alternate" hreflang="zh-TW" href="https://www.aitarf.com/" />
+        <link rel="alternate" hreflang="en" href="https://www.aitarf.com/en" />
+
+        <!-- Favicon (示意，可換成你自己的) -->
+        <link
+            rel="icon"
+            href="https://chatbot.aitarf.us/img/logo.png"
+            type="image/png"
+        />
+
+        <!-- Fonts & Icons -->
+        <link
+            rel="preconnect"
+            href="https://fonts.googleapis.com"
+            crossorigin
+        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+
+        <!-- JSON-LD -->
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": "https://www.aitarf.com/#org",
+                  "name": "AiTarf Ltd. (鈊塔科技)",
+                  "url": "https://www.aitarf.com/",
+                  "logo": "https://chatbot.aitarf.us/img/logo.png",
+                  "sameAs": [
+                    "https://x.com/_aitarf"
+                  ]
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://www.aitarf.com/#website",
+                  "url": "https://www.aitarf.com/",
+                  "name": "AiTarf 鈊塔科技有限公司",
+                  "publisher": { "@id": "https://www.aitarf.com/#org" },
+                  "inLanguage": "zh-TW"
+                },
+                {
+                  "@type": "WebPage",
+                  "@id": "https://www.aitarf.com/#webpage",
+                  "url": "https://www.aitarf.com/",
+                  "name": "AiTarf 鈊塔科技有限公司｜區塊鏈・大型系統・AI 自動化",
+                  "isPartOf": { "@id": "https://www.aitarf.com/#website" },
+                  "about": ["區塊鏈", "IT 系統整合", "AI 應用", "企業自動化"],
+                  "inLanguage": "zh-TW"
+                }
+              ]
+            }
+        </script>
+
+        <style>
+            :root {
+                --bg: #f5f6f8;
+                --surface: #ffffff;
+                --text: #1a1a1a;
+                --primary: #1f4fff;
+                --primary-dark: #163ac2;
+                --muted: #6b7280;
+                --radius: 1rem;
+                --cta-h: 0px; /* 動態設定底部列高度 */
+            }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family: "Noto Sans TC", system-ui, -apple-system,
+                    BlinkMacSystemFont, "Segoe UI", sans-serif;
+                line-height: 1.6;
+                padding-bottom: var(--cta-h, 0px);
+            }
+            a {
+                color: inherit;
+            }
+            .container {
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 1.2rem;
+            }
+
+            /* Header */
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                background: rgba(245, 246, 248, 0.85);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            }
+            .nav-bar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+                height: 60px;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                font-weight: 700;
+            }
+            .brand img {
+                height: 30px;
+                width: 30px;
+                object-fit: cover;
+            }
+            .nav-links {
+                display: flex;
+                gap: 1.1rem;
+            }
+            .nav-links a {
+                text-decoration: none;
+                font-weight: 500;
+                color: #333;
+                font-size: 0.95rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.35rem;
+            }
+            .lang-switch {
+                display: flex;
+                gap: 0.5rem;
+            }
+            .lang-btn {
+                background: transparent;
+                border: 1px solid transparent;
+                padding: 0.25rem 0.6rem;
+                border-radius: 999px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+            .lang-btn.active {
+                border-color: var(--primary);
+                color: var(--primary);
+                background: rgba(31, 79, 255, 0.08);
+            }
+            .menu-toggle {
+                display: none;
+                background: none;
+                border: none;
+                font-size: 1.4rem;
+            }
+
+            /* Hero */
+            .hero {
+                padding: 4rem 0 3rem;
+            }
+            .hero-inner {
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 2.5rem;
+                align-items: center;
+            }
+            .hero-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                background: rgba(31, 79, 255, 0.08);
+                padding: 0.4rem 0.85rem;
+                border-radius: 999px;
+                font-size: 0.8rem;
+                color: var(--primary-dark);
+                margin-bottom: 0.8rem;
+            }
+            .hero-badge i {
+                color: var(--primary);
+            }
+            .hero-title {
+                font-size: clamp(2.2rem, 4vw, 2.8rem);
+                font-weight: 700;
+                margin-bottom: 1rem;
+            }
+            .hero-sub {
+                font-size: 1.03rem;
+                color: var(--muted);
+                margin-bottom: 1.7rem;
+            }
+            .btn-primary {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+                background: var(--primary);
+                color: #fff;
+                padding: 0.55rem 1.2rem;
+                border-radius: 999px;
+                text-decoration: none;
+                font-weight: 600;
+            }
+            .badge-list {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                font-size: 0.78rem;
+                color: var(--muted);
+                margin-top: 1.5rem;
+            }
+            .badge-list span {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.3rem;
+            }
+            .badge-list i {
+                color: var(--primary);
+            }
+            .hero-card {
+                background: var(--surface);
+                border-radius: 1rem;
+                padding: 1.2rem 1.4rem;
+                box-shadow: 0 10px 35px rgba(15, 23, 42, 0.05);
+            }
+            .hero-card-title {
+                font-weight: 600;
+                margin-bottom: 0.4rem;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+            }
+            .hero-card-title i {
+                color: var(--primary);
+            }
+            .hero-card p {
+                margin: 0.25rem 0;
+                font-size: 0.9rem;
+                color: #555;
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+            }
+            .hero-card p i {
+                color: var(--primary);
+                font-size: 0.9rem;
+            }
+
+            /* Sections */
+            section {
+                padding: 3rem 0;
+            }
+            h2.section-title {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+            }
+            h2.section-title i {
+                color: var(--primary);
+            }
+            .grid {
+                display: grid;
+                gap: 1.5rem;
+            }
+            .service-card {
+                background: var(--surface);
+                border-radius: 1rem;
+                padding: 1.2rem 1.2rem 1.15rem;
+                box-shadow: 0 10px 35px rgba(15, 23, 42, 0.03);
+                border: 1px solid rgba(12, 74, 110, 0.03);
+                text-align: left;
+            }
+            .service-card i {
+                font-size: 1.6rem;
+                color: var(--primary);
+                margin-bottom: 0.7rem;
+            }
+            .service-card h3 {
+                margin: 0 0 0.4rem;
+                font-size: 1.05rem;
+            }
+            .service-card p {
+                margin: 0;
+                font-size: 0.88rem;
+                color: #555;
+            }
+            .two-col {
+                display: grid;
+                gap: 2rem;
+                grid-template-columns: 1.1fr 0.9fr;
+            }
+
+            /* Contact */
+            .contact-box {
+                background: var(--surface);
+                border-radius: 1rem;
+                padding: 1.2rem 1.4rem;
+                box-shadow: 0 10px 35px rgba(15, 23, 42, 0.03);
+            }
+            .contact-box h3 {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.4rem;
+            }
+            .contact-box h3 i {
+                color: var(--primary);
+            }
+            .contact-line {
+                display: flex;
+                align-items: center;
+                gap: 0.6rem;
+                margin-bottom: 0.7rem;
+                font-size: 0.95rem;
+            }
+            .contact-line i {
+                color: var(--primary);
+            }
+
+            footer {
+                padding: 2rem 0 1.2rem;
+                text-align: center;
+                font-size: 0.8rem;
+                color: #888;
+            }
+
+            /* Bottom CTA */
+            .floating-cta {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 9999;
+                background: rgba(255, 255, 255, 0.96);
+                border-top: 1px solid rgba(0, 0, 0, 0.04);
+                padding: 0.5rem 1rem
+                    calc(0.5rem + env(safe-area-inset-bottom, 0px));
+                backdrop-filter: blur(10px);
+            }
+            .floating-cta .cta-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+            }
+            .cta-row {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.6rem;
+            }
+            .cta-btn {
+                background: #fff;
+                border: 1px solid rgba(0, 0, 0, 0.04);
+                border-radius: 999px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 0.4rem;
+                padding: 0.55rem 0.5rem;
+                font-weight: 600;
+                font-size: 0.85rem;
+                text-decoration: none;
+                color: #1f2933;
+                box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+                transition: transform 0.15s ease;
+            }
+            .cta-btn i {
+                color: var(--primary);
+            }
+            .cta-btn:hover {
+                transform: translateY(-2px);
+            }
+
+            /* Back to top */
+            .back-to-top {
+                position: fixed;
+                right: 1rem;
+                bottom: calc(3.5rem + var(--cta-h, 0px));
+                width: 44px;
+                height: 44px;
+                border-radius: 999px;
+                border: none;
+                background: rgba(31, 79, 255, 0.88);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1rem;
+                cursor: pointer;
+                box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(10px);
+                transition: all 0.25s ease;
+                z-index: 10000;
+            }
+            .back-to-top.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            /* RWD */
+            @media (max-width: 900px) {
+                .hero-inner {
+                    grid-template-columns: 1fr;
+                }
+                .two-col {
+                    grid-template-columns: 1fr;
+                }
+            }
+            @media (max-width: 780px) {
+                .nav-links {
+                    display: none;
+                    position: absolute;
+                    top: 60px;
+                    left: 0;
+                    right: 0;
+                    background: #fff;
+                    flex-direction: column;
+                    padding: 0.7rem 1.2rem 1rem;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+                }
+                .nav-links.show {
+                    display: flex;
+                }
+                .menu-toggle {
+                    display: block;
+                    background: none;
+                    border: none;
+                    color: #333;
+                }
+                .cta-row {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container nav-bar">
+                <div class="brand">
+                    <img
+                        src="https://chatbot.aitarf.us/img/logo.png"
+                        alt="AiTarf"
+                    />
+                    <span data-i18n="brand.name"
+                        >AiTarf 鈊塔科技有限公司</span
+                    >
+                </div>
+                <nav class="nav-links" id="navLinks">
+                    <a href="#hero" data-i18n="nav.home"
+                        ><i class="fa-solid fa-house"></i>首頁</a
+                    >
+                    <a href="#services" data-i18n="nav.services"
+                        ><i class="fa-solid fa-cubes"></i>核心服務</a
+                    >
+                    <a href="#consulting" data-i18n="nav.consulting"
+                        ><i class="fa-solid fa-user-tie"></i>技術顧問</a
+                    >
+                    <a href="#projects" data-i18n="nav.projects"
+                        ><i class="fa-solid fa-briefcase"></i>專案經驗</a
+                    >
+                    <a href="#contact" data-i18n="nav.contact"
+                        ><i class="fa-solid fa-envelope"></i>聯絡我們</a
+                    >
+                </nav>
+                <div class="lang-switch" id="langSwitch">
+                    <button
+                        class="lang-btn active"
+                        data-lang="zh"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-language"></i>中
+                    </button>
+                    <button class="lang-btn" data-lang="en" type="button">
+                        <i class="fa-solid fa-globe"></i>EN
+                    </button>
+                </div>
+                <button class="menu-toggle" id="menuToggle" aria-label="menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero -->
+            <section id="hero" class="hero">
+                <div class="container hero-inner">
+                    <div>
+                        <div class="hero-badge" data-i18n="hero.badge">
+                            <i class="fa-solid fa-bolt"></i>
+                            AI・Blockchain・System Integration
+                        </div>
+                        <h1 class="hero-title" data-i18n="hero.title">
+                            您值得信賴的創新科技夥伴
+                        </h1>
+                        <p class="hero-sub" data-i18n="hero.subtitle">
+                            專注區塊鏈、大型系統、IT 整合、AI 應用與企業自動化，
+                            依照專案規模彈性調配工程師人力，協助企業加速數位轉型。
+                        </p>
+                        <a
+                            href="#contact"
+                            class="btn-primary"
+                            data-i18n="hero.cta"
+                        >
+                            與我們合作 <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div class="badge-list">
+                            <span data-i18n="hero.tag1">
+                                <i class="fa-solid fa-diagram-project"></i
+                                >企業級架構設計
+                            </span>
+                            <span data-i18n="hero.tag2">
+                                <i class="fa-solid fa-building-columns"></i
+                                >政府標案經驗
+                            </span>
+                            <span data-i18n="hero.tag3">
+                                <i class="fa-solid fa-robot"></i>AI 實務導入
+                            </span>
+                        </div>
+                    </div>
+                    <div class="hero-card">
+                        <div
+                            class="hero-card-title"
+                            data-i18n="hero.panelTitle"
+                        >
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            我們的服務重點
+                        </div>
+                        <p data-i18n="hero.panel1">
+                            <i class="fa-solid fa-link"></i>
+                            ・ 區塊鏈與智慧合約開發
+                        </p>
+                        <p data-i18n="hero.panel2">
+                            <i class="fa-solid fa-server"></i>
+                            ・ 高併發大型系統與雲端架構
+                        </p>
+                        <p data-i18n="hero.panel3">
+                            <i class="fa-solid fa-plug"></i>
+                            ・ 異質系統整合與資料流優化
+                        </p>
+                        <p data-i18n="hero.panel4">
+                            <i class="fa-solid fa-brain"></i>
+                            ・ AI、NLP、預測分析與企業自動化
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services -->
+            <section id="services">
+                <div class="container">
+                    <h2 class="section-title" data-i18n="services.title">
+                        <i class="fa-solid fa-cubes"></i>核心專業領域
+                    </h2>
+                    <div
+                        class="grid"
+                        style="
+                            grid-template-columns: repeat(
+                                auto-fit,
+                                minmax(230px, 1fr)
+                            );
+                        "
+                    >
+                        <div class="service-card">
+                            <i class="fa-solid fa-link"></i>
+                            <h3 data-i18n="services.item1.title">
+                                區塊鏈技術解決方案
+                            </h3>
+                            <p data-i18n="services.item1.desc">
+                                企業級 DApp、智慧合約與鏈上基礎建設，強化交易安全與透明度。
+                            </p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fa-solid fa-server"></i>
+                            <h3 data-i18n="services.item2.title">
+                                大型系統開發與高效能架構
+                            </h3>
+                            <p data-i18n="services.item2.desc">
+                                支援複雜業務邏輯與高流量併發，重視穩定性、擴充性與雲端部署。
+                            </p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fa-solid fa-plug"></i>
+                            <h3 data-i18n="services.item3.title">
+                                IT 系統整合與數位生態優化
+                            </h3>
+                            <p data-i18n="services.item3.desc">
+                                透過 API、微服務與中介層整合異質系統，提升營運效率與資料流通。
+                            </p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fa-solid fa-brain"></i>
+                            <h3 data-i18n="services.item4.title">
+                                AI 人工智慧應用
+                            </h3>
+                            <p data-i18n="services.item4.desc">
+                                NLP、機器學習、預測分析導入業務流程，打造資料驅動決策。
+                            </p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fa-solid fa-database"></i>
+                            <h3 data-i18n="services.item5.title">
+                                資料萃取與工程
+                            </h3>
+                            <p data-i18n="services.item5.desc">
+                                從多來源萃取、清理與結構化，建立可供 AI 與分析使用的數據基礎。
+                            </p>
+                        </div>
+                        <div class="service-card">
+                            <i class="fa-solid fa-building-circle-check"></i>
+                            <h3 data-i18n="services.item6.title">
+                                傳統企業 AI 自動化轉型
+                            </h3>
+                            <p data-i18n="services.item6.desc">
+                                以漸進方式導入 AI、自動化與決策輔助，協助企業實現智慧營運。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Consulting -->
+            <section id="consulting">
+                <div class="container two-col">
+                    <div>
+                        <h2
+                            class="section-title"
+                            style="text-align: left"
+                            data-i18n="consulting.title"
+                        >
+                            <i class="fa-solid fa-user-tie"></i>技術顧問服務
+                        </h2>
+                        <p data-i18n="consulting.desc">
+                            AiTarf 提供客製化的技術顧問服務，包括系統架構設計、效能優化與新興技術導入。我們結合產業情境，協助客戶打造可長期維運且可擴充的技術底座，縮短從
+                            PoC 到實際上線的落差。
+                        </p>
+                        <ul style="list-style: none; padding-left: 0">
+                            <li data-i18n="consulting.item1">
+                                <i class="fa-solid fa-sitemap"></i>
+                                系統與資料架構設計
+                            </li>
+                            <li data-i18n="consulting.item2">
+                                <i class="fa-solid fa-gauge-high"></i>
+                                既有系統效能分析與優化
+                            </li>
+                            <li data-i18n="consulting.item3">
+                                <i class="fa-solid fa-plug-circle-check"></i>
+                                區塊鏈 / AI / API Gateway 導入規劃
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="contact-box">
+                        <h3 data-i18n="contact.title">
+                            <i class="fa-solid fa-envelope-open-text"></i
+                            >聯絡我們
+                        </h3>
+                        <p data-i18n="contact.subtitle">
+                            告訴我們您的專案規模、技術棧或要整合的既有系統，我們會協助規劃最合適的技術路線。
+                        </p>
+                        <div class="contact-line">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+886 02-26088993</span>
+                        </div>
+                        <div class="contact-line">
+                            <i class="fa-solid fa-envelope"></i>
+                            <a href="mailto:aitarf.crypto@gmail.com"
+                                >aitarf.crypto@gmail.com</a
+                            >
+                        </div>
+                        <div class="contact-line">
+                            <i class="fa-brands fa-line"></i>
+                            <span data-i18n="contact.line">
+                                LINE / 業務專員可另行提供
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section id="projects">
+                <div class="container">
+                    <h2 class="section-title" data-i18n="projects.title">
+                        <i class="fa-solid fa-briefcase"></i>專案經驗
+                    </h2>
+                    <p
+                        style="
+                            max-width: 780px;
+                            margin: 0 auto;
+                            text-align: center;
+                        "
+                        data-i18n="projects.desc"
+                    >
+                        我們在多項大型與高複雜度專案中，展現穩定交付與卓越執行能力。AiTarf
+                        的解決方案廣泛應用於不同產業場域，從企業數位化到智慧應用落地，皆以嚴謹的技術品質與創新思維贏得長期合作夥伴的信任。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Team -->
+            <section id="team">
+                <div class="container">
+                    <h2 class="section-title" data-i18n="team.title">
+                        <i class="fa-solid fa-people-group"></i>我們的團隊
+                    </h2>
+                    <p
+                        style="
+                            max-width: 680px;
+                            margin: 0 auto;
+                            text-align: center;
+                        "
+                        data-i18n="team.desc"
+                    >
+                        團隊成員涵蓋軟體工程、區塊鏈開發、AI 演算法與資安領域，皆具多年實戰經驗，能依據專案階段彈性投入合適人力，確保專案品質。
+                    </p>
+                </div>
+            </section>
+
+            <!-- Contact (target for CTA) -->
+            <section id="contact">
+                <div class="container">
+                    <h2 class="section-title" data-i18n="contact.bottomTitle">
+                        <i class="fa-solid fa-headset"></i>與 AiTarf 合作
+                    </h2>
+                    <p
+                        style="text-align: center; max-width: 600px; margin: 0 auto"
+                        data-i18n="contact.bottomDesc"
+                    >
+                        若您正在規劃區塊鏈、AI、資料萃取或既有系統整合，我們可以協助評估技術可行性並提供架構建議。
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>
+                <i class="fa-solid fa-building"></i>
+                © <span id="year"></span> AiTarf Co., Ltd. All rights reserved.
+            </p>
+        </footer>
+
+        <!-- 底部固定列 -->
+        <div class="floating-cta" id="floatingCta">
+            <div class="cta-inner">
+                <div class="cta-row">
+                    <a href="#contact" class="cta-btn" data-i18n="cta.contact">
+                        <i class="fa-solid fa-handshake-angle"></i>
+                        <span>聯絡我們</span>
+                    </a>
+                    <a
+                        href="mailto:aitarf.crypto@gmail.com"
+                        class="cta-btn"
+                        data-i18n="cta.email"
+                    >
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Email</span>
+                    </a>
+                    <a
+                        href="https://line.me/ti/p/v4dzRhiEYE"
+                        target="_blank"
+                        rel="noopener"
+                        class="cta-btn"
+                        data-i18n="cta.social"
+                    >
+                        <i class="fa-brands fa-line"></i>
+                        <span>LINE / X 平台</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 回到頂端 -->
+        <button
+            id="backToTop"
+            class="back-to-top"
+            aria-label="Back to top"
+        >
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+
+        <script>
+            // 多語字典
+            const translations = {
+                zh: {
+                    "meta.title":
+                        "AiTarf 鈊塔科技有限公司｜區塊鏈・大型系統・AI 自動化",
+                    "meta.description":
+                        "AiTarf 鈊塔科技有限公司專注於區塊鏈技術、大型系統開發、IT 系統整合、AI 人工智慧應用、資料萃取與企業 AI 自動化轉型，依據專案規模彈性調配工程師人力，是企業數位轉型的技術夥伴。",
+                    "brand.name": "AiTarf 鈊塔科技有限公司",
+                    "nav.home": "首頁",
+                    "nav.services": "核心服務",
+                    "nav.consulting": "技術顧問",
+                    "nav.projects": "專案經驗",
+                    "nav.contact": "聯絡我們",
+                    "hero.badge": "AI・Blockchain・System Integration",
+                    "hero.title": "您值得信賴的創新科技夥伴",
+                    "hero.subtitle":
+                        "專注區塊鏈、大型系統、IT 整合、AI 應用與企業自動化，依照專案規模彈性調配工程師人力，協助企業加速數位轉型。",
+                    "hero.cta": "與我們合作",
+                    "hero.tag1": "企業級架構設計",
+                    "hero.tag2": "政府標案經驗",
+                    "hero.tag3": "AI 實務導入",
+                    "hero.panelTitle": "我們的服務重點",
+                    "hero.panel1": "・ 區塊鏈與智慧合約開發",
+                    "hero.panel2": "・ 高併發大型系統與雲端架構",
+                    "hero.panel3": "・ 異質系統整合與資料流優化",
+                    "hero.panel4": "・ AI、NLP、預測分析與企業自動化",
+                    "services.title": "核心專業領域",
+                    "services.item1.title": "區塊鏈技術解決方案",
+                    "services.item1.desc":
+                        "企業級 DApp、智慧合約與鏈上基礎建設，強化交易安全與透明度。",
+                    "services.item2.title": "大型系統開發與高效能架構",
+                    "services.item2.desc":
+                        "支援複雜業務邏輯與高流量併發，重視穩定性、擴充性與雲端部署。",
+                    "services.item3.title": "IT 系統整合與數位生態優化",
+                    "services.item3.desc":
+                        "透過 API、微服務與中介層整合異質系統，提升營運效率與資料流通。",
+                    "services.item4.title": "AI 人工智慧應用",
+                    "services.item4.desc":
+                        "NLP、機器學習、預測分析導入業務流程，打造資料驅動決策。",
+                    "services.item5.title": "資料萃取與工程",
+                    "services.item5.desc":
+                        "從多來源萃取、清理與結構化，建立可供 AI 與分析使用的數據基礎。",
+                    "services.item6.title": "傳統企業 AI 自動化轉型",
+                    "services.item6.desc":
+                        "以漸進方式導入 AI、自動化與決策輔助，協助企業實現智慧營運。",
+                    "consulting.title": "技術顧問服務",
+                    "consulting.desc":
+                        "AiTarf 提供客製化的技術顧問服務，包括系統架構設計、效能優化與新興技術導入。我們結合產業情境，協助客戶打造可長期維運且可擴充的技術底座，縮短從 PoC 到實際上線的落差。",
+                    "consulting.item1": "系統與資料架構設計",
+                    "consulting.item2": "既有系統效能分析與優化",
+                    "consulting.item3":
+                        "區塊鏈 / AI / API Gateway 導入規劃",
+                    "contact.title": "聯絡我們",
+                    "contact.subtitle":
+                        "告訴我們您的專案規模、技術棧或要整合的既有系統，我們會協助規劃最合適的技術路線。",
+                    "contact.line": "LINE / 業務專員可另行提供",
+                    "projects.title": "專案經驗",
+                    "projects.desc":
+                        "我們在多項大型與高複雜度專案中，展現穩定交付與卓越執行能力。AiTarf 的解決方案廣泛應用於不同產業場域，從企業數位化到智慧應用落地，皆以嚴謹的技術品質與創新思維贏得長期合作夥伴的信任。",
+                    "team.title": "我們的團隊",
+                    "team.desc":
+                        "團隊成員涵蓋軟體工程、區塊鏈開發、AI 演算法與資安領域，皆具多年實戰經驗，能依據專案階段彈性投入合適人力，確保專案品質。",
+                    "contact.bottomTitle": "與 AiTarf 合作",
+                    "contact.bottomDesc":
+                        "若您正在規劃區塊鏈、AI、資料萃取或既有系統整合，我們可以協助評估技術可行性並提供架構建議。",
+                    "cta.contact": "聯絡我們",
+                    "cta.email": "Email",
+                    "cta.social": "LINE / X 平台"
+                },
+                en: {
+                    "meta.title":
+                        "AiTarf Co., Ltd. | Blockchain, System Integration & AI Automation",
+                    "meta.description":
+                        "AiTarf is a Taiwan-based software development company specializing in blockchain, large-scale systems, IT integration, AI-powered applications, data extraction and AI-driven business automation, with flexible engineering allocation based on project scope.",
+                    "brand.name": "AiTarf Co., Ltd.",
+                    "nav.home": "Home",
+                    "nav.services": "Services",
+                    "nav.consulting": "Consulting",
+                    "nav.projects": "Projects",
+                    "nav.contact": "Contact",
+                    "hero.badge": "AI・Blockchain・System Integration",
+                    "hero.title":
+                        "Your Trusted Partner for Technology Innovation",
+                    "hero.subtitle":
+                        "We specialize in blockchain, large-scale systems, IT integration, AI and automation. Our team dynamically allocates engineering resources based on project scale to help enterprises accelerate digital transformation.",
+                    "hero.cta": "Contact Us",
+                    "hero.tag1": "Enterprise Architecture",
+                    "hero.tag2": "Public / Gov Project Experience",
+                    "hero.tag3": "AI Implementation",
+                    "hero.panelTitle": "What We Deliver",
+                    "hero.panel1":
+                        "・ Blockchain & smart contract development",
+                    "hero.panel2":
+                        "・ High-concurrency, cloud-native systems",
+                    "hero.panel3":
+                        "・ Heterogeneous system integration",
+                    "hero.panel4":
+                        "・ AI, NLP and predictive analytics",
+                    "services.title": "Core Expertise",
+                    "services.item1.title": "Blockchain Technology Solutions",
+                    "services.item1.desc":
+                        "Enterprise DApps, smart contracts and blockchain infrastructure for secure and transparent transactions.",
+                    "services.item2.title":
+                        "Large-Scale System Development",
+                    "services.item2.desc":
+                        "Robust architectures for complex business logic and heavy traffic, built for stability and scalability.",
+                    "services.item3.title": "IT System Integration",
+                    "services.item3.desc":
+                        "API, microservices and middleware to unify heterogeneous systems and improve operational efficiency.",
+                    "services.item4.title": "AI-Powered Applications",
+                    "services.item4.desc":
+                        "NLP, machine learning and predictive analytics embedded into business processes.",
+                    "services.item5.title": "Data Extraction & Engineering",
+                    "services.item5.desc":
+                        "Extract, clean and structure data from diverse sources to build AI-ready, analytics-ready datasets.",
+                    "services.item6.title":
+                        "AI Automation for Traditional Enterprises",
+                    "services.item6.desc":
+                        "Practical AI and workflow automation to help non-digital-native businesses modernize operations.",
+                    "consulting.title": "Technical Consulting Services",
+                    "consulting.desc":
+                        "We offer tailored consulting on architecture, performance and emerging tech adoption to shorten the path from PoC to production.",
+                    "consulting.item1": "System & data architecture design",
+                    "consulting.item2":
+                        "Legacy performance review & optimization",
+                    "consulting.item3":
+                        "Blockchain / AI / API gateway adoption planning",
+                    "contact.title": "Get in Touch",
+                    "contact.subtitle":
+                        "Tell us about your systems, data and integration needs — we'll propose the best technical approach.",
+                    "contact.line":
+                        "LINE / social links available on request",
+                    "projects.title": "Project Experience",
+                    "projects.desc":
+                        "We have delivered large-scale and complex projects across diverse industries, consistently earning long-term client trust through reliable execution and technical excellence.",
+                    "team.title": "Our Team",
+                    "team.desc":
+                        "Our engineers cover software, blockchain, AI and security, and we can scale the team according to project size.",
+                    "contact.bottomTitle": "Work with AiTarf",
+                    "contact.bottomDesc":
+                        "Planning blockchain, AI, data extraction or system integration? We can assess feasibility and propose an architecture.",
+                    "cta.contact": "Contact Us",
+                    "cta.email": "Email",
+                    "cta.social": "LINE / X"
+                }
+            };
+
+            function applyTranslations(lang) {
+                const elements = document.querySelectorAll("[data-i18n]");
+                elements.forEach((el) => {
+                    const key = el.getAttribute("data-i18n");
+                    const text = translations[lang][key];
+                    if (text !== undefined) {
+                        el.textContent = text;
+                    }
+                });
+                if (translations[lang]["meta.title"]) {
+                    document.title = translations[lang]["meta.title"];
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const langBtns = document.querySelectorAll(".lang-btn");
+                const navLinks = document.getElementById("navLinks");
+                const menuToggle = document.getElementById("menuToggle");
+                const yearEl = document.getElementById("year");
+                const floatingCta = document.getElementById("floatingCta");
+                const backToTop = document.getElementById("backToTop");
+
+                yearEl.textContent = new Date().getFullYear();
+
+                // 初始語系
+                applyTranslations("zh");
+
+                // 語系切換
+                langBtns.forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        const lang = btn.getAttribute("data-lang");
+                        langBtns.forEach((b) => b.classList.remove("active"));
+                        btn.classList.add("active");
+                        applyTranslations(lang);
+                    });
+                });
+
+                // 手機選單
+                menuToggle.addEventListener("click", () => {
+                    navLinks.classList.toggle("show");
+                });
+                navLinks.querySelectorAll("a").forEach((a) => {
+                    a.addEventListener("click", () => {
+                        navLinks.classList.remove("show");
+                    });
+                });
+
+                // 計算底部 CTA 高度
+                function syncCtaHeight() {
+                    if (!floatingCta) return;
+                    const h = floatingCta.getBoundingClientRect().height;
+                    document.documentElement.style.setProperty(
+                        "--cta-h",
+                        h + "px"
+                    );
+                }
+                syncCtaHeight();
+                window.addEventListener("resize", syncCtaHeight);
+
+                // 回到頂端控制
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > 280) {
+                        backToTop.classList.add("show");
+                    } else {
+                        backToTop.classList.remove("show");
+                    }
+                });
+                backToTop.addEventListener("click", () => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                });
+            });
+        </script>
+    </body>
+</html>
+```

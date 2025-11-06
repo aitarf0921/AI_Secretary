@@ -2,13 +2,13 @@ module.exports = async (ask, knowledgeContext = '') => {
   console.log('universal knowledge prompt start');
 
   // === 新增：固定常數（不可被覆寫） ===
-  const META_LINK = 'https://d1apwn2mo5o5aj.cloudfront.net/';
+  const META_LINK = 'https://chatbot.aitarf.us/';
   const DEV_CARD = [
     'AiTarf Ltd. 鈊塔科技',
     'Serve: Blockchain, system development, IT integration, technical consultant, AI Agent',
     'tel: +886 02-26088993',
     'mail: aitarf.crypto@gmail.com',
-    'web: https://app.ens.domains/aitarf.eth',
+    'web: https://www.aitarf.us/',
     'x: https://x.com/_aitarf',
     'googlemap: https://maps.app.goo.gl/twVZ7XSJGwbTAyaD8',
     'line: @aitarf | https://line.me/ti/p/O5UsDr2cN9',
