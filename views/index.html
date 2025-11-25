@@ -679,47 +679,50 @@
             <!-- 卡片一：Hero -->
             <section class="hero card">
                 <h1 data-i18n="hero.title">
-                    企業級 AI 代理平台<br class="hidden sm:block" />
-                    專為製造業與金融業打造的私有化 AI 助理
+                    企業級 AI 代理平台<br
+                        class="hidden sm:block"
+                    />專為製造業與金融業打造的私有化 AI 助理
                 </h1>
 
                 <div class="benefits">
                     <div class="benefit-item">
                         <div class="benefit-icon">✓</div>
-                        <span
+                        <span data-i18n="hero.b1"
                             >深度整合
                             ERP、MES、SCADA、碳排放監控、交易與風控系統</span
                         >
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">✓</div>
-                        <span
+                        <span data-i18n="hero.b2"
                             >工廠現場即時 SOP
                             查詢、設備異常通報、作業員語音助理</span
                         >
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">✓</div>
-                        <span
+                        <span data-i18n="hero.b3"
                             >金融合規專屬：政策即時解釋、交易紀錄查詢、反洗錢規則問答</span
                         >
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">✓</div>
-                        <span
+                        <span data-i18n="hero.b4"
                             >完整資料私有化部署，符合金管會／個資法／ISO
                             27001</span
                         >
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">✓</div>
-                        <span
+                        <span data-i18n="hero.b5"
                             >企業級功能：權限分級、操作稽核、報表匯出、多版本控管</span
                         >
                     </div>
                     <div class="benefit-item">
                         <div class="benefit-icon">✓</div>
-                        <span>支援 API 與 Webhook，無縫嵌入既有內部系統</span>
+                        <span data-i18n="hero.b6"
+                            >支援 API 與 Webhook，無縫嵌入既有內部系統</span
+                        >
                     </div>
                 </div>
 
@@ -728,39 +731,21 @@
                     class="btn primary"
                     id="start-trial-btn"
                     data-i18n="hero.cta"
-                    >立即開始免費體驗</a
+                    >立刻免費體驗</a
                 >
 
-                <div class="inline-note" style="margin-top: 12px">
-                    企業級完整功能 ⋅ 30 天免費試用（含內部系統整合示範）
-                </div>
-
-                <p
-                    style="
-                        margin-top: 2.5rem;
-                        font-size: 1rem;
-                        line-height: 1.75;
-                        opacity: 0.95;
-                    "
-                >
+                <!-- 進階客製化：已多國語系 + 左對齊 -->
+                <div class="custom-contact" data-i18n="hero.custom">
                     如需進階客製化（報表匯出匯入、企業內部資料庫同步、<br
                         class="hidden sm:block"
                     />
                     碳排放監控系統串接、工廠製造 IT／OT 整合、金融風控或 ERP
                     深度整合），<br />
                     歡迎聯繫我們的企業解決方案團隊：<br />
-                    <a
-                        href="https://www.aitarf.us/contact"
-                        target="_blank"
-                        style="
-                            color: #fff;
-                            text-decoration: underline;
-                            font-weight: 600;
-                        "
+                    <a href="https://www.aitarf.us/contact" target="_blank"
+                        >https://www.aitarf.us/contact →</a
                     >
-                        https://www.aitarf.us/contact →
-                    </a>
-                </p>
+                </div>
             </section>
 
             <!-- 卡片二：輸入知識庫 -->
@@ -1032,6 +1017,8 @@
                     title: "AiTarf AI Agent：企業級 AI 助理平台 — 製造業與金融業私有化部署",
                     brand: "AiTarf AI Agent — 企業級 AI 助理平台",
                     theme: { toggle: "切換主題" },
+                    footer: "AiTarf Ltd. — 企業級 AI 代理平台，專注製造業與金融業私有化部署",
+
                     common: {
                         copied: "已複製！",
                         copyHint: "按一下複製",
@@ -1053,30 +1040,19 @@
                         otpValidity:
                             "OTP 驗證碼有效時間：<strong>{n}</strong> 秒。",
                     },
+
                     hero: {
-                        title: "企業級 AI 代理平台<br>專為製造業與金融業打造的私有化 AI 助理",
-                        cta: "立即開始免費體驗",
+                        title: '企業級 AI 代理平台<br class="hidden sm:block">專為製造業與金融業打造的私有化 AI 助理',
+                        cta: "立刻免費體驗",
+                        b1: "深度整合 ERP、MES、SCADA、碳排放監控、交易與風控系統",
+                        b2: "工廠現場即時 SOP 查詢、設備異常通報、作業員語音助理",
+                        b3: "金融合規專屬：政策即時解釋、交易紀錄查詢、反洗錢規則問答",
+                        b4: "完整資料私有化部署，符合金管會／個資法／ISO 27001",
+                        b5: "企業級功能：權限分級、操作稽核、報表匯出、多版本控管",
+                        b6: "支援 API 與 Webhook，無縫嵌入既有內部系統",
+                        custom: '如需進階客製化（報表匯出匯入、企業內部資料庫同步、<br class="hidden sm:block">碳排放監控系統串接、工廠製造 IT／OT 整合、金融風控或 ERP 深度整合），<br>歡迎聯繫我們的企業解決方案團隊：<br><a href="https://www.aitarf.us/contact" target="_blank">https://www.aitarf.us/contact →</a>',
                     },
-                    quickStart: {
-                        title: "步驟 2 – 快速體驗版嵌入程式碼",
-                        notice: "右下角的藍色 AI 助理已即時套用您的 widget，您可以立即測試互動效果。",
-                        desc: '將以下程式碼貼到您的網站（全站 Layout 或頁尾），即可快速啟用體驗版。<br><strong style="color:var(--primary);">企業正式版將提供私有化腳本與後台管理系統。</strong>',
-                    },
-                    params: {
-                        title: "自訂您的 AI 助理參數，實現無縫整合",
-                        th1: "屬性",
-                        th2: "必填",
-                        th4: "說明",
-                        src: "載入 AI 助理嵌入核心腳本。",
-                        position: "浮動按鈕位置（預設：右下）。",
-                        site: "您的網站 ID。",
-                        accent: "品牌主色（HEX/RGB）。",
-                        width: "聊天面板寬度。",
-                        height: "聊天面板高度。",
-                        z: "Z-index 以確保置頂。",
-                    },
-                    required: "必填",
-                    optional: "可選",
+
                     create: {
                         title: "步驟 1 – 建立您的專屬 AI 助理（公開體驗版）",
                         note: '輸入貴公司產品、服務或內部 FAQ（最多 500 字），即可立即產生專屬 widget。<br><strong style="color:var(--primary);">此為公開網站體驗版，企業客戶可選擇完整私有部署方案。</strong>',
@@ -1092,26 +1068,81 @@
                         toastTooShort: "內容過短，至少需 20 個字。",
                         rateLimited: "操作太頻繁，請稍後再試。",
                     },
+
+                    quickStart: {
+                        title: "步驟 2 – 快速體驗版嵌入程式碼",
+                        notice: "右下角的藍色 AI 助理已即時套用您的 widget，您可以立即測試互動效果。",
+                        desc: '將以下程式碼貼到您的網站（全站 Layout 或頁尾），即可快速啟用體驗版。<br><strong style="color:var(--primary);">企業正式版將提供私有化腳本與後台管理系統。</strong>',
+                    },
+
+                    params: {
+                        title: "自訂您的 AI 助理參數，實現無縫整合",
+                        th1: "屬性",
+                        th2: "必填",
+                        th4: "說明",
+                        src: "載入 AI 助理嵌入核心腳本。",
+                        site: "您的網站 ID。",
+                        position: "浮動按鈕位置（預設：右下）。",
+                        accent: "品牌主色（HEX/RGB）。",
+                        width: "聊天面板寬度。",
+                        height: "聊天面板高度。",
+                        z: "Z-index 以確保置頂。",
+                    },
+                    required: "必填",
+                    optional: "可選",
+
                     donation: {
                         title: "感謝支持開發 ⋅ 企業客戶歡迎直接聯繫商業合作",
                         note: '您的支持能讓我們持續優化企業級功能。<br>若貴公司有批量授權、私有部署或客製開發需求，歡迎直接聯繫：<br><a href="https://www.aitarf.us/contact" target="_blank" style="color:var(--primary); font-weight:600;">https://www.aitarf.us/contact →</a>',
                         emailLabel: "您的 Email",
                         emailPh: "輸入您的電子郵件...",
                         emailNote:
-                            "請輸入您註冊時使用的 email，NOWPayments 會要求再次確認。這是測試模式，不會進行真實捐款。",
+                            "請輸入您註冊時使用的 email，NOWPayments 會在新分頁要求再次確認。這是測試模式，不會進行真實捐款。",
                         btn: "顯示測試捐款 Widget",
                         widgetError: "無法載入測試捐款 Widget，請稍後再試。",
                     },
-                    footer: "AiTarf Ltd. — 企業級 AI 代理平台，專注製造業與金融業私有化部署",
                 },
+
                 "zh-CN": {
-                    /* 你原本完整的簡中內容保留不變 */
+                    hero: {
+                        title: '企业级 AI 代理平台<br class="hidden sm:block">专为制造业与金融业打造的私有化 AI 助理',
+                        cta: "立即免费体验",
+                        b1: "深度整合 ERP、MES、SCADA、碳排放监控、交易与风控系统",
+                        b2: "工厂现场即时 SOP 查询、设备异常通报、作业员语音助理",
+                        b3: "金融合规专属：政策即时解释、交易记录查询、反洗钱规则问答",
+                        b4: "完整资料私有化部署，符合金管会／个资法／ISO 27001",
+                        b5: "企业级功能：权限分级、操作稽核、报表汇出、多版本控管",
+                        b6: "支持 API 与 Webhook，无缝嵌入既有内部系统",
+                        custom: '如需高级定制（报表导出导入、企业内部数据库同步、<br class="hidden sm:block">碳排放监控系统串接、工厂制造 IT／OT 整合、金融风控或 ERP 深度整合），<br>欢迎联系我们的企业解决方案团队：<br><a href="https://www.aitarf.us/contact" target="_blank">https://www.aitarf.us/contact →</a>',
+                    },
                 },
+
                 ja: {
-                    /* 你原本完整的日文內容保留不變 */
+                    hero: {
+                        title: 'エンタープライズ級AIエージェントプラットフォーム<br class="hidden sm:block">製造業・金融業向けプライベートAIアシスタント',
+                        cta: "今すぐ無料で体験",
+                        b1: "ERP、MES、SCADA、炭素排出モニタリング、取引・リスク管理システムと深く統合",
+                        b2: "工場現場での即時SOP照会、設備異常通知、作業員向け音声アシスタント",
+                        b3: "金融コンプライアンス専用：政策即時解説、取引記録照会、AMLルールQ&A",
+                        b4: "完全なデータ私有化展開、金管会／個人情報保護法／ISO 27001準拠",
+                        b5: "エンタープライズ機能：権限階層化、操作監査、レポート出力、多バージョン管理",
+                        b6: "API・Webhook対応、既存内部システムにシームレスに組み込み可能",
+                        custom: '高度なカスタマイズが必要な場合（レポート出力入、社内データベース同期、<br class="hidden sm:block">炭素排出モニタリングシステム連携、工場製造IT/OT統合、金融リスク管理またはERP深層統合）、<br>弊社エンタープライズソリューション担当までお気軽にお問い合わせください：<br><a href="https://www.aitarf.us/contact" target="_blank">https://www.aitarf.us/contact →</a>',
+                    },
                 },
+
                 en: {
-                    /* 你原本完整的英文內容保留不變 */
+                    hero: {
+                        title: 'Enterprise AI Agent Platform<br class="hidden sm:block">Private AI Assistant for Manufacturing & Finance',
+                        cta: "Start Free Trial Now",
+                        b1: "Deep integration with ERP, MES, SCADA, carbon emission monitoring, trading & risk control systems",
+                        b2: "Real-time SOP lookup, equipment alerts, and voice assistant for factory workers",
+                        b3: "Financial compliance: instant policy explanation, transaction history, AML Q&A",
+                        b4: "Fully private deployment, compliant with FSC, PDPA, ISO 27001",
+                        b5: "Enterprise features: role-based access, audit logs, report export, version control",
+                        b6: "API & Webhook support, seamless embedding into existing systems",
+                        custom: 'For advanced customization (report export/import, internal DB sync,<br class="hidden sm:block">carbon emission monitoring, factory IT/OT integration, financial risk control, or deep ERP integration),<br>please contact our Enterprise Solutions team:<br><a href="https://www.aitarf.us/contact" target="_blank">https://www.aitarf.us/contact →</a>',
+                    },
                 },
             };
 
