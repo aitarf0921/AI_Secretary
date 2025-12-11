@@ -152,7 +152,8 @@
         if (!res.ok){
           clearTyping();
           const errText = await res.text().catch(()=> '');
-          appendMsg('ai', `抱歉，出錯了：${errText || ('HTTP ' + res.status)}`);
+          appendMsg('ai', `The system is under maintenance. Please try again later. Thank you for your understanding.`);
+
           return;
         }
 
@@ -178,7 +179,7 @@
         }
       }catch(e){
         clearTyping();
-        appendMsg('ai', '抱歉，出錯了！');
+        appendMsg('ai', 'The system is under maintenance. Please try again later. Thank you for your understanding.');
       }finally{
         setLoading(false);
       }
