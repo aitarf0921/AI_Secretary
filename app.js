@@ -413,9 +413,9 @@ require("./start")().then(() => {
           };
         }
 
-        // 檢查是否超過 20 次
-          if (bucket.count >= 20) {
-            ctx.body = { answer: `Hi there! You’ve reached the 20-question limit. Don’t worry — it will reset automatically after 24 hours.` };
+        // 檢查是否超過 5 次
+          if (bucket.count >= 5) {
+            ctx.body = { answer: `Hi there! You’ve reached the 5-question limit. Don’t worry — it will reset automatically after 24 hours.` };
             return;
           }
         // 尚未達到上限 → 計數 +1 並寫回
@@ -450,6 +450,11 @@ require("./start")().then(() => {
       }
 
       console.log(`knowledge.knowledgeContext`,knowledge.knowledgeContext);
+
+      if(cleanQuery.length > 20){
+        ctx.body = { answer: `Your message is a bit too long. Please keep it within 20 characters and try again.` };
+        return;
+      }
 
       // 呼叫你的 LLM / Prompt 程式（保持你的寫法）
       const answer = await require('./prompt')(cleanQuery,knowledge.knowledgeContext);
