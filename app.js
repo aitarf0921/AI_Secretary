@@ -85,7 +85,7 @@ require("./start")().then(() => {
 
   const limiter = RateLimit.middleware({
     interval: { min: 1 },
-    max: 60*10,
+    max: 60,
   });
 
   const queryLimiter = RateLimit.middleware({
