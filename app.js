@@ -370,15 +370,10 @@ require("./start")().then(() => {
 
   router.post('/query', queryLimiter,async (ctx) => {
 
-    console.log('query');
-
 
     try {
       const { query, site } = ctx.request.body || {};
 
-      console.log('site',site);
-
-      console.log('clientIP',ctx.ip);
 
       if (!query || typeof query !== 'string') {
         ctx.status = 400;
@@ -422,6 +417,7 @@ require("./start")().then(() => {
           bucket.count += 1;
           global.IP_QUOTA.set(`${ctx.ip}`, bucket);
 
+
           // 機率性清理：避免 Map 無限增長（低成本）
           if (Math.random() < 0.01) {
             for (const [k, v] of global.IP_QUOTA.entries()) {
@@ -449,12 +445,12 @@ require("./start")().then(() => {
         return;
       }
 
-      console.log(`knowledge.knowledgeContext`,knowledge.knowledgeContext);
-
       if(cleanQuery.length > 20){
         ctx.body = { answer: `Your message is a bit too long. Please keep it within 20 characters and try again.` };
         return;
       }
+
+      console.log(`${knowledge.email}:${ctx.ip}:${bucket.count}`);
 
       // 呼叫你的 LLM / Prompt 程式（保持你的寫法）
       const answer = await require('./prompt')(cleanQuery,knowledge.knowledgeContext);
