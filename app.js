@@ -473,6 +473,28 @@ require("./start")().then(() => {
 
   app.use(router.routes()).use(router.allowedMethods());
 
-  http.createServer(app.callback()).listen(PORT);
+  // http.createServer(app.callback()).listen(PORT);
+
+  const server = http.createServer(app.callback());
+
+  server.on("clientError", (err, socket) => {
+    if (err.code === "ECONNRESET" || err.code === "EPIPE") {
+      return;
+    }
+    console.error("ClientError:", err.message);
+    try {
+      socket.end("HTTP/1.1 400 Bad Request\r\n\r\n");
+    } catch (e) {}
+  });
+
+  // 全域攔截 socket reset（避免 pm2 / node crash）
+  process.on("uncaughtException", err => {
+    if (err.code === "ECONNRESET") return;
+    console.error("Uncaught:", err);
+  });
+
+  server.listen(PORT, () => {
+    console.log(`AI server running on port ${PORT}`);
+  });
 
 });
