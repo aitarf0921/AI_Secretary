@@ -33,6 +33,31 @@ require("./start")().then(() => {
 
   app.proxy = true;
 
+  // ===== A. 斷線保護 middleware（放這裡）=====
+    app.use(async (ctx, next) => {
+      let aborted = false;
+      const onClose = () => { aborted = true; };
+
+      ctx.req.on("aborted", onClose);
+      ctx.req.on("close", onClose);
+
+      try {
+        await next();
+      } catch (err) {
+        if (aborted && (err.code === "EPIPE" || err.code === "ECONNRESET")) return;
+        throw err;
+      } finally {
+        ctx.req.off("aborted", onClose);
+        ctx.req.off("close", onClose);
+      }
+    });
+
+    // ===== B. Koa error handler（放這裡）=====
+    app.on("error", (err, ctx) => {
+      if (err.code === "EPIPE" || err.code === "ECONNRESET") return;
+      console.error("KoaError:", err);
+    });
+
   app.use(async (ctx, next) => {
 
     if (ctx.path === '/nowpayments-ipn') {
@@ -471,35 +496,6 @@ require("./start")().then(() => {
     }
   });
 
-  app.use(async (ctx, next) => {
-    let aborted = false;
-
-    ctx.req.on("aborted", () => {
-      aborted = true;
-    });
-
-    const rawWrite = ctx.res.write.bind(ctx.res);
-    const rawEnd = ctx.res.end.bind(ctx.res);
-
-    ctx.res.write = function (chunk, encoding, cb) {
-      if (!aborted && !ctx.res.destroyed && ctx.res.writable) {
-        try { return rawWrite(chunk, encoding, cb); } catch {}
-      }
-    };
-
-    ctx.res.end = function (chunk, encoding, cb) {
-      if (!aborted && !ctx.res.destroyed && ctx.res.writable) {
-        try { return rawEnd(chunk, encoding, cb); } catch {}
-      }
-    };
-
-    try {
-      await next();
-    } catch (err) {
-      if (err.code !== "ECONNRESET") throw err;
-    }
-  });
-
 
   app.use(router.routes()).use(router.allowedMethods());
 
@@ -518,8 +514,9 @@ require("./start")().then(() => {
   });
 
   // 全域攔截 socket reset（避免 pm2 / node crash）
+
   process.on("uncaughtException", err => {
-    if (err.code === "ECONNRESET") return;
+    if (err.code === "ECONNRESET" || err.code === "EPIPE") return;
     console.error("Uncaught:", err);
   });
 
