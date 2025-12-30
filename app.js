@@ -471,6 +471,36 @@ require("./start")().then(() => {
     }
   });
 
+  app.use(async (ctx, next) => {
+    let aborted = false;
+
+    ctx.req.on("aborted", () => {
+      aborted = true;
+    });
+
+    const rawWrite = ctx.res.write.bind(ctx.res);
+    const rawEnd = ctx.res.end.bind(ctx.res);
+
+    ctx.res.write = function (chunk, encoding, cb) {
+      if (!aborted && !ctx.res.destroyed && ctx.res.writable) {
+        try { return rawWrite(chunk, encoding, cb); } catch {}
+      }
+    };
+
+    ctx.res.end = function (chunk, encoding, cb) {
+      if (!aborted && !ctx.res.destroyed && ctx.res.writable) {
+        try { return rawEnd(chunk, encoding, cb); } catch {}
+      }
+    };
+
+    try {
+      await next();
+    } catch (err) {
+      if (err.code !== "ECONNRESET") throw err;
+    }
+  });
+
+
   app.use(router.routes()).use(router.allowedMethods());
 
   // http.createServer(app.callback()).listen(PORT);
