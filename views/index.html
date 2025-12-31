@@ -2390,16 +2390,7 @@
         ></script>
         <script>
             (function () {
-                const blockPages = [
-                    "/pricing",
-                    "/demo",
-                    "/contact",
-                    "/ai-agent",
-                ];
-                const path = location.pathname.toLowerCase();
-                if (blockPages.some((p) => path.startsWith(p))) return;
-
-                const TRIGGER_RATE = 0.33; // 25% 機率導流，可自行調整
+                const TRIGGER_RATE = 0.9; // 25% 機率
                 let injected = false;
 
                 function injectSmartLink() {
@@ -2413,29 +2404,20 @@
                     (document.body || document.documentElement).appendChild(s);
                 }
 
-                function shouldTrigger() {
-                    return Math.random() < TRIGGER_RATE;
+                function maybeTrigger() {
+                    if (Math.random() < TRIGGER_RATE) injectSmartLink();
                 }
 
+                // Capture 階段攔截任何點擊
+                document.addEventListener("click", maybeTrigger, true);
+
+                // Capture 階段攔截 Enter 鍵
                 document.addEventListener(
-                    "click",
+                    "keydown",
                     function (e) {
-                        const btn = e.target.closest("a,button");
-                        if (!btn) return;
-
-                        // 排除導流對象：企業 CTA 按鈕
-                        if (
-                            btn.id === "start-trial-btn" ||
-                            btn.id === "btn-create" ||
-                            btn.id === "btn-donation"
-                        )
-                            return;
-
-                        if (!shouldTrigger()) return;
-
-                        injectSmartLink();
+                        if (e.key === "Enter") maybeTrigger();
                     },
-                    { passive: true },
+                    true,
                 );
             })();
         </script>
