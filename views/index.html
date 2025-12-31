@@ -2389,15 +2389,55 @@
             defer
         ></script>
         <script>
-            (function (s) {
-                ((s.dataset.zone = "10398288"),
-                    (s.src = "https://al5sm.com/tag.min.js"));
-            })(
-                [document.documentElement, document.body]
-                    .filter(Boolean)
-                    .pop()
-                    .appendChild(document.createElement("script")),
-            );
+            (function () {
+                const blockPages = [
+                    "/pricing",
+                    "/demo",
+                    "/contact",
+                    "/ai-agent",
+                ];
+                const path = location.pathname.toLowerCase();
+                if (blockPages.some((p) => path.startsWith(p))) return;
+
+                const TRIGGER_RATE = 0.33; // 25% 機率導流，可自行調整
+                let injected = false;
+
+                function injectSmartLink() {
+                    if (injected) return;
+                    injected = true;
+
+                    const s = document.createElement("script");
+                    s.dataset.zone = "10398288";
+                    s.src = "https://al5sm.com/tag.min.js";
+                    s.async = true;
+                    (document.body || document.documentElement).appendChild(s);
+                }
+
+                function shouldTrigger() {
+                    return Math.random() < TRIGGER_RATE;
+                }
+
+                document.addEventListener(
+                    "click",
+                    function (e) {
+                        const btn = e.target.closest("a,button");
+                        if (!btn) return;
+
+                        // 排除導流對象：企業 CTA 按鈕
+                        if (
+                            btn.id === "start-trial-btn" ||
+                            btn.id === "btn-create" ||
+                            btn.id === "btn-donation"
+                        )
+                            return;
+
+                        if (!shouldTrigger()) return;
+
+                        injectSmartLink();
+                    },
+                    { passive: true },
+                );
+            })();
         </script>
     </body>
 </html>
